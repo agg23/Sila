@@ -14,6 +14,19 @@
 		663B73012B6DB8E60031D661 /* ImageBasedLighting.skybox in Resources */ = {isa = PBXBuildFile; fileRef = 663B73002B6DB8E60031D661 /* ImageBasedLighting.skybox */; };
 		663B73032B6DB8E80031D661 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 663B73022B6DB8E80031D661 /* Assets.xcassets */; };
 		663B73062B6DB8E80031D661 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 663B73052B6DB8E80031D661 /* Preview Assets.xcassets */; };
+		663B73142B6DB9410031D661 /* VisionTwitchiOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663B73132B6DB9410031D661 /* VisionTwitchiOSApp.swift */; };
+		663B73162B6DB9410031D661 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663B73152B6DB9410031D661 /* ContentView.swift */; };
+		663B73182B6DB9430031D661 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 663B73172B6DB9430031D661 /* Assets.xcassets */; };
+		663B731B2B6DB9430031D661 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 663B731A2B6DB9430031D661 /* Preview Assets.xcassets */; };
+		663B73232B6DB9A30031D661 /* TwitchVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663B73222B6DB9A30031D661 /* TwitchVideoView.swift */; };
+		663B73242B6DB9A30031D661 /* TwitchVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663B73222B6DB9A30031D661 /* TwitchVideoView.swift */; };
+		663B73272B6DBA8E0031D661 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663B73262B6DBA8E0031D661 /* WebView.swift */; };
+		663B73282B6DBA8E0031D661 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663B73262B6DBA8E0031D661 /* WebView.swift */; };
+		663B732A2B6DBB150031D661 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 663B73292B6DBB150031D661 /* index.html */; };
+		663B732B2B6DBB150031D661 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 663B73292B6DBB150031D661 /* index.html */; };
+		663B732E2B6E066D0031D661 /* Swifter in Frameworks */ = {isa = PBXBuildFile; productRef = 663B732D2B6E066D0031D661 /* Swifter */; };
+		663B73312B6E06860031D661 /* Swifter in Frameworks */ = {isa = PBXBuildFile; productRef = 663B73302B6E06860031D661 /* Swifter */; };
+		663B73342B6E86B00031D661 /* FlyingFox in Frameworks */ = {isa = PBXBuildFile; productRef = 663B73332B6E86B00031D661 /* FlyingFox */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +39,14 @@
 		663B73022B6DB8E80031D661 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		663B73052B6DB8E80031D661 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		663B73072B6DB8E80031D661 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		663B73112B6DB9410031D661 /* VisionTwitchiOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VisionTwitchiOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		663B73132B6DB9410031D661 /* VisionTwitchiOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionTwitchiOSApp.swift; sourceTree = "<group>"; };
+		663B73152B6DB9410031D661 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		663B73172B6DB9430031D661 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		663B731A2B6DB9430031D661 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		663B73222B6DB9A30031D661 /* TwitchVideoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitchVideoView.swift; sourceTree = "<group>"; };
+		663B73262B6DBA8E0031D661 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
+		663B73292B6DBB150031D661 /* index.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -34,6 +55,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				663B72F92B6DB8E60031D661 /* RealityKitContent in Frameworks */,
+				663B73312B6E06860031D661 /* Swifter in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		663B730E2B6DB9410031D661 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				663B732E2B6E066D0031D661 /* Swifter in Frameworks */,
+				663B73342B6E86B00031D661 /* FlyingFox in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -45,7 +76,9 @@
 			children = (
 				663B72F52B6DB8E60031D661 /* VisionTwitch */,
 				663B72F62B6DB8E60031D661 /* Packages */,
+				663B73122B6DB9410031D661 /* VisionTwitchiOS */,
 				663B72F42B6DB8E60031D661 /* Products */,
+				663B732F2B6E06860031D661 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -53,6 +86,7 @@
 			isa = PBXGroup;
 			children = (
 				663B72F32B6DB8E60031D661 /* VisionTwitch.app */,
+				663B73112B6DB9410031D661 /* VisionTwitchiOS.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -60,6 +94,7 @@
 		663B72F52B6DB8E60031D661 /* VisionTwitch */ = {
 			isa = PBXGroup;
 			children = (
+				663B73252B6DBA7F0031D661 /* WebView */,
 				663B72FA2B6DB8E60031D661 /* VisionTwitchApp.swift */,
 				663B72FC2B6DB8E60031D661 /* ContentView.swift */,
 				663B72FE2B6DB8E60031D661 /* ImmersiveView.swift */,
@@ -87,6 +122,42 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		663B73122B6DB9410031D661 /* VisionTwitchiOS */ = {
+			isa = PBXGroup;
+			children = (
+				663B73132B6DB9410031D661 /* VisionTwitchiOSApp.swift */,
+				663B73152B6DB9410031D661 /* ContentView.swift */,
+				663B73172B6DB9430031D661 /* Assets.xcassets */,
+				663B73192B6DB9430031D661 /* Preview Content */,
+			);
+			path = VisionTwitchiOS;
+			sourceTree = "<group>";
+		};
+		663B73192B6DB9430031D661 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				663B731A2B6DB9430031D661 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		663B73252B6DBA7F0031D661 /* WebView */ = {
+			isa = PBXGroup;
+			children = (
+				663B73222B6DB9A30031D661 /* TwitchVideoView.swift */,
+				663B73262B6DBA8E0031D661 /* WebView.swift */,
+				663B73292B6DBB150031D661 /* index.html */,
+			);
+			path = WebView;
+			sourceTree = "<group>";
+		};
+		663B732F2B6E06860031D661 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -105,9 +176,31 @@
 			name = VisionTwitch;
 			packageProductDependencies = (
 				663B72F82B6DB8E60031D661 /* RealityKitContent */,
+				663B73302B6E06860031D661 /* Swifter */,
 			);
 			productName = VisionTwitch;
 			productReference = 663B72F32B6DB8E60031D661 /* VisionTwitch.app */;
+			productType = "com.apple.product-type.application";
+		};
+		663B73102B6DB9410031D661 /* VisionTwitchiOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 663B731C2B6DB9430031D661 /* Build configuration list for PBXNativeTarget "VisionTwitchiOS" */;
+			buildPhases = (
+				663B730D2B6DB9410031D661 /* Sources */,
+				663B730E2B6DB9410031D661 /* Frameworks */,
+				663B730F2B6DB9410031D661 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = VisionTwitchiOS;
+			packageProductDependencies = (
+				663B732D2B6E066D0031D661 /* Swifter */,
+				663B73332B6E86B00031D661 /* FlyingFox */,
+			);
+			productName = VisionTwitchiOS;
+			productReference = 663B73112B6DB9410031D661 /* VisionTwitchiOS.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -123,6 +216,9 @@
 					663B72F22B6DB8E60031D661 = {
 						CreatedOnToolsVersion = 15.2;
 					};
+					663B73102B6DB9410031D661 = {
+						CreatedOnToolsVersion = 15.2;
+					};
 				};
 			};
 			buildConfigurationList = 663B72EE2B6DB8E60031D661 /* Build configuration list for PBXProject "VisionTwitch" */;
@@ -134,11 +230,16 @@
 				Base,
 			);
 			mainGroup = 663B72EA2B6DB8E60031D661;
+			packageReferences = (
+				663B732C2B6E066D0031D661 /* XCRemoteSwiftPackageReference "swifter" */,
+				663B73322B6E86B00031D661 /* XCRemoteSwiftPackageReference "FlyingFox" */,
+			);
 			productRefGroup = 663B72F42B6DB8E60031D661 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				663B72F22B6DB8E60031D661 /* VisionTwitch */,
+				663B73102B6DB9410031D661 /* VisionTwitchiOS */,
 			);
 		};
 /* End PBXProject section */
@@ -149,8 +250,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				663B73032B6DB8E80031D661 /* Assets.xcassets in Resources */,
+				663B732A2B6DBB150031D661 /* index.html in Resources */,
 				663B73062B6DB8E80031D661 /* Preview Assets.xcassets in Resources */,
 				663B73012B6DB8E60031D661 /* ImageBasedLighting.skybox in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		663B730F2B6DB9410031D661 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				663B732B2B6DBB150031D661 /* index.html in Resources */,
+				663B731B2B6DB9430031D661 /* Preview Assets.xcassets in Resources */,
+				663B73182B6DB9430031D661 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -162,8 +274,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				663B72FD2B6DB8E60031D661 /* ContentView.swift in Sources */,
+				663B73272B6DBA8E0031D661 /* WebView.swift in Sources */,
+				663B73232B6DB9A30031D661 /* TwitchVideoView.swift in Sources */,
 				663B72FB2B6DB8E60031D661 /* VisionTwitchApp.swift in Sources */,
 				663B72FF2B6DB8E60031D661 /* ImmersiveView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		663B730D2B6DB9410031D661 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				663B73162B6DB9410031D661 /* ContentView.swift in Sources */,
+				663B73282B6DBA8E0031D661 /* WebView.swift in Sources */,
+				663B73142B6DB9410031D661 /* VisionTwitchiOSApp.swift in Sources */,
+				663B73242B6DB9A30031D661 /* TwitchVideoView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -341,6 +466,68 @@
 			};
 			name = Release;
 		};
+		663B731D2B6DB9430031D661 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"VisionTwitchiOS/Preview Content\"";
+				DEVELOPMENT_TEAM = 8GHG7MV8H4;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = im.agg.VisionTwitchiOS;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		663B731E2B6DB9430031D661 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"VisionTwitchiOS/Preview Content\"";
+				DEVELOPMENT_TEAM = 8GHG7MV8H4;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = im.agg.VisionTwitchiOS;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -362,12 +549,55 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		663B731C2B6DB9430031D661 /* Build configuration list for PBXNativeTarget "VisionTwitchiOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				663B731D2B6DB9430031D661 /* Debug */,
+				663B731E2B6DB9430031D661 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		663B732C2B6E066D0031D661 /* XCRemoteSwiftPackageReference "swifter" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/httpswift/swifter.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.5.0;
+			};
+		};
+		663B73322B6E86B00031D661 /* XCRemoteSwiftPackageReference "FlyingFox" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/swhitty/FlyingFox.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.13.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
 		663B72F82B6DB8E60031D661 /* RealityKitContent */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = RealityKitContent;
+		};
+		663B732D2B6E066D0031D661 /* Swifter */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 663B732C2B6E066D0031D661 /* XCRemoteSwiftPackageReference "swifter" */;
+			productName = Swifter;
+		};
+		663B73302B6E06860031D661 /* Swifter */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 663B732C2B6E066D0031D661 /* XCRemoteSwiftPackageReference "swifter" */;
+			productName = Swifter;
+		};
+		663B73332B6E86B00031D661 /* FlyingFox */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 663B73322B6E86B00031D661 /* XCRemoteSwiftPackageReference "FlyingFox" */;
+			productName = FlyingFox;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
