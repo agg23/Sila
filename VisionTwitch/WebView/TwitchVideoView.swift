@@ -10,17 +10,29 @@ import WebKit
 import Swifter
 
 struct TwitchVideoView: View {
-    let twitch = WebView()
+    @State var reload = false
+    @State var status: PlaybackStatus = .idle
 
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-        WebView()
-        Button(action: {
-            self.twitch.reload()
-        }, label: {
-            /*@START_MENU_TOKEN@*/Text("Button")/*@END_MENU_TOKEN@*/
-        })
-
+        WebView(reload: $reload, status: $status)
+            .aspectRatio(16/9, contentMode: .fit)
+        HStack {
+            Button(action: {
+                self.reload = true
+            }, label: {
+                Text("Reload")
+            })
+            Button {
+                self.status = .playing
+            } label: {
+                Text("Play")
+            }
+            Button {
+                self.status = .idle
+            } label: {
+                Text("Stop")
+            }
+        }
     }
 }
 
