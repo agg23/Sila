@@ -11,11 +11,24 @@ import WebKit
 struct TwitchVideoView: View {
     @ObservedObject var player = WebViewPlayer()
 
+    @State var showControls = false
+    @State var showControlsTimer: Timer?
+
     var body: some View {
         ZStack {
-            WebView(player: self.player)
+            TwitchWebView(player: self.player)
                 .aspectRatio(16/9, contentMode: .fit)
-//            PlayerControlsView(player: player)
+                .onTapGesture {
+                    self.showControls = true
+
+                    self.showControlsTimer?.invalidate()
+                    self.showControlsTimer = Timer.scheduledTimer(withTimeInterval: 3, repeats: false, block: { _ in
+                        self.showControls = false
+                    })
+                }
+            if self.showControls {
+                PlayerControlsView(player: player)
+            }
         }
     }
 }

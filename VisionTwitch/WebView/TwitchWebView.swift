@@ -9,7 +9,7 @@ import SwiftUI
 import WebKit
 import Combine
 
-struct WebView: UIViewRepresentable {
+struct TwitchWebView: UIViewRepresentable {
     typealias UIViewType = WKWebView
 
     let webView: WKWebView
@@ -225,5 +225,5 @@ class Coordinator: NSObject, WKUIDelegate, WKNavigationDelegate, WKScriptMessage
 }
 
 #Preview {
-    WebView(player: WebViewPlayer())
+    TwitchWebView(player: WebViewPlayer())
 }

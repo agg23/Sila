@@ -11,6 +11,8 @@
 		660F73A32B7446D70011FD65 /* WebViewPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660F73A12B7446D70011FD65 /* WebViewPlayer.swift */; };
 		660F73A52B745D710011FD65 /* PlayerControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660F73A42B745D710011FD65 /* PlayerControlsView.swift */; };
 		660F73A62B745D710011FD65 /* PlayerControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660F73A42B745D710011FD65 /* PlayerControlsView.swift */; };
+		660F73A82B7464470011FD65 /* ChatWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660F73A72B7464470011FD65 /* ChatWebView.swift */; };
+		660F73A92B7464470011FD65 /* ChatWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660F73A72B7464470011FD65 /* ChatWebView.swift */; };
 		663B72F92B6DB8E60031D661 /* RealityKitContent in Frameworks */ = {isa = PBXBuildFile; productRef = 663B72F82B6DB8E60031D661 /* RealityKitContent */; };
 		663B72FB2B6DB8E60031D661 /* VisionTwitchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663B72FA2B6DB8E60031D661 /* VisionTwitchApp.swift */; };
 		663B72FD2B6DB8E60031D661 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663B72FC2B6DB8E60031D661 /* ContentView.swift */; };
@@ -24,8 +26,8 @@
 		663B731B2B6DB9430031D661 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 663B731A2B6DB9430031D661 /* Preview Assets.xcassets */; };
 		663B73232B6DB9A30031D661 /* TwitchVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663B73222B6DB9A30031D661 /* TwitchVideoView.swift */; };
 		663B73242B6DB9A30031D661 /* TwitchVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663B73222B6DB9A30031D661 /* TwitchVideoView.swift */; };
-		663B73272B6DBA8E0031D661 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663B73262B6DBA8E0031D661 /* WebView.swift */; };
-		663B73282B6DBA8E0031D661 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663B73262B6DBA8E0031D661 /* WebView.swift */; };
+		663B73272B6DBA8E0031D661 /* TwitchWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663B73262B6DBA8E0031D661 /* TwitchWebView.swift */; };
+		663B73282B6DBA8E0031D661 /* TwitchWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663B73262B6DBA8E0031D661 /* TwitchWebView.swift */; };
 		663B732A2B6DBB150031D661 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 663B73292B6DBB150031D661 /* index.html */; };
 		663B732B2B6DBB150031D661 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 663B73292B6DBB150031D661 /* index.html */; };
 		663B732E2B6E066D0031D661 /* Swifter in Frameworks */ = {isa = PBXBuildFile; productRef = 663B732D2B6E066D0031D661 /* Swifter */; };
@@ -36,6 +38,7 @@
 /* Begin PBXFileReference section */
 		660F73A12B7446D70011FD65 /* WebViewPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewPlayer.swift; sourceTree = "<group>"; };
 		660F73A42B745D710011FD65 /* PlayerControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerControlsView.swift; sourceTree = "<group>"; };
+		660F73A72B7464470011FD65 /* ChatWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatWebView.swift; sourceTree = "<group>"; };
 		663B72F32B6DB8E60031D661 /* VisionTwitch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VisionTwitch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		663B72F72B6DB8E60031D661 /* RealityKitContent */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = RealityKitContent; sourceTree = "<group>"; };
 		663B72FA2B6DB8E60031D661 /* VisionTwitchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionTwitchApp.swift; sourceTree = "<group>"; };
@@ -51,7 +54,7 @@
 		663B73172B6DB9430031D661 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		663B731A2B6DB9430031D661 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		663B73222B6DB9A30031D661 /* TwitchVideoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitchVideoView.swift; sourceTree = "<group>"; };
-		663B73262B6DBA8E0031D661 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
+		663B73262B6DBA8E0031D661 /* TwitchWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitchWebView.swift; sourceTree = "<group>"; };
 		663B73292B6DBB150031D661 /* index.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -151,7 +154,8 @@
 			isa = PBXGroup;
 			children = (
 				663B73222B6DB9A30031D661 /* TwitchVideoView.swift */,
-				663B73262B6DBA8E0031D661 /* WebView.swift */,
+				663B73262B6DBA8E0031D661 /* TwitchWebView.swift */,
+				660F73A72B7464470011FD65 /* ChatWebView.swift */,
 				663B73292B6DBB150031D661 /* index.html */,
 				660F73A12B7446D70011FD65 /* WebViewPlayer.swift */,
 				660F73A42B745D710011FD65 /* PlayerControlsView.swift */,
@@ -282,7 +286,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				663B72FD2B6DB8E60031D661 /* ContentView.swift in Sources */,
-				663B73272B6DBA8E0031D661 /* WebView.swift in Sources */,
+				660F73A82B7464470011FD65 /* ChatWebView.swift in Sources */,
+				663B73272B6DBA8E0031D661 /* TwitchWebView.swift in Sources */,
 				660F73A52B745D710011FD65 /* PlayerControlsView.swift in Sources */,
 				660F73A22B7446D70011FD65 /* WebViewPlayer.swift in Sources */,
 				663B73232B6DB9A30031D661 /* TwitchVideoView.swift in Sources */,
@@ -296,11 +301,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				663B73162B6DB9410031D661 /* ContentView.swift in Sources */,
-				663B73282B6DBA8E0031D661 /* WebView.swift in Sources */,
+				663B73282B6DBA8E0031D661 /* TwitchWebView.swift in Sources */,
 				663B73142B6DB9410031D661 /* VisionTwitchiOSApp.swift in Sources */,
 				660F73A32B7446D70011FD65 /* WebViewPlayer.swift in Sources */,
 				663B73242B6DB9A30031D661 /* TwitchVideoView.swift in Sources */,
 				660F73A62B745D710011FD65 /* PlayerControlsView.swift in Sources */,
+				660F73A92B7464470011FD65 /* ChatWebView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
