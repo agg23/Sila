@@ -31,6 +31,12 @@ class WebViewPlayer: ObservableObject {
 
     var functionCaller = PassthroughSubject<String, Never>()
 
+    var isPlaying: Bool {
+        get {
+            return status == .buffering || status == .playing
+        }
+    }
+
     func play() {
         self.functionCaller.send("""
             Twitch._player.play();

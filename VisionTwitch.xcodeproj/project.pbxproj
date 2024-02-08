@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		660F73A22B7446D70011FD65 /* WebViewPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660F73A12B7446D70011FD65 /* WebViewPlayer.swift */; };
 		660F73A32B7446D70011FD65 /* WebViewPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660F73A12B7446D70011FD65 /* WebViewPlayer.swift */; };
+		660F73A52B745D710011FD65 /* PlayerControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660F73A42B745D710011FD65 /* PlayerControlsView.swift */; };
+		660F73A62B745D710011FD65 /* PlayerControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660F73A42B745D710011FD65 /* PlayerControlsView.swift */; };
 		663B72F92B6DB8E60031D661 /* RealityKitContent in Frameworks */ = {isa = PBXBuildFile; productRef = 663B72F82B6DB8E60031D661 /* RealityKitContent */; };
 		663B72FB2B6DB8E60031D661 /* VisionTwitchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663B72FA2B6DB8E60031D661 /* VisionTwitchApp.swift */; };
 		663B72FD2B6DB8E60031D661 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663B72FC2B6DB8E60031D661 /* ContentView.swift */; };
@@ -33,6 +35,7 @@
 
 /* Begin PBXFileReference section */
 		660F73A12B7446D70011FD65 /* WebViewPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewPlayer.swift; sourceTree = "<group>"; };
+		660F73A42B745D710011FD65 /* PlayerControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerControlsView.swift; sourceTree = "<group>"; };
 		663B72F32B6DB8E60031D661 /* VisionTwitch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VisionTwitch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		663B72F72B6DB8E60031D661 /* RealityKitContent */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = RealityKitContent; sourceTree = "<group>"; };
 		663B72FA2B6DB8E60031D661 /* VisionTwitchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionTwitchApp.swift; sourceTree = "<group>"; };
@@ -151,6 +154,7 @@
 				663B73262B6DBA8E0031D661 /* WebView.swift */,
 				663B73292B6DBB150031D661 /* index.html */,
 				660F73A12B7446D70011FD65 /* WebViewPlayer.swift */,
+				660F73A42B745D710011FD65 /* PlayerControlsView.swift */,
 			);
 			path = WebView;
 			sourceTree = "<group>";
@@ -279,6 +283,7 @@
 			files = (
 				663B72FD2B6DB8E60031D661 /* ContentView.swift in Sources */,
 				663B73272B6DBA8E0031D661 /* WebView.swift in Sources */,
+				660F73A52B745D710011FD65 /* PlayerControlsView.swift in Sources */,
 				660F73A22B7446D70011FD65 /* WebViewPlayer.swift in Sources */,
 				663B73232B6DB9A30031D661 /* TwitchVideoView.swift in Sources */,
 				663B72FB2B6DB8E60031D661 /* VisionTwitchApp.swift in Sources */,
@@ -295,6 +300,7 @@
 				663B73142B6DB9410031D661 /* VisionTwitchiOSApp.swift in Sources */,
 				660F73A32B7446D70011FD65 /* WebViewPlayer.swift in Sources */,
 				663B73242B6DB9A30031D661 /* TwitchVideoView.swift in Sources */,
+				660F73A62B745D710011FD65 /* PlayerControlsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
