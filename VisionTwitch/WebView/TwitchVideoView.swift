@@ -7,30 +7,36 @@
 
 import SwiftUI
 import WebKit
-import Swifter
 
 struct TwitchVideoView: View {
-    @State var reload = false
-    @State var status: PlaybackStatus = .idle
+    @ObservedObject var player = WebViewPlayer()
 
     var body: some View {
-        WebView(reload: $reload, status: $status)
+        WebView(player: self.player)
             .aspectRatio(16/9, contentMode: .fit)
         HStack {
-            Button(action: {
-                self.reload = true
-            }, label: {
-                Text("Reload")
-            })
+//            Button(action: {
+//                self.reload = true
+//            }, label: {
+//                Text("Reload")
+//            })
             Button {
-                self.status = .playing
+//                self.status = .playing
+                self.player.play()
             } label: {
                 Text("Play")
             }
             Button {
-                self.status = .idle
+//                self.status = .idle
+//                self.player.pause()
+                self.player.pause()
             } label: {
                 Text("Stop")
+            }
+            Button {
+                self.player.toggleMute()
+            } label: {
+                Text("Toggle mute")
             }
         }
     }

@@ -7,77 +7,17 @@
 
 import SwiftUI
 import WebKit
-//import FlyingFox
-
-enum PlaybackStatus {
-    case playing
-    case idle
-    case buffering
-    case ready
-}
+import Combine
 
 struct WebView: UIViewRepresentable {
     typealias UIViewType = WKWebView
 
     let webView: WKWebView
-//    let serverTask: Task<Void, Error>
+    let player: WebViewPlayer
 
-    @Binding var reload: Bool
-    @Binding var status: PlaybackStatus
+    init(player: WebViewPlayer) {
+        self.player = player
 
-    init(reload: Binding<Bool>, status: Binding<PlaybackStatus>) {
-//        self.serverTask = Task {
-//            let server = HTTPServer(port:8080)
-//            await server.appendRoute("/") { request in
-//                let channel = request.query["channel"]
-//
-//                let destination: String
-//
-//                if let channel = channel {
-//                    destination = "channel=\(channel)"
-//                } else {
-//                    fatalError("Invalid request")
-//                }
-//
-//                let html = """
-//                    <html>
-//                        <body>
-//                            Hello world from Web
-//                            <!--<iframe
-//                                src="https://player.twitch.tv/?\(destination)&parent=localhost"
-//                                height="100%"
-//                                width="100%"
-//                                autoplay>
-//                            </iframe>-->
-//                            <script src= "https://player.twitch.tv/js/embed/v1.js"></script>
-//                            <div id="player"></div>
-//                            <script type="text/javascript">
-//                              var options = {
-//                                width: "100%",
-//                                height: "100%",
-//                                channel: "barbarousking",
-//                                //video: "<video ID>",
-//                                //collection: "<collection ID>",
-//                                // only needed if your site is also embedded on embed.example.com and othersite.example.com
-//                                // parent: ["embed.example.com", "othersite.example.com"]
-//                              };
-//                              var player = new Twitch.Player("player", options);
-//                              player.setVolume(0.5);
-//
-//                              window.player = player;
-//                            </script>
-//                        </body>
-//                    </html>
-//                """
-//
-//                return HTTPResponse(statusCode: .ok, body: html.data(using: .utf8)!)
-//            }
-//            do {
-//                try await server.start()
-//            } catch {
-//                print(error)
-//            }
-//        }
         let overrideScript = WKUserScript(source: """
             // Set custom window parent
             window.parent = {
@@ -103,7 +43,7 @@ struct WebView: UIViewRepresentable {
 
                     listener({
                       type: "message",
-                      data: { eventName: event.data.eventName, params: null, namespace: "twitch-embed-player-proxy" },
+                      data: { eventName: event.data.eventName, params: event.data.params, namespace: "twitch-embed-player-proxy" },
                       source: window.parent
                     });
 
@@ -148,13 +88,10 @@ struct WebView: UIViewRepresentable {
         configuration.allowsInlineMediaPlayback = true
 
         self.webView = WKWebView(frame: .zero, configuration: configuration)
-
-        self._reload = reload
-        self._status = status
     }
 
     func makeCoordinator() -> Coordinator {
-        Coordinator(status: self.$status)
+        Coordinator(player: self.player, webView: self.webView)
     }
 
     func makeUIView(context: Context) -> WKWebView {
@@ -164,53 +101,52 @@ struct WebView: UIViewRepresentable {
 
         webView.configuration.userContentController.add(context.coordinator, name: "twitch")
 
+        // Also supports quality=auto&volume=0.39
+        webView.load(URLRequest(url: URL(string: "https://player.twitch.tv/?channel=GamesDoneQuick&parent=twitch.tv&muted=false&player=popout")!))
+
+        context.coordinator.setup()
+
         return webView
     }
 
     func updateUIView(_ uiView: WKWebView, context: Context) {
-//        guard let url = Bundle.main.url(forResource: "index", withExtension: "html") else {
-//            fatalError("Could not get index.html")
+//        if context.coordinator.cachedStatus != self.status {
+//            context.coordinator.cachedStatus = self.status
+//
+//            switch(self.status) {
+//            case .playing:
+//                uiView.evaluateJavaScript("""
+//                    Twitch._player.play()
+//                """)
+//            case .idle:
+//                uiView.evaluateJavaScript("""
+//                    Twitch._player.pause()
+//                """)
+//            default:
+//                // Do nothing
+//                break
+//            }
 //        }
-
-//        uiView.loadFileURL(url, allowingReadAccessTo: url)
-
-        if self.reload {
-//            self.webView.load(URLRequest(url: URL(string: "https://apple.com")!))
-//            uiView.load(URLRequest(url: URL(string: "https://player.twitch.tv/?channel=nobletofu&parent=localhost")!))
-//            uiView.load(URLRequest(url: URL(string: "http://localhost:8080?channel=nobletofu")!))
-            uiView.load(URLRequest(url: URL(string: "https://player.twitch.tv/?channel=barbarousking&parent=twitch.tv&player=popout")!))
-            DispatchQueue.main.async {
-                self.reload = false
-            }
-        }
-
-        if context.coordinator.cachedStatus != self.status {
-            context.coordinator.cachedStatus = self.status
-
-            switch(self.status) {
-            case .playing:
-                uiView.evaluateJavaScript("""
-                    Twitch._player.play()
-                """)
-            case .idle:
-                uiView.evaluateJavaScript("""
-                    Twitch._player.pause()
-                """)
-            default:
-                // Do nothing
-                break
-            }
-        }
     }
 }
 
 class Coordinator: NSObject, WKUIDelegate, WKNavigationDelegate, WKScriptMessageHandler {
-    var cachedStatus: PlaybackStatus = .idle
+    var player: WebViewPlayer
+    var webView: WKWebView
 
-    @Binding var status: PlaybackStatus
+    var cancellable: AnyCancellable?
 
-    init(status: Binding<PlaybackStatus>){
-        _status = status
+    init(player: WebViewPlayer, webView: WKWebView){
+        self.player = player
+        self.webView = webView
+    }
+
+    func setup() {
+        self.cancellable?.cancel()
+
+        self.cancellable = self.player.functionCaller.sink { javascript in
+            self.webView.evaluateJavaScript(javascript);
+        }
     }
 
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
@@ -267,10 +203,27 @@ class Coordinator: NSObject, WKUIDelegate, WKNavigationDelegate, WKScriptMessage
         let playback = params["playback"] as? NSString ?? "Idle"
         let volume = params["volume"] as? NSNumber ?? 0.0
 
-        print("Time: \(currentTime), muted: \(muted), playback: \(playback), volume: \(volume)")
+//        print("Time: \(currentTime), muted: \(muted), playback: \(playback), volume: \(volume)")
+
+        let status: PlaybackStatus
+        switch (playback.lowercased) {
+        case "idle":
+            status = .idle
+        case "buffering":
+            status = .buffering
+        case "playing":
+            status = .playing
+        case "ready":
+            status = .ready
+        default:
+            print("Unknown playback status \(playback)")
+            status = .idle
+        }
+
+        self.player.applyEvent(TwitchEvent(currentTime: currentTime.doubleValue, muted: muted, playback: status, volume: volume.doubleValue))
     }
 }
 
 #Preview {
-    WebView(reload: .constant(false), status: .constant(.idle))
+    WebView(player: WebViewPlayer())
 }
