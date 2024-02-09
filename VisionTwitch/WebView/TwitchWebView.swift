@@ -104,12 +104,13 @@ struct TwitchWebView: UIViewRepresentable {
         // Also supports quality=auto&volume=0.39
         webView.load(URLRequest(url: URL(string: "https://player.twitch.tv/?channel=GamesDoneQuick&parent=twitch.tv&muted=false&player=popout")!))
 
-        context.coordinator.setup()
+//        context.coordinator.setup()
 
         return webView
     }
 
     func updateUIView(_ uiView: WKWebView, context: Context) {
+        self.player.webView = uiView
 //        if context.coordinator.cachedStatus != self.status {
 //            context.coordinator.cachedStatus = self.status
 //
@@ -142,11 +143,11 @@ class Coordinator: NSObject, WKUIDelegate, WKNavigationDelegate, WKScriptMessage
     }
 
     func setup() {
-        self.cancellable?.cancel()
-
-        self.cancellable = self.player.functionCaller.sink { javascript in
-            self.webView.evaluateJavaScript(javascript);
-        }
+//        self.cancellable?.cancel()
+//
+//        self.cancellable = self.player.functionCaller.sink { javascript in
+//            self.webView.evaluateJavaScript(javascript);
+//        }
     }
 
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {

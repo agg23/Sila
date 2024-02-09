@@ -9,27 +9,35 @@ import SwiftUI
 import WebKit
 
 struct TwitchVideoView: View {
-    @ObservedObject var player = WebViewPlayer()
-
+    private var player = WebViewPlayer()
+    
     @State var showControls = false
     @State var showControlsTimer: Timer?
-
+    
     var body: some View {
+        let playerOpacity = self.showControls ? 1.0 : 0.0
+
         ZStack {
             TwitchWebView(player: self.player)
                 .aspectRatio(16/9, contentMode: .fit)
                 .onTapGesture {
                     self.showControls = true
-
-                    self.showControlsTimer?.invalidate()
-                    self.showControlsTimer = Timer.scheduledTimer(withTimeInterval: 3, repeats: false, block: { _ in
-                        self.showControls = false
-                    })
+                    
+                    resetTimer()
                 }
-            if self.showControls {
-                PlayerControlsView(player: player)
-            }
+            PlayerControlsView(player: player, onButtonPress: {
+                resetTimer()
+            })
+            .opacity(playerOpacity)
+            .animation(.easeInOut(duration: 0.5), value: playerOpacity)
         }
+    }
+    
+    func resetTimer() {
+        self.showControlsTimer?.invalidate()
+        self.showControlsTimer = Timer.scheduledTimer(withTimeInterval: 3, repeats: false, block: { _ in
+            self.showControls = false
+        })
     }
 }
 

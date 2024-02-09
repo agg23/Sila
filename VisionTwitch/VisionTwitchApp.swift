@@ -14,15 +14,15 @@ struct VisionTwitchApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .onAppear {
-                    openWindow(id: "chat")
-                }
+//                .onAppear {
+//                    openWindow(id: "chat")
+//                }
         }
 
-        WindowGroup(id: "chat") {
-            ChatWebView()
-        }
-            .defaultSize(width: 300, height: 500)
+//        WindowGroup(id: "chat") {
+//            ChatWebView()
+//        }
+//            .defaultSize(width: 300, height: 500)
 
         ImmersiveSpace(id: "ImmersiveSpace") {
             ImmersiveView()

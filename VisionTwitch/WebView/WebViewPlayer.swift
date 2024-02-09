@@ -23,13 +23,15 @@ struct TwitchEvent {
     let volume: Double
 }
 
-class WebViewPlayer: ObservableObject {
-    @Published var status: PlaybackStatus = .idle
+@Observable
+class WebViewPlayer {
+    var status: PlaybackStatus = .idle
 
-    @Published var muted: Bool = true
-    @Published var volume: Double = 0.0
+    var muted: Bool = true
+    var volume: Double = 0.0
 
-    var functionCaller = PassthroughSubject<String, Never>()
+//    var functionCaller = PassthroughSubject<String, Never>()
+    var webView: WKWebView?
 
     var isPlaying: Bool {
         get {
@@ -38,22 +40,26 @@ class WebViewPlayer: ObservableObject {
     }
 
     func play() {
-        self.functionCaller.send("""
+        self.webView?.evaluateJavaScript("""
             Twitch._player.play();
         """)
     }
 
     func pause() {
-        self.functionCaller.send("""
+        self.webView?.evaluateJavaScript("""
             Twitch._player.pause();
         """)
     }
 
     func toggleMute() {
         self.muted = !self.muted;
-        self.functionCaller.send("""
+        self.webView?.evaluateJavaScript("""
             Twitch._player.setMuted(\(self.muted));
         """)
+    }
+
+    func reload() {
+        self.webView?.reload()
     }
 
     func applyEvent(_ event: TwitchEvent) {

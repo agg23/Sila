@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct PlayerControlsView: View {
-    @ObservedObject var player: WebViewPlayer
+    var player: WebViewPlayer
+
+    var onButtonPress: (() -> Void)?
 
     var body: some View {
         HStack {
@@ -18,6 +20,8 @@ struct PlayerControlsView: View {
                 } else {
                     self.player.play()
                 }
+
+                self.onButtonPress?()
             } label: {
                 if self.player.isPlaying {
                     Image(systemName: "pause.fill")
@@ -27,12 +31,19 @@ struct PlayerControlsView: View {
             }
             Button {
                 self.player.toggleMute()
+                self.onButtonPress?()
             } label: {
                 if self.player.muted {
                     Image(systemName: "speaker.slash.fill")
                 } else {
                     Image(systemName: "speaker.fill")
                 }
+            }
+            Button {
+                self.player.reload()
+                self.onButtonPress?()
+            } label: {
+                Image(systemName: "arrow.clockwise")
             }
         }
         .frame(height: 200)
