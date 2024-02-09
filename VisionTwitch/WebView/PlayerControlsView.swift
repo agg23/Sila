@@ -36,7 +36,7 @@ struct PlayerControlsView: View {
                 if self.player.muted {
                     Image(systemName: "speaker.slash.fill")
                 } else {
-                    Image(systemName: "speaker.fill")
+                    Image(systemName: "speaker.wave.3.fill")
                 }
             }
             Button {

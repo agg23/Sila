@@ -19,7 +19,6 @@ struct TwitchVideoView: View {
 
         ZStack {
             TwitchWebView(player: self.player)
-                .aspectRatio(16/9, contentMode: .fit)
                 .onTapGesture {
                     self.showControls = true
                     

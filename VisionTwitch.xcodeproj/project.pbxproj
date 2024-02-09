@@ -13,6 +13,8 @@
 		660F73A62B745D710011FD65 /* PlayerControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660F73A42B745D710011FD65 /* PlayerControlsView.swift */; };
 		660F73A82B7464470011FD65 /* ChatWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660F73A72B7464470011FD65 /* ChatWebView.swift */; };
 		660F73A92B7464470011FD65 /* ChatWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660F73A72B7464470011FD65 /* ChatWebView.swift */; };
+		663336942B75B7EA0098D188 /* View+WindowGeometryPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663336932B75B7EA0098D188 /* View+WindowGeometryPreferences.swift */; };
+		663336952B75B7EA0098D188 /* View+WindowGeometryPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663336932B75B7EA0098D188 /* View+WindowGeometryPreferences.swift */; };
 		663B72F92B6DB8E60031D661 /* RealityKitContent in Frameworks */ = {isa = PBXBuildFile; productRef = 663B72F82B6DB8E60031D661 /* RealityKitContent */; };
 		663B72FB2B6DB8E60031D661 /* VisionTwitchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663B72FA2B6DB8E60031D661 /* VisionTwitchApp.swift */; };
 		663B72FD2B6DB8E60031D661 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663B72FC2B6DB8E60031D661 /* ContentView.swift */; };
@@ -39,6 +41,7 @@
 		660F73A12B7446D70011FD65 /* WebViewPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewPlayer.swift; sourceTree = "<group>"; };
 		660F73A42B745D710011FD65 /* PlayerControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerControlsView.swift; sourceTree = "<group>"; };
 		660F73A72B7464470011FD65 /* ChatWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatWebView.swift; sourceTree = "<group>"; };
+		663336932B75B7EA0098D188 /* View+WindowGeometryPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+WindowGeometryPreferences.swift"; sourceTree = "<group>"; };
 		663B72F32B6DB8E60031D661 /* VisionTwitch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VisionTwitch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		663B72F72B6DB8E60031D661 /* RealityKitContent */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = RealityKitContent; sourceTree = "<group>"; };
 		663B72FA2B6DB8E60031D661 /* VisionTwitchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionTwitchApp.swift; sourceTree = "<group>"; };
@@ -80,6 +83,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		663336922B75B7D40098D188 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				663336932B75B7EA0098D188 /* View+WindowGeometryPreferences.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		663B72EA2B6DB8E60031D661 = {
 			isa = PBXGroup;
 			children = (
@@ -110,6 +121,7 @@
 				663B73002B6DB8E60031D661 /* ImageBasedLighting.skybox */,
 				663B73022B6DB8E80031D661 /* Assets.xcassets */,
 				663B73072B6DB8E80031D661 /* Info.plist */,
+				663336922B75B7D40098D188 /* Extensions */,
 				663B73042B6DB8E80031D661 /* Preview Content */,
 			);
 			path = VisionTwitch;
@@ -285,6 +297,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				663336942B75B7EA0098D188 /* View+WindowGeometryPreferences.swift in Sources */,
 				663B72FD2B6DB8E60031D661 /* ContentView.swift in Sources */,
 				660F73A82B7464470011FD65 /* ChatWebView.swift in Sources */,
 				663B73272B6DBA8E0031D661 /* TwitchWebView.swift in Sources */,
@@ -303,6 +316,7 @@
 				663B73162B6DB9410031D661 /* ContentView.swift in Sources */,
 				663B73282B6DBA8E0031D661 /* TwitchWebView.swift in Sources */,
 				663B73142B6DB9410031D661 /* VisionTwitchiOSApp.swift in Sources */,
+				663336952B75B7EA0098D188 /* View+WindowGeometryPreferences.swift in Sources */,
 				660F73A32B7446D70011FD65 /* WebViewPlayer.swift in Sources */,
 				663B73242B6DB9A30031D661 /* TwitchVideoView.swift in Sources */,
 				660F73A62B745D710011FD65 /* PlayerControlsView.swift in Sources */,

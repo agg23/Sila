@@ -17,7 +17,10 @@ struct VisionTwitchApp: App {
 //                .onAppear {
 //                    openWindow(id: "chat")
 //                }
+                // Set aspect ratio and enforce uniform resizing
+                .windowGeometryPreferences(minimumSize: CGSize(width: 160.0, height: 90.0), resizingRestrictions: .uniform)
         }
+        .defaultSize(CGSize(width: 800.0, height: 450.0))
 
 //        WindowGroup(id: "chat") {
 //            ChatWebView()
