@@ -60,7 +60,6 @@ struct TwitchWebView: UIViewRepresentable {
             """, injectionTime: .atDocumentStart, forMainFrameOnly: true)
 
         let injectPlayerAPI = WKUserScript(source: """
-        console.log("Injecting player");
             const script = document.createElement("script");
             script.src = "https://player.twitch.tv/js/embed/v1.js";
 
@@ -133,8 +132,8 @@ struct TwitchWebView: UIViewRepresentable {
 }
 
 class Coordinator: NSObject, WKUIDelegate, WKNavigationDelegate, WKScriptMessageHandler {
-    var player: WebViewPlayer
-    var webView: WKWebView
+    weak var player: WebViewPlayer?
+    weak var webView: WKWebView?
 
     init(player: WebViewPlayer, webView: WKWebView){
         self.player = player
@@ -195,7 +194,7 @@ class Coordinator: NSObject, WKUIDelegate, WKNavigationDelegate, WKScriptMessage
         let playback = params["playback"] as? NSString ?? "Idle"
         let volume = params["volume"] as? NSNumber ?? 0.0
 
-        print("Time: \(currentTime), muted: \(muted), playback: \(playback), volume: \(volume)")
+//        print("Time: \(currentTime), muted: \(muted), playback: \(playback), volume: \(volume)")
 
         let status: PlaybackStatus
         switch (playback.lowercased) {
@@ -212,7 +211,7 @@ class Coordinator: NSObject, WKUIDelegate, WKNavigationDelegate, WKScriptMessage
             status = .idle
         }
 
-        self.player.applyEvent(TwitchEvent(currentTime: currentTime.doubleValue, muted: muted, playback: status, volume: volume.doubleValue))
+        self.player?.applyEvent(TwitchEvent(currentTime: currentTime.doubleValue, muted: muted, playback: status, volume: volume.doubleValue))
     }
 }
 

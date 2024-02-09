@@ -17,7 +17,8 @@ struct TwitchVideoView: View {
     @State var showControlsTimer: Timer?
     
     var body: some View {
-        let playerOpacity = self.showControls ? 1.0 : 0.0
+        let forceControlsDisplay = self.player.status == .idle
+        let controlOpacity = self.showControls || forceControlsDisplay ? 1.0 : 0.0
 
         ZStack {
             TwitchWebView(player: self.player, channel: self.channel)
@@ -29,8 +30,8 @@ struct TwitchVideoView: View {
             PlayerControlsView(player: player, onButtonPress: {
                 resetTimer()
             })
-                .opacity(playerOpacity)
-                .animation(.easeInOut(duration: 0.5), value: playerOpacity)
+                .opacity(controlOpacity)
+                .animation(.easeInOut(duration: 0.5), value: controlOpacity)
         }
     }
     

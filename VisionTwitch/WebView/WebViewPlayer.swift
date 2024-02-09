@@ -30,8 +30,7 @@ class WebViewPlayer {
     var muted: Bool = true
     var volume: Double = 0.0
 
-//    var functionCaller = PassthroughSubject<String, Never>()
-    var webView: WKWebView?
+    weak var webView: WKWebView?
 
     var isPlaying: Bool {
         get {
@@ -52,9 +51,8 @@ class WebViewPlayer {
     }
 
     func toggleMute() {
-        self.muted = !self.muted;
         self.webView?.evaluateJavaScript("""
-            Twitch._player.setMuted(\(self.muted));
+            Twitch._player.setMuted(\(!self.muted));
         """)
     }
 
