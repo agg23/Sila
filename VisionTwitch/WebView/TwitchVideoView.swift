@@ -9,7 +9,9 @@ import SwiftUI
 import WebKit
 
 struct TwitchVideoView: View {
-    private var player = WebViewPlayer()
+    let channel: String
+
+    let player = WebViewPlayer()
     
     @State var showControls = false
     @State var showControlsTimer: Timer?
@@ -18,7 +20,7 @@ struct TwitchVideoView: View {
         let playerOpacity = self.showControls ? 1.0 : 0.0
 
         ZStack {
-            TwitchWebView(player: self.player)
+            TwitchWebView(player: self.player, channel: self.channel)
                 .onTapGesture {
                     self.showControls = true
                     
@@ -27,8 +29,8 @@ struct TwitchVideoView: View {
             PlayerControlsView(player: player, onButtonPress: {
                 resetTimer()
             })
-            .opacity(playerOpacity)
-            .animation(.easeInOut(duration: 0.5), value: playerOpacity)
+                .opacity(playerOpacity)
+                .animation(.easeInOut(duration: 0.5), value: playerOpacity)
         }
     }
     
@@ -41,5 +43,5 @@ struct TwitchVideoView: View {
 }
 
 #Preview {
-    TwitchVideoView()
+    TwitchVideoView(channel: "BarbarousKing")
 }

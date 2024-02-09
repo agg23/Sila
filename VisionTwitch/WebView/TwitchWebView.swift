@@ -12,11 +12,14 @@ import Combine
 struct TwitchWebView: UIViewRepresentable {
     typealias UIViewType = WKWebView
 
+    let channel: String
+
     let webView: WKWebView
     let player: WebViewPlayer
 
-    init(player: WebViewPlayer) {
+    init(player: WebViewPlayer, channel: String) {
         self.player = player
+        self.channel = channel
 
         let overrideScript = WKUserScript(source: """
             // Set custom window parent
@@ -102,9 +105,7 @@ struct TwitchWebView: UIViewRepresentable {
         webView.configuration.userContentController.add(context.coordinator, name: "twitch")
 
         // Also supports quality=auto&volume=0.39
-        webView.load(URLRequest(url: URL(string: "https://player.twitch.tv/?channel=GamesDoneQuick&parent=twitch.tv&muted=false&player=popout")!))
-
-//        context.coordinator.setup()
+        webView.load(URLRequest(url: URL(string: "https://player.twitch.tv/?channel=\(self.channel)&parent=twitch.tv&muted=false&player=popout")!))
 
         return webView
     }
@@ -135,19 +136,9 @@ class Coordinator: NSObject, WKUIDelegate, WKNavigationDelegate, WKScriptMessage
     var player: WebViewPlayer
     var webView: WKWebView
 
-    var cancellable: AnyCancellable?
-
     init(player: WebViewPlayer, webView: WKWebView){
         self.player = player
         self.webView = webView
-    }
-
-    func setup() {
-//        self.cancellable?.cancel()
-//
-//        self.cancellable = self.player.functionCaller.sink { javascript in
-//            self.webView.evaluateJavaScript(javascript);
-//        }
     }
 
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
@@ -204,7 +195,7 @@ class Coordinator: NSObject, WKUIDelegate, WKNavigationDelegate, WKScriptMessage
         let playback = params["playback"] as? NSString ?? "Idle"
         let volume = params["volume"] as? NSNumber ?? 0.0
 
-//        print("Time: \(currentTime), muted: \(muted), playback: \(playback), volume: \(volume)")
+        print("Time: \(currentTime), muted: \(muted), playback: \(playback), volume: \(volume)")
 
         let status: PlaybackStatus
         switch (playback.lowercased) {
@@ -226,5 +217,5 @@ class Coordinator: NSObject, WKUIDelegate, WKNavigationDelegate, WKScriptMessage
 }
 
 #Preview {
-    TwitchWebView(player: WebViewPlayer())
+    TwitchWebView(player: WebViewPlayer(), channel: "BarbarousKing")
 }

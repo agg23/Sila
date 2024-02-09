@@ -13,14 +13,22 @@ struct VisionTwitchApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
-//                .onAppear {
-//                    openWindow(id: "chat")
-//                }
-                // Set aspect ratio and enforce uniform resizing
-                .windowGeometryPreferences(minimumSize: CGSize(width: 160.0, height: 90.0), resizingRestrictions: .uniform)
+            AssetSelectionView()
         }
-        .defaultSize(CGSize(width: 800.0, height: 450.0))
+
+        WindowGroup(id: "channelVideo", for: String.self) { channel in
+            if let channel = channel.wrappedValue {
+                TwitchVideoView(channel: channel)
+    //                .onAppear {
+    //                    openWindow(id: "chat")
+    //                }
+                    // Set aspect ratio and enforce uniform resizing
+                    .windowGeometryPreferences(minimumSize: CGSize(width: 160.0, height: 90.0), resizingRestrictions: .uniform)
+            } else {
+                Text("No channel specified")
+            }
+        }
+            .defaultSize(CGSize(width: 800.0, height: 450.0))
 
 //        WindowGroup(id: "chat") {
 //            ChatWebView()
