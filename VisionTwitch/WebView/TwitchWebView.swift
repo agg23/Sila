@@ -81,7 +81,8 @@ struct TwitchWebView: UIViewRepresentable {
         let controller = WKUserContentController()
         controller.addUserScript(overrideScript)
         controller.addUserScript(injectPlayerAPI)
-        controller.addUserScript(hideChromeScript)
+        // TODO: It seems like hiding the Chrome is breaking the video playback somehow
+//        controller.addUserScript(hideChromeScript)
 
         let configuration = WKWebViewConfiguration()
         configuration.userContentController = controller
@@ -104,7 +105,7 @@ struct TwitchWebView: UIViewRepresentable {
         webView.configuration.userContentController.add(context.coordinator, name: "twitch")
 
         // Also supports quality=auto&volume=0.39
-        webView.load(URLRequest(url: URL(string: "https://player.twitch.tv/?channel=\(self.channel)&parent=twitch.tv&muted=false&player=popout")!))
+        webView.load(URLRequest(url: URL(string: "https://player.twitch.tv/?channel=\(self.channel)&parent=twitch.tv&muted=false&controls=false&player=popout")!))
 
         return webView
     }
