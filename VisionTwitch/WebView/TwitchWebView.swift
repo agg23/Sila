@@ -77,12 +77,21 @@ struct TwitchWebView: UIViewRepresentable {
             document.head.appendChild(style);
             """, injectionTime: .atDocumentEnd, forMainFrameOnly: false)
 
+        let disableZoomScript = WKUserScript(source: """
+            var meta = document.createElement('meta');
+            meta.name = 'viewport';
+            meta.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no';
+            var head = document.getElementsByTagName('head')[0];
+            head.appendChild(meta);
+        """, injectionTime: .atDocumentEnd, forMainFrameOnly: false)
+
         // One final script is injected after everything else has loaded in webView(:didFinish:)
         let controller = WKUserContentController()
         controller.addUserScript(overrideScript)
         controller.addUserScript(injectPlayerAPI)
         // TODO: It seems like hiding the Chrome is breaking the video playback somehow
 //        controller.addUserScript(hideChromeScript)
+        controller.addUserScript(disableZoomScript)
 
         let configuration = WKWebViewConfiguration()
         configuration.userContentController = controller
@@ -155,6 +164,15 @@ class Coordinator: NSObject, WKUIDelegate, WKNavigationDelegate, WKScriptMessage
 
             // Mark video as in current window
             Twitch._player._embedWindow = window;
+
+            Twitch._player.addEventListener(Twitch.Player.PLAYBACK_BLOCKED, () => {
+                console.log("playback blocked");
+            });
+
+            Twitch._player.addEventListener(Twitch.Player.READY, () => {
+                Twitch._player.play();
+                Twitch._player.setMute(false);
+            });
         """)
     }
 
