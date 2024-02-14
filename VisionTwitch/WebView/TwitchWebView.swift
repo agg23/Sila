@@ -7,7 +7,6 @@
 
 import SwiftUI
 import WebKit
-import Combine
 
 struct TwitchWebView: UIViewRepresentable {
     typealias UIViewType = WKWebView
@@ -98,6 +97,9 @@ struct TwitchWebView: UIViewRepresentable {
 
         // Allow videos to not play in the native player
         configuration.allowsInlineMediaPlayback = true
+
+        // Disable selection of anything in WebView
+        configuration.preferences.isTextInteractionEnabled = false
 
         self.webView = WKWebView(frame: .zero, configuration: configuration)
     }
