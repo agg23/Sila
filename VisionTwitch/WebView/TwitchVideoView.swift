@@ -27,12 +27,15 @@ struct TwitchVideoView: View {
                     
                     resetTimer()
                 }
-            PlayerControlsView(player: player, onButtonPress: {
-                resetTimer()
-            })
-                .opacity(controlOpacity)
-                .animation(.easeInOut(duration: 0.5), value: controlOpacity)
         }
+            .ornament(attachmentAnchor: .scene(.bottom)) {
+                PlayerControlsView(player: player, onButtonPress: {
+                    resetTimer()
+                })
+                    .glassBackgroundEffect()
+                    .opacity(controlOpacity)
+                    .animation(.easeInOut(duration: 0.5), value: controlOpacity)
+            }
     }
     
     func resetTimer() {
