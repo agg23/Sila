@@ -24,6 +24,9 @@ struct VisionTwitchApp: App {
     //                }
                     // Set aspect ratio and enforce uniform resizing
                     .windowGeometryPreferences(minimumSize: CGSize(width: 160.0, height: 90.0), resizingRestrictions: .uniform)
+                    .onAppear {
+                        NotificationCenter.default.post(name: .twitchMuteAll, object: nil, userInfo: nil)
+                    }
             } else {
                 Text("No channel specified")
             }

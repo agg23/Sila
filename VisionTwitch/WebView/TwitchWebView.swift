@@ -65,6 +65,18 @@ struct TwitchWebView: UIViewRepresentable {
             document.head.appendChild(script);
         """, injectionTime: .atDocumentEnd, forMainFrameOnly: true)
 
+        let injectVideoGetter = WKUserScript(source: """
+            window.getVideoTag = () => {
+                const video = document.getElementsByTagName("video");
+
+                if (video.length < 1) {
+                    throw new Error("No video tag found");
+                }
+
+                return video;
+            };
+        """, injectionTime: .atDocumentEnd, forMainFrameOnly: false)
+
         let hideChromeScript = WKUserScript(source: """
             const style = document.createElement("style");
             style.textContent = `
@@ -88,6 +100,7 @@ struct TwitchWebView: UIViewRepresentable {
         let controller = WKUserContentController()
         controller.addUserScript(overrideScript)
         controller.addUserScript(injectPlayerAPI)
+        controller.addUserScript(injectVideoGetter)
         // TODO: It seems like hiding the Chrome is breaking the video playback somehow
 //        controller.addUserScript(hideChromeScript)
         controller.addUserScript(disableZoomScript)
@@ -100,6 +113,9 @@ struct TwitchWebView: UIViewRepresentable {
 
         // Disable selection of anything in WebView
         configuration.preferences.isTextInteractionEnabled = false
+
+        // Enable Airplay support
+        configuration.allowsAirPlayForMediaPlayback = true
 
         self.webView = WKWebView(frame: .zero, configuration: configuration)
     }
@@ -115,31 +131,14 @@ struct TwitchWebView: UIViewRepresentable {
 
         webView.configuration.userContentController.add(context.coordinator, name: "twitch")
 
-        // Also supports quality=auto&volume=0.39
-        webView.load(URLRequest(url: URL(string: "https://player.twitch.tv/?channel=\(self.channel)&parent=twitch.tv&muted=false&controls=false&player=popout")!))
+        // Also supports quality=auto&volume=0.39&muted=false
+        webView.load(URLRequest(url: URL(string: "https://player.twitch.tv/?channel=\(self.channel)&parent=twitch.tv&controls=false&player=popout")!))
 
         return webView
     }
 
     func updateUIView(_ uiView: WKWebView, context: Context) {
         self.player.webView = uiView
-//        if context.coordinator.cachedStatus != self.status {
-//            context.coordinator.cachedStatus = self.status
-//
-//            switch(self.status) {
-//            case .playing:
-//                uiView.evaluateJavaScript("""
-//                    Twitch._player.play()
-//                """)
-//            case .idle:
-//                uiView.evaluateJavaScript("""
-//                    Twitch._player.pause()
-//                """)
-//            default:
-//                // Do nothing
-//                break
-//            }
-//        }
     }
 }
 
@@ -167,13 +166,31 @@ class Coordinator: NSObject, WKUIDelegate, WKNavigationDelegate, WKScriptMessage
             // Mark video as in current window
             Twitch._player._embedWindow = window;
 
-            Twitch._player.addEventListener(Twitch.Player.PLAYBACK_BLOCKED, () => {
-                console.log("playback blocked");
+            window.addEventListener("message", (event) => {
+                if (event.data.eventName === "ready") {
+                    console.log("Ready");
+                    // TODO: Does this actually do anything?
+                    Twitch._player.play();
+                    // Twitch._player.setMute(false);
+                    window.getVideoTag().muted = false;
+                    console.log(Twitch._player);
+                }
             });
+        """)
 
-            Twitch._player.addEventListener(Twitch.Player.READY, () => {
-                Twitch._player.play();
-                Twitch._player.setMute(false);
+        webView.evaluateJavaScript("""
+            (() => {
+                const video = document.getElementsByTagName("video");
+
+                if (video.length < 1) {
+                    console.error("No video tag found");
+                    return;
+                }
+
+                video[0].addEventListener("webkitplaybacktargetavailabilitychanged", () => {
+                    console.log("Showing picker");
+                    video[0].webkitShowPlaybackTargetPicker();
+                });
             });
         """)
     }

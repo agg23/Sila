@@ -32,6 +32,17 @@ class WebViewPlayer {
 
     weak var webView: WKWebView?
 
+    init() {
+        NotificationCenter.default.addObserver(forName: .twitchMuteAll, object: nil, queue: nil) { notification in
+            self.webView?.evaluateJavaScript("""
+                let video = document.getElementsByTagName("video");
+                if (video.length > 0) {
+                    video[0].muted = true;
+                }
+            """)
+        }
+    }
+
     var isPlaying: Bool {
         get {
             return status == .buffering || status == .playing
