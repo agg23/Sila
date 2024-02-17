@@ -9,11 +9,28 @@ import SwiftUI
 import Twitch
 
 struct FollowedStreamsView: View {
-    @StateObject var viewModel = FollowedStreamsModel()
+    @State var data = DataProvider { api in
+        return Task {
+            let (streams, _) = try await api.getFollowedStreams(limit: nil, after: nil)
+            return streams
+        }
+    }
 
     var body: some View {
+        switch self.data.data {
+        case .success(let streams):
+            self.success(streams)
+        case .failure:
+            Text("TODO: Failure")
+        case .noData:
+            Text("TODO: No data")
+        }
+    }
+
+    @ViewBuilder
+    func success(_ streams: [Twitch.Stream]) -> some View {
         LazyHStack(content: {
-            ForEach(self.viewModel.streams, id: \.id) { item in
+            ForEach(streams, id: \.id) { item in
                 Button {
                     print("Clicked")
                 } label: {
@@ -27,11 +44,8 @@ struct FollowedStreamsView: View {
 
             }
         })
-        .onAppear {
-            self.viewModel.fetchData()
-        }
         Button {
-            self.viewModel.fetchData()
+            self.data.reload()
         } label: {
             Text("Refresh")
         }

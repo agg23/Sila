@@ -54,6 +54,8 @@
 		66F4E4352B813A1F008C565D /* FollowedStreamsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E4332B813A1F008C565D /* FollowedStreamsView.swift */; };
 		66F4E4372B813A2B008C565D /* FollowedStreamsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E4362B813A2B008C565D /* FollowedStreamsModel.swift */; };
 		66F4E4382B813A2B008C565D /* FollowedStreamsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E4362B813A2B008C565D /* FollowedStreamsModel.swift */; };
+		66F4E43A2B814D32008C565D /* DataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E4392B814D32008C565D /* DataProvider.swift */; };
+		66F4E43B2B814D32008C565D /* DataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E4392B814D32008C565D /* DataProvider.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -87,6 +89,7 @@
 		66F4E42B2B812A32008C565D /* AuthController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthController.swift; sourceTree = "<group>"; };
 		66F4E4332B813A1F008C565D /* FollowedStreamsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowedStreamsView.swift; sourceTree = "<group>"; };
 		66F4E4362B813A2B008C565D /* FollowedStreamsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowedStreamsModel.swift; sourceTree = "<group>"; };
+		66F4E4392B814D32008C565D /* DataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataProvider.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -234,6 +237,7 @@
 			children = (
 				66F4E4142B802916008C565D /* OAuth */,
 				66F4E41C2B811788008C565D /* AuthBadgeView.swift */,
+				66F4E4392B814D32008C565D /* DataProvider.swift */,
 			);
 			path = Authentication;
 			sourceTree = "<group>";
@@ -408,6 +412,7 @@
 				66F4E4252B811B6C008C565D /* CloseButton.swift in Sources */,
 				66F4E42C2B812A32008C565D /* AuthController.swift in Sources */,
 				66F4E4342B813A1F008C565D /* FollowedStreamsView.swift in Sources */,
+				66F4E43A2B814D32008C565D /* DataProvider.swift in Sources */,
 				66F4E4372B813A2B008C565D /* FollowedStreamsModel.swift in Sources */,
 				660F73A22B7446D70011FD65 /* WebViewPlayer.swift in Sources */,
 				663B73232B6DB9A30031D661 /* TwitchVideoView.swift in Sources */,
@@ -432,6 +437,7 @@
 				66F4E4382B813A2B008C565D /* FollowedStreamsModel.swift in Sources */,
 				663336952B75B7EA0098D188 /* View+WindowGeometryPreferences.swift in Sources */,
 				660F73A32B7446D70011FD65 /* WebViewPlayer.swift in Sources */,
+				66F4E43B2B814D32008C565D /* DataProvider.swift in Sources */,
 				663B73242B6DB9A30031D661 /* TwitchVideoView.swift in Sources */,
 				66F4E4262B811B6C008C565D /* CloseButton.swift in Sources */,
 				66F4E42D2B812A32008C565D /* AuthController.swift in Sources */,
