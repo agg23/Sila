@@ -13,7 +13,7 @@ struct VisionTwitchApp: App {
 
     var body: some Scene {
         WindowGroup {
-            AssetSelectionView()
+            MainWindowView()
         }
 
         WindowGroup(id: "channelVideo", for: String.self) { channel in

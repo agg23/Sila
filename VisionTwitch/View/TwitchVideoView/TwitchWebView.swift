@@ -120,8 +120,8 @@ struct TwitchWebView: UIViewRepresentable {
         self.webView = WKWebView(frame: .zero, configuration: configuration)
     }
 
-    func makeCoordinator() -> Coordinator {
-        Coordinator(player: self.player, webView: self.webView)
+    func makeCoordinator() -> TwitchWebViewCoordinator {
+        TwitchWebViewCoordinator(player: self.player, webView: self.webView)
     }
 
     func makeUIView(context: Context) -> WKWebView {
@@ -142,7 +142,7 @@ struct TwitchWebView: UIViewRepresentable {
     }
 }
 
-class Coordinator: NSObject, WKUIDelegate, WKNavigationDelegate, WKScriptMessageHandler {
+class TwitchWebViewCoordinator: NSObject, WKUIDelegate, WKNavigationDelegate, WKScriptMessageHandler {
     weak var player: WebViewPlayer?
     weak var webView: WKWebView?
 

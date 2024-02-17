@@ -38,6 +38,22 @@
 		663B73342B6E86B00031D661 /* FlyingFox in Frameworks */ = {isa = PBXBuildFile; productRef = 663B73332B6E86B00031D661 /* FlyingFox */; };
 		66F4E40F2B7D8FD3008C565D /* Twitch+Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E40E2B7D8FD3008C565D /* Twitch+Notification.swift */; };
 		66F4E4102B7D8FD3008C565D /* Twitch+Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E40E2B7D8FD3008C565D /* Twitch+Notification.swift */; };
+		66F4E4162B80292F008C565D /* OAuthWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E4152B80292F008C565D /* OAuthWebView.swift */; };
+		66F4E4172B80292F008C565D /* OAuthWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E4152B80292F008C565D /* OAuthWebView.swift */; };
+		66F4E41D2B811788008C565D /* AuthBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E41C2B811788008C565D /* AuthBadgeView.swift */; };
+		66F4E41E2B811788008C565D /* AuthBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E41C2B811788008C565D /* AuthBadgeView.swift */; };
+		66F4E4202B8118E9008C565D /* MainWindowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E41F2B8118E9008C565D /* MainWindowView.swift */; };
+		66F4E4252B811B6C008C565D /* CloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E4242B811B6C008C565D /* CloseButton.swift */; };
+		66F4E4262B811B6C008C565D /* CloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E4242B811B6C008C565D /* CloseButton.swift */; };
+		66F4E4282B812932008C565D /* OAuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E4272B812932008C565D /* OAuthView.swift */; };
+		66F4E4292B812932008C565D /* OAuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E4272B812932008C565D /* OAuthView.swift */; };
+		66F4E42C2B812A32008C565D /* AuthController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E42B2B812A32008C565D /* AuthController.swift */; };
+		66F4E42D2B812A32008C565D /* AuthController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E42B2B812A32008C565D /* AuthController.swift */; };
+		66F4E4302B8132F5008C565D /* Twitch in Frameworks */ = {isa = PBXBuildFile; productRef = 66F4E42F2B8132F5008C565D /* Twitch */; };
+		66F4E4342B813A1F008C565D /* FollowedStreamsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E4332B813A1F008C565D /* FollowedStreamsView.swift */; };
+		66F4E4352B813A1F008C565D /* FollowedStreamsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E4332B813A1F008C565D /* FollowedStreamsView.swift */; };
+		66F4E4372B813A2B008C565D /* FollowedStreamsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E4362B813A2B008C565D /* FollowedStreamsModel.swift */; };
+		66F4E4382B813A2B008C565D /* FollowedStreamsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E4362B813A2B008C565D /* FollowedStreamsModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -63,6 +79,14 @@
 		663B73262B6DBA8E0031D661 /* TwitchWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitchWebView.swift; sourceTree = "<group>"; };
 		663B73292B6DBB150031D661 /* index.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
 		66F4E40E2B7D8FD3008C565D /* Twitch+Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Twitch+Notification.swift"; sourceTree = "<group>"; };
+		66F4E4152B80292F008C565D /* OAuthWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuthWebView.swift; sourceTree = "<group>"; };
+		66F4E41C2B811788008C565D /* AuthBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthBadgeView.swift; sourceTree = "<group>"; };
+		66F4E41F2B8118E9008C565D /* MainWindowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWindowView.swift; sourceTree = "<group>"; };
+		66F4E4242B811B6C008C565D /* CloseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseButton.swift; sourceTree = "<group>"; };
+		66F4E4272B812932008C565D /* OAuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuthView.swift; sourceTree = "<group>"; };
+		66F4E42B2B812A32008C565D /* AuthController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthController.swift; sourceTree = "<group>"; };
+		66F4E4332B813A1F008C565D /* FollowedStreamsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowedStreamsView.swift; sourceTree = "<group>"; };
+		66F4E4362B813A2B008C565D /* FollowedStreamsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowedStreamsModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +94,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				66F4E4302B8132F5008C565D /* Twitch in Frameworks */,
 				663B72F92B6DB8E60031D661 /* RealityKitContent in Frameworks */,
 				663B73312B6E06860031D661 /* Swifter in Frameworks */,
 			);
@@ -126,10 +151,10 @@
 		663B72F52B6DB8E60031D661 /* VisionTwitch */ = {
 			isa = PBXGroup;
 			children = (
-				6633369A2B75BA7C0098D188 /* AssetSelection */,
-				663B73252B6DBA7F0031D661 /* WebView */,
+				66F4E42A2B812A1F008C565D /* Authentication */,
+				66F4E4312B813986008C565D /* Pages */,
+				66F4E4222B811B51008C565D /* View */,
 				663B72FA2B6DB8E60031D661 /* VisionTwitchApp.swift */,
-				663B72FE2B6DB8E60031D661 /* ImmersiveView.swift */,
 				663B73002B6DB8E60031D661 /* ImageBasedLighting.skybox */,
 				663B73022B6DB8E80031D661 /* Assets.xcassets */,
 				663B73072B6DB8E80031D661 /* Info.plist */,
@@ -174,7 +199,7 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		663B73252B6DBA7F0031D661 /* WebView */ = {
+		663B73252B6DBA7F0031D661 /* TwitchVideoView */ = {
 			isa = PBXGroup;
 			children = (
 				663B73222B6DB9A30031D661 /* TwitchVideoView.swift */,
@@ -185,7 +210,7 @@
 				660F73A42B745D710011FD65 /* PlayerControlsView.swift */,
 				66F4E40E2B7D8FD3008C565D /* Twitch+Notification.swift */,
 			);
-			path = WebView;
+			path = TwitchVideoView;
 			sourceTree = "<group>";
 		};
 		663B732F2B6E06860031D661 /* Frameworks */ = {
@@ -193,6 +218,70 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		66F4E4142B802916008C565D /* OAuth */ = {
+			isa = PBXGroup;
+			children = (
+				66F4E4152B80292F008C565D /* OAuthWebView.swift */,
+				66F4E4272B812932008C565D /* OAuthView.swift */,
+			);
+			path = OAuth;
+			sourceTree = "<group>";
+		};
+		66F4E41B2B811778008C565D /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				66F4E4142B802916008C565D /* OAuth */,
+				66F4E41C2B811788008C565D /* AuthBadgeView.swift */,
+			);
+			path = Authentication;
+			sourceTree = "<group>";
+		};
+		66F4E4222B811B51008C565D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				66F4E41B2B811778008C565D /* Authentication */,
+				6633369A2B75BA7C0098D188 /* AssetSelection */,
+				663B73252B6DBA7F0031D661 /* TwitchVideoView */,
+				66F4E4232B811B5F008C565D /* Shared */,
+				66F4E41F2B8118E9008C565D /* MainWindowView.swift */,
+				663B72FE2B6DB8E60031D661 /* ImmersiveView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		66F4E4232B811B5F008C565D /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				66F4E4242B811B6C008C565D /* CloseButton.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		66F4E42A2B812A1F008C565D /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				66F4E42B2B812A32008C565D /* AuthController.swift */,
+			);
+			path = Authentication;
+			sourceTree = "<group>";
+		};
+		66F4E4312B813986008C565D /* Pages */ = {
+			isa = PBXGroup;
+			children = (
+				66F4E4322B813A0C008C565D /* FollowedStreams */,
+			);
+			path = Pages;
+			sourceTree = "<group>";
+		};
+		66F4E4322B813A0C008C565D /* FollowedStreams */ = {
+			isa = PBXGroup;
+			children = (
+				66F4E4332B813A1F008C565D /* FollowedStreamsView.swift */,
+				66F4E4362B813A2B008C565D /* FollowedStreamsModel.swift */,
+			);
+			path = FollowedStreams;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -214,6 +303,7 @@
 			packageProductDependencies = (
 				663B72F82B6DB8E60031D661 /* RealityKitContent */,
 				663B73302B6E06860031D661 /* Swifter */,
+				66F4E42F2B8132F5008C565D /* Twitch */,
 			);
 			productName = VisionTwitch;
 			productReference = 663B72F32B6DB8E60031D661 /* VisionTwitch.app */;
@@ -270,6 +360,7 @@
 			packageReferences = (
 				663B732C2B6E066D0031D661 /* XCRemoteSwiftPackageReference "swifter" */,
 				663B73322B6E86B00031D661 /* XCRemoteSwiftPackageReference "FlyingFox" */,
+				66F4E42E2B8132F5008C565D /* XCRemoteSwiftPackageReference "swift-twitch-client" */,
 			);
 			productRefGroup = 663B72F42B6DB8E60031D661 /* Products */;
 			projectDirPath = "";
@@ -314,11 +405,19 @@
 				660F73A82B7464470011FD65 /* ChatWebView.swift in Sources */,
 				663B73272B6DBA8E0031D661 /* TwitchWebView.swift in Sources */,
 				660F73A52B745D710011FD65 /* PlayerControlsView.swift in Sources */,
+				66F4E4252B811B6C008C565D /* CloseButton.swift in Sources */,
+				66F4E42C2B812A32008C565D /* AuthController.swift in Sources */,
+				66F4E4342B813A1F008C565D /* FollowedStreamsView.swift in Sources */,
+				66F4E4372B813A2B008C565D /* FollowedStreamsModel.swift in Sources */,
 				660F73A22B7446D70011FD65 /* WebViewPlayer.swift in Sources */,
 				663B73232B6DB9A30031D661 /* TwitchVideoView.swift in Sources */,
 				663B72FB2B6DB8E60031D661 /* VisionTwitchApp.swift in Sources */,
 				66F4E40F2B7D8FD3008C565D /* Twitch+Notification.swift in Sources */,
+				66F4E4282B812932008C565D /* OAuthView.swift in Sources */,
+				66F4E4162B80292F008C565D /* OAuthWebView.swift in Sources */,
+				66F4E4202B8118E9008C565D /* MainWindowView.swift in Sources */,
 				663B72FF2B6DB8E60031D661 /* ImmersiveView.swift in Sources */,
+				66F4E41D2B811788008C565D /* AuthBadgeView.swift in Sources */,
 				6633369C2B75BAB60098D188 /* AssetSelectionView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -330,12 +429,19 @@
 				663B73162B6DB9410031D661 /* ContentView.swift in Sources */,
 				663B73282B6DBA8E0031D661 /* TwitchWebView.swift in Sources */,
 				663B73142B6DB9410031D661 /* VisionTwitchiOSApp.swift in Sources */,
+				66F4E4382B813A2B008C565D /* FollowedStreamsModel.swift in Sources */,
 				663336952B75B7EA0098D188 /* View+WindowGeometryPreferences.swift in Sources */,
 				660F73A32B7446D70011FD65 /* WebViewPlayer.swift in Sources */,
 				663B73242B6DB9A30031D661 /* TwitchVideoView.swift in Sources */,
+				66F4E4262B811B6C008C565D /* CloseButton.swift in Sources */,
+				66F4E42D2B812A32008C565D /* AuthController.swift in Sources */,
 				660F73A62B745D710011FD65 /* PlayerControlsView.swift in Sources */,
 				66F4E4102B7D8FD3008C565D /* Twitch+Notification.swift in Sources */,
+				66F4E4352B813A1F008C565D /* FollowedStreamsView.swift in Sources */,
+				66F4E4172B80292F008C565D /* OAuthWebView.swift in Sources */,
 				660F73A92B7464470011FD65 /* ChatWebView.swift in Sources */,
+				66F4E41E2B811788008C565D /* AuthBadgeView.swift in Sources */,
+				66F4E4292B812932008C565D /* OAuthView.swift in Sources */,
 				6633369D2B75BAB60098D188 /* AssetSelectionView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -625,6 +731,14 @@
 				minimumVersion = 0.13.0;
 			};
 		};
+		66F4E42E2B8132F5008C565D /* XCRemoteSwiftPackageReference "swift-twitch-client" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/agg23/swift-twitch-client";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -646,6 +760,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 663B73322B6E86B00031D661 /* XCRemoteSwiftPackageReference "FlyingFox" */;
 			productName = FlyingFox;
+		};
+		66F4E42F2B8132F5008C565D /* Twitch */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 66F4E42E2B8132F5008C565D /* XCRemoteSwiftPackageReference "swift-twitch-client" */;
+			productName = Twitch;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
