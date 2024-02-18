@@ -42,7 +42,8 @@ struct AuthBadgeView: View {
 @Observable class AuthUserProvider {
     private var cancellables = Set<AnyCancellable>()
 
-    var user: AuthUser?
+    // Make sure to initialize to current state
+    var user: AuthUser? = AuthController.shared.authUser
 
     init() {
         AuthController.shared.authChangeSubject.sink { _ in

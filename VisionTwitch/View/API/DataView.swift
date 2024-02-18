@@ -49,7 +49,7 @@ struct DataView<T, E: Error, Content: View, Loading: View, ErrorView: View>: Vie
                 // Do nothing
             }
         }
-        .onAppear {
+        .onChange(of: true, initial: true) {
             self.state = DataProvider(taskClosure: taskClosure, requiresAuth: self.requiresAuth)
 
             if self.runOnAppear && (!self.requiresAuth || AuthController.shared.isAuthorized) {
