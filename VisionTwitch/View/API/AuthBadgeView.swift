@@ -28,6 +28,10 @@ struct AuthBadgeView: View {
         } label: {
             Image(systemName: "person.circle")
         }
+        .onReceive(AuthController.shared.requestReauthSubject) { _ in
+            // We need to reauth
+            self.showOauth = true
+        }
         .buttonBorderShape(.circle)
         .sheet(isPresented: $showOauth) {
             OAuthView()
@@ -41,7 +45,7 @@ struct AuthBadgeView: View {
     var user: AuthUser?
 
     init() {
-        AuthController.shared.subject.sink { _ in
+        AuthController.shared.authChangeSubject.sink { _ in
         } receiveValue: { _ in
             self.user = AuthController.shared.authUser
         }.store(in: &self.cancellables)

@@ -19,7 +19,7 @@ struct FollowedStreamsView: View {
             FollowedStreamsDataView(streams: streams)
         }, error: { _ in
             Text("Error")
-        }, onInit: .authOnly)
+        }, requiresAuth: true, runOnAppear: true)
     }
 }
 

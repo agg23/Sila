@@ -15,6 +15,7 @@ struct OAuthView: View {
         VStack(spacing: 0) {
             HStack(content: {
                 CloseButtonView {
+                    AuthController.shared.logOut()
                     dismiss()
                 }
                 // Offset to prevent button from being cut off from rounded corners

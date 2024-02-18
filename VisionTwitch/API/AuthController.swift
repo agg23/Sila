@@ -21,7 +21,8 @@ class AuthController {
     private static let OAUTH_KEYCHAIN_KEY = "oauth_token"
 
     var helixApi: Helix
-    let subject: any Subject<(), Error>
+    let authChangeSubject: PassthroughSubject<(), Never>
+    let requestReauthSubject: PassthroughSubject<(), Never>
     var authUser: AuthUser?
     var isAuthorized: Bool = false
 
@@ -33,7 +34,8 @@ class AuthController {
 
         // Create authed or unauthed Helix instance. Set userId to empty string so Helix doesn't throw
         self.helixApi = try! Helix(authentication: .init(oAuth: oauthToken ?? "", clientID: AuthController.CLIENT_ID, userId: authUser?.id ?? ""))
-        self.subject = PassthroughSubject<(), Error>()
+        self.authChangeSubject = PassthroughSubject<(), Never>()
+        self.requestReauthSubject = PassthroughSubject<(), Never>()
 
         if oauthToken != nil && authUser != nil {
             self.isAuthorized = true
@@ -45,7 +47,7 @@ class AuthController {
         // Helix creation can not throw because we set all of the cred values
         self.helixApi = try! Helix(authentication: TwitchCredentials(oAuth: token, clientID: AuthController.CLIENT_ID, userId: authUser.id))
         self.isAuthorized = true
-        self.subject.send(())
+        self.authChangeSubject.send(())
 
         self.updateStore(token: token, authUser: authUser)
     }
@@ -71,7 +73,14 @@ class AuthController {
         // Send event to cause streaming windows to close
         NotificationCenter.default.post(name: .twitchLogOut, object: nil, userInfo: nil)
 
-        self.subject.send(())
+        self.authChangeSubject.send(())
+    }
+
+    /// Request we show the sheet to relogin with current credentials
+    func requestReauth() {
+        DispatchQueue.main.async {
+            self.requestReauthSubject.send(())
+        }
     }
 
     private func updateStore(token: String?, authUser: AuthUser?) {
@@ -83,6 +92,10 @@ class AuthController {
             UserDefaults.standard.setValue(nil, forKey: AuthController.USER_USER_DEFAULTS_KEY)
         }
 
-        KeychainWrapper.default.set(token, forKey: AuthController.OAUTH_KEYCHAIN_KEY)
+        if let token = token {
+            KeychainWrapper.default.set(token, forKey: AuthController.OAUTH_KEYCHAIN_KEY)
+        } else {
+            KeychainWrapper.default.removeObject(forKey: AuthController.OAUTH_KEYCHAIN_KEY)
+        }
     }
 }

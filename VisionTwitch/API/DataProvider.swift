@@ -19,16 +19,18 @@ enum DataStatus<T, E: Error> {
 @Observable class DataProvider<T, E: Error> {
     private let taskClosure: (_ api: Helix) -> Task<T, E>
     private var cancellable: AnyCancellable?
+    private let requiresAuth: Bool
 
     var data: DataStatus<T, E> = .noData
 
-    init(taskClosure: @escaping (_ api: Helix) -> Task<T, E>) {
+    init(taskClosure: @escaping (_ api: Helix) -> Task<T, E>, requiresAuth: Bool) {
         self.taskClosure = taskClosure
-        self.cancellable = AuthController.shared.subject.sink(receiveCompletion: { _ in
-
-        }, receiveValue: { _ in
+        self.requiresAuth = requiresAuth
+        self.cancellable = AuthController.shared.authChangeSubject.sink(receiveCompletion: { _ in }, receiveValue: { _ in
             // Received new auth, rerun task
-            self.reload()
+            if !self.requiresAuth || AuthController.shared.isAuthorized {
+                self.reload()
+            }
         })
     }
 
@@ -40,7 +42,25 @@ enum DataStatus<T, E: Error> {
                 let value = try await task.value
                 self.data = .success(value)
             } catch {
+                print("Request error: \(error)")
                 self.data = .failure(error as! E)
+
+                if let helixError = error as? HelixError {
+                    switch helixError {
+                    case .invalidErrorResponse(let status, _):
+                        if status == 401 {
+                            // Need to relogin
+                            AuthController.shared.requestReauth()
+                        }
+                    case .requestFailed(_, let status, _):
+                        if status == 401 {
+                            // Need to relogin
+                            AuthController.shared.requestReauth()
+                        }
+                    default:
+                        break
+                    }
+                }
             }
         }
     }
