@@ -38,6 +38,13 @@
 		663B73342B6E86B00031D661 /* FlyingFox in Frameworks */ = {isa = PBXBuildFile; productRef = 663B73332B6E86B00031D661 /* FlyingFox */; };
 		66E102122B82515A007A44D4 /* TagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E102112B82515A007A44D4 /* TagView.swift */; };
 		66E102132B82515A007A44D4 /* TagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E102112B82515A007A44D4 /* TagView.swift */; };
+		66E102152B826171007A44D4 /* AuthUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E102142B826171007A44D4 /* AuthUser.swift */; };
+		66E102162B826171007A44D4 /* AuthUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E102142B826171007A44D4 /* AuthUser.swift */; };
+		66E102192B8262AC007A44D4 /* KeychainWrapper in Frameworks */ = {isa = PBXBuildFile; productRef = 66E102182B8262AC007A44D4 /* KeychainWrapper */; };
+		66E1021B2B8272E3007A44D4 /* Auth+Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E1021A2B8272E3007A44D4 /* Auth+Notification.swift */; };
+		66E1021C2B8272E3007A44D4 /* Auth+Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E1021A2B8272E3007A44D4 /* Auth+Notification.swift */; };
+		66E1021E2B8273B0007A44D4 /* TwitchWindowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E1021D2B8273B0007A44D4 /* TwitchWindowView.swift */; };
+		66E1021F2B8273B0007A44D4 /* TwitchWindowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E1021D2B8273B0007A44D4 /* TwitchWindowView.swift */; };
 		66F4E40F2B7D8FD3008C565D /* Twitch+Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E40E2B7D8FD3008C565D /* Twitch+Notification.swift */; };
 		66F4E4102B7D8FD3008C565D /* Twitch+Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E40E2B7D8FD3008C565D /* Twitch+Notification.swift */; };
 		66F4E4162B80292F008C565D /* OAuthWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E4152B80292F008C565D /* OAuthWebView.swift */; };
@@ -85,6 +92,9 @@
 		663B73262B6DBA8E0031D661 /* TwitchWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitchWebView.swift; sourceTree = "<group>"; };
 		663B73292B6DBB150031D661 /* index.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
 		66E102112B82515A007A44D4 /* TagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagView.swift; sourceTree = "<group>"; };
+		66E102142B826171007A44D4 /* AuthUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthUser.swift; sourceTree = "<group>"; };
+		66E1021A2B8272E3007A44D4 /* Auth+Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Auth+Notification.swift"; sourceTree = "<group>"; };
+		66E1021D2B8273B0007A44D4 /* TwitchWindowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitchWindowView.swift; sourceTree = "<group>"; };
 		66F4E40E2B7D8FD3008C565D /* Twitch+Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Twitch+Notification.swift"; sourceTree = "<group>"; };
 		66F4E4152B80292F008C565D /* OAuthWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuthWebView.swift; sourceTree = "<group>"; };
 		66F4E41C2B811788008C565D /* AuthBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthBadgeView.swift; sourceTree = "<group>"; };
@@ -103,6 +113,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				66E102192B8262AC007A44D4 /* KeychainWrapper in Frameworks */,
 				66F4E4302B8132F5008C565D /* Twitch in Frameworks */,
 				663B72F92B6DB8E60031D661 /* RealityKitContent in Frameworks */,
 				663B73312B6E06860031D661 /* Swifter in Frameworks */,
@@ -256,6 +267,7 @@
 				663B73252B6DBA7F0031D661 /* TwitchVideoView */,
 				66F4E4232B811B5F008C565D /* Shared */,
 				66F4E41F2B8118E9008C565D /* MainWindowView.swift */,
+				66E1021D2B8273B0007A44D4 /* TwitchWindowView.swift */,
 				663B72FE2B6DB8E60031D661 /* ImmersiveView.swift */,
 			);
 			path = View;
@@ -275,6 +287,8 @@
 			children = (
 				66F4E42B2B812A32008C565D /* AuthController.swift */,
 				66F4E4392B814D32008C565D /* DataProvider.swift */,
+				66E102142B826171007A44D4 /* AuthUser.swift */,
+				66E1021A2B8272E3007A44D4 /* Auth+Notification.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -316,6 +330,7 @@
 				663B72F82B6DB8E60031D661 /* RealityKitContent */,
 				663B73302B6E06860031D661 /* Swifter */,
 				66F4E42F2B8132F5008C565D /* Twitch */,
+				66E102182B8262AC007A44D4 /* KeychainWrapper */,
 			);
 			productName = VisionTwitch;
 			productReference = 663B72F32B6DB8E60031D661 /* VisionTwitch.app */;
@@ -373,6 +388,7 @@
 				663B732C2B6E066D0031D661 /* XCRemoteSwiftPackageReference "swifter" */,
 				663B73322B6E86B00031D661 /* XCRemoteSwiftPackageReference "FlyingFox" */,
 				66F4E42E2B8132F5008C565D /* XCRemoteSwiftPackageReference "swift-twitch-client" */,
+				66E102172B8262AC007A44D4 /* XCRemoteSwiftPackageReference "KeychainWrapper" */,
 			);
 			productRefGroup = 663B72F42B6DB8E60031D661 /* Products */;
 			projectDirPath = "";
@@ -428,7 +444,10 @@
 				663B73232B6DB9A30031D661 /* TwitchVideoView.swift in Sources */,
 				663B72FB2B6DB8E60031D661 /* VisionTwitchApp.swift in Sources */,
 				66F4E40F2B7D8FD3008C565D /* Twitch+Notification.swift in Sources */,
+				66E1021E2B8273B0007A44D4 /* TwitchWindowView.swift in Sources */,
 				66F4E4282B812932008C565D /* OAuthView.swift in Sources */,
+				66E102152B826171007A44D4 /* AuthUser.swift in Sources */,
+				66E1021B2B8272E3007A44D4 /* Auth+Notification.swift in Sources */,
 				66F4E4162B80292F008C565D /* OAuthWebView.swift in Sources */,
 				66F4E4202B8118E9008C565D /* MainWindowView.swift in Sources */,
 				663B72FF2B6DB8E60031D661 /* ImmersiveView.swift in Sources */,
@@ -441,16 +460,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				66E1021F2B8273B0007A44D4 /* TwitchWindowView.swift in Sources */,
 				663B73162B6DB9410031D661 /* ContentView.swift in Sources */,
 				663B73282B6DBA8E0031D661 /* TwitchWebView.swift in Sources */,
 				663B73142B6DB9410031D661 /* VisionTwitchiOSApp.swift in Sources */,
 				66F4E4382B813A2B008C565D /* FollowedStreamsModel.swift in Sources */,
 				663336952B75B7EA0098D188 /* View+WindowGeometryPreferences.swift in Sources */,
 				660F73A32B7446D70011FD65 /* WebViewPlayer.swift in Sources */,
+				66E1021C2B8272E3007A44D4 /* Auth+Notification.swift in Sources */,
 				66F4E43B2B814D32008C565D /* DataProvider.swift in Sources */,
 				663B73242B6DB9A30031D661 /* TwitchVideoView.swift in Sources */,
 				66F4E4262B811B6C008C565D /* CloseButtonView.swift in Sources */,
 				66F4E42D2B812A32008C565D /* AuthController.swift in Sources */,
+				66E102162B826171007A44D4 /* AuthUser.swift in Sources */,
 				660F73A62B745D710011FD65 /* PlayerControlsView.swift in Sources */,
 				66E102132B82515A007A44D4 /* TagView.swift in Sources */,
 				66F4E4102B7D8FD3008C565D /* Twitch+Notification.swift in Sources */,
@@ -749,6 +771,14 @@
 				minimumVersion = 0.13.0;
 			};
 		};
+		66E102172B8262AC007A44D4 /* XCRemoteSwiftPackageReference "KeychainWrapper" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/puretears/KeychainWrapper.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.2.1;
+			};
+		};
 		66F4E42E2B8132F5008C565D /* XCRemoteSwiftPackageReference "swift-twitch-client" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/agg23/swift-twitch-client";
@@ -778,6 +808,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 663B73322B6E86B00031D661 /* XCRemoteSwiftPackageReference "FlyingFox" */;
 			productName = FlyingFox;
+		};
+		66E102182B8262AC007A44D4 /* KeychainWrapper */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 66E102172B8262AC007A44D4 /* XCRemoteSwiftPackageReference "KeychainWrapper" */;
+			productName = KeychainWrapper;
 		};
 		66F4E42F2B8132F5008C565D /* Twitch */ = {
 			isa = XCSwiftPackageProductDependency;

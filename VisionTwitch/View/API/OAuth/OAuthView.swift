@@ -12,17 +12,15 @@ struct OAuthView: View {
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             HStack(content: {
                 CloseButtonView {
                     dismiss()
                 }
                 // Offset to prevent button from being cut off from rounded corners
-                .offset(x: 30)
+                .padding(.leading, 32)
                 Spacer()
             })
-            // For some reason there's a 8px padding here
-            .padding(.bottom, -8)
             .padding(.vertical, 12)
             OAuthWebView(completed: self.receiveOAuthStatus)
         }
@@ -37,12 +35,15 @@ struct OAuthView: View {
             Task {
                 let users = try? await helix.getUsers(userIDs: [], userLogins: [])
                 guard let user = users?.first else {
+                    // TODO: Display error?
                     print("Failed to get user in getUsers request")
+                    dismiss()
                     return
                 }
 
-                // TODO: Get username, profile URL
-                AuthController.shared.setCredientials(withToken: token, userId: user.id)
+                let authUser = AuthUser(id: user.id, username: user.displayName, avatarUrl: URL(string: user.profileImageUrl))
+
+                AuthController.shared.setCredientials(withToken: token, authUser: authUser)
 
                 print(user)
             }

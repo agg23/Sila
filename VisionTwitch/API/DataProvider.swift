@@ -45,6 +45,11 @@ enum DataStatus<T, E: Error> {
         }
     }
 
+    func cancel() {
+        self.cancellable?.cancel()
+        self.cancellable = nil
+    }
+
     private func currentData() -> T? {
         switch self.data {
         case .success(let data):

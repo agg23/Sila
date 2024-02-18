@@ -10,6 +10,15 @@
       }
     },
     {
+      "identity" : "keychainwrapper",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/puretears/KeychainWrapper.git",
+      "state" : {
+        "revision" : "e72bc3256b2f830750f1c0080bccc3058f866f3b",
+        "version" : "1.2.1"
+      }
+    },
+    {
       "identity" : "swift-atomics",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-atomics.git",

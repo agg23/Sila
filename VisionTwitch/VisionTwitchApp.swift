@@ -18,16 +18,7 @@ struct VisionTwitchApp: App {
 
         WindowGroup(id: "channelVideo", for: String.self) { channel in
             if let channel = channel.wrappedValue {
-                TwitchVideoView(channel: channel)
-    //                .onAppear {
-    //                    openWindow(id: "chat")
-    //                }
-                    // Set aspect ratio and enforce uniform resizing
-                    .windowGeometryPreferences(minimumSize: CGSize(width: 160.0, height: 90.0), resizingRestrictions: .uniform)
-                    .persistentSystemOverlays(.hidden)
-                    .onAppear {
-                        NotificationCenter.default.post(name: .twitchMuteAll, object: nil, userInfo: nil)
-                    }
+                TwitchWindowView(channel: channel)
             } else {
                 Text("No channel specified")
             }

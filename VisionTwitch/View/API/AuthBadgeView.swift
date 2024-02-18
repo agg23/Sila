@@ -6,14 +6,24 @@
 //
 
 import SwiftUI
+import Combine
 
 struct AuthBadgeView: View {
+    @State var authUser = AuthUserProvider()
     @State var showOauth = false
 
     var body: some View {
         Menu {
-            Button("Log In") {
-                self.showOauth = true
+            if let authUser = self.authUser.user, AuthController.shared.isAuthorized {
+                Button("Logged In: \(authUser.username)") {}
+                    .disabled(/*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
+                Button("Log Out") {
+                    AuthController.shared.logOut()
+                }
+            } else {
+                Button("Log In") {
+                    self.showOauth = true
+                }
             }
         } label: {
             Image(systemName: "person.circle")
@@ -22,6 +32,19 @@ struct AuthBadgeView: View {
         .sheet(isPresented: $showOauth) {
             OAuthView()
         }
+    }
+}
+
+@Observable class AuthUserProvider {
+    private var cancellables = Set<AnyCancellable>()
+
+    var user: AuthUser?
+
+    init() {
+        AuthController.shared.subject.sink { _ in
+        } receiveValue: { _ in
+            self.user = AuthController.shared.authUser
+        }.store(in: &self.cancellables)
     }
 }
 
