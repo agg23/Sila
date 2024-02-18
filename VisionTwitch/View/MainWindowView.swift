@@ -10,10 +10,10 @@ import SwiftUI
 struct MainWindowView: View {
     var body: some View {
         ZStack {
-            HStack {
-                Spacer()
-                AuthBadgeView()
-            }
+            AuthBadgeView()
+                // Force filling window and position in top right corner
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
+                .padding(.all, 32)
 
             FollowedStreamsView()
         }

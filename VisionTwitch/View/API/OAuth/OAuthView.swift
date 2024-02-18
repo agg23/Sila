@@ -12,14 +12,21 @@ struct OAuthView: View {
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
-        HStack(alignment: .top, content: {
-            CloseButtonView {
-                dismiss()
-            }
-            Spacer()
-        })
-        OAuthWebView(completed: self.receiveOAuthStatus)
-        Text("Welcome to Oauth")
+        VStack {
+            HStack(content: {
+                CloseButtonView {
+                    dismiss()
+                }
+                // Offset to prevent button from being cut off from rounded corners
+                .offset(x: 30)
+                Spacer()
+            })
+            // For some reason there's a 8px padding here
+            .padding(.bottom, -8)
+            .padding(.vertical, 12)
+            OAuthWebView(completed: self.receiveOAuthStatus)
+        }
+        .frame(width: 800, height: 600)
     }
 
     func receiveOAuthStatus(_ status: OAuthStatus) {
