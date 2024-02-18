@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct CloseButton: View {
+struct CloseButtonView: View {
     let action: () -> Void
 
     var body: some View {
@@ -28,7 +28,7 @@ struct CloseButton: View {
 }
 
 #Preview {
-    CloseButton {
+    CloseButtonView {
 
     }
 }

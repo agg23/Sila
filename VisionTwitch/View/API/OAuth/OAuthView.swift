@@ -13,7 +13,7 @@ struct OAuthView: View {
 
     var body: some View {
         HStack(alignment: .top, content: {
-            CloseButton {
+            CloseButtonView {
                 dismiss()
             }
             Spacer()

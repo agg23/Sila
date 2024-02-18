@@ -36,6 +36,8 @@
 		663B732E2B6E066D0031D661 /* Swifter in Frameworks */ = {isa = PBXBuildFile; productRef = 663B732D2B6E066D0031D661 /* Swifter */; };
 		663B73312B6E06860031D661 /* Swifter in Frameworks */ = {isa = PBXBuildFile; productRef = 663B73302B6E06860031D661 /* Swifter */; };
 		663B73342B6E86B00031D661 /* FlyingFox in Frameworks */ = {isa = PBXBuildFile; productRef = 663B73332B6E86B00031D661 /* FlyingFox */; };
+		66E102122B82515A007A44D4 /* TagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E102112B82515A007A44D4 /* TagView.swift */; };
+		66E102132B82515A007A44D4 /* TagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E102112B82515A007A44D4 /* TagView.swift */; };
 		66F4E40F2B7D8FD3008C565D /* Twitch+Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E40E2B7D8FD3008C565D /* Twitch+Notification.swift */; };
 		66F4E4102B7D8FD3008C565D /* Twitch+Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E40E2B7D8FD3008C565D /* Twitch+Notification.swift */; };
 		66F4E4162B80292F008C565D /* OAuthWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E4152B80292F008C565D /* OAuthWebView.swift */; };
@@ -43,8 +45,8 @@
 		66F4E41D2B811788008C565D /* AuthBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E41C2B811788008C565D /* AuthBadgeView.swift */; };
 		66F4E41E2B811788008C565D /* AuthBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E41C2B811788008C565D /* AuthBadgeView.swift */; };
 		66F4E4202B8118E9008C565D /* MainWindowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E41F2B8118E9008C565D /* MainWindowView.swift */; };
-		66F4E4252B811B6C008C565D /* CloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E4242B811B6C008C565D /* CloseButton.swift */; };
-		66F4E4262B811B6C008C565D /* CloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E4242B811B6C008C565D /* CloseButton.swift */; };
+		66F4E4252B811B6C008C565D /* CloseButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E4242B811B6C008C565D /* CloseButtonView.swift */; };
+		66F4E4262B811B6C008C565D /* CloseButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E4242B811B6C008C565D /* CloseButtonView.swift */; };
 		66F4E4282B812932008C565D /* OAuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E4272B812932008C565D /* OAuthView.swift */; };
 		66F4E4292B812932008C565D /* OAuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E4272B812932008C565D /* OAuthView.swift */; };
 		66F4E42C2B812A32008C565D /* AuthController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E42B2B812A32008C565D /* AuthController.swift */; };
@@ -82,11 +84,12 @@
 		663B73222B6DB9A30031D661 /* TwitchVideoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitchVideoView.swift; sourceTree = "<group>"; };
 		663B73262B6DBA8E0031D661 /* TwitchWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitchWebView.swift; sourceTree = "<group>"; };
 		663B73292B6DBB150031D661 /* index.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
+		66E102112B82515A007A44D4 /* TagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagView.swift; sourceTree = "<group>"; };
 		66F4E40E2B7D8FD3008C565D /* Twitch+Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Twitch+Notification.swift"; sourceTree = "<group>"; };
 		66F4E4152B80292F008C565D /* OAuthWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuthWebView.swift; sourceTree = "<group>"; };
 		66F4E41C2B811788008C565D /* AuthBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthBadgeView.swift; sourceTree = "<group>"; };
 		66F4E41F2B8118E9008C565D /* MainWindowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWindowView.swift; sourceTree = "<group>"; };
-		66F4E4242B811B6C008C565D /* CloseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseButton.swift; sourceTree = "<group>"; };
+		66F4E4242B811B6C008C565D /* CloseButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseButtonView.swift; sourceTree = "<group>"; };
 		66F4E4272B812932008C565D /* OAuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuthView.swift; sourceTree = "<group>"; };
 		66F4E42B2B812A32008C565D /* AuthController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthController.swift; sourceTree = "<group>"; };
 		66F4E4332B813A1F008C565D /* FollowedStreamsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowedStreamsView.swift; sourceTree = "<group>"; };
@@ -261,7 +264,8 @@
 		66F4E4232B811B5F008C565D /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				66F4E4242B811B6C008C565D /* CloseButton.swift */,
+				66F4E4242B811B6C008C565D /* CloseButtonView.swift */,
+				66E102112B82515A007A44D4 /* TagView.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -414,12 +418,13 @@
 				66F4E43D2B818499008C565D /* DataView.swift in Sources */,
 				663B73272B6DBA8E0031D661 /* TwitchWebView.swift in Sources */,
 				660F73A52B745D710011FD65 /* PlayerControlsView.swift in Sources */,
-				66F4E4252B811B6C008C565D /* CloseButton.swift in Sources */,
+				66F4E4252B811B6C008C565D /* CloseButtonView.swift in Sources */,
 				66F4E42C2B812A32008C565D /* AuthController.swift in Sources */,
 				66F4E4342B813A1F008C565D /* FollowedStreamsView.swift in Sources */,
 				66F4E43A2B814D32008C565D /* DataProvider.swift in Sources */,
 				66F4E4372B813A2B008C565D /* FollowedStreamsModel.swift in Sources */,
 				660F73A22B7446D70011FD65 /* WebViewPlayer.swift in Sources */,
+				66E102122B82515A007A44D4 /* TagView.swift in Sources */,
 				663B73232B6DB9A30031D661 /* TwitchVideoView.swift in Sources */,
 				663B72FB2B6DB8E60031D661 /* VisionTwitchApp.swift in Sources */,
 				66F4E40F2B7D8FD3008C565D /* Twitch+Notification.swift in Sources */,
@@ -444,9 +449,10 @@
 				660F73A32B7446D70011FD65 /* WebViewPlayer.swift in Sources */,
 				66F4E43B2B814D32008C565D /* DataProvider.swift in Sources */,
 				663B73242B6DB9A30031D661 /* TwitchVideoView.swift in Sources */,
-				66F4E4262B811B6C008C565D /* CloseButton.swift in Sources */,
+				66F4E4262B811B6C008C565D /* CloseButtonView.swift in Sources */,
 				66F4E42D2B812A32008C565D /* AuthController.swift in Sources */,
 				660F73A62B745D710011FD65 /* PlayerControlsView.swift in Sources */,
+				66E102132B82515A007A44D4 /* TagView.swift in Sources */,
 				66F4E4102B7D8FD3008C565D /* Twitch+Notification.swift in Sources */,
 				66F4E4352B813A1F008C565D /* FollowedStreamsView.swift in Sources */,
 				66F4E4172B80292F008C565D /* OAuthWebView.swift in Sources */,
