@@ -12,6 +12,7 @@ import Twitch
 enum DataStatus<T, E: Error> {
     case success(_: T)
     case failure(_: E)
+    case loading(_: T?)
     case noData
 }
 
@@ -35,11 +36,23 @@ enum DataStatus<T, E: Error> {
         Task {
             let task = taskClosure(AuthController.shared.helixApi)
             do {
+                self.data = .loading(self.currentData())
                 let value = try await task.value
                 self.data = .success(value)
             } catch {
                 self.data = .failure(error as! E)
             }
+        }
+    }
+
+    private func currentData() -> T? {
+        switch self.data {
+        case .success(let data):
+            return data
+        case .loading(let data):
+            return data
+        case .noData, .failure:
+            return nil
         }
     }
 }
