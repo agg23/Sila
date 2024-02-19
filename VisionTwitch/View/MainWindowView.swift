@@ -22,7 +22,13 @@ struct MainWindowView: View {
                         Label("Popular", systemImage: "star.circle")
                     }
 
-                CategoryView()
+                NavStack {
+                    CategoryView()
+                        .toolbar {
+                            Spacer()
+                            AuthBadgeView()
+                        }
+                }
                     .tabItem {
                         Label("Categories", systemImage: "gamecontroller")
                     }
@@ -35,10 +41,10 @@ struct MainWindowView: View {
                 }
             }
 
-            AuthBadgeView()
-                // Force filling window and position in top right corner
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
-                .padding(.all, 32)
+//            AuthBadgeView()
+//                // Force filling window and position in top right corner
+//                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
+//                .padding(.all, 32)
         }
     }
 }

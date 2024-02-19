@@ -19,6 +19,7 @@ struct DataView<T, E: Error, Content: View, Loading: View, ErrorView: View>: Vie
     private let runOnAppear: Bool
 
     @State private var state: DataProvider<T, E>?
+    @State private var hasRendered = false
 
     init(taskClosure: @escaping (_: Helix) -> Task<T, E>, @ViewBuilder content: @escaping (_: T) -> Content, @ViewBuilder loading: @escaping (_: T?) -> Loading, @ViewBuilder error: @escaping (_: E) -> ErrorView, requiresAuth: Bool, runOnAppear: Bool) {
         self.taskClosure = taskClosure
@@ -49,7 +50,13 @@ struct DataView<T, E: Error, Content: View, Loading: View, ErrorView: View>: Vie
                 // Do nothing
             }
         }
-        .onChange(of: true, initial: true) {
+        .onAppear {
+            guard !self.hasRendered else {
+                return
+            }
+
+            self.hasRendered = true
+
             self.state = DataProvider(taskClosure: taskClosure, requiresAuth: self.requiresAuth)
 
             if self.runOnAppear && (!self.requiresAuth || AuthController.shared.isAuthorized) {

@@ -9,16 +9,18 @@ import SwiftUI
 import Twitch
 
 struct CategoryButtonView: View {
+    @Environment(\.router) private var router
+
     let category: Twitch.Game
 
     var body: some View {
         AsyncImageButton(imageUrl: buildImageUrl(using: self.category), aspectRatio: 0.75) {
-
+            router.path.append(GameWrapper(game: self.category))
         } content: {
             VStack(alignment: .leading) {
                 Text(self.category.name)
                     .font(.title3)
-                    .lineLimit(1)
+                    .lineLimit(1, reservesSpace: true)
             }
         }
     }

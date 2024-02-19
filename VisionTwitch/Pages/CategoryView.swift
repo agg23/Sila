@@ -20,6 +20,9 @@ struct CategoryView: View {
         }, error: { _ in
             Text("Error")
         }, requiresAuth: true, runOnAppear: true)
+        .navigationDestination(for: GameWrapper.self) { category in
+            Text("Showing \(category.game.name)")
+        }
     }
 }
 

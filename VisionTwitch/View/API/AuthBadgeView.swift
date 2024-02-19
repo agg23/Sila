@@ -27,6 +27,7 @@ struct AuthBadgeView: View {
             }
         } label: {
             Image(systemName: "person.circle")
+                .imageScale(.large)
         }
         .onReceive(AuthController.shared.requestReauthSubject) { _ in
             // We need to reauth
