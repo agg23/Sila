@@ -17,9 +17,14 @@ struct MainWindowView: View {
                         Label("Following", systemImage: "person.crop.square.badge.video.fill")
                     }
 
-                BrowseView()
+                PopularView()
                     .tabItem {
-                        Label("Browse", systemImage: "play.rectangle")
+                        Label("Popular", systemImage: "star.circle")
+                    }
+
+                CategoryView()
+                    .tabItem {
+                        Label("Categories", systemImage: "gamecontroller")
                     }
 
                 VStack {

@@ -14,48 +14,29 @@ struct StreamButtonView: View {
     let stream: Twitch.Stream
 
     var body: some View {
-        Button {
+        AsyncImageButton(imageUrl: buildImageUrl(using: self.stream), aspectRatio: 16.0/9.0) {
             openWindow(id: "channelVideo", value: stream.userName)
-        } label: {
-            VStack {
-                AsyncImage(url: buildImageUrl(using: stream), content: { image in
-                    image
-                        .resizable()
-                }, placeholder: {
-                    // Make sure ProgressView is the same size as the final image will be
-                    GeometryReader { geometry in
-                        ProgressView()
-                            .frame(width: geometry.size.width, height: geometry.size.height)
-                    }
-                })
-                    .aspectRatio(16.0/9.0, contentMode: .fit)
-                VStack(alignment: .leading) {
-                    HStack {
-                        Text(stream.gameName)
-                        Spacer()
-                        Text(stream.startedAt.formatted())
-                    }
-                    .font(.subheadline.weight(.medium))
-                    .foregroundStyle(.secondary)
+        } content: {
+            VStack(alignment: .leading) {
+                HStack {
+                    Text(self.stream.gameName)
+                    Spacer()
+                    Text(self.stream.startedAt.formatted())
+                }
+                .font(.subheadline.weight(.medium))
+                .foregroundStyle(.secondary)
+                .lineLimit(1)
+
+                Text(self.stream.title)
+                    .font(.title3)
+                    .lineLimit(1)
+                Text(self.stream.userName)
+                    .truncationMode(.tail)
                     .lineLimit(1)
 
-                    Text(stream.title)
-                        .font(.title3)
-                        .lineLimit(1)
-                    Text(stream.userName)
-                        .truncationMode(.tail)
-                        .lineLimit(1)
-
 //                    tagList(stream.tags)
-                }
-                .padding(.horizontal, 16)
-                .padding(.bottom, 8)
             }
-            .background(.thinMaterial)
-            .hoverEffect()
-            .cornerRadius(20)
         }
-        .buttonStyle(.plain)
     }
 
     @ViewBuilder
