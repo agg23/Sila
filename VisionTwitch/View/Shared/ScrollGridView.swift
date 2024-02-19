@@ -14,10 +14,10 @@ struct ScrollGridView<Content: View>: View {
         ScrollView {
             content()
                 // No padding on the top for NavBar
-                // 10px matches NavBar padding
-                .padding([.horizontal, .bottom], 10)
-                // ScrollView has a safe area applied at the top that makes the content off center
-                .safeAreaPadding([.horizontal, .bottom])
+                // 24px matches NavBar padding
+                .padding([.horizontal, .bottom], 24)
+                // We control our own padding to match NavBar. Only apply to bottom
+                .safeAreaPadding(.bottom)
         }
     }
 }

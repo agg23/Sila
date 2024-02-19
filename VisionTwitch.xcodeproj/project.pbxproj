@@ -23,6 +23,10 @@
 		66125F572B83C88E002169B5 /* TabPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66125F552B83C88E002169B5 /* TabPage.swift */; };
 		66125F592B83CE4E002169B5 /* DefaultToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66125F582B83CE4E002169B5 /* DefaultToolbar.swift */; };
 		66125F5A2B83CE4E002169B5 /* DefaultToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66125F582B83CE4E002169B5 /* DefaultToolbar.swift */; };
+		66125F5C2B83D9EC002169B5 /* PickerTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66125F5B2B83D9EC002169B5 /* PickerTabView.swift */; };
+		66125F5D2B83D9EC002169B5 /* PickerTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66125F5B2B83D9EC002169B5 /* PickerTabView.swift */; };
+		66125F5F2B83EF38002169B5 /* View+HighlightableButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66125F5E2B83EF38002169B5 /* View+HighlightableButton.swift */; };
+		66125F602B83EF38002169B5 /* View+HighlightableButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66125F5E2B83EF38002169B5 /* View+HighlightableButton.swift */; };
 		663336942B75B7EA0098D188 /* View+WindowGeometryPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663336932B75B7EA0098D188 /* View+WindowGeometryPreferences.swift */; };
 		663336952B75B7EA0098D188 /* View+WindowGeometryPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663336932B75B7EA0098D188 /* View+WindowGeometryPreferences.swift */; };
 		6633369C2B75BAB60098D188 /* AssetSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6633369B2B75BAB60098D188 /* AssetSelectionView.swift */; };
@@ -108,6 +112,8 @@
 		66125F522B83C003002169B5 /* ScrollGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollGridView.swift; sourceTree = "<group>"; };
 		66125F552B83C88E002169B5 /* TabPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabPage.swift; sourceTree = "<group>"; };
 		66125F582B83CE4E002169B5 /* DefaultToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultToolbar.swift; sourceTree = "<group>"; };
+		66125F5B2B83D9EC002169B5 /* PickerTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerTabView.swift; sourceTree = "<group>"; };
+		66125F5E2B83EF38002169B5 /* View+HighlightableButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+HighlightableButton.swift"; sourceTree = "<group>"; };
 		663336932B75B7EA0098D188 /* View+WindowGeometryPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+WindowGeometryPreferences.swift"; sourceTree = "<group>"; };
 		6633369B2B75BAB60098D188 /* AssetSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetSelectionView.swift; sourceTree = "<group>"; };
 		663B72F32B6DB8E60031D661 /* VisionTwitch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VisionTwitch.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -384,6 +390,8 @@
 				66125F522B83C003002169B5 /* ScrollGridView.swift */,
 				66125F552B83C88E002169B5 /* TabPage.swift */,
 				66E102112B82515A007A44D4 /* TagView.swift */,
+				66125F5B2B83D9EC002169B5 /* PickerTabView.swift */,
+				66125F5E2B83EF38002169B5 /* View+HighlightableButton.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -535,6 +543,7 @@
 				66F4E43D2B818499008C565D /* DataView.swift in Sources */,
 				663B73272B6DBA8E0031D661 /* TwitchWebView.swift in Sources */,
 				660F73A52B745D710011FD65 /* PlayerControlsView.swift in Sources */,
+				66125F5C2B83D9EC002169B5 /* PickerTabView.swift in Sources */,
 				66F4E4252B811B6C008C565D /* CloseButtonView.swift in Sources */,
 				66E102492B82E496007A44D4 /* NavStack.swift in Sources */,
 				66125F592B83CE4E002169B5 /* DefaultToolbar.swift in Sources */,
@@ -567,6 +576,7 @@
 				66F4E4202B8118E9008C565D /* MainWindowView.swift in Sources */,
 				663B72FF2B6DB8E60031D661 /* ImmersiveView.swift in Sources */,
 				66F4E41D2B811788008C565D /* AuthBadgeView.swift in Sources */,
+				66125F5F2B83EF38002169B5 /* View+HighlightableButton.swift in Sources */,
 				6633369C2B75BAB60098D188 /* AssetSelectionView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -582,6 +592,7 @@
 				663B73282B6DBA8E0031D661 /* TwitchWebView.swift in Sources */,
 				663B73142B6DB9410031D661 /* VisionTwitchiOSApp.swift in Sources */,
 				66E102272B8293EB007A44D4 /* Stream.swift in Sources */,
+				66125F602B83EF38002169B5 /* View+HighlightableButton.swift in Sources */,
 				663336952B75B7EA0098D188 /* View+WindowGeometryPreferences.swift in Sources */,
 				660F73A32B7446D70011FD65 /* WebViewPlayer.swift in Sources */,
 				66125F572B83C88E002169B5 /* TabPage.swift in Sources */,
@@ -612,6 +623,7 @@
 				66125F512B83B913002169B5 /* CategoryView.swift in Sources */,
 				66F4E4292B812932008C565D /* OAuthView.swift in Sources */,
 				6633369D2B75BAB60098D188 /* AssetSelectionView.swift in Sources */,
+				66125F5D2B83D9EC002169B5 /* PickerTabView.swift in Sources */,
 				66125F5A2B83CE4E002169B5 /* DefaultToolbar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
