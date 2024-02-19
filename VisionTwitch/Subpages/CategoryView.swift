@@ -1,17 +1,19 @@
 //
-//  FollowedStreamsView.swift
+//  GameView.swift
 //  VisionTwitch
 //
-//  Created by Adam Gastineau on 2/17/24.
+//  Created by Adam Gastineau on 2/19/24.
 //
 
 import SwiftUI
 
-struct FollowedStreamsView: View {
+struct CategoryView: View {
+    var category: GameWrapper
+
     var body: some View {
         DataView(taskClosure: { api in
             return Task {
-                let (streams, _) = try await api.getFollowedStreams()
+                let (streams, _) = try await api.getStreams(gameIDs: [self.category.game.id])
                 return streams
             }
         }, content: { streams in
@@ -20,6 +22,11 @@ struct FollowedStreamsView: View {
             }
         }, error: { _ in
             Text("Error")
-        }, requiresAuth: true, runOnAppear: true)
+        }, requiresAuth: false, runOnAppear: true)
+            .navigationTitle(self.category.game.name)
     }
 }
+
+//#Preview {
+//    CategoryView()
+//}

@@ -15,9 +15,19 @@ struct PopularView: View {
                 return streams
             }
         }, content: { streams in
-            StreamGridPageView(streams: streams)
+            ScrollGridView {
+                StreamGridView(streams: streams)
+            }
         }, error: { _ in
             Text("Error")
         }, requiresAuth: true, runOnAppear: true)
+    }
+}
+
+#Preview {
+    TabPage(title: "Popular", systemImage: "star") {
+        ScrollGridView {
+            StreamGridView(streams: STREAMS_LIST_MOCK())
+        }
     }
 }

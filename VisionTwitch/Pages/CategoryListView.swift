@@ -8,7 +8,7 @@
 import SwiftUI
 import Twitch
 
-struct CategoryView: View {
+struct CategoryListView: View {
     var body: some View {
         DataView(taskClosure: { api in
             return Task {
@@ -16,16 +16,21 @@ struct CategoryView: View {
                 return categories
             }
         }, content: { categories in
-            CategoryGridPageView(categories: categories)
+            ScrollGridView {
+                CategoryGridView(categories: categories)
+            }
         }, error: { _ in
             Text("Error")
-        }, requiresAuth: true, runOnAppear: true)
+        }, requiresAuth: false, runOnAppear: true)
         .navigationDestination(for: GameWrapper.self) { category in
-            Text("Showing \(category.game.name)")
+            CategoryView(category: category)
+                .toolbar {
+                    defaultToolbar()
+                }
         }
     }
 }
 
 #Preview {
-    CategoryView()
+    CategoryListView()
 }

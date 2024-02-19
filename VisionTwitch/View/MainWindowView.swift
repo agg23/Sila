@@ -11,40 +11,25 @@ struct MainWindowView: View {
     var body: some View {
         ZStack {
             TabView {
-                FollowedStreamsView()
-                    .tabItem {
-                        // TODO: Change
-                        Label("Following", systemImage: "person.crop.square.badge.video.fill")
-                    }
-
-                PopularView()
-                    .tabItem {
-                        Label("Popular", systemImage: "star.circle")
-                    }
-
-                NavStack {
-                    CategoryView()
-                        .toolbar {
-                            Spacer()
-                            AuthBadgeView()
-                        }
+                // TODO: Change icon
+                TabPage(title: "Following", systemImage: "person.crop.square.badge.video.fill") {
+                    FollowedStreamsView()
                 }
-                    .tabItem {
-                        Label("Categories", systemImage: "gamecontroller")
-                    }
 
-                VStack {
-
+                TabPage(title: "Popular", systemImage: "star") {
+                    PopularView()
                 }
-                .tabItem {
-                    Label("Search", systemImage: "magnifyingglass.circle")
+
+                TabPage(title: "Categories", systemImage: "gamecontroller") {
+                    CategoryListView()
+                }
+
+                TabPage(title: "Search", systemImage: "magnifyingglass") {
+                    VStack {
+
+                    }
                 }
             }
-
-//            AuthBadgeView()
-//                // Force filling window and position in top right corner
-//                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
-//                .padding(.all, 32)
         }
     }
 }

@@ -13,7 +13,7 @@ struct AuthBadgeView: View {
     @State var showOauth = false
 
     var body: some View {
-        Menu {
+        Menu("Account", systemImage: "person.fill") {
             if let authUser = self.authUser.user, AuthController.shared.isAuthorized {
                 Button("Logged In: \(authUser.username)") {}
                     .disabled(/*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
@@ -25,15 +25,11 @@ struct AuthBadgeView: View {
                     self.showOauth = true
                 }
             }
-        } label: {
-            Image(systemName: "person.circle")
-                .imageScale(.large)
         }
         .onReceive(AuthController.shared.requestReauthSubject) { _ in
             // We need to reauth
             self.showOauth = true
         }
-        .buttonBorderShape(.circle)
         .sheet(isPresented: $showOauth) {
             OAuthView()
         }
@@ -55,5 +51,12 @@ struct AuthBadgeView: View {
 }
 
 #Preview {
-    AuthBadgeView()
+    NavigationStack {
+        Text("hi")
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    AuthBadgeView()
+                }
+            }
+    }
 }
