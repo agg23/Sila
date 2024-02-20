@@ -19,6 +19,20 @@ struct TabPage<Content: View>: View {
                     defaultToolbar()
                 }
                 .navigationTitle(self.title)
+                .navigationDestination(for: GameWrapper.self) { category in
+                    // View streams in specific category
+                    CategoryView(category: category)
+                        .toolbar {
+                            defaultToolbar()
+                        }
+                }
+                .navigationDestination(for: UserWrapper.self) { user in
+                    // View individual user info
+                    Text("TODO: User \(user.user.displayName)")
+                        .toolbar {
+                            defaultToolbar()
+                        }
+                }
         }
             .tabItem {
                 Label(self.title, systemImage: self.systemImage)

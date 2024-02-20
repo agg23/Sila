@@ -14,7 +14,7 @@ struct CategoryButtonView: View {
     let category: Twitch.Game
 
     var body: some View {
-        AsyncImageButton(imageUrl: buildImageUrl(using: self.category), aspectRatio: 0.75) {
+        AsyncImageButtonView(imageUrl: buildImageUrl(using: self.category), aspectRatio: 0.75) {
             router.path.append(GameWrapper(game: self.category))
         } content: {
             VStack(alignment: .leading) {

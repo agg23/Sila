@@ -22,12 +22,6 @@ struct CategoryListView: View {
         }, error: { _ in
             Text("Error")
         }, requiresAuth: false, runOnAppear: true)
-        .navigationDestination(for: GameWrapper.self) { category in
-            CategoryView(category: category)
-                .toolbar {
-                    defaultToolbar()
-                }
-        }
     }
 }
 

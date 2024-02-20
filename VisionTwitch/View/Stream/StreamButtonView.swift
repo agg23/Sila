@@ -14,7 +14,7 @@ struct StreamButtonView: View {
     let stream: Twitch.Stream
 
     var body: some View {
-        AsyncImageButton(imageUrl: buildImageUrl(using: self.stream), aspectRatio: 16.0/9.0) {
+        AsyncImageButtonView(imageUrl: buildImageUrl(using: self.stream), aspectRatio: 16.0/9.0) {
             openWindow(id: "channelVideo", value: stream.userName)
         } content: {
             VStack(alignment: .leading) {

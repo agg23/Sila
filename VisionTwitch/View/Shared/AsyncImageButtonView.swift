@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct AsyncImageButton<Content: View>: View {
+struct AsyncImageButtonView<Content: View>: View {
     let imageUrl: URL?
     let aspectRatio: CGFloat
 
