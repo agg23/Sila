@@ -132,6 +132,7 @@
 		66125F6B2B8429E4002169B5 /* UserWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserWrapper.swift; sourceTree = "<group>"; };
 		66125F6E2B842F82002169B5 /* ChannelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelView.swift; sourceTree = "<group>"; };
 		662C4FE62B8438BC00A84C7A /* SuccessDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuccessDataView.swift; sourceTree = "<group>"; };
+		662C4FE92B856F7100A84C7A /* Keys.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Keys.xcconfig; sourceTree = "<group>"; };
 		663336932B75B7EA0098D188 /* View+WindowGeometryPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+WindowGeometryPreferences.swift"; sourceTree = "<group>"; };
 		6633369B2B75BAB60098D188 /* AssetSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetSelectionView.swift; sourceTree = "<group>"; };
 		663B72F32B6DB8E60031D661 /* VisionTwitch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VisionTwitch.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -248,6 +249,7 @@
 			isa = PBXGroup;
 			children = (
 				663B72F52B6DB8E60031D661 /* VisionTwitch */,
+				662C4FE92B856F7100A84C7A /* Keys.xcconfig */,
 				663B72F62B6DB8E60031D661 /* Packages */,
 				663B73122B6DB9410031D661 /* VisionTwitchiOS */,
 				663B72F42B6DB8E60031D661 /* Products */,
@@ -677,6 +679,7 @@
 /* Begin XCBuildConfiguration section */
 		663B73082B6DB8E80031D661 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 662C4FE92B856F7100A84C7A /* Keys.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -740,6 +743,7 @@
 		};
 		663B73092B6DB8E80031D661 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 662C4FE92B856F7100A84C7A /* Keys.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;

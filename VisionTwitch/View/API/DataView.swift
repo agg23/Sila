@@ -16,12 +16,11 @@ struct DataView<T, E: Error, Content: View, Loading: View, ErrorView: View>: Vie
     private let error: (_: E) -> ErrorView
 
     private let requiresAuth: Bool
-    private let runOnAppear: Bool
 
     @State private var state: DataProvider<T, E>?
     @State private var hasRendered = false
 
-    init(taskClosure: @escaping (_: Helix) -> Task<T, E>, @ViewBuilder content: @escaping (_: T) -> Content, @ViewBuilder loading: @escaping (_: T?) -> Loading, @ViewBuilder error: @escaping (_: E) -> ErrorView, requiresAuth: Bool, runOnAppear: Bool) {
+    init(taskClosure: @escaping (_: Helix) -> Task<T, E>, @ViewBuilder content: @escaping (_: T) -> Content, @ViewBuilder loading: @escaping (_: T?) -> Loading, @ViewBuilder error: @escaping (_: E) -> ErrorView, requiresAuth: Bool) {
         self.taskClosure = taskClosure
 
         self.content = content
@@ -29,7 +28,6 @@ struct DataView<T, E: Error, Content: View, Loading: View, ErrorView: View>: Vie
         self.error = error
 
         self.requiresAuth = requiresAuth
-        self.runOnAppear = runOnAppear
     }
 
     var body: some View {
@@ -51,7 +49,23 @@ struct DataView<T, E: Error, Content: View, Loading: View, ErrorView: View>: Vie
             }
         }
         .onAppear {
-            guard !self.hasRendered else {
+            // Subscribe to auth updates
+            self.state?.register()
+
+            if self.hasRendered {
+                if let lastFetchToken = self.state?.lastFetchToken, lastFetchToken != AuthController.shared.currentToken {
+                    // Token has changed since we were last rendered, refetch
+                    self.state?.reload()
+                } else {
+                    // If we we had no data, or error, refetch
+                    switch self.state?.data {
+                    case .noData, .failure:
+                        self.state?.reload()
+                    default:
+                        break
+                    }
+                }
+
                 return
             }
 
@@ -59,7 +73,7 @@ struct DataView<T, E: Error, Content: View, Loading: View, ErrorView: View>: Vie
 
             self.state = DataProvider(taskClosure: taskClosure, requiresAuth: self.requiresAuth)
 
-            if self.runOnAppear && (!self.requiresAuth || AuthController.shared.isAuthorized) {
+            if !self.requiresAuth || AuthController.shared.isAuthorized {
                 self.state?.reload()
             }
         }
@@ -70,10 +84,10 @@ struct DataView<T, E: Error, Content: View, Loading: View, ErrorView: View>: Vie
 }
 
 extension DataView where Loading == CustomProgressView {
-    init(taskClosure: @escaping (_: Helix) -> Task<T, E>, @ViewBuilder content: @escaping (_: T) -> Content, @ViewBuilder error: @escaping (_: E) -> ErrorView, requiresAuth: Bool, runOnAppear: Bool) {
+    init(taskClosure: @escaping (_: Helix) -> Task<T, E>, @ViewBuilder content: @escaping (_: T) -> Content, @ViewBuilder error: @escaping (_: E) -> ErrorView, requiresAuth: Bool) {
         self.init(taskClosure: taskClosure, content: content, loading: { _ in
             CustomProgressView()
-        }, error: error, requiresAuth: requiresAuth, runOnAppear: runOnAppear)
+        }, error: error, requiresAuth: requiresAuth)
     }
 }
 

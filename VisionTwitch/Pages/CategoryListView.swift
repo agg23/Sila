@@ -21,7 +21,7 @@ struct CategoryListView: View {
             }
         }, error: { _ in
             Text("Error")
-        }, requiresAuth: false, runOnAppear: true)
+        }, requiresAuth: false)
     }
 }
 

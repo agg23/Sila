@@ -3,4 +3,300 @@
    uuid = "DFE59ABF-CB12-4624-8A1B-2D3827582048"
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "AE483BCE-941D-40BB-BE2C-D48DBBC508C9"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "VisionTwitch/API/AuthController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "105"
+            endingLineNumber = "105"
+            landmarkName = "updatePublicToken()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "AE483BCE-941D-40BB-BE2C-D48DBBC508C9 - 4b05bc0e612bf9d3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for VisionTwitch.AuthController.updatePublicToken() async throws -&gt; ()"
+                  moduleName = "VisionTwitch"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/adam/code/Swift/VisionTwitch/VisionTwitch/API/AuthController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "105"
+                  endingLineNumber = "105"
+                  offsetFromSymbolStart = "112">
+               </Location>
+               <Location
+                  uuid = "AE483BCE-941D-40BB-BE2C-D48DBBC508C9 - 974f33826fc005d1"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for VisionTwitch.AuthController.updatePublicToken() async throws -&gt; ()"
+                  moduleName = "VisionTwitch"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/adam/code/Swift/VisionTwitch/VisionTwitch/API/AuthController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "105"
+                  endingLineNumber = "105"
+                  offsetFromSymbolStart = "60">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "6FACDB3B-CB06-4A9A-AFC5-07DAA354B391"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "VisionTwitch/API/AuthController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "109"
+            endingLineNumber = "109"
+            landmarkName = "updatePublicToken()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "6FACDB3B-CB06-4A9A-AFC5-07DAA354B391 - 73d563d4d4d60432"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "VisionTwitch.AuthController.requestPublicToken() async throws -&gt; Swift.String"
+                  moduleName = "VisionTwitch"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/adam/code/Swift/VisionTwitch/VisionTwitch/API/AuthController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "117"
+                  endingLineNumber = "117"
+                  offsetFromSymbolStart = "24">
+               </Location>
+               <Location
+                  uuid = "6FACDB3B-CB06-4A9A-AFC5-07DAA354B391 - 4a8f626d5acf765f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for VisionTwitch.AuthController.requestPublicToken() async throws -&gt; Swift.String"
+                  moduleName = "VisionTwitch"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/adam/code/Swift/VisionTwitch/VisionTwitch/API/AuthController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "117"
+                  endingLineNumber = "117"
+                  offsetFromSymbolStart = "76">
+               </Location>
+               <Location
+                  uuid = "6FACDB3B-CB06-4A9A-AFC5-07DAA354B391 - 974f33826fc0055d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for VisionTwitch.AuthController.updatePublicToken() async throws -&gt; ()"
+                  moduleName = "VisionTwitch"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/adam/code/Swift/VisionTwitch/VisionTwitch/API/AuthController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "109"
+                  endingLineNumber = "109"
+                  offsetFromSymbolStart = "136">
+               </Location>
+               <Location
+                  uuid = "6FACDB3B-CB06-4A9A-AFC5-07DAA354B391 - 4bbf238b1cead971"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(2) await resume partial function for VisionTwitch.AuthController.updatePublicToken() async throws -&gt; ()"
+                  moduleName = "VisionTwitch"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/adam/code/Swift/VisionTwitch/VisionTwitch/API/AuthController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "109"
+                  endingLineNumber = "109"
+                  offsetFromSymbolStart = "44">
+               </Location>
+               <Location
+                  uuid = "6FACDB3B-CB06-4A9A-AFC5-07DAA354B391 - 4bbf238b1cead971"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(2) await resume partial function for VisionTwitch.AuthController.updatePublicToken() async throws -&gt; ()"
+                  moduleName = "VisionTwitch"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/adam/code/Swift/VisionTwitch/VisionTwitch/API/AuthController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "109"
+                  endingLineNumber = "109"
+                  offsetFromSymbolStart = "164">
+               </Location>
+               <Location
+                  uuid = "6FACDB3B-CB06-4A9A-AFC5-07DAA354B391 - 4b05bc0e612bf95f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for VisionTwitch.AuthController.updatePublicToken() async throws -&gt; ()"
+                  moduleName = "VisionTwitch"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/adam/code/Swift/VisionTwitch/VisionTwitch/API/AuthController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "109"
+                  endingLineNumber = "109"
+                  offsetFromSymbolStart = "52">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "B9020A1B-FF8B-4636-8FE9-4D55695B10F5"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "VisionTwitch/API/AuthController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "131"
+            endingLineNumber = "131"
+            landmarkName = "requestPublicToken()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "B9020A1B-FF8B-4636-8FE9-4D55695B10F5 - 9fc323687766308b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for VisionTwitch.AuthController.requestPublicToken() async throws -&gt; Swift.String"
+                  moduleName = "VisionTwitch"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/adam/code/Swift/VisionTwitch/VisionTwitch/API/AuthController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "131"
+                  endingLineNumber = "131"
+                  offsetFromSymbolStart = "2676">
+               </Location>
+               <Location
+                  uuid = "B9020A1B-FF8B-4636-8FE9-4D55695B10F5 - 4a8f626d5acf746e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for VisionTwitch.AuthController.requestPublicToken() async throws -&gt; Swift.String"
+                  moduleName = "VisionTwitch"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/adam/code/Swift/VisionTwitch/VisionTwitch/API/AuthController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "132"
+                  endingLineNumber = "132"
+                  offsetFromSymbolStart = "1084">
+               </Location>
+               <Location
+                  uuid = "B9020A1B-FF8B-4636-8FE9-4D55695B10F5 - 150a57c7055a8f8a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(2) await resume partial function for VisionTwitch.AuthController.requestPublicToken() async throws -&gt; Swift.String"
+                  moduleName = "VisionTwitch"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/adam/code/Swift/VisionTwitch/VisionTwitch/API/AuthController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "124"
+                  endingLineNumber = "124"
+                  offsetFromSymbolStart = "24">
+               </Location>
+               <Location
+                  uuid = "B9020A1B-FF8B-4636-8FE9-4D55695B10F5 - 150a57c7055a8e92"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(2) await resume partial function for VisionTwitch.AuthController.requestPublicToken() async throws -&gt; Swift.String"
+                  moduleName = "VisionTwitch"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/adam/code/Swift/VisionTwitch/VisionTwitch/API/AuthController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "132"
+                  endingLineNumber = "132"
+                  offsetFromSymbolStart = "68">
+               </Location>
+               <Location
+                  uuid = "B9020A1B-FF8B-4636-8FE9-4D55695B10F5 - 9fc3236877663170"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for VisionTwitch.AuthController.requestPublicToken() async throws -&gt; Swift.String"
+                  moduleName = "VisionTwitch"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/adam/code/Swift/VisionTwitch/VisionTwitch/API/AuthController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "124"
+                  endingLineNumber = "124"
+                  offsetFromSymbolStart = "96">
+               </Location>
+               <Location
+                  uuid = "B9020A1B-FF8B-4636-8FE9-4D55695B10F5 - 9fc3236877663068"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for VisionTwitch.AuthController.requestPublicToken() async throws -&gt; Swift.String"
+                  moduleName = "VisionTwitch"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/adam/code/Swift/VisionTwitch/VisionTwitch/API/AuthController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "132"
+                  endingLineNumber = "132"
+                  offsetFromSymbolStart = "256">
+               </Location>
+               <Location
+                  uuid = "B9020A1B-FF8B-4636-8FE9-4D55695B10F5 - c97ec4e582b29f73"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(4) suspend resume partial function for VisionTwitch.AuthController.requestPublicToken() async throws -&gt; Swift.String"
+                  moduleName = "VisionTwitch"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/adam/code/Swift/VisionTwitch/VisionTwitch/API/AuthController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "124"
+                  endingLineNumber = "124"
+                  offsetFromSymbolStart = "28">
+               </Location>
+               <Location
+                  uuid = "B9020A1B-FF8B-4636-8FE9-4D55695B10F5 - c97ec4e582b29e6b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(4) suspend resume partial function for VisionTwitch.AuthController.requestPublicToken() async throws -&gt; Swift.String"
+                  moduleName = "VisionTwitch"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/adam/code/Swift/VisionTwitch/VisionTwitch/API/AuthController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "132"
+                  endingLineNumber = "132"
+                  offsetFromSymbolStart = "68">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

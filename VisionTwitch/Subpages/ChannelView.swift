@@ -44,7 +44,7 @@ struct ChannelView: View {
                         }
                     }, other: {
                         offlineMessage
-                    }, requiresAuth: false, runOnAppear: true)
+                    }, requiresAuth: false)
                 }
             }
         }

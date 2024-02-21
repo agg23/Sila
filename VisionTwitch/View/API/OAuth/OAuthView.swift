@@ -44,7 +44,7 @@ struct OAuthView: View {
 
                 let authUser = AuthUser(id: user.id, username: user.displayName, avatarUrl: URL(string: user.profileImageUrl))
 
-                AuthController.shared.setCredientials(withToken: token, authUser: authUser)
+                AuthController.shared.setUserCredientials(withToken: token, authUser: authUser)
 
                 print(user)
             }

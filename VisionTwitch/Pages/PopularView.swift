@@ -20,7 +20,7 @@ struct PopularView: View {
             }
         }, error: { _ in
             Text("Error")
-        }, requiresAuth: true, runOnAppear: true)
+        }, requiresAuth: false)
     }
 }
 

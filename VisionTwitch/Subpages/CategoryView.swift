@@ -22,7 +22,7 @@ struct CategoryView: View {
             }
         }, error: { _ in
             Text("Error")
-        }, requiresAuth: false, runOnAppear: true)
+        }, requiresAuth: false)
             .navigationTitle(self.category.game.name)
     }
 }

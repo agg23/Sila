@@ -29,7 +29,7 @@ struct FollowedStreamsView: View {
             }
         }, error: { _ in
             Text("Error")
-        }, requiresAuth: true, runOnAppear: true)
+        }, requiresAuth: true)
     }
 
     @ViewBuilder
@@ -49,6 +49,6 @@ struct FollowedStreamsView: View {
             }
         }, error: { _ in
             Text("Error")
-        }, requiresAuth: true, runOnAppear: true)
+        }, requiresAuth: true)
     }
 }
