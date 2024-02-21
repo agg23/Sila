@@ -30,8 +30,12 @@ enum DataStatus<T, E: Error> {
         self.requiresAuth = requiresAuth
     }
 
-    func reload() {
-        Task {
+    func reload() async {
+        let _ = await self.reloadTask().result
+    }
+
+    func reloadTask() -> Task<Void, Error> {
+        return Task {
             let task = taskClosure(AuthController.shared.helixApi)
             self.lastFetchToken = AuthController.shared.currentToken
             do {
@@ -66,7 +70,7 @@ enum DataStatus<T, E: Error> {
         self.cancellable = AuthController.shared.authChangeSubject.sink(receiveCompletion: { _ in }, receiveValue: { _ in
             // Received new auth, rerun task
             if !self.requiresAuth || AuthController.shared.isAuthorized {
-                self.reload()
+                self.reloadTask()
             }
         })
     }

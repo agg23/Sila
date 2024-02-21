@@ -29,6 +29,8 @@ struct PlayerControlsView: View {
                     Image(systemName: "play.fill")
                 }
             }
+            .buttonStyle(.plain)
+            .buttonBorderShape(.circle)
             Button {
                 self.player.toggleMute()
                 self.onButtonPress?()
@@ -46,10 +48,14 @@ struct PlayerControlsView: View {
                 Image(systemName: "arrow.clockwise")
             }
         }
-        .frame(height: 200)
+        .padding()
     }
 }
 
 #Preview {
-    PlayerControlsView(player: WebViewPlayer())
+    Rectangle()
+        .ornament(attachmentAnchor: .scene(.bottom)) {
+            PlayerControlsView(player: WebViewPlayer())
+                .glassBackgroundEffect()
+        }
 }

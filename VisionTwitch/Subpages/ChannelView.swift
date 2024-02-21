@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ChannelView: View {
-    @State private var liveProvider: DataProvider<Bool, Error>?
+    @State private var liveProvider: DataProvider<Bool, Error>? = nil
 
     let channel: UserWrapper
 
@@ -31,20 +31,20 @@ struct ChannelView: View {
 
                     let offlineMessage = Text("Offline")
 
-                    SuccessDataView(taskClosure: { api in
-                        return Task {
-                            let (streams, _) = try await api.getStreams(userIDs: [user.id])
-                            return streams.count > 0
-                        }
-                    }, content: { isLive in
-                        if isLive {
-                            liveButton
-                        } else {
-                            offlineMessage
-                        }
-                    }, other: {
-                        offlineMessage
-                    }, requiresAuth: false)
+//                    SuccessDataView(taskClosure: { api in
+//                        return Task {
+//                            let (streams, _) = try await api.getStreams(userIDs: [user.id])
+//                            return streams.count > 0
+//                        }
+//                    }, content: { isLive in
+//                        if isLive {
+//                            liveButton
+//                        } else {
+//                            offlineMessage
+//                        }
+//                    }, other: {
+//                        offlineMessage
+//                    }, requiresAuth: false)
                 }
             }
         }
