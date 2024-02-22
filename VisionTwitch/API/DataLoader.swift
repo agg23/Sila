@@ -8,7 +8,7 @@
 import SwiftUI
 
 @propertyWrapper
-struct DataLoader<T>: DynamicProperty {
+struct DataLoader<T, Changable: Equatable>: DynamicProperty {
     enum Status {
         case loading(T?)
         case idle
@@ -24,14 +24,14 @@ struct DataLoader<T>: DynamicProperty {
     }
 
     public class WrappedValue {
-        let dataLoader: DataLoader<T>
+        let dataLoader: DataLoader<T, Changable>
 
-        init(dataLoader: DataLoader<T>) {
+        init(dataLoader: DataLoader<T, Changable>) {
             self.dataLoader = dataLoader
         }
 
-        func get(task: @escaping () async throws -> T) -> Status {
-            self.dataLoader.status.get(task: task)
+        func get(task: @escaping () async throws -> T, onChange: Changable? = nil) -> Status {
+            self.dataLoader.status.get(task: task, onChange: onChange)
         }
 
         func refresh(task: @escaping () async throws -> T) -> Status {
@@ -41,12 +41,20 @@ struct DataLoader<T>: DynamicProperty {
 
     @Observable class Loader {
         var status: Status = .idle
+        var changable: Changable? = nil
 
-        func get(task: @escaping () async throws -> T) -> Status {
+        func get(task: @escaping () async throws -> T, onChange: Changable? = nil) -> Status {
             switch self.status {
             case .idle:
                 self.refresh(task: task)
+                // Save changable for future updates
+                self.changable = onChange
             default:
+                if onChange != self.changable {
+                    // We need to refresh
+                    self.changable = onChange
+                    self.refresh(task: task)
+                }
                 break
             }
             return self.status

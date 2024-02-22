@@ -11,10 +11,13 @@ import SwiftUI
 struct VisionTwitchApp: App {
     @Environment(\.openWindow) private var openWindow
 
+    @State var authController = AuthController()
+
     var body: some Scene {
         WindowGroup {
             MainWindowView()
         }
+        .environment(\.authController, self.authController)
 
         WindowGroup(id: "channelVideo", for: String.self) { channel in
             if let channel = channel.wrappedValue {
@@ -23,15 +26,12 @@ struct VisionTwitchApp: App {
                 Text("No channel specified")
             }
         }
-            .defaultSize(CGSize(width: 800.0, height: 450.0))
+        .environment(\.authController, self.authController)
+        .defaultSize(CGSize(width: 800.0, height: 450.0))
 
 //        WindowGroup(id: "chat") {
 //            ChatWebView()
 //        }
-//            .defaultSize(width: 300, height: 500)
-
-        ImmersiveSpace(id: "ImmersiveSpace") {
-            ImmersiveView()
-        }.immersionStyle(selection: .constant(.progressive), in: .progressive)
+//        .defaultSize(width: 300, height: 500)
     }
 }

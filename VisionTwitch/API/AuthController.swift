@@ -11,9 +11,7 @@ import Twitch
 import KeychainWrapper
 import WebKit
 
-class AuthController {
-    static let shared = AuthController()
-
+@Observable class AuthController {
     // Embedding a secret into the client is insecure, but Twitch requires auth to access public APIs
     // and I don't want to set up a HTTP service to embed the secret into requests (especially given
     // this is OSS).
@@ -25,46 +23,40 @@ class AuthController {
     private static let OAUTH_KEYCHAIN_KEY = "oauth_token"
     private static let PUBLIC_KEYCHAIN_KEY = "public_token"
 
-    var helixApi: Helix
-    let authChangeSubject: PassthroughSubject<(), Never>
+    var status: AuthStatus
     let requestReauthSubject: PassthroughSubject<(), Never>
-    var authUser: AuthUser?
-    var isAuthorized: Bool = false
-    var currentToken: String
 
-    private init() {
+    init() {
+        var user: AuthUser? = nil
+
         if let authUserData = UserDefaults.standard.object(forKey: AuthController.USER_USER_DEFAULTS_KEY) as? Data, let authUser = try? JSONDecoder().decode(AuthUser.self, from: authUserData) {
-            self.authUser = authUser
+            user = authUser
         }
+
         let oauthToken = KeychainWrapper.default.string(forKey: AuthController.OAUTH_KEYCHAIN_KEY)
         let publicToken = KeychainWrapper.default.string(forKey: AuthController.PUBLIC_KEYCHAIN_KEY)
 
-        if let oauthToken = oauthToken {
-            // Create authed Helix instance. Set userId to empty string so Helix doesn't throw
-            self.helixApi = try! Helix(authentication: .init(oAuth: oauthToken, clientID: AuthController.CLIENT_ID, userId: authUser?.id ?? ""))
-            self.currentToken = oauthToken
-        } else {
+        if let oauthToken = oauthToken, let user = user {
+            // We're logged in. Create authed Helix instance
+            // Won't throw
+            let helix = try! Helix(authentication: .init(oAuth: oauthToken, clientID: AuthController.CLIENT_ID, userId: user.id))
+            self.status = .user(user: user, api: helix)
+        } else if let publicToken = publicToken {
             // Public instance. Make sure we don't set user so we don't have permission issues
-            let token = publicToken ?? ""
-            self.helixApi = try! Helix(authentication: .init(oAuth: token, clientID: AuthController.CLIENT_ID, userId: ""))
-            self.currentToken = token
+            let helix = try! Helix(authentication: .init(oAuth: publicToken, clientID: AuthController.CLIENT_ID, userId: ""))
+            self.status = .publicLoggedOut(api: helix)
+        } else {
+            // No auth at all
+            self.status = .none
         }
 
-        self.authChangeSubject = PassthroughSubject<(), Never>()
-        self.requestReauthSubject = PassthroughSubject<(), Never>()
-
-        if oauthToken != nil && authUser != nil {
-            self.isAuthorized = true
-        }
+        self.requestReauthSubject = PassthroughSubject()
     }
 
-    func setUserCredientials(withToken token: String, authUser: AuthUser) {
-        self.authUser = authUser
+    func setLoggedInCredentials(withToken token: String, authUser: AuthUser) {
         // Helix creation can not throw because we set all of the cred values
-        self.helixApi = try! Helix(authentication: TwitchCredentials(oAuth: token, clientID: AuthController.CLIENT_ID, userId: authUser.id))
-        self.currentToken = token
-        self.isAuthorized = true
-        self.authChangeSubject.send(())
+        let helix = try! Helix(authentication: TwitchCredentials(oAuth: token, clientID: AuthController.CLIENT_ID, userId: authUser.id))
+        self.status = .user(user: authUser, api: helix)
 
         self.updateUserStore(token: token, authUser: authUser)
     }
@@ -81,17 +73,21 @@ class AuthController {
             }
         }
 
-        self.helixApi = try! Helix(authentication: .init(oAuth: "", clientID: AuthController.CLIENT_ID, userId: ""))
-        self.currentToken = ""
-        self.authUser = nil
-        self.isAuthorized = false
+        let publicToken = KeychainWrapper.default.string(forKey: AuthController.PUBLIC_KEYCHAIN_KEY)
+
+        if let publicToken = publicToken {
+            // Public instance. Make sure we don't set user so we don't have permission issues
+            let helix = try! Helix(authentication: .init(oAuth: publicToken, clientID: AuthController.CLIENT_ID, userId: ""))
+            self.status = .publicLoggedOut(api: helix)
+        } else {
+            // No auth at all
+            self.status = .none
+        }
 
         self.updateUserStore(token: nil, authUser: nil)
 
         // Send event to cause streaming windows to close
         NotificationCenter.default.post(name: .twitchLogOut, object: nil, userInfo: nil)
-
-        self.authChangeSubject.send(())
     }
 
     /// Request we show the sheet to relogin with current credentials
@@ -102,15 +98,31 @@ class AuthController {
     }
 
     func updatePublicToken() async throws {
-        if self.isAuthorized {
+        // Already authorized
+        if self.isAuthorized() {
             return
         }
 
         let token = try await requestPublicToken()
 
-        self.helixApi = try! Helix(authentication: TwitchCredentials(oAuth: token, clientID: AuthController.CLIENT_ID, userId: ""))
-        self.currentToken = token
+        // We authorized since this request started, abort
+        if self.isAuthorized() {
+            return
+        }
+
+        // Public instance. Make sure we don't set user so we don't have permission issues
+        let helix = try! Helix(authentication: TwitchCredentials(oAuth: token, clientID: AuthController.CLIENT_ID, userId: ""))
+        self.status = .publicLoggedOut(api: helix)
         self.updatePublicStore(token: token)
+    }
+
+    func isAuthorized() -> Bool {
+        switch self.status {
+        case .user:
+            return true
+        default:
+            return false
+        }
     }
 
     private func requestPublicToken() async throws -> String {

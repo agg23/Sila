@@ -51,10 +51,10 @@ struct DataView<T, E: Error, Content: View, Loading: View, ErrorView: View>: Vie
             state?.register()
 
             if self.hasRendered {
-                if let lastFetchToken = self.state?.lastFetchToken, lastFetchToken != AuthController.shared.currentToken {
-                    // Token has changed since we were last rendered, refetch
-                    let _ = self.state?.reloadTask()
-                } else {
+//                if let lastFetchToken = self.state?.lastFetchToken, lastFetchToken != AuthController.shared.currentToken {
+//                    // Token has changed since we were last rendered, refetch
+//                    let _ = self.state?.reloadTask()
+//                } else {
                     // If we we had no data, or error, refetch
                     switch self.state?.data {
                     case .noData, .failure:
@@ -62,7 +62,7 @@ struct DataView<T, E: Error, Content: View, Loading: View, ErrorView: View>: Vie
                     default:
                         break
                     }
-                }
+//                }
 
                 return
             }
@@ -71,7 +71,8 @@ struct DataView<T, E: Error, Content: View, Loading: View, ErrorView: View>: Vie
 
 //            self.state = DataProvider(taskClosure: taskClosure, requiresAuth: self.requiresAuth)
 
-            if !self.requiresAuth || AuthController.shared.isAuthorized {
+//            if !self.requiresAuth || AuthController.shared.isAuthorized {
+            if !self.requiresAuth {
                 let _ = self.state?.reloadTask()
             }
         }
@@ -96,14 +97,16 @@ struct CustomProgressView: View {
 }
 
 struct DataView2<T, E: Error, Content: View, Loading: View, ErrorView: View>: View {
-    private var loader: DataLoader<T>.WrappedValue
-    private let task: () async throws -> T
+    @Environment(\.authController) private var authController
+
+    private var loader: DataLoader<T, AuthStatus>.WrappedValue
+    private let task: (_: Helix, _: AuthUser?) async throws -> T
 
     private let content: (_: T) -> Content
     private let loading: (_: T?) -> Loading
-    private let error: (_: E) -> ErrorView
+    private let error: (_: E?) -> ErrorView
 
-    init(loader: DataLoader<T>.WrappedValue, task: @escaping () async throws -> T, @ViewBuilder content: @escaping (_: T) -> Content, @ViewBuilder loading: @escaping (_: T?) -> Loading, @ViewBuilder error: @escaping (_: E) -> ErrorView) {
+    init(loader: DataLoader<T, AuthStatus>.WrappedValue, task: @escaping (_: Helix, _: AuthUser?) async throws -> T, @ViewBuilder content: @escaping (_: T) -> Content, @ViewBuilder loading: @escaping (_: T?) -> Loading, @ViewBuilder error: @escaping (_: E?) -> ErrorView) {
         self.loader = loader
         self.task = task
 
@@ -113,15 +116,23 @@ struct DataView2<T, E: Error, Content: View, Loading: View, ErrorView: View>: Vi
     }
 
     var body: some View {
-        switch loader.get(task: self.task) {
-        case .loading(let data):
-            self.loading(data)
-        case .idle:
-            Text("No data")
-        case .finished(let data):
-            self.content(data)
-        case .error(let error):
-            self.error(error as! E)
+        if let apiAndUser = self.authController.status.apiAndUser() {
+            switch self.loader.get(task: {
+                // We have some auth info, run the task
+                try await self.task(apiAndUser.0, apiAndUser.1)
+            }, onChange: self.authController.status) {
+            case .loading(let data):
+                self.loading(data)
+            case .idle:
+                Text("No data")
+            case .finished(let data):
+                self.content(data)
+            case .error(let error):
+                self.error(error as? E)
+            }
+        } else {
+            // Not authorized
+            self.error(nil)
         }
     }
 }

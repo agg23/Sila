@@ -10,12 +10,13 @@ import Twitch
 
 struct OAuthView: View {
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.authController) private var authController
 
     var body: some View {
         VStack(spacing: 0) {
             HStack(content: {
                 CloseButtonView {
-                    AuthController.shared.logOut()
+                    self.authController.logOut()
                     dismiss()
                 }
                 // Offset to prevent button from being cut off from rounded corners
@@ -44,9 +45,7 @@ struct OAuthView: View {
 
                 let authUser = AuthUser(id: user.id, username: user.displayName, avatarUrl: URL(string: user.profileImageUrl))
 
-                AuthController.shared.setUserCredientials(withToken: token, authUser: authUser)
-
-                print(user)
+                self.authController.setLoggedInCredentials(withToken: token, authUser: authUser)
             }
         case .failure:
             print("Failed to oauth")
