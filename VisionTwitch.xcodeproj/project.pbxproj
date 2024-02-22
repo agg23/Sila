@@ -93,6 +93,8 @@
 		66E102472B82E3E8007A44D4 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E102452B82E3E8007A44D4 /* Router.swift */; };
 		66E102492B82E496007A44D4 /* NavStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E102482B82E496007A44D4 /* NavStack.swift */; };
 		66E1024A2B82E496007A44D4 /* NavStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E102482B82E496007A44D4 /* NavStack.swift */; };
+		66E8859F2B86C646004B4B8D /* DataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E8859E2B86C646004B4B8D /* DataLoader.swift */; };
+		66E885A02B86C646004B4B8D /* DataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E8859E2B86C646004B4B8D /* DataLoader.swift */; };
 		66F4E40F2B7D8FD3008C565D /* Twitch+Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E40E2B7D8FD3008C565D /* Twitch+Notification.swift */; };
 		66F4E4102B7D8FD3008C565D /* Twitch+Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E40E2B7D8FD3008C565D /* Twitch+Notification.swift */; };
 		66F4E4162B80292F008C565D /* OAuthWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E4152B80292F008C565D /* OAuthWebView.swift */; };
@@ -166,6 +168,7 @@
 		66E102412B82D94D007A44D4 /* AsyncImageButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncImageButtonView.swift; sourceTree = "<group>"; };
 		66E102452B82E3E8007A44D4 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		66E102482B82E496007A44D4 /* NavStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavStack.swift; sourceTree = "<group>"; };
+		66E8859E2B86C646004B4B8D /* DataLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataLoader.swift; sourceTree = "<group>"; };
 		66F4E40E2B7D8FD3008C565D /* Twitch+Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Twitch+Notification.swift"; sourceTree = "<group>"; };
 		66F4E4152B80292F008C565D /* OAuthWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuthWebView.swift; sourceTree = "<group>"; };
 		66F4E41C2B811788008C565D /* AuthBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthBadgeView.swift; sourceTree = "<group>"; };
@@ -438,6 +441,7 @@
 				66F4E4392B814D32008C565D /* DataProvider.swift */,
 				66E102142B826171007A44D4 /* AuthUser.swift */,
 				66E1021A2B8272E3007A44D4 /* Auth+Notification.swift */,
+				66E8859E2B86C646004B4B8D /* DataLoader.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -615,6 +619,7 @@
 				663B72FF2B6DB8E60031D661 /* ImmersiveView.swift in Sources */,
 				66F4E41D2B811788008C565D /* AuthBadgeView.swift in Sources */,
 				66125F5F2B83EF38002169B5 /* View+HighlightableButton.swift in Sources */,
+				66E8859F2B86C646004B4B8D /* DataLoader.swift in Sources */,
 				6633369C2B75BAB60098D188 /* AssetSelectionView.swift in Sources */,
 				66B153632B85A7C30048E80A /* StatefulDataView.swift in Sources */,
 				66125F662B84260D002169B5 /* User.swift in Sources */,
@@ -644,6 +649,7 @@
 				66125F4D2B83B8AC002169B5 /* GameWrapper.swift in Sources */,
 				66E102472B82E3E8007A44D4 /* Router.swift in Sources */,
 				66B153642B85A7C30048E80A /* StatefulDataView.swift in Sources */,
+				66E885A02B86C646004B4B8D /* DataLoader.swift in Sources */,
 				66F4E43B2B814D32008C565D /* DataProvider.swift in Sources */,
 				663B73242B6DB9A30031D661 /* TwitchVideoView.swift in Sources */,
 				66F4E4262B811B6C008C565D /* CloseButtonView.swift in Sources */,

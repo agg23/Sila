@@ -9,13 +9,6 @@ import SwiftUI
 import Twitch
 
 struct FollowedStreamsView: View {
-    @State private var liveStreamsState: DataProvider<[Twitch.Stream], Error>? = DataProvider(taskClosure: { api in
-        return Task {
-            let (streams, _) = try await api.getFollowedStreams(limit: 100)
-            return streams
-        }
-    }, requiresAuth: true)
-
     @State private var channelsState: DataProvider<[Twitch.User], Error>? = DataProvider(taskClosure: { api in
         return Task {
             let (_, channels, _) = try await api.getFollowedChannels(limit: 100)
@@ -27,6 +20,8 @@ struct FollowedStreamsView: View {
         }
     }, requiresAuth: true)
 
+    @DataLoader<[Twitch.Stream]> var liveStreamsLoader
+
     var body: some View {
         PickerTabView(leftTitle: "Live", leftView: {
             self.liveStreams
@@ -37,13 +32,22 @@ struct FollowedStreamsView: View {
 
     @ViewBuilder
     var liveStreams: some View {
-        DataView(provider: $liveStreamsState, content: { streams in
-            ScrollGridView {
-                StreamGridView(streams: streams)
-            }
-        }, error: { _ in
-            Text("Error")
-        }, requiresAuth: true)
+        if AuthController.shared.isAuthorized {
+            DataView2(loader: self.liveStreamsLoader, task: {
+                let (streams, _) = try await AuthController.shared.helixApi.getFollowedStreams(limit: 100)
+                return streams
+            }, content: { streams in
+                ScrollGridView {
+                    StreamGridView(streams: streams)
+                }
+            }, loading: { _ in
+                ProgressView()
+            }, error: { (_: HelixError) in
+                Text("An error occured")
+            })
+        } else {
+            Text("Not logged in")
+        }
     }
 
     @ViewBuilder

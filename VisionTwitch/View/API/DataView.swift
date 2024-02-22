@@ -94,3 +94,34 @@ struct CustomProgressView: View {
         ProgressView()
     }
 }
+
+struct DataView2<T, E: Error, Content: View, Loading: View, ErrorView: View>: View {
+    private var loader: DataLoader<T>.WrappedValue
+    private let task: () async throws -> T
+
+    private let content: (_: T) -> Content
+    private let loading: (_: T?) -> Loading
+    private let error: (_: E) -> ErrorView
+
+    init(loader: DataLoader<T>.WrappedValue, task: @escaping () async throws -> T, @ViewBuilder content: @escaping (_: T) -> Content, @ViewBuilder loading: @escaping (_: T?) -> Loading, @ViewBuilder error: @escaping (_: E) -> ErrorView) {
+        self.loader = loader
+        self.task = task
+
+        self.content = content
+        self.loading = loading
+        self.error = error
+    }
+
+    var body: some View {
+        switch loader.get(task: self.task) {
+        case .loading(let data):
+            self.loading(data)
+        case .idle:
+            Text("No data")
+        case .finished(let data):
+            self.content(data)
+        case .error(let error):
+            self.error(error as! E)
+        }
+    }
+}
