@@ -11,18 +11,8 @@ import Twitch
 struct FollowedStreamsView: View {
     @Environment(\.authController) private var authController
 
-    @State private var channelsState: DataProvider<[Twitch.User], Error>? = DataProvider(taskClosure: { api in
-        return Task {
-            let (_, channels, _) = try await api.getFollowedChannels(limit: 100)
-
-            let broadcasterIds = channels.map({$0.broadcasterId})
-
-            let users = try await api.getUsers(userIDs: broadcasterIds)
-            return users
-        }
-    }, requiresAuth: true)
-
-    @DataLoader<[Twitch.Stream], AuthStatus> var liveStreamsLoader
+    @State private var liveStreamsLoader = DataLoader<[Twitch.Stream], AuthStatus>()
+    @State private var channelsLoader = DataLoader<[Twitch.User], AuthStatus>()
 
     var body: some View {
         PickerTabView(leftTitle: "Live", leftView: {
@@ -34,38 +24,31 @@ struct FollowedStreamsView: View {
 
     @ViewBuilder
     var liveStreams: some View {
-        if self.authController.isAuthorized() {
-            DataView2(loader: self.liveStreamsLoader, task: { (api, user) in
-                guard user != nil else {
-                    // If we have no user, we're unauthenticated and this is a buffered task
-                    return []
-                }
-                print("Fetching")
-                let (streams, _) = try await api.getFollowedStreams(limit: 100)
-                return streams
-            }, content: { streams in
-                ScrollGridView {
-                    StreamGridView(streams: streams)
-                }
-                .refreshable(action: { await self.liveStreamsLoader.refresh(minDurationSecs: 1) })
-            }, loading: { _ in
-                ProgressView()
-            }, error: { (_: HelixError?) in
-                Text("An error occured")
-            })
-        } else {
-            Text("Not logged in")
+        AuthorizedStandardScrollableDataView(loader: self.$liveStreamsLoader, task: { (api, user) in
+            print("Request live")
+            guard user != nil else {
+                // If we have no user, we're unauthenticated and this is a buffered task
+                return []
+            }
+            let (streams, _) = try await api.getFollowedStreams(limit: 100)
+            return streams
+        }) { streams in
+            StreamGridView(streams: streams)
         }
     }
 
     @ViewBuilder
     var channels: some View {
-        DataView(provider: $channelsState, content: { users in
-            ScrollGridView {
-                ChannelGridView(channels: users)
-            }
-        }, error: { _ in
-            Text("Error")
-        }, requiresAuth: true)
+        AuthorizedStandardScrollableDataView(loader: self.$channelsLoader) { api, user in
+            print("Request channels")
+            let (_, channels, _) = try await api.getFollowedChannels(limit: 100)
+
+            let broadcasterIds = channels.map({$0.broadcasterId})
+
+            let users = try await api.getUsers(userIDs: broadcasterIds)
+            return users
+        } content: { channels in
+            ChannelGridView(channels: channels)
+        }
     }
 }

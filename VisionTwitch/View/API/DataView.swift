@@ -99,36 +99,34 @@ struct CustomProgressView: View {
 struct DataView2<T, E: Error, Content: View, Loading: View, ErrorView: View>: View {
     @Environment(\.authController) private var authController
 
-    private var loader: DataLoader<T, AuthStatus>.WrappedValue
-    private let task: (_: Helix, _: AuthUser?) async throws -> T
+    let loader: Binding<DataLoader<T, AuthStatus>>
+    let task: (_: Helix, _: AuthUser?) async throws -> T
 
-    private let content: (_: T) -> Content
-    private let loading: (_: T?) -> Loading
-    private let error: (_: E?) -> ErrorView
-
-    init(loader: DataLoader<T, AuthStatus>.WrappedValue, task: @escaping (_: Helix, _: AuthUser?) async throws -> T, @ViewBuilder content: @escaping (_: T) -> Content, @ViewBuilder loading: @escaping (_: T?) -> Loading, @ViewBuilder error: @escaping (_: E?) -> ErrorView) {
-        self.loader = loader
-        self.task = task
-
-        self.content = content
-        self.loading = loading
-        self.error = error
-    }
+    let content: (_: T) -> Content
+    let loading: (_: T?) -> Loading
+    let error: (_: E?) -> ErrorView
 
     var body: some View {
         if let apiAndUser = self.authController.status.apiAndUser() {
-            switch self.loader.get(task: {
-                // We have some auth info, run the task
-                try await self.task(apiAndUser.0, apiAndUser.1)
-            }, onChange: self.authController.status) {
-            case .loading(let data):
-                self.loading(data)
-            case .idle:
-                Text("No data")
-            case .finished(let data):
-                self.content(data)
-            case .error(let error):
-                self.error(error as? E)
+            Group {
+                switch self.loader.wrappedValue.get(task: {
+                    // We have some auth info, run the task
+                    try await self.task(apiAndUser.0, apiAndUser.1)
+                }, onChange: self.authController.status) {
+                case .loading(let data):
+                    self.loading(data)
+                case .idle:
+                    Text("No data")
+                case .finished(let data):
+                    self.content(data)
+                case .error(let error):
+                    self.error(error as? E)
+                }
+            }
+            .onAppear {
+                Task {
+                    await self.loader.wrappedValue.onAppear()
+                }
             }
         } else {
             // Not authorized

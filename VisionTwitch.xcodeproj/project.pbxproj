@@ -93,6 +93,8 @@
 		66E885A32B86D95C004B4B8D /* AuthStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E885A12B86D95C004B4B8D /* AuthStatus.swift */; };
 		66E885A52B86DFE2004B4B8D /* AuthController+EnvironmentValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E885A42B86DFE2004B4B8D /* AuthController+EnvironmentValues.swift */; };
 		66E885A62B86DFE2004B4B8D /* AuthController+EnvironmentValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E885A42B86DFE2004B4B8D /* AuthController+EnvironmentValues.swift */; };
+		66E885A82B8821D9004B4B8D /* StandardScrollableDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E885A72B8821D9004B4B8D /* StandardScrollableDataView.swift */; };
+		66E885A92B8821D9004B4B8D /* StandardScrollableDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E885A72B8821D9004B4B8D /* StandardScrollableDataView.swift */; };
 		66F4E40F2B7D8FD3008C565D /* Twitch+Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E40E2B7D8FD3008C565D /* Twitch+Notification.swift */; };
 		66F4E4102B7D8FD3008C565D /* Twitch+Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E40E2B7D8FD3008C565D /* Twitch+Notification.swift */; };
 		66F4E4162B80292F008C565D /* OAuthWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E4152B80292F008C565D /* OAuthWebView.swift */; };
@@ -166,6 +168,7 @@
 		66E8859E2B86C646004B4B8D /* DataLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataLoader.swift; sourceTree = "<group>"; };
 		66E885A12B86D95C004B4B8D /* AuthStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthStatus.swift; sourceTree = "<group>"; };
 		66E885A42B86DFE2004B4B8D /* AuthController+EnvironmentValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthController+EnvironmentValues.swift"; sourceTree = "<group>"; };
+		66E885A72B8821D9004B4B8D /* StandardScrollableDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandardScrollableDataView.swift; sourceTree = "<group>"; };
 		66F4E40E2B7D8FD3008C565D /* Twitch+Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Twitch+Notification.swift"; sourceTree = "<group>"; };
 		66F4E4152B80292F008C565D /* OAuthWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuthWebView.swift; sourceTree = "<group>"; };
 		66F4E41C2B811788008C565D /* AuthBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthBadgeView.swift; sourceTree = "<group>"; };
@@ -391,6 +394,7 @@
 				66F4E4142B802916008C565D /* OAuth */,
 				66F4E41C2B811788008C565D /* AuthBadgeView.swift */,
 				66F4E43C2B818499008C565D /* DataView.swift */,
+				66E885A72B8821D9004B4B8D /* StandardScrollableDataView.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -616,6 +620,7 @@
 				66125F5F2B83EF38002169B5 /* View+HighlightableButton.swift in Sources */,
 				66E8859F2B86C646004B4B8D /* DataLoader.swift in Sources */,
 				6633369C2B75BAB60098D188 /* AssetSelectionView.swift in Sources */,
+				66E885A82B8821D9004B4B8D /* StandardScrollableDataView.swift in Sources */,
 				66125F662B84260D002169B5 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -648,6 +653,7 @@
 				66F4E43B2B814D32008C565D /* DataProvider.swift in Sources */,
 				663B73242B6DB9A30031D661 /* TwitchVideoView.swift in Sources */,
 				66F4E4262B811B6C008C565D /* CloseButtonView.swift in Sources */,
+				66E885A92B8821D9004B4B8D /* StandardScrollableDataView.swift in Sources */,
 				66F4E42D2B812A32008C565D /* AuthController.swift in Sources */,
 				66125F672B84260D002169B5 /* User.swift in Sources */,
 				66E1022A2B82988A007A44D4 /* PopularView.swift in Sources */,
