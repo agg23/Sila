@@ -47,6 +47,7 @@ struct FollowedStreamsView: View {
                 ScrollGridView {
                     StreamGridView(streams: streams)
                 }
+                .refreshable(action: { await self.liveStreamsLoader.refresh(minDurationSecs: 1) })
             }, loading: { _ in
                 ProgressView()
             }, error: { (_: HelixError?) in

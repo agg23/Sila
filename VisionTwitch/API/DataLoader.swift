@@ -16,8 +16,7 @@ struct DataLoader<T, Changable: Equatable>: DynamicProperty {
         case error(Error)
     }
 
-    @State
-    private var status = Loader()
+    @State private var loader = Loader()
 
     public var wrappedValue: WrappedValue {
         WrappedValue(dataLoader: self)
@@ -31,52 +30,84 @@ struct DataLoader<T, Changable: Equatable>: DynamicProperty {
         }
 
         func get(task: @escaping () async throws -> T, onChange: Changable? = nil) -> Status {
-            self.dataLoader.status.get(task: task, onChange: onChange)
+            self.dataLoader.loader.get(task: task, onChange: onChange)
         }
 
-        func refresh(task: @escaping () async throws -> T) -> Status {
-            self.dataLoader.status.get(task: task)
+        func refresh() async {
+            await self.dataLoader.loader.refresh()
+        }
+
+        func refresh(minDurationSecs: UInt64) async {
+            await self.dataLoader.loader.refresh(minDurationSecs: minDurationSecs)
+        }
+
+        func update(task: @escaping () async throws -> T) {
+            self.dataLoader.loader.task = task
         }
     }
 
     @Observable class Loader {
         var status: Status = .idle
         var changable: Changable? = nil
+        var task: (() async throws -> T)? = nil
 
         func get(task: @escaping () async throws -> T, onChange: Changable? = nil) -> Status {
+            self.task = task
+
             switch self.status {
             case .idle:
-                self.refresh(task: task)
+                Task {
+                    await self.refresh()
+                }
                 // Save changable for future updates
                 self.changable = onChange
             default:
-                if onChange != self.changable {
+                if onChange != nil && onChange != self.changable {
                     // We need to refresh
+                    Task {
+                        await self.refresh()
+                    }
                     self.changable = onChange
-                    self.refresh(task: task)
                 }
                 break
             }
             return self.status
         }
 
-        func refresh(task: @escaping () async throws -> T) {
-            Task {
-                do {
-                    var existingData: T? = nil
+        func refresh() async {
+            self.status = await self.refreshDeferredData()
+        }
 
-                    switch self.status {
-                    case .loading(let existing):
-                        existingData = existing
-                    default:
-                        break
-                    }
+        func refresh(minDurationSecs: UInt64) async {
+            async let newStatusAsync = await self.refreshDeferredData(preventLoadingState: true)
+            async let sleep: ()? = try? await Task.sleep(nanoseconds: minDurationSecs * NSEC_PER_SEC)
+            let (newStatus, _) = await (newStatusAsync, sleep)
 
-                    self.status = .loading(existingData)
-                    self.status = try await .finished(task())
-                } catch {
-                    self.status = .error(error)
+            self.status = newStatus
+        }
+
+        private func refreshDeferredData(preventLoadingState: Bool = false) async -> Status {
+            guard let task = self.task else {
+                fatalError("Incorrectly set up DataLoader")
+            }
+
+            do {
+                var existingData: T? = nil
+
+                switch self.status {
+                case .loading(let existing):
+                    existingData = existing
+                default:
+                    break
                 }
+
+                if !preventLoadingState {
+                    self.status = .loading(existingData)
+                }
+
+                return try await .finished(task())
+            } catch {
+                return .error(error)
             }
         }
     }
