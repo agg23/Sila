@@ -15,7 +15,7 @@ struct CategoryButtonView: View {
 
     var body: some View {
         AsyncImageButtonView(imageUrl: buildImageUrl(using: self.category), aspectRatio: 0.75) {
-            router.path.append(GameWrapper(game: self.category))
+            router.path.append(GameWrapper.game(self.category))
         } content: {
             VStack(alignment: .leading) {
                 Text(self.category.name)

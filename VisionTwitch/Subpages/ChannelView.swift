@@ -6,20 +6,46 @@
 //
 
 import SwiftUI
+import Twitch
 
 struct ChannelView: View {
-//    @State private var liveProvider: DataProvider<Bool, Error>? = nil
+    @State private var loader = DataLoader<User, AuthStatus>()
 
     let channel: UserWrapper
 
     var body: some View {
-        let user = self.channel.user
+        DataView(loader: self.$loader) { api, _ in
+            switch self.channel {
+            case .user(let user):
+                return user
+            case .id(let id):
+                let users = try await api.getUsers(userIDs: [id])
 
+                guard users.count > 0 else {
+                    throw HelixError.requestFailed(error: "Could not fetch user", status: 200, message: "")
+                }
+
+                return users[0]
+            }
+        } content: { user in
+            ChannelViewContent(channelUser: user)
+        } loading: { _ in
+            ProgressView()
+        } error: { (_: HelixError?) in
+            Text("An error occurred")
+        }
+    }
+}
+
+struct ChannelViewContent: View {
+    let channelUser: User
+
+    var body: some View {
         VStack {
             HStack {
-                profileImage
+                self.profileImage
                 VStack {
-                    Text(user.displayName)
+                    Text(self.channelUser.displayName)
                         .font(.title)
                         .lineLimit(1, reservesSpace: true)
 
@@ -48,6 +74,7 @@ struct ChannelView: View {
                 }
             }
         }
+        .navigationTitle(self.channelUser.displayName)
         .onAppear {
             // This will trigger on every appear, refetching
 //            liveProvider = DataProvider(taskClosure: { api in
@@ -60,7 +87,7 @@ struct ChannelView: View {
     }
 
     var profileImage: some View {
-        AsyncImage(url: URL(string: self.channel.user.profileImageUrl), content: { image in
+        AsyncImage(url: URL(string: self.channelUser.profileImageUrl), content: { image in
             image
                 .resizable()
         }, placeholder: {
@@ -76,5 +103,5 @@ struct ChannelView: View {
 }
 
 #Preview {
-    ChannelView(channel: UserWrapper(user: USER_MOCK()))
+    ChannelView(channel: UserWrapper.user(USER_MOCK()))
 }

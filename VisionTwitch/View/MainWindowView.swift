@@ -12,19 +12,19 @@ struct MainWindowView: View {
         ZStack {
             TabView {
                 // TODO: Change icon
-                TabPage(title: "Following", systemImage: "person.crop.square.badge.video.fill") {
+                TabPage(title: "Following", systemImage: Icon.following) {
                     FollowedStreamsView()
                 }
 
-                TabPage(title: "Popular", systemImage: "star") {
+                TabPage(title: "Popular", systemImage: Icon.popular) {
                     PopularView()
                 }
 
-                TabPage(title: "Categories", systemImage: "gamecontroller") {
+                TabPage(title: "Categories", systemImage: Icon.category) {
                     CategoryListView()
                 }
 
-                TabPage(title: "Search", systemImage: "magnifyingglass") {
+                TabPage(title: "Search", systemImage: Icon.search) {
                     VStack {
 
                     }

@@ -28,7 +28,7 @@ struct TabPage<Content: View>: View {
                 }
                 .navigationDestination(for: UserWrapper.self) { user in
                     // View individual user info
-                    Text("TODO: User \(user.user.displayName)")
+                    ChannelView(channel: user)
                         .toolbar {
                             defaultToolbar()
                         }

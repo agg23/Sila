@@ -9,6 +9,7 @@ import SwiftUI
 import Twitch
 
 struct StreamButtonView: View {
+    @Environment(\.router) private var router
     @Environment(\.openWindow) private var openWindow;
 
     let stream: Twitch.Stream
@@ -35,6 +36,18 @@ struct StreamButtonView: View {
                     .lineLimit(1)
 
 //                    tagList(stream.tags)
+            }
+        }
+        .contextMenu {
+            Button {
+                router.path.append(UserWrapper.id(stream.userId))
+            } label: {
+                Label("View Channel", systemImage: Icon.channel)
+            }
+            Button {
+                router.path.append(GameWrapper.id(stream.gameID))
+            } label: {
+                Label("More in this Category", systemImage: Icon.category)
             }
         }
     }

@@ -8,14 +8,32 @@
 import Foundation
 import Twitch
 
-struct GameWrapper: Hashable {
-    let game: Twitch.Game
+enum GameWrapper {
+    case game(_ game: Game)
+    case id(_ id: String)
+}
 
+extension GameWrapper: Hashable {
     func hash(into hasher: inout Hasher) {
-        hasher.combine(self.game.id)
+        switch self {
+        case .game(let game):
+            hasher.combine("game")
+            hasher.combine(game.id)
+        case .id(let id):
+            hasher.combine("id")
+            hasher.combine(id)
+        }
     }
 
     static func == (lhs: GameWrapper, rhs: GameWrapper) -> Bool {
-        lhs.game.id == rhs.game.id
+        switch (lhs, rhs) {
+        case (.game(let leftGame), .game(let rightGame)):
+            return leftGame.id == rightGame.id
+        case (.id(let leftId), .id(let rightId)):
+            return leftId == rightId
+        default:
+            return false
+        }
     }
 }
+
