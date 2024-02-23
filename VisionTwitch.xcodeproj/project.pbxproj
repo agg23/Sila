@@ -111,8 +111,6 @@
 		66F4E4302B8132F5008C565D /* Twitch in Frameworks */ = {isa = PBXBuildFile; productRef = 66F4E42F2B8132F5008C565D /* Twitch */; };
 		66F4E4342B813A1F008C565D /* FollowedStreamsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E4332B813A1F008C565D /* FollowedStreamsView.swift */; };
 		66F4E4352B813A1F008C565D /* FollowedStreamsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E4332B813A1F008C565D /* FollowedStreamsView.swift */; };
-		66F4E43A2B814D32008C565D /* DataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E4392B814D32008C565D /* DataProvider.swift */; };
-		66F4E43B2B814D32008C565D /* DataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E4392B814D32008C565D /* DataProvider.swift */; };
 		66F4E43D2B818499008C565D /* DataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E43C2B818499008C565D /* DataView.swift */; };
 		66F4E43E2B818499008C565D /* DataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E43C2B818499008C565D /* DataView.swift */; };
 /* End PBXBuildFile section */
@@ -177,7 +175,6 @@
 		66F4E4272B812932008C565D /* OAuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuthView.swift; sourceTree = "<group>"; };
 		66F4E42B2B812A32008C565D /* AuthController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthController.swift; sourceTree = "<group>"; };
 		66F4E4332B813A1F008C565D /* FollowedStreamsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowedStreamsView.swift; sourceTree = "<group>"; };
-		66F4E4392B814D32008C565D /* DataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataProvider.swift; sourceTree = "<group>"; };
 		66F4E43C2B818499008C565D /* DataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -440,7 +437,6 @@
 				66E885A42B86DFE2004B4B8D /* AuthController+EnvironmentValues.swift */,
 				66E885A12B86D95C004B4B8D /* AuthStatus.swift */,
 				66E1021A2B8272E3007A44D4 /* Auth+Notification.swift */,
-				66F4E4392B814D32008C565D /* DataProvider.swift */,
 				66E8859E2B86C646004B4B8D /* DataLoader.swift */,
 			);
 			path = API;
@@ -591,7 +587,6 @@
 				66E1023F2B82D8AF007A44D4 /* CategoryButtonView.swift in Sources */,
 				66F4E4342B813A1F008C565D /* FollowedStreamsView.swift in Sources */,
 				66E1022C2B82A592007A44D4 /* StreamGridView.swift in Sources */,
-				66F4E43A2B814D32008C565D /* DataProvider.swift in Sources */,
 				66E102352B82D788007A44D4 /* Category.swift in Sources */,
 				66125F692B84279A002169B5 /* ChannelButtonView.swift in Sources */,
 				66125F532B83C003002169B5 /* ScrollGridView.swift in Sources */,
@@ -650,7 +645,6 @@
 				66125F4D2B83B8AC002169B5 /* GameWrapper.swift in Sources */,
 				66E102472B82E3E8007A44D4 /* Router.swift in Sources */,
 				66E885A02B86C646004B4B8D /* DataLoader.swift in Sources */,
-				66F4E43B2B814D32008C565D /* DataProvider.swift in Sources */,
 				663B73242B6DB9A30031D661 /* TwitchVideoView.swift in Sources */,
 				66F4E4262B811B6C008C565D /* CloseButtonView.swift in Sources */,
 				66E885A92B8821D9004B4B8D /* StandardScrollableDataView.swift in Sources */,

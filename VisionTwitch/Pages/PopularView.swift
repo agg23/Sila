@@ -9,21 +9,15 @@ import SwiftUI
 import Twitch
 
 struct PopularView: View {
-    @State private var state: DataProvider<[Twitch.Stream], Error>? = DataProvider(taskClosure: { api in
-        return Task {
-            let (streams, _) = try await api.getStreams(limit: 100)
-            return streams
-        }
-    }, requiresAuth: false)
+    @State private var loader = DataLoader<[Twitch.Stream], AuthStatus>()
 
     var body: some View {
-        DataView(provider: $state, content: { streams in
-            ScrollGridView {
-                StreamGridView(streams: streams)
-            }
-        }, error: { _ in
-            Text("Error")
-        }, requiresAuth: false)
+        StandardScrollableDataView(loader: self.$loader) { api, _ in
+            let (streams, _) = try await api.getStreams(limit: 100)
+            return streams
+        } content: { streams in
+            StreamGridView(streams: streams)
+        }
     }
 }
 

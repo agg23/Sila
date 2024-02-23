@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ChannelView: View {
-    @State private var liveProvider: DataProvider<Bool, Error>? = nil
+//    @State private var liveProvider: DataProvider<Bool, Error>? = nil
 
     let channel: UserWrapper
 
@@ -50,12 +50,12 @@ struct ChannelView: View {
         }
         .onAppear {
             // This will trigger on every appear, refetching
-            liveProvider = DataProvider(taskClosure: { api in
-                Task {
-                    let (streams, _) = try await api.getStreams(userIDs: [user.id])
-                    return streams.count > 0
-                }
-            }, requiresAuth: false)
+//            liveProvider = DataProvider(taskClosure: { api in
+//                Task {
+//                    let (streams, _) = try await api.getStreams(userIDs: [user.id])
+//                    return streams.count > 0
+//                }
+//            }, requiresAuth: false)
         }
     }
 

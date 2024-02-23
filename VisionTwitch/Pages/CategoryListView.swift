@@ -9,24 +9,15 @@ import SwiftUI
 import Twitch
 
 struct CategoryListView: View {
-    @State private var state: DataProvider<[Game], Error>? = DataProvider(taskClosure: { api in
-        return Task {
-            let (categories, _) = try await api.getTopGames(limit: 100)
-            return categories
-        }
-    }, requiresAuth: false)
+    @State private var loader = DataLoader<[Game], AuthStatus>()
 
     var body: some View {
-        DataView(provider: $state, content: { categories in
-            ScrollGridView {
-                CategoryGridView(categories: categories)
-            }
-            .refreshable {
-                await self.state?.reload()
-            }
-        }, error: { _ in
-            Text("Error")
-        }, requiresAuth: false)
+        StandardScrollableDataView(loader: self.$loader) { api, user in
+            let (categories, _) = try await api.getTopGames(limit: 100)
+            return categories
+        } content: { categories in
+            CategoryGridView(categories: categories)
+        }
     }
 }
 

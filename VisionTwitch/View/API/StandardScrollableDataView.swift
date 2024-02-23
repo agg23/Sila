@@ -15,7 +15,7 @@ struct StandardScrollableDataView<T, Content: View>: View {
     let content: (_: T) -> Content
 
     var body: some View {
-        DataView2(loader: self.loader, task: self.task, content: { data in
+        DataView(loader: self.loader, task: self.task, content: { data in
             ScrollGridView {
                 self.content(data)
             }
