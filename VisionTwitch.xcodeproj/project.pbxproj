@@ -117,6 +117,8 @@
 		66F8D1972B898141008C4F7C /* LoadingAsyncImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F8D1952B898141008C4F7C /* LoadingAsyncImage.swift */; };
 		66F8D1992B89A051008C4F7C /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F8D1982B89A051008C4F7C /* SearchView.swift */; };
 		66F8D19A2B89A051008C4F7C /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F8D1982B89A051008C4F7C /* SearchView.swift */; };
+		66F8D1A02B8A8F4B008C4F7C /* ChannelMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F8D19F2B8A8F4B008C4F7C /* ChannelMock.swift */; };
+		66F8D1A12B8A8F4B008C4F7C /* ChannelMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F8D19F2B8A8F4B008C4F7C /* ChannelMock.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -182,6 +184,7 @@
 		66F8D1922B894253008C4F7C /* Route.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
 		66F8D1952B898141008C4F7C /* LoadingAsyncImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingAsyncImage.swift; sourceTree = "<group>"; };
 		66F8D1982B89A051008C4F7C /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
+		66F8D19F2B8A8F4B008C4F7C /* ChannelMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelMock.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -352,6 +355,7 @@
 				66E102252B8293EB007A44D4 /* StreamMock.swift */,
 				66E102342B82D788007A44D4 /* CategoryMock.swift */,
 				66125F652B84260D002169B5 /* UserMock.swift */,
+				66F8D19F2B8A8F4B008C4F7C /* ChannelMock.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -594,6 +598,7 @@
 				66125F632B8425A7002169B5 /* ChannelGridView.swift in Sources */,
 				66E1023F2B82D8AF007A44D4 /* CategoryButtonView.swift in Sources */,
 				66F4E4342B813A1F008C565D /* FollowedStreamsView.swift in Sources */,
+				66F8D1A02B8A8F4B008C4F7C /* ChannelMock.swift in Sources */,
 				66F8D1932B894253008C4F7C /* Route.swift in Sources */,
 				66E1022C2B82A592007A44D4 /* StreamGridView.swift in Sources */,
 				66E102352B82D788007A44D4 /* CategoryMock.swift in Sources */,
@@ -653,6 +658,7 @@
 				66125F572B83C88E002169B5 /* TabPage.swift in Sources */,
 				66E102402B82D8AF007A44D4 /* CategoryButtonView.swift in Sources */,
 				66E1021C2B8272E3007A44D4 /* Auth+Notification.swift in Sources */,
+				66F8D1A12B8A8F4B008C4F7C /* ChannelMock.swift in Sources */,
 				66E102472B82E3E8007A44D4 /* Router.swift in Sources */,
 				66E885A02B86C646004B4B8D /* DataLoader.swift in Sources */,
 				663B73242B6DB9A30031D661 /* TwitchVideoView.swift in Sources */,
