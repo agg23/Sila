@@ -9,7 +9,7 @@ import SwiftUI
 import Twitch
 
 struct ChannelButtonView: View {
-    @Environment(\.router) private var router
+    @Environment(Router.self) private var router
 
     let channel: Twitch.User
 

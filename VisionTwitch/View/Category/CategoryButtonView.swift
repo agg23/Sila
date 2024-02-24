@@ -9,7 +9,7 @@ import SwiftUI
 import Twitch
 
 struct CategoryButtonView: View {
-    @Environment(\.router) private var router
+    @Environment(Router.self) private var router
 
     let category: Twitch.Game
 

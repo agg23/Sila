@@ -8,11 +8,9 @@
 import SwiftUI
 
 struct TabPage<Content: View>: View {
-    @Environment(\.router) private var router
-
-    var title: String
-    var systemImage: String
-    var content: () -> Content
+    let title: String
+    let systemImage: String
+    let content: () -> Content
 
     var body: some View {
         NavStack {
