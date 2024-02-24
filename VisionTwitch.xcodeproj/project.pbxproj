@@ -13,8 +13,6 @@
 		660F73A62B745D710011FD65 /* PlayerControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660F73A42B745D710011FD65 /* PlayerControlsView.swift */; };
 		660F73A82B7464470011FD65 /* ChatWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660F73A72B7464470011FD65 /* ChatWebView.swift */; };
 		660F73A92B7464470011FD65 /* ChatWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660F73A72B7464470011FD65 /* ChatWebView.swift */; };
-		66125F4C2B83B8AC002169B5 /* GameWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66125F4B2B83B8AC002169B5 /* GameWrapper.swift */; };
-		66125F4D2B83B8AC002169B5 /* GameWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66125F4B2B83B8AC002169B5 /* GameWrapper.swift */; };
 		66125F502B83B913002169B5 /* CategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66125F4F2B83B913002169B5 /* CategoryView.swift */; };
 		66125F512B83B913002169B5 /* CategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66125F4F2B83B913002169B5 /* CategoryView.swift */; };
 		66125F532B83C003002169B5 /* ScrollGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66125F522B83C003002169B5 /* ScrollGridView.swift */; };
@@ -33,8 +31,6 @@
 		66125F672B84260D002169B5 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66125F652B84260D002169B5 /* User.swift */; };
 		66125F692B84279A002169B5 /* ChannelButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66125F682B84279A002169B5 /* ChannelButtonView.swift */; };
 		66125F6A2B84279A002169B5 /* ChannelButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66125F682B84279A002169B5 /* ChannelButtonView.swift */; };
-		66125F6C2B8429E4002169B5 /* UserWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66125F6B2B8429E4002169B5 /* UserWrapper.swift */; };
-		66125F6D2B8429E4002169B5 /* UserWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66125F6B2B8429E4002169B5 /* UserWrapper.swift */; };
 		66125F6F2B842F82002169B5 /* ChannelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66125F6E2B842F82002169B5 /* ChannelView.swift */; };
 		66125F702B842F82002169B5 /* ChannelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66125F6E2B842F82002169B5 /* ChannelView.swift */; };
 		663336942B75B7EA0098D188 /* View+WindowGeometryPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663336932B75B7EA0098D188 /* View+WindowGeometryPreferences.swift */; };
@@ -115,13 +111,14 @@
 		66F4E43E2B818499008C565D /* DataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E43C2B818499008C565D /* DataView.swift */; };
 		66F8D1902B88581D008C4F7C /* Icon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F8D18F2B88581D008C4F7C /* Icon.swift */; };
 		66F8D1912B88581D008C4F7C /* Icon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F8D18F2B88581D008C4F7C /* Icon.swift */; };
+		66F8D1932B894253008C4F7C /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F8D1922B894253008C4F7C /* Route.swift */; };
+		66F8D1942B894253008C4F7C /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F8D1922B894253008C4F7C /* Route.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		660F73A12B7446D70011FD65 /* WebViewPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewPlayer.swift; sourceTree = "<group>"; };
 		660F73A42B745D710011FD65 /* PlayerControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerControlsView.swift; sourceTree = "<group>"; };
 		660F73A72B7464470011FD65 /* ChatWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatWebView.swift; sourceTree = "<group>"; };
-		66125F4B2B83B8AC002169B5 /* GameWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameWrapper.swift; sourceTree = "<group>"; };
 		66125F4F2B83B913002169B5 /* CategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryView.swift; sourceTree = "<group>"; };
 		66125F522B83C003002169B5 /* ScrollGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollGridView.swift; sourceTree = "<group>"; };
 		66125F552B83C88E002169B5 /* TabPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabPage.swift; sourceTree = "<group>"; };
@@ -131,7 +128,6 @@
 		66125F622B8425A7002169B5 /* ChannelGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelGridView.swift; sourceTree = "<group>"; };
 		66125F652B84260D002169B5 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		66125F682B84279A002169B5 /* ChannelButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelButtonView.swift; sourceTree = "<group>"; };
-		66125F6B2B8429E4002169B5 /* UserWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserWrapper.swift; sourceTree = "<group>"; };
 		66125F6E2B842F82002169B5 /* ChannelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelView.swift; sourceTree = "<group>"; };
 		662C4FE92B856F7100A84C7A /* Keys.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Keys.xcconfig; sourceTree = "<group>"; };
 		663336932B75B7EA0098D188 /* View+WindowGeometryPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+WindowGeometryPreferences.swift"; sourceTree = "<group>"; };
@@ -179,6 +175,7 @@
 		66F4E4332B813A1F008C565D /* FollowedStreamsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowedStreamsView.swift; sourceTree = "<group>"; };
 		66F4E43C2B818499008C565D /* DataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataView.swift; sourceTree = "<group>"; };
 		66F8D18F2B88581D008C4F7C /* Icon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icon.swift; sourceTree = "<group>"; };
+		66F8D1922B894253008C4F7C /* Route.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -205,15 +202,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		66125F4A2B83B89D002169B5 /* Types */ = {
-			isa = PBXGroup;
-			children = (
-				66125F4B2B83B8AC002169B5 /* GameWrapper.swift */,
-				66125F6B2B8429E4002169B5 /* UserWrapper.swift */,
-			);
-			path = Types;
-			sourceTree = "<group>";
-		};
 		66125F4E2B83B8FD002169B5 /* Subpages */ = {
 			isa = PBXGroup;
 			children = (
@@ -376,6 +364,7 @@
 			children = (
 				66E102452B82E3E8007A44D4 /* Router.swift */,
 				66E102482B82E496007A44D4 /* NavStack.swift */,
+				66F8D1922B894253008C4F7C /* Route.swift */,
 			);
 			path = Navigation;
 			sourceTree = "<group>";
@@ -436,7 +425,6 @@
 		66F4E42A2B812A1F008C565D /* API */ = {
 			isa = PBXGroup;
 			children = (
-				66125F4A2B83B89D002169B5 /* Types */,
 				66F4E42B2B812A32008C565D /* AuthController.swift */,
 				66E885A42B86DFE2004B4B8D /* AuthController+EnvironmentValues.swift */,
 				66E885A12B86D95C004B4B8D /* AuthStatus.swift */,
@@ -598,6 +586,7 @@
 				66125F632B8425A7002169B5 /* ChannelGridView.swift in Sources */,
 				66E1023F2B82D8AF007A44D4 /* CategoryButtonView.swift in Sources */,
 				66F4E4342B813A1F008C565D /* FollowedStreamsView.swift in Sources */,
+				66F8D1932B894253008C4F7C /* Route.swift in Sources */,
 				66E1022C2B82A592007A44D4 /* StreamGridView.swift in Sources */,
 				66E102352B82D788007A44D4 /* Category.swift in Sources */,
 				66125F692B84279A002169B5 /* ChannelButtonView.swift in Sources */,
@@ -610,7 +599,6 @@
 				66E1023C2B82D85B007A44D4 /* CategoryGridView.swift in Sources */,
 				663B72FB2B6DB8E60031D661 /* VisionTwitchApp.swift in Sources */,
 				66F4E40F2B7D8FD3008C565D /* Twitch+Notification.swift in Sources */,
-				66125F6C2B8429E4002169B5 /* UserWrapper.swift in Sources */,
 				66E1021E2B8273B0007A44D4 /* TwitchWindowView.swift in Sources */,
 				66E102222B829349007A44D4 /* StreamButtonView.swift in Sources */,
 				66F4E4282B812932008C565D /* OAuthView.swift in Sources */,
@@ -618,7 +606,6 @@
 				66125F6F2B842F82002169B5 /* ChannelView.swift in Sources */,
 				66F8D1902B88581D008C4F7C /* Icon.swift in Sources */,
 				66E102322B82D317007A44D4 /* CategoryListView.swift in Sources */,
-				66125F4C2B83B8AC002169B5 /* GameWrapper.swift in Sources */,
 				66E1021B2B8272E3007A44D4 /* Auth+Notification.swift in Sources */,
 				66125F502B83B913002169B5 /* CategoryView.swift in Sources */,
 				66F4E4162B80292F008C565D /* OAuthWebView.swift in Sources */,
@@ -656,7 +643,6 @@
 				66125F572B83C88E002169B5 /* TabPage.swift in Sources */,
 				66E102402B82D8AF007A44D4 /* CategoryButtonView.swift in Sources */,
 				66E1021C2B8272E3007A44D4 /* Auth+Notification.swift in Sources */,
-				66125F4D2B83B8AC002169B5 /* GameWrapper.swift in Sources */,
 				66E102472B82E3E8007A44D4 /* Router.swift in Sources */,
 				66E885A02B86C646004B4B8D /* DataLoader.swift in Sources */,
 				663B73242B6DB9A30031D661 /* TwitchVideoView.swift in Sources */,
@@ -669,7 +655,6 @@
 				660F73A62B745D710011FD65 /* PlayerControlsView.swift in Sources */,
 				66E102132B82515A007A44D4 /* TagView.swift in Sources */,
 				66F4E4102B7D8FD3008C565D /* Twitch+Notification.swift in Sources */,
-				66125F6D2B8429E4002169B5 /* UserWrapper.swift in Sources */,
 				66F4E4352B813A1F008C565D /* FollowedStreamsView.swift in Sources */,
 				66125F542B83C003002169B5 /* ScrollGridView.swift in Sources */,
 				66F4E4172B80292F008C565D /* OAuthWebView.swift in Sources */,
@@ -680,6 +665,7 @@
 				66E1023D2B82D85B007A44D4 /* CategoryGridView.swift in Sources */,
 				66E102362B82D788007A44D4 /* Category.swift in Sources */,
 				66F4E41E2B811788008C565D /* AuthBadgeView.swift in Sources */,
+				66F8D1942B894253008C4F7C /* Route.swift in Sources */,
 				66125F512B83B913002169B5 /* CategoryView.swift in Sources */,
 				66F4E4292B812932008C565D /* OAuthView.swift in Sources */,
 				6633369D2B75BAB60098D188 /* AssetSelectionView.swift in Sources */,

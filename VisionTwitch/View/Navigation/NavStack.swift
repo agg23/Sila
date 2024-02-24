@@ -16,7 +16,7 @@ struct NavStack<Content: View>: View {
         // For some reason @Environment doesn't give us bindings by default, though they're internally there
         NavigationStack(path: router.pathBinding) {
             self.content()
-                .environment(\.router, self.router)
         }
+        .environment(\.router, self.router)
     }
 }

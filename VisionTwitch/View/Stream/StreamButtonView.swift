@@ -39,15 +39,40 @@ struct StreamButtonView: View {
             }
         }
         .contextMenu {
-            Button {
-                router.path.append(UserWrapper.id(stream.userId))
+            let channelButton = Button {
+                self.router.path.append(Route.channel(user: .id(stream.userId)))
             } label: {
                 Label("View Channel", systemImage: Icon.channel)
             }
-            Button {
-                router.path.append(GameWrapper.id(stream.gameID))
+
+            let categoryButton = Button {
+                self.router.path.append(Route.category(game: .id(stream.gameID)))
             } label: {
                 Label("More in this Category", systemImage: Icon.category)
+            }
+
+            if let last = self.router.path.last {
+                switch last {
+                case .channel:
+                    // We're in a channel view, we're already looking at this channel
+                    EmptyView()
+                default:
+                    channelButton
+                }
+            } else {
+                channelButton
+            }
+
+            if let last = self.router.path.last {
+                switch last {
+                case .category:
+                    // We're in a category view, we're already looking at this category
+                    EmptyView()
+                default:
+                    categoryButton
+                }
+            } else {
+                categoryButton
             }
         }
     }

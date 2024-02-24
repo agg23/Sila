@@ -8,8 +8,8 @@
 import SwiftUI
 
 @Observable class Router {
-    var path = NavigationPath()
-    var pathBinding: Binding<NavigationPath> {
+    var path: [Route] = []
+    var pathBinding: Binding<[Route]> {
         Binding(get: { self.path }, set: { self.path = $0 })
     }
 }

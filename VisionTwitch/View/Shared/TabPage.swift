@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct TabPage<Content: View>: View {
+    @Environment(\.router) private var router
+
     var title: String
     var systemImage: String
     var content: () -> Content
@@ -19,20 +21,20 @@ struct TabPage<Content: View>: View {
                     defaultToolbar()
                 }
                 .navigationTitle(self.title)
-                .navigationDestination(for: GameWrapper.self) { category in
-                    // View streams in specific category
-                    CategoryView(category: category)
-                        .toolbar {
-                            defaultToolbar()
-                        }
-                }
-                .navigationDestination(for: UserWrapper.self) { user in
-                    // View individual user info
-                    ChannelView(channel: user)
-                        .toolbar {
-                            defaultToolbar()
-                        }
-                }
+                .navigationDestination(for: Route.self, destination: { route in
+                    switch route {
+                    case .category(game: let gameWrapper):
+                        CategoryView(category: gameWrapper)
+                            .toolbar {
+                                defaultToolbar()
+                            }
+                    case .channel(user: let userWrapper):
+                        ChannelView(channel: userWrapper)
+                            .toolbar {
+                                defaultToolbar()
+                            }
+                    }
+                })
         }
             .tabItem {
                 Label(self.title, systemImage: self.systemImage)

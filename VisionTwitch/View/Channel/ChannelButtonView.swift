@@ -15,7 +15,7 @@ struct ChannelButtonView: View {
 
     var body: some View {
         AsyncImageButtonView(imageUrl: URL(string: self.channel.profileImageUrl), aspectRatio: 1.0) {
-            router.path.append(UserWrapper.user(self.channel))
+            router.path.append(Route.channel(user: UserWrapper.user(self.channel)))
         } content: {
             VStack(alignment: .leading) {
                 Text(self.channel.displayName)
