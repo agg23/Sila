@@ -16,26 +16,29 @@ enum Status<T> {
 
 @Observable class DataLoader<T, Changable: Equatable> {
     var status: Status<T> = .idle
-    var changable: Changable? = nil
-    var task: (() async throws -> T)? = nil
+    @ObservationIgnored var changable: Changable? = nil
+    @ObservationIgnored var task: (() async throws -> T)? = nil
+    @ObservationIgnored var runningTask: Task<Status<T>, Error>? = nil
 
     func get(task: @escaping () async throws -> T, onChange: Changable? = nil) -> Status<T> {
         self.task = task
 
-        switch self.status {
-        case .idle:
-            // Save changable for future updates
-            self.changable = onChange
-        default:
-            break
-        }
-
+        // Check changes before updating it (if in idle)
         if onChange != nil && onChange != self.changable {
             // We need to refresh
             Task {
                 await self.refresh()
             }
             self.changable = onChange
+        }
+
+        switch self.status {
+        case .idle:
+            // Save changable for future updates
+            self.changable = onChange
+            break
+        default:
+            break
         }
 
         return self.status
@@ -51,14 +54,38 @@ enum Status<T> {
         }
     }
 
+    func cancel() {
+        if let runningTask = self.runningTask {
+            runningTask.cancel()
+            self.runningTask = nil
+        }
+    }
+
+    private func refreshWithRunningTask(_ task: Task<Status<T>, Error>) async -> Status<T> {
+        self.cancel()
+
+        self.runningTask = task
+
+        // Can not throw
+        return try! await task.value
+    }
+
     func refresh() async {
-        self.status = await self.refreshDeferredData()
+        self.status = await self.refreshWithRunningTask(Task {
+            await self.refreshDeferredData()
+        })
     }
 
     func refresh(minDurationSecs: UInt64) async {
-        async let newStatusAsync = await self.refreshDeferredData(preventLoadingState: true)
+        async let newStatusAsync = await self.refreshWithRunningTask(Task {
+            await self.refreshDeferredData(preventLoadingState: true)
+        })
         async let sleep: ()? = try? await Task.sleep(nanoseconds: minDurationSecs * NSEC_PER_SEC)
         let (newStatus, _) = await (newStatusAsync, sleep)
+
+        guard !Task.isCancelled else {
+            return
+        }
 
         self.status = newStatus
     }
@@ -80,12 +107,31 @@ enum Status<T> {
                 break
             }
 
+            guard !Task.isCancelled else {
+                return self.status
+            }
+
             if !preventLoadingState {
                 self.status = .loading(existingData)
             }
 
-            return try await .finished(task())
+            let result = try await Status<T>.finished(task())
+
+            self.runningTask = nil
+
+            guard !Task.isCancelled else {
+                // We've cancelled. Don't assign data
+                return self.status
+            }
+
+            return result
         } catch {
+            guard !Task.isCancelled else {
+                return self.status
+            }
+
+            self.runningTask = nil
+
             return .error(error)
         }
     }

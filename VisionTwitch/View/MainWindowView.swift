@@ -25,9 +25,7 @@ struct MainWindowView: View {
                 }
 
                 TabPage(title: "Search", systemImage: Icon.search) {
-                    VStack {
-
-                    }
+                    SearchView()
                 }
             }
         }

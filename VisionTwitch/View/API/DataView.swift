@@ -40,6 +40,9 @@ struct DataView<T, E: Error, Content: View, Loading: View, ErrorView: View>: Vie
                     await self.loader.wrappedValue.onAppear()
                 }
             }
+            .onDisappear {
+                self.loader.wrappedValue.cancel()
+            }
         } else {
             // Not authorized
             self.error(nil)

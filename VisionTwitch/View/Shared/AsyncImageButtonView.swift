@@ -11,7 +11,7 @@ struct AsyncImageButtonView<Content: View>: View {
     let imageUrl: URL?
     let aspectRatio: CGFloat
 
-    @ViewBuilder let action: () -> Void
+    let action: () -> Void
     @ViewBuilder let content: () -> Content
 
     var body: some View {

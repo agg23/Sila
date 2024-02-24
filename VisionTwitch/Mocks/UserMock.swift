@@ -1,5 +1,5 @@
 //
-//  User.swift
+//  UserMock.swift
 //  VisionTwitch
 //
 //  Created by Adam Gastineau on 2/19/24.

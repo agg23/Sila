@@ -27,8 +27,8 @@
 		66125F602B83EF38002169B5 /* View+HighlightableButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66125F5E2B83EF38002169B5 /* View+HighlightableButton.swift */; };
 		66125F632B8425A7002169B5 /* ChannelGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66125F622B8425A7002169B5 /* ChannelGridView.swift */; };
 		66125F642B8425A7002169B5 /* ChannelGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66125F622B8425A7002169B5 /* ChannelGridView.swift */; };
-		66125F662B84260D002169B5 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66125F652B84260D002169B5 /* User.swift */; };
-		66125F672B84260D002169B5 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66125F652B84260D002169B5 /* User.swift */; };
+		66125F662B84260D002169B5 /* UserMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66125F652B84260D002169B5 /* UserMock.swift */; };
+		66125F672B84260D002169B5 /* UserMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66125F652B84260D002169B5 /* UserMock.swift */; };
 		66125F692B84279A002169B5 /* ChannelButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66125F682B84279A002169B5 /* ChannelButtonView.swift */; };
 		66125F6A2B84279A002169B5 /* ChannelButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66125F682B84279A002169B5 /* ChannelButtonView.swift */; };
 		66125F6F2B842F82002169B5 /* ChannelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66125F6E2B842F82002169B5 /* ChannelView.swift */; };
@@ -63,16 +63,16 @@
 		66E1021F2B8273B0007A44D4 /* TwitchWindowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E1021D2B8273B0007A44D4 /* TwitchWindowView.swift */; };
 		66E102222B829349007A44D4 /* StreamButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E102212B829349007A44D4 /* StreamButtonView.swift */; };
 		66E102232B829349007A44D4 /* StreamButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E102212B829349007A44D4 /* StreamButtonView.swift */; };
-		66E102262B8293EB007A44D4 /* Stream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E102252B8293EB007A44D4 /* Stream.swift */; };
-		66E102272B8293EB007A44D4 /* Stream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E102252B8293EB007A44D4 /* Stream.swift */; };
+		66E102262B8293EB007A44D4 /* StreamMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E102252B8293EB007A44D4 /* StreamMock.swift */; };
+		66E102272B8293EB007A44D4 /* StreamMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E102252B8293EB007A44D4 /* StreamMock.swift */; };
 		66E102292B82988A007A44D4 /* PopularView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E102282B82988A007A44D4 /* PopularView.swift */; };
 		66E1022A2B82988A007A44D4 /* PopularView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E102282B82988A007A44D4 /* PopularView.swift */; };
 		66E1022C2B82A592007A44D4 /* StreamGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E1022B2B82A592007A44D4 /* StreamGridView.swift */; };
 		66E1022D2B82A592007A44D4 /* StreamGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E1022B2B82A592007A44D4 /* StreamGridView.swift */; };
 		66E102322B82D317007A44D4 /* CategoryListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E102312B82D317007A44D4 /* CategoryListView.swift */; };
 		66E102332B82D317007A44D4 /* CategoryListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E102312B82D317007A44D4 /* CategoryListView.swift */; };
-		66E102352B82D788007A44D4 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E102342B82D788007A44D4 /* Category.swift */; };
-		66E102362B82D788007A44D4 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E102342B82D788007A44D4 /* Category.swift */; };
+		66E102352B82D788007A44D4 /* CategoryMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E102342B82D788007A44D4 /* CategoryMock.swift */; };
+		66E102362B82D788007A44D4 /* CategoryMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E102342B82D788007A44D4 /* CategoryMock.swift */; };
 		66E1023C2B82D85B007A44D4 /* CategoryGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E1023B2B82D85B007A44D4 /* CategoryGridView.swift */; };
 		66E1023D2B82D85B007A44D4 /* CategoryGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E1023B2B82D85B007A44D4 /* CategoryGridView.swift */; };
 		66E1023F2B82D8AF007A44D4 /* CategoryButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E1023E2B82D8AF007A44D4 /* CategoryButtonView.swift */; };
@@ -115,6 +115,8 @@
 		66F8D1942B894253008C4F7C /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F8D1922B894253008C4F7C /* Route.swift */; };
 		66F8D1962B898141008C4F7C /* LoadingAsyncImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F8D1952B898141008C4F7C /* LoadingAsyncImage.swift */; };
 		66F8D1972B898141008C4F7C /* LoadingAsyncImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F8D1952B898141008C4F7C /* LoadingAsyncImage.swift */; };
+		66F8D1992B89A051008C4F7C /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F8D1982B89A051008C4F7C /* SearchView.swift */; };
+		66F8D19A2B89A051008C4F7C /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F8D1982B89A051008C4F7C /* SearchView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -128,7 +130,7 @@
 		66125F5B2B83D9EC002169B5 /* PickerTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerTabView.swift; sourceTree = "<group>"; };
 		66125F5E2B83EF38002169B5 /* View+HighlightableButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+HighlightableButton.swift"; sourceTree = "<group>"; };
 		66125F622B8425A7002169B5 /* ChannelGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelGridView.swift; sourceTree = "<group>"; };
-		66125F652B84260D002169B5 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		66125F652B84260D002169B5 /* UserMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMock.swift; sourceTree = "<group>"; };
 		66125F682B84279A002169B5 /* ChannelButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelButtonView.swift; sourceTree = "<group>"; };
 		66125F6E2B842F82002169B5 /* ChannelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelView.swift; sourceTree = "<group>"; };
 		662C4FE92B856F7100A84C7A /* Keys.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Keys.xcconfig; sourceTree = "<group>"; };
@@ -153,11 +155,11 @@
 		66E1021A2B8272E3007A44D4 /* Auth+Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Auth+Notification.swift"; sourceTree = "<group>"; };
 		66E1021D2B8273B0007A44D4 /* TwitchWindowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitchWindowView.swift; sourceTree = "<group>"; };
 		66E102212B829349007A44D4 /* StreamButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamButtonView.swift; sourceTree = "<group>"; };
-		66E102252B8293EB007A44D4 /* Stream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stream.swift; sourceTree = "<group>"; };
+		66E102252B8293EB007A44D4 /* StreamMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamMock.swift; sourceTree = "<group>"; };
 		66E102282B82988A007A44D4 /* PopularView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularView.swift; sourceTree = "<group>"; };
 		66E1022B2B82A592007A44D4 /* StreamGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamGridView.swift; sourceTree = "<group>"; };
 		66E102312B82D317007A44D4 /* CategoryListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListView.swift; sourceTree = "<group>"; };
-		66E102342B82D788007A44D4 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
+		66E102342B82D788007A44D4 /* CategoryMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryMock.swift; sourceTree = "<group>"; };
 		66E1023B2B82D85B007A44D4 /* CategoryGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryGridView.swift; sourceTree = "<group>"; };
 		66E1023E2B82D8AF007A44D4 /* CategoryButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryButtonView.swift; sourceTree = "<group>"; };
 		66E102412B82D94D007A44D4 /* AsyncImageButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncImageButtonView.swift; sourceTree = "<group>"; };
@@ -179,6 +181,7 @@
 		66F8D18F2B88581D008C4F7C /* Icon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icon.swift; sourceTree = "<group>"; };
 		66F8D1922B894253008C4F7C /* Route.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
 		66F8D1952B898141008C4F7C /* LoadingAsyncImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingAsyncImage.swift; sourceTree = "<group>"; };
+		66F8D1982B89A051008C4F7C /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -346,9 +349,9 @@
 		66E102242B8293DE007A44D4 /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
-				66E102252B8293EB007A44D4 /* Stream.swift */,
-				66E102342B82D788007A44D4 /* Category.swift */,
-				66125F652B84260D002169B5 /* User.swift */,
+				66E102252B8293EB007A44D4 /* StreamMock.swift */,
+				66E102342B82D788007A44D4 /* CategoryMock.swift */,
+				66125F652B84260D002169B5 /* UserMock.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -444,6 +447,7 @@
 				66E102312B82D317007A44D4 /* CategoryListView.swift */,
 				66F4E4332B813A1F008C565D /* FollowedStreamsView.swift */,
 				66E102282B82988A007A44D4 /* PopularView.swift */,
+				66F8D1982B89A051008C4F7C /* SearchView.swift */,
 			);
 			path = Pages;
 			sourceTree = "<group>";
@@ -592,10 +596,10 @@
 				66F4E4342B813A1F008C565D /* FollowedStreamsView.swift in Sources */,
 				66F8D1932B894253008C4F7C /* Route.swift in Sources */,
 				66E1022C2B82A592007A44D4 /* StreamGridView.swift in Sources */,
-				66E102352B82D788007A44D4 /* Category.swift in Sources */,
+				66E102352B82D788007A44D4 /* CategoryMock.swift in Sources */,
 				66125F692B84279A002169B5 /* ChannelButtonView.swift in Sources */,
 				66125F532B83C003002169B5 /* ScrollGridView.swift in Sources */,
-				66E102262B8293EB007A44D4 /* Stream.swift in Sources */,
+				66E102262B8293EB007A44D4 /* StreamMock.swift in Sources */,
 				660F73A22B7446D70011FD65 /* WebViewPlayer.swift in Sources */,
 				66E102122B82515A007A44D4 /* TagView.swift in Sources */,
 				66F8D1962B898141008C4F7C /* LoadingAsyncImage.swift in Sources */,
@@ -613,6 +617,7 @@
 				66E102322B82D317007A44D4 /* CategoryListView.swift in Sources */,
 				66E1021B2B8272E3007A44D4 /* Auth+Notification.swift in Sources */,
 				66125F502B83B913002169B5 /* CategoryView.swift in Sources */,
+				66F8D1992B89A051008C4F7C /* SearchView.swift in Sources */,
 				66F4E4162B80292F008C565D /* OAuthWebView.swift in Sources */,
 				66F4E4202B8118E9008C565D /* MainWindowView.swift in Sources */,
 				663B72FF2B6DB8E60031D661 /* ImmersiveView.swift in Sources */,
@@ -621,7 +626,7 @@
 				66E8859F2B86C646004B4B8D /* DataLoader.swift in Sources */,
 				6633369C2B75BAB60098D188 /* AssetSelectionView.swift in Sources */,
 				66E885A82B8821D9004B4B8D /* StandardScrollableDataView.swift in Sources */,
-				66125F662B84260D002169B5 /* User.swift in Sources */,
+				66125F662B84260D002169B5 /* UserMock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -641,7 +646,7 @@
 				663B73282B6DBA8E0031D661 /* TwitchWebView.swift in Sources */,
 				66125F6A2B84279A002169B5 /* ChannelButtonView.swift in Sources */,
 				663B73142B6DB9410031D661 /* VisionTwitchiOSApp.swift in Sources */,
-				66E102272B8293EB007A44D4 /* Stream.swift in Sources */,
+				66E102272B8293EB007A44D4 /* StreamMock.swift in Sources */,
 				66125F602B83EF38002169B5 /* View+HighlightableButton.swift in Sources */,
 				663336952B75B7EA0098D188 /* View+WindowGeometryPreferences.swift in Sources */,
 				660F73A32B7446D70011FD65 /* WebViewPlayer.swift in Sources */,
@@ -654,7 +659,7 @@
 				66F4E4262B811B6C008C565D /* CloseButtonView.swift in Sources */,
 				66E885A92B8821D9004B4B8D /* StandardScrollableDataView.swift in Sources */,
 				66F4E42D2B812A32008C565D /* AuthController.swift in Sources */,
-				66125F672B84260D002169B5 /* User.swift in Sources */,
+				66125F672B84260D002169B5 /* UserMock.swift in Sources */,
 				66E1022A2B82988A007A44D4 /* PopularView.swift in Sources */,
 				66E102232B829349007A44D4 /* StreamButtonView.swift in Sources */,
 				660F73A62B745D710011FD65 /* PlayerControlsView.swift in Sources */,
@@ -667,9 +672,10 @@
 				660F73A92B7464470011FD65 /* ChatWebView.swift in Sources */,
 				66E102432B82D94E007A44D4 /* AsyncImageButtonView.swift in Sources */,
 				66F4E43E2B818499008C565D /* DataView.swift in Sources */,
+				66F8D19A2B89A051008C4F7C /* SearchView.swift in Sources */,
 				66E1022D2B82A592007A44D4 /* StreamGridView.swift in Sources */,
 				66E1023D2B82D85B007A44D4 /* CategoryGridView.swift in Sources */,
-				66E102362B82D788007A44D4 /* Category.swift in Sources */,
+				66E102362B82D788007A44D4 /* CategoryMock.swift in Sources */,
 				66F4E41E2B811788008C565D /* AuthBadgeView.swift in Sources */,
 				66F8D1942B894253008C4F7C /* Route.swift in Sources */,
 				66125F512B83B913002169B5 /* CategoryView.swift in Sources */,
