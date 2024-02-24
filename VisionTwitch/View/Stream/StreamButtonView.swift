@@ -10,7 +10,7 @@ import Twitch
 
 struct StreamButtonView: View {
     @Environment(\.router) private var router
-    @Environment(\.openWindow) private var openWindow;
+    @Environment(\.openWindow) private var openWindow
 
     let stream: Twitch.Stream
 

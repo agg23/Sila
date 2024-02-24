@@ -14,9 +14,9 @@ struct DataView<T, E: Error, Content: View, Loading: View, ErrorView: View>: Vie
     let loader: Binding<DataLoader<T, AuthStatus>>
     let task: (_: Helix, _: AuthUser?) async throws -> T
 
-    let content: (_: T) -> Content
-    let loading: (_: T?) -> Loading
-    let error: (_: E?) -> ErrorView
+    @ViewBuilder let content: (_: T) -> Content
+    @ViewBuilder let loading: (_: T?) -> Loading
+    @ViewBuilder let error: (_: E?) -> ErrorView
 
     var body: some View {
         if let apiAndUser = self.authController.status.apiAndUser() {

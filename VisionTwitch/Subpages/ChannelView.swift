@@ -38,6 +38,10 @@ struct ChannelView: View {
 }
 
 struct ChannelViewContent: View {
+    @Environment(\.openWindow) private var openWindow
+
+    @State private var userLoader = DataLoader<[Twitch.Stream], AuthStatus>()
+
     let channelUser: User
 
     var body: some View {
@@ -49,59 +53,37 @@ struct ChannelViewContent: View {
                         .font(.title)
                         .lineLimit(1, reservesSpace: true)
 
-                    let liveButton = Button {
-
-                    } label: {
-                        Text("Watch Now")
+                    DataView(loader: self.$userLoader) { api, _ in
+                        let (streams, _) = try await api.getStreams(userIDs: [self.channelUser.id])
+                        return streams
+                    } content: { streams in
+                        if let stream = streams.first {
+                            Button {
+                                openWindow(id: "channelVideo", value: stream.userName)
+                            } label: {
+                                Text("Watch Now")
+                            }
+                        } else {
+                            Text("Offline")
+                        }
+                    } loading: { _ in
+                        ProgressView()
+                    } error: { (_: HelixError?) in
+                        EmptyView()
                     }
-
-                    let offlineMessage = Text("Offline")
-
-//                    SuccessDataView(taskClosure: { api in
-//                        return Task {
-//                            let (streams, _) = try await api.getStreams(userIDs: [user.id])
-//                            return streams.count > 0
-//                        }
-//                    }, content: { isLive in
-//                        if isLive {
-//                            liveButton
-//                        } else {
-//                            offlineMessage
-//                        }
-//                    }, other: {
-//                        offlineMessage
-//                    }, requiresAuth: false)
                 }
+                Spacer()
             }
         }
         .navigationTitle(self.channelUser.displayName)
-        .onAppear {
-            // This will trigger on every appear, refetching
-//            liveProvider = DataProvider(taskClosure: { api in
-//                Task {
-//                    let (streams, _) = try await api.getStreams(userIDs: [user.id])
-//                    return streams.count > 0
-//                }
-//            }, requiresAuth: false)
-        }
     }
 
     var profileImage: some View {
-        AsyncImage(url: URL(string: self.channelUser.profileImageUrl), content: { image in
-            image
-                .resizable()
-        }, placeholder: {
-            // Make sure ProgressView is the same size as the final image will be
-            GeometryReader { geometry in
-                ProgressView()
-                    .frame(width: geometry.size.width, height: geometry.size.height)
-            }
-        })
-        .aspectRatio(1.0, contentMode: .fit)
-        .frame(width: 150)
+        LoadingAsyncImage(imageUrl: URL(string: self.channelUser.profileImageUrl), aspectRatio: 1.0)
+            .frame(width: 150)
     }
 }
 
 #Preview {
-    ChannelView(channel: UserWrapper.user(USER_MOCK()))
+    ChannelViewContent(channelUser: USER_MOCK())
 }

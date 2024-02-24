@@ -12,7 +12,7 @@ struct StandardScrollableDataView<T, Content: View>: View {
     let loader: Binding<DataLoader<T, AuthStatus>>
     let task: (_: Helix, _: AuthUser?) async throws -> T
 
-    let content: (_: T) -> Content
+    @ViewBuilder let content: (_: T) -> Content
 
     var body: some View {
         DataView(loader: self.loader, task: self.task, content: { data in
@@ -34,7 +34,7 @@ struct AuthorizedStandardScrollableDataView<T, Content: View>: View {
     let loader: Binding<DataLoader<T, AuthStatus>>
     let task: (_: Helix, _: AuthUser?) async throws -> T
 
-    let content: (_: T) -> Content
+    @ViewBuilder let content: (_: T) -> Content
 
     var body: some View {
         if self.authController.isAuthorized() {

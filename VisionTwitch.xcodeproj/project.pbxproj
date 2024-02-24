@@ -113,6 +113,8 @@
 		66F8D1912B88581D008C4F7C /* Icon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F8D18F2B88581D008C4F7C /* Icon.swift */; };
 		66F8D1932B894253008C4F7C /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F8D1922B894253008C4F7C /* Route.swift */; };
 		66F8D1942B894253008C4F7C /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F8D1922B894253008C4F7C /* Route.swift */; };
+		66F8D1962B898141008C4F7C /* LoadingAsyncImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F8D1952B898141008C4F7C /* LoadingAsyncImage.swift */; };
+		66F8D1972B898141008C4F7C /* LoadingAsyncImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F8D1952B898141008C4F7C /* LoadingAsyncImage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -176,6 +178,7 @@
 		66F4E43C2B818499008C565D /* DataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataView.swift; sourceTree = "<group>"; };
 		66F8D18F2B88581D008C4F7C /* Icon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icon.swift; sourceTree = "<group>"; };
 		66F8D1922B894253008C4F7C /* Route.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
+		66F8D1952B898141008C4F7C /* LoadingAsyncImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingAsyncImage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -413,10 +416,11 @@
 				66E102412B82D94D007A44D4 /* AsyncImageButtonView.swift */,
 				66F4E4242B811B6C008C565D /* CloseButtonView.swift */,
 				66125F582B83CE4E002169B5 /* DefaultToolbar.swift */,
+				66F8D1952B898141008C4F7C /* LoadingAsyncImage.swift */,
+				66125F5B2B83D9EC002169B5 /* PickerTabView.swift */,
 				66125F522B83C003002169B5 /* ScrollGridView.swift */,
 				66125F552B83C88E002169B5 /* TabPage.swift */,
 				66E102112B82515A007A44D4 /* TagView.swift */,
-				66125F5B2B83D9EC002169B5 /* PickerTabView.swift */,
 				66125F5E2B83EF38002169B5 /* View+HighlightableButton.swift */,
 			);
 			path = Shared;
@@ -594,6 +598,7 @@
 				66E102262B8293EB007A44D4 /* Stream.swift in Sources */,
 				660F73A22B7446D70011FD65 /* WebViewPlayer.swift in Sources */,
 				66E102122B82515A007A44D4 /* TagView.swift in Sources */,
+				66F8D1962B898141008C4F7C /* LoadingAsyncImage.swift in Sources */,
 				66E102462B82E3E8007A44D4 /* Router.swift in Sources */,
 				663B73232B6DB9A30031D661 /* TwitchVideoView.swift in Sources */,
 				66E1023C2B82D85B007A44D4 /* CategoryGridView.swift in Sources */,
@@ -657,6 +662,7 @@
 				66F4E4102B7D8FD3008C565D /* Twitch+Notification.swift in Sources */,
 				66F4E4352B813A1F008C565D /* FollowedStreamsView.swift in Sources */,
 				66125F542B83C003002169B5 /* ScrollGridView.swift in Sources */,
+				66F8D1972B898141008C4F7C /* LoadingAsyncImage.swift in Sources */,
 				66F4E4172B80292F008C565D /* OAuthWebView.swift in Sources */,
 				660F73A92B7464470011FD65 /* ChatWebView.swift in Sources */,
 				66E102432B82D94E007A44D4 /* AsyncImageButtonView.swift in Sources */,
