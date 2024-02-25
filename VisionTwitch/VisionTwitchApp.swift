@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Twitch
 
 @main
 struct VisionTwitchApp: App {
@@ -19,9 +20,9 @@ struct VisionTwitchApp: App {
         }
         .environment(\.authController, self.authController)
 
-        WindowGroup(id: "channelVideo", for: String.self) { channel in
-            if let channel = channel.wrappedValue {
-                TwitchWindowView(channel: channel)
+        WindowGroup(id: "channelVideo", for: Twitch.Stream.self) { stream in
+            if let stream = stream.wrappedValue {
+                TwitchWindowView(stream: stream)
             } else {
                 Text("No channel specified")
             }

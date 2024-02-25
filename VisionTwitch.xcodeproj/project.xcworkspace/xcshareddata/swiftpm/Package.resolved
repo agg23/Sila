@@ -1,12 +1,12 @@
 {
   "pins" : [
     {
-      "identity" : "flyingfox",
+      "identity" : "junoslider",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/swhitty/FlyingFox.git",
+      "location" : "https://github.com/christianselig/JunoSlider.git",
       "state" : {
-        "revision" : "00e4d51c57b4fbe4f011650f2f965d3bea1ba7c1",
-        "version" : "0.13.0"
+        "revision" : "c7c9967c0107b3753bf45f23babba7f94d82a684",
+        "version" : "1.0.0"
       }
     },
     {
@@ -123,16 +123,7 @@
       "location" : "https://github.com/agg23/swift-twitch-client",
       "state" : {
         "branch" : "main",
-        "revision" : "5dd447342dd679096f3a2dcf6a44ebe894394aef"
-      }
-    },
-    {
-      "identity" : "swifter",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/httpswift/swifter.git",
-      "state" : {
-        "revision" : "9483a5d459b45c3ffd059f7b55f9638e268632fd",
-        "version" : "1.5.0"
+        "revision" : "c01d930bcf1a442d922179530b25f6db471b5629"
       }
     },
     {

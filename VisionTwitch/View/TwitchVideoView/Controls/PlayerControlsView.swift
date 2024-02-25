@@ -6,9 +6,15 @@
 //
 
 import SwiftUI
+import Twitch
+import JunoUI
 
 struct PlayerControlsView: View {
+    @State private var volume: CGFloat = 0.0
+
     var player: WebViewPlayer
+
+    var stream: Twitch.Stream
 
     var onButtonPress: (() -> Void)?
 
@@ -25,35 +31,30 @@ struct PlayerControlsView: View {
             }
             .controlSize(.extraLarge)
 
-            Button {
-                self.player.toggleMute()
-                self.onButtonPress?()
-            } label: {
-                if self.player.muted {
-                    Image(systemName: "speaker.slash.fill")
-                } else {
-                    Image(systemName: "speaker.wave.3.fill")
-                }
-            }
+            StreamStatusControlView(stream: self.stream)
+                .padding(.horizontal)
+
             Button {
                 self.player.reload()
                 self.onButtonPress?()
             } label: {
                 Image(systemName: "arrow.clockwise")
             }
+
+            PopupVolumeSlider(volume: self.$volume)
         }
         .padding()
     }
 }
 
 #Preview {
-    PlayerControlsView(player: WebViewPlayer())
+    PlayerControlsView(player: WebViewPlayer(), stream: STREAM_MOCK())
 }
 
 #Preview {
     Rectangle()
         .ornament(attachmentAnchor: .scene(.bottom)) {
-            PlayerControlsView(player: WebViewPlayer())
+            PlayerControlsView(player: WebViewPlayer(), stream: STREAM_MOCK())
                 .glassBackgroundEffect()
         }
 }

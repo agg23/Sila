@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6600E0852B8BB384003B2270 /* Stream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6600E0842B8BB384003B2270 /* Stream.swift */; };
+		6600E0862B8BB384003B2270 /* Stream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6600E0842B8BB384003B2270 /* Stream.swift */; };
+		6600E0892B8BB5E8003B2270 /* StreamStatusControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6600E0882B8BB5E8003B2270 /* StreamStatusControlView.swift */; };
+		6600E08A2B8BB5E8003B2270 /* StreamStatusControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6600E0882B8BB5E8003B2270 /* StreamStatusControlView.swift */; };
+		6600E08C2B8BBBCB003B2270 /* DarkBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6600E08B2B8BBBCB003B2270 /* DarkBackgroundView.swift */; };
+		6600E08D2B8BBBCB003B2270 /* DarkBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6600E08B2B8BBBCB003B2270 /* DarkBackgroundView.swift */; };
+		6600E0902B8BC0FD003B2270 /* InsetBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6600E08F2B8BC0FD003B2270 /* InsetBackground.swift */; };
+		6600E0912B8BC0FD003B2270 /* InsetBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6600E08F2B8BC0FD003B2270 /* InsetBackground.swift */; };
 		660F73A22B7446D70011FD65 /* WebViewPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660F73A12B7446D70011FD65 /* WebViewPlayer.swift */; };
 		660F73A32B7446D70011FD65 /* WebViewPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660F73A12B7446D70011FD65 /* WebViewPlayer.swift */; };
 		660F73A52B745D710011FD65 /* PlayerControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660F73A42B745D710011FD65 /* PlayerControlsView.swift */; };
@@ -35,8 +43,6 @@
 		66125F702B842F82002169B5 /* ChannelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66125F6E2B842F82002169B5 /* ChannelView.swift */; };
 		663336942B75B7EA0098D188 /* View+WindowGeometryPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663336932B75B7EA0098D188 /* View+WindowGeometryPreferences.swift */; };
 		663336952B75B7EA0098D188 /* View+WindowGeometryPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663336932B75B7EA0098D188 /* View+WindowGeometryPreferences.swift */; };
-		6633369C2B75BAB60098D188 /* AssetSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6633369B2B75BAB60098D188 /* AssetSelectionView.swift */; };
-		6633369D2B75BAB60098D188 /* AssetSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6633369B2B75BAB60098D188 /* AssetSelectionView.swift */; };
 		66364FBA2B8ABB9C005180B8 /* APIErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66364FB92B8ABB9C005180B8 /* APIErrorView.swift */; };
 		66364FBB2B8ABB9C005180B8 /* APIErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66364FB92B8ABB9C005180B8 /* APIErrorView.swift */; };
 		66364FBD2B8AF629005180B8 /* CircleBackgroundLessButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66364FBC2B8AF629005180B8 /* CircleBackgroundLessButton.swift */; };
@@ -44,6 +50,7 @@
 		66364FC12B8B92B0005180B8 /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = 66364FC02B8B92B0005180B8 /* MarkdownUI */; };
 		66364FC42B8B9AAD005180B8 /* ChatExperimentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66364FC32B8B9AAD005180B8 /* ChatExperimentView.swift */; };
 		66364FC52B8B9AAD005180B8 /* ChatExperimentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66364FC32B8B9AAD005180B8 /* ChatExperimentView.swift */; };
+		66364FC82B8BA49A005180B8 /* JunoUI in Frameworks */ = {isa = PBXBuildFile; productRef = 66364FC72B8BA49A005180B8 /* JunoUI */; };
 		663B72F92B6DB8E60031D661 /* RealityKitContent in Frameworks */ = {isa = PBXBuildFile; productRef = 663B72F82B6DB8E60031D661 /* RealityKitContent */; };
 		663B72FB2B6DB8E60031D661 /* VisionTwitchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663B72FA2B6DB8E60031D661 /* VisionTwitchApp.swift */; };
 		663B72FF2B6DB8E60031D661 /* ImmersiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663B72FE2B6DB8E60031D661 /* ImmersiveView.swift */; };
@@ -58,9 +65,8 @@
 		663B73242B6DB9A30031D661 /* TwitchVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663B73222B6DB9A30031D661 /* TwitchVideoView.swift */; };
 		663B73272B6DBA8E0031D661 /* TwitchWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663B73262B6DBA8E0031D661 /* TwitchWebView.swift */; };
 		663B73282B6DBA8E0031D661 /* TwitchWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663B73262B6DBA8E0031D661 /* TwitchWebView.swift */; };
-		663B732E2B6E066D0031D661 /* Swifter in Frameworks */ = {isa = PBXBuildFile; productRef = 663B732D2B6E066D0031D661 /* Swifter */; };
-		663B73312B6E06860031D661 /* Swifter in Frameworks */ = {isa = PBXBuildFile; productRef = 663B73302B6E06860031D661 /* Swifter */; };
-		663B73342B6E86B00031D661 /* FlyingFox in Frameworks */ = {isa = PBXBuildFile; productRef = 663B73332B6E86B00031D661 /* FlyingFox */; };
+		66DF455D2B8BA645006C1D99 /* PopupVolumeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DF455C2B8BA645006C1D99 /* PopupVolumeSlider.swift */; };
+		66DF455E2B8BA645006C1D99 /* PopupVolumeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DF455C2B8BA645006C1D99 /* PopupVolumeSlider.swift */; };
 		66E102122B82515A007A44D4 /* TagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E102112B82515A007A44D4 /* TagView.swift */; };
 		66E102132B82515A007A44D4 /* TagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E102112B82515A007A44D4 /* TagView.swift */; };
 		66E102192B8262AC007A44D4 /* KeychainWrapper in Frameworks */ = {isa = PBXBuildFile; productRef = 66E102182B8262AC007A44D4 /* KeychainWrapper */; };
@@ -129,6 +135,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6600E0842B8BB384003B2270 /* Stream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stream.swift; sourceTree = "<group>"; };
+		6600E0882B8BB5E8003B2270 /* StreamStatusControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamStatusControlView.swift; sourceTree = "<group>"; };
+		6600E08B2B8BBBCB003B2270 /* DarkBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DarkBackgroundView.swift; sourceTree = "<group>"; };
+		6600E08F2B8BC0FD003B2270 /* InsetBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsetBackground.swift; sourceTree = "<group>"; };
 		660F73A12B7446D70011FD65 /* WebViewPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewPlayer.swift; sourceTree = "<group>"; };
 		660F73A42B745D710011FD65 /* PlayerControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerControlsView.swift; sourceTree = "<group>"; };
 		660F73A72B7464470011FD65 /* ChatWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatWebView.swift; sourceTree = "<group>"; };
@@ -144,7 +154,6 @@
 		66125F6E2B842F82002169B5 /* ChannelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelView.swift; sourceTree = "<group>"; };
 		662C4FE92B856F7100A84C7A /* Keys.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Keys.xcconfig; sourceTree = "<group>"; };
 		663336932B75B7EA0098D188 /* View+WindowGeometryPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+WindowGeometryPreferences.swift"; sourceTree = "<group>"; };
-		6633369B2B75BAB60098D188 /* AssetSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetSelectionView.swift; sourceTree = "<group>"; };
 		66364FB92B8ABB9C005180B8 /* APIErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIErrorView.swift; sourceTree = "<group>"; };
 		66364FBC2B8AF629005180B8 /* CircleBackgroundLessButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleBackgroundLessButton.swift; sourceTree = "<group>"; };
 		66364FC32B8B9AAD005180B8 /* ChatExperimentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatExperimentView.swift; sourceTree = "<group>"; };
@@ -163,6 +172,7 @@
 		663B731A2B6DB9430031D661 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		663B73222B6DB9A30031D661 /* TwitchVideoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitchVideoView.swift; sourceTree = "<group>"; };
 		663B73262B6DBA8E0031D661 /* TwitchWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitchWebView.swift; sourceTree = "<group>"; };
+		66DF455C2B8BA645006C1D99 /* PopupVolumeSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupVolumeSlider.swift; sourceTree = "<group>"; };
 		66E102112B82515A007A44D4 /* TagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagView.swift; sourceTree = "<group>"; };
 		66E1021A2B8272E3007A44D4 /* Auth+Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Auth+Notification.swift"; sourceTree = "<group>"; };
 		66E1021D2B8273B0007A44D4 /* TwitchWindowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitchWindowView.swift; sourceTree = "<group>"; };
@@ -205,7 +215,7 @@
 				66E102192B8262AC007A44D4 /* KeychainWrapper in Frameworks */,
 				66F4E4302B8132F5008C565D /* Twitch in Frameworks */,
 				663B72F92B6DB8E60031D661 /* RealityKitContent in Frameworks */,
-				663B73312B6E06860031D661 /* Swifter in Frameworks */,
+				66364FC82B8BA49A005180B8 /* JunoUI in Frameworks */,
 				66364FC12B8B92B0005180B8 /* MarkdownUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -214,14 +224,38 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				663B732E2B6E066D0031D661 /* Swifter in Frameworks */,
-				663B73342B6E86B00031D661 /* FlyingFox in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6600E0832B8BB352003B2270 /* Overrides */ = {
+			isa = PBXGroup;
+			children = (
+				6600E0842B8BB384003B2270 /* Stream.swift */,
+			);
+			path = Overrides;
+			sourceTree = "<group>";
+		};
+		6600E0872B8BB5AF003B2270 /* Controls */ = {
+			isa = PBXGroup;
+			children = (
+				660F73A42B745D710011FD65 /* PlayerControlsView.swift */,
+				66DF455C2B8BA645006C1D99 /* PopupVolumeSlider.swift */,
+				6600E0882B8BB5E8003B2270 /* StreamStatusControlView.swift */,
+			);
+			path = Controls;
+			sourceTree = "<group>";
+		};
+		6600E08E2B8BC0E0003B2270 /* ViewModifiers */ = {
+			isa = PBXGroup;
+			children = (
+				6600E08F2B8BC0FD003B2270 /* InsetBackground.swift */,
+			);
+			path = ViewModifiers;
+			sourceTree = "<group>";
+		};
 		66125F4E2B83B8FD002169B5 /* Subpages */ = {
 			isa = PBXGroup;
 			children = (
@@ -246,14 +280,6 @@
 				663336932B75B7EA0098D188 /* View+WindowGeometryPreferences.swift */,
 			);
 			path = Extensions;
-			sourceTree = "<group>";
-		};
-		6633369A2B75BA7C0098D188 /* AssetSelection */ = {
-			isa = PBXGroup;
-			children = (
-				6633369B2B75BAB60098D188 /* AssetSelectionView.swift */,
-			);
-			path = AssetSelection;
 			sourceTree = "<group>";
 		};
 		66364FC22B8B9A97005180B8 /* Chat */ = {
@@ -342,11 +368,11 @@
 		663B73252B6DBA7F0031D661 /* TwitchVideoView */ = {
 			isa = PBXGroup;
 			children = (
-				663B73222B6DB9A30031D661 /* TwitchVideoView.swift */,
-				663B73262B6DBA8E0031D661 /* TwitchWebView.swift */,
+				6600E0872B8BB5AF003B2270 /* Controls */,
 				660F73A72B7464470011FD65 /* ChatWebView.swift */,
 				660F73A12B7446D70011FD65 /* WebViewPlayer.swift */,
-				660F73A42B745D710011FD65 /* PlayerControlsView.swift */,
+				663B73262B6DBA8E0031D661 /* TwitchWebView.swift */,
+				663B73222B6DB9A30031D661 /* TwitchVideoView.swift */,
 				66F4E40E2B7D8FD3008C565D /* Twitch+Notification.swift */,
 			);
 			path = TwitchVideoView;
@@ -423,7 +449,6 @@
 			isa = PBXGroup;
 			children = (
 				66F4E41B2B811778008C565D /* API */,
-				6633369A2B75BA7C0098D188 /* AssetSelection */,
 				66E102372B82D7FC007A44D4 /* Category */,
 				66125F612B84255D002169B5 /* Channel */,
 				66364FC22B8B9A97005180B8 /* Chat */,
@@ -431,6 +456,7 @@
 				66F4E4232B811B5F008C565D /* Shared */,
 				66E102202B829332007A44D4 /* Stream */,
 				663B73252B6DBA7F0031D661 /* TwitchVideoView */,
+				6600E08E2B8BC0E0003B2270 /* ViewModifiers */,
 				66F4E41F2B8118E9008C565D /* MainWindowView.swift */,
 				66E1021D2B8273B0007A44D4 /* TwitchWindowView.swift */,
 				663B72FE2B6DB8E60031D661 /* ImmersiveView.swift */,
@@ -444,6 +470,7 @@
 				66E102412B82D94D007A44D4 /* AsyncImageButtonView.swift */,
 				66364FBC2B8AF629005180B8 /* CircleBackgroundLessButton.swift */,
 				66F4E4242B811B6C008C565D /* CloseButtonView.swift */,
+				6600E08B2B8BBBCB003B2270 /* DarkBackgroundView.swift */,
 				66125F582B83CE4E002169B5 /* DefaultToolbar.swift */,
 				66F8D1952B898141008C4F7C /* LoadingAsyncImage.swift */,
 				66125F5B2B83D9EC002169B5 /* PickerTabView.swift */,
@@ -458,6 +485,7 @@
 		66F4E42A2B812A1F008C565D /* API */ = {
 			isa = PBXGroup;
 			children = (
+				6600E0832B8BB352003B2270 /* Overrides */,
 				66F4E42B2B812A32008C565D /* AuthController.swift */,
 				66E885A42B86DFE2004B4B8D /* AuthController+EnvironmentValues.swift */,
 				66E885A12B86D95C004B4B8D /* AuthStatus.swift */,
@@ -504,10 +532,10 @@
 			name = VisionTwitch;
 			packageProductDependencies = (
 				663B72F82B6DB8E60031D661 /* RealityKitContent */,
-				663B73302B6E06860031D661 /* Swifter */,
 				66F4E42F2B8132F5008C565D /* Twitch */,
 				66E102182B8262AC007A44D4 /* KeychainWrapper */,
 				66364FC02B8B92B0005180B8 /* MarkdownUI */,
+				66364FC72B8BA49A005180B8 /* JunoUI */,
 			);
 			productName = VisionTwitch;
 			productReference = 663B72F32B6DB8E60031D661 /* VisionTwitch.app */;
@@ -527,8 +555,6 @@
 			);
 			name = VisionTwitchiOS;
 			packageProductDependencies = (
-				663B732D2B6E066D0031D661 /* Swifter */,
-				663B73332B6E86B00031D661 /* FlyingFox */,
 			);
 			productName = VisionTwitchiOS;
 			productReference = 663B73112B6DB9410031D661 /* VisionTwitchiOS.app */;
@@ -562,11 +588,10 @@
 			);
 			mainGroup = 663B72EA2B6DB8E60031D661;
 			packageReferences = (
-				663B732C2B6E066D0031D661 /* XCRemoteSwiftPackageReference "swifter" */,
-				663B73322B6E86B00031D661 /* XCRemoteSwiftPackageReference "FlyingFox" */,
 				66F4E42E2B8132F5008C565D /* XCRemoteSwiftPackageReference "swift-twitch-client" */,
 				66E102172B8262AC007A44D4 /* XCRemoteSwiftPackageReference "KeychainWrapper" */,
 				66364FBF2B8B92AF005180B8 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
+				66364FC62B8BA499005180B8 /* XCRemoteSwiftPackageReference "JunoSlider" */,
 			);
 			productRefGroup = 663B72F42B6DB8E60031D661 /* Products */;
 			projectDirPath = "";
@@ -607,10 +632,12 @@
 			files = (
 				66364FBA2B8ABB9C005180B8 /* APIErrorView.swift in Sources */,
 				663336942B75B7EA0098D188 /* View+WindowGeometryPreferences.swift in Sources */,
+				6600E08C2B8BBBCB003B2270 /* DarkBackgroundView.swift in Sources */,
 				66E102422B82D94E007A44D4 /* AsyncImageButtonView.swift in Sources */,
 				660F73A82B7464470011FD65 /* ChatWebView.swift in Sources */,
 				66F4E43D2B818499008C565D /* DataView.swift in Sources */,
 				663B73272B6DBA8E0031D661 /* TwitchWebView.swift in Sources */,
+				6600E0902B8BC0FD003B2270 /* InsetBackground.swift in Sources */,
 				660F73A52B745D710011FD65 /* PlayerControlsView.swift in Sources */,
 				66125F5C2B83D9EC002169B5 /* PickerTabView.swift in Sources */,
 				66F4E4252B811B6C008C565D /* CloseButtonView.swift in Sources */,
@@ -624,6 +651,7 @@
 				66E1023F2B82D8AF007A44D4 /* CategoryButtonView.swift in Sources */,
 				66364FBD2B8AF629005180B8 /* CircleBackgroundLessButton.swift in Sources */,
 				66F4E4342B813A1F008C565D /* FollowedStreamsView.swift in Sources */,
+				6600E0892B8BB5E8003B2270 /* StreamStatusControlView.swift in Sources */,
 				66F8D1A02B8A8F4B008C4F7C /* ChannelMock.swift in Sources */,
 				66F8D1932B894253008C4F7C /* Route.swift in Sources */,
 				66E1022C2B82A592007A44D4 /* StreamGridView.swift in Sources */,
@@ -632,10 +660,12 @@
 				66125F532B83C003002169B5 /* ScrollGridView.swift in Sources */,
 				66E102262B8293EB007A44D4 /* StreamMock.swift in Sources */,
 				660F73A22B7446D70011FD65 /* WebViewPlayer.swift in Sources */,
+				6600E0852B8BB384003B2270 /* Stream.swift in Sources */,
 				66E102122B82515A007A44D4 /* TagView.swift in Sources */,
 				66F8D1962B898141008C4F7C /* LoadingAsyncImage.swift in Sources */,
 				66364FC42B8B9AAD005180B8 /* ChatExperimentView.swift in Sources */,
 				66E102462B82E3E8007A44D4 /* Router.swift in Sources */,
+				66DF455D2B8BA645006C1D99 /* PopupVolumeSlider.swift in Sources */,
 				663B73232B6DB9A30031D661 /* TwitchVideoView.swift in Sources */,
 				66E1023C2B82D85B007A44D4 /* CategoryGridView.swift in Sources */,
 				663B72FB2B6DB8E60031D661 /* VisionTwitchApp.swift in Sources */,
@@ -656,7 +686,6 @@
 				66F4E41D2B811788008C565D /* AuthBadgeView.swift in Sources */,
 				66125F5F2B83EF38002169B5 /* View+HighlightableButton.swift in Sources */,
 				66E8859F2B86C646004B4B8D /* DataLoader.swift in Sources */,
-				6633369C2B75BAB60098D188 /* AssetSelectionView.swift in Sources */,
 				66E885A82B8821D9004B4B8D /* StandardScrollableDataView.swift in Sources */,
 				66125F662B84260D002169B5 /* UserMock.swift in Sources */,
 			);
@@ -669,6 +698,7 @@
 				66E1021F2B8273B0007A44D4 /* TwitchWindowView.swift in Sources */,
 				66E885A32B86D95C004B4B8D /* AuthStatus.swift in Sources */,
 				66F8D1912B88581D008C4F7C /* Icon.swift in Sources */,
+				6600E0912B8BC0FD003B2270 /* InsetBackground.swift in Sources */,
 				663B73162B6DB9410031D661 /* ContentView.swift in Sources */,
 				66E1024A2B82E496007A44D4 /* NavStack.swift in Sources */,
 				66125F702B842F82002169B5 /* ChannelView.swift in Sources */,
@@ -686,6 +716,7 @@
 				66125F572B83C88E002169B5 /* TabPage.swift in Sources */,
 				66E102402B82D8AF007A44D4 /* CategoryButtonView.swift in Sources */,
 				66E1021C2B8272E3007A44D4 /* Auth+Notification.swift in Sources */,
+				6600E08A2B8BB5E8003B2270 /* StreamStatusControlView.swift in Sources */,
 				66F8D1A12B8A8F4B008C4F7C /* ChannelMock.swift in Sources */,
 				66E102472B82E3E8007A44D4 /* Router.swift in Sources */,
 				66E885A02B86C646004B4B8D /* DataLoader.swift in Sources */,
@@ -701,6 +732,7 @@
 				66F4E4102B7D8FD3008C565D /* Twitch+Notification.swift in Sources */,
 				66F4E4352B813A1F008C565D /* FollowedStreamsView.swift in Sources */,
 				66125F542B83C003002169B5 /* ScrollGridView.swift in Sources */,
+				66DF455E2B8BA645006C1D99 /* PopupVolumeSlider.swift in Sources */,
 				66F8D1972B898141008C4F7C /* LoadingAsyncImage.swift in Sources */,
 				66F4E4172B80292F008C565D /* OAuthWebView.swift in Sources */,
 				660F73A92B7464470011FD65 /* ChatWebView.swift in Sources */,
@@ -709,6 +741,8 @@
 				66364FBB2B8ABB9C005180B8 /* APIErrorView.swift in Sources */,
 				66F8D19A2B89A051008C4F7C /* SearchView.swift in Sources */,
 				66E1022D2B82A592007A44D4 /* StreamGridView.swift in Sources */,
+				6600E0862B8BB384003B2270 /* Stream.swift in Sources */,
+				6600E08D2B8BBBCB003B2270 /* DarkBackgroundView.swift in Sources */,
 				66E1023D2B82D85B007A44D4 /* CategoryGridView.swift in Sources */,
 				66E102362B82D788007A44D4 /* CategoryMock.swift in Sources */,
 				66F4E41E2B811788008C565D /* AuthBadgeView.swift in Sources */,
@@ -716,7 +750,6 @@
 				66125F512B83B913002169B5 /* CategoryView.swift in Sources */,
 				66F4E4292B812932008C565D /* OAuthView.swift in Sources */,
 				66364FBE2B8AF629005180B8 /* CircleBackgroundLessButton.swift in Sources */,
-				6633369D2B75BAB60098D188 /* AssetSelectionView.swift in Sources */,
 				66125F5D2B83D9EC002169B5 /* PickerTabView.swift in Sources */,
 				66125F5A2B83CE4E002169B5 /* DefaultToolbar.swift in Sources */,
 			);
@@ -1001,20 +1034,12 @@
 				minimumVersion = 2.3.0;
 			};
 		};
-		663B732C2B6E066D0031D661 /* XCRemoteSwiftPackageReference "swifter" */ = {
+		66364FC62B8BA499005180B8 /* XCRemoteSwiftPackageReference "JunoSlider" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/httpswift/swifter.git";
+			repositoryURL = "https://github.com/christianselig/JunoSlider.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.5.0;
-			};
-		};
-		663B73322B6E86B00031D661 /* XCRemoteSwiftPackageReference "FlyingFox" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/swhitty/FlyingFox.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.13.0;
+				minimumVersion = 1.0.0;
 			};
 		};
 		66E102172B8262AC007A44D4 /* XCRemoteSwiftPackageReference "KeychainWrapper" */ = {
@@ -1041,24 +1066,14 @@
 			package = 66364FBF2B8B92AF005180B8 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */;
 			productName = MarkdownUI;
 		};
+		66364FC72B8BA49A005180B8 /* JunoUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 66364FC62B8BA499005180B8 /* XCRemoteSwiftPackageReference "JunoSlider" */;
+			productName = JunoUI;
+		};
 		663B72F82B6DB8E60031D661 /* RealityKitContent */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = RealityKitContent;
-		};
-		663B732D2B6E066D0031D661 /* Swifter */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 663B732C2B6E066D0031D661 /* XCRemoteSwiftPackageReference "swifter" */;
-			productName = Swifter;
-		};
-		663B73302B6E06860031D661 /* Swifter */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 663B732C2B6E066D0031D661 /* XCRemoteSwiftPackageReference "swifter" */;
-			productName = Swifter;
-		};
-		663B73332B6E86B00031D661 /* FlyingFox */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 663B73322B6E86B00031D661 /* XCRemoteSwiftPackageReference "FlyingFox" */;
-			productName = FlyingFox;
 		};
 		66E102182B8262AC007A44D4 /* KeychainWrapper */ = {
 			isa = XCSwiftPackageProductDependency;

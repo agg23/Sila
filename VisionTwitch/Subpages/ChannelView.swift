@@ -59,7 +59,7 @@ struct ChannelViewContent: View {
                     } content: { streams in
                         if let stream = streams.first {
                             Button {
-                                openWindow(id: "channelVideo", value: stream.userName)
+                                openWindow(id: "channelVideo", value: stream)
                             } label: {
                                 Text("Watch Now")
                             }

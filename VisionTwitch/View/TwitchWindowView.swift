@@ -6,14 +6,15 @@
 //
 
 import SwiftUI
+import Twitch
 
 struct TwitchWindowView: View {
     @Environment(\.dismissWindow) private var dismissWindow
 
-    let channel: String
+    let stream: Twitch.Stream
 
     var body: some View {
-        TwitchVideoView(channel: self.channel)
+        TwitchVideoView(stream: self.stream)
             // Set aspect ratio and enforce uniform resizing
             .windowGeometryPreferences(minimumSize: CGSize(width: 160.0, height: 90.0), resizingRestrictions: .uniform)
             .persistentSystemOverlays(.hidden)
@@ -27,5 +28,5 @@ struct TwitchWindowView: View {
 }
 
 #Preview {
-    TwitchWindowView(channel: "BarbarousKing")
+    TwitchWindowView(stream: STREAM_MOCK())
 }

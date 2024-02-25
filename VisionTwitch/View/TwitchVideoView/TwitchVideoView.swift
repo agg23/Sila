@@ -6,10 +6,11 @@
 //
 
 import SwiftUI
+import Twitch
 import WebKit
 
 struct TwitchVideoView: View {
-    let channel: String
+    let stream: Twitch.Stream
 
     let player = WebViewPlayer()
     
@@ -21,7 +22,7 @@ struct TwitchVideoView: View {
         let controlOpacity = self.showControls || forceControlsDisplay ? 1.0 : 0.0
 
         ZStack {
-            TwitchWebView(player: self.player, channel: self.channel)
+            TwitchWebView(player: self.player, channel: self.stream.userName)
                 .onTapGesture {
                     self.showControls = true
                     
@@ -29,7 +30,7 @@ struct TwitchVideoView: View {
                 }
         }
             .ornament(attachmentAnchor: .scene(.bottom)) {
-                PlayerControlsView(player: player, onButtonPress: {
+                PlayerControlsView(player: player, stream: self.stream, onButtonPress: {
                     resetTimer()
                 })
                     .glassBackgroundEffect()
@@ -47,5 +48,5 @@ struct TwitchVideoView: View {
 }
 
 #Preview {
-    TwitchVideoView(channel: "BarbarousKing")
+    TwitchVideoView(stream: STREAM_MOCK())
 }

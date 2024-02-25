@@ -16,7 +16,7 @@ struct StreamButtonView: View {
 
     var body: some View {
         AsyncImageButtonView(imageUrl: buildImageUrl(using: self.stream), aspectRatio: 16.0/9.0, overlayAlignment: .bottomTrailing) {
-            openWindow(id: "channelVideo", value: stream.userName)
+            openWindow(id: "channelVideo", value: stream)
         } content: {
             VStack(alignment: .leading) {
                 HStack {
