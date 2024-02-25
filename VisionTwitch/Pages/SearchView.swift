@@ -39,7 +39,7 @@ struct SearchView: View {
                     SearchListView(channels: channels, categories: categories)
                 }
             case .error:
-                Text("An error occurred")
+                APIErrorView(loader: self.$loader)
             }
         }
         .searchable(text: self.$text, placement: .navigationBarDrawer)

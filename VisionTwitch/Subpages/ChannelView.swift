@@ -32,7 +32,7 @@ struct ChannelView: View {
         } loading: { _ in
             ProgressView()
         } error: { (_: HelixError?) in
-            Text("An error occurred")
+            APIErrorView(loader: self.$loader)
         }
     }
 }

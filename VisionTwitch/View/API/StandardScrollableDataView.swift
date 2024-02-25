@@ -23,7 +23,7 @@ struct StandardScrollableDataView<T, Content: View>: View {
         }) { _ in
             ProgressView()
         } error: { (_: HelixError?) in
-            Text("An error occured")
+            APIErrorView(loader: self.loader)
         }
     }
 }
