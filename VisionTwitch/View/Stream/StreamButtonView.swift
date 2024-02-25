@@ -15,7 +15,7 @@ struct StreamButtonView: View {
     let stream: Twitch.Stream
 
     var body: some View {
-        AsyncImageButtonView(imageUrl: buildImageUrl(using: self.stream), aspectRatio: 16.0/9.0) {
+        AsyncImageButtonView(imageUrl: buildImageUrl(using: self.stream), aspectRatio: 16.0/9.0, overlayAlignment: .bottomTrailing) {
             openWindow(id: "channelVideo", value: stream.userName)
         } content: {
             VStack(alignment: .leading) {
@@ -37,6 +37,17 @@ struct StreamButtonView: View {
 
 //                    tagList(stream.tags)
             }
+        } imageOverlay: {
+            HStack {
+                Image(systemName: "record.circle")
+                    .symbolRenderingMode(.palette)
+                    .foregroundStyle(.red, .white)
+                Text(self.stream.viewerCount.formatted(.number))
+            }
+            .padding(4)
+            .background(.black.opacity(0.5))
+            .clipShape(.rect(cornerRadius: 8))
+            .padding()
         }
         .contextMenu {
             let channelButton = Button {
@@ -94,6 +105,8 @@ struct StreamButtonView: View {
 }
 
 #Preview {
-    StreamButtonView(stream: STREAM_MOCK())
-        .frame(width: 400, height: 300)
+    NavStack {
+        StreamButtonView(stream: STREAM_MOCK())
+            .frame(width: 400, height: 300)
+    }
 }
