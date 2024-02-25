@@ -58,28 +58,30 @@ enum Status<T> {
         if let runningTask = self.runningTask {
             runningTask.cancel()
             self.runningTask = nil
+            // Drop out of loading state
+            switch self.status {
+            case .loading(let data):
+                if let data = data {
+                    self.status = .finished(data)
+                } else {
+                    self.status = .idle
+                }
+            default:
+                break
+            }
         }
     }
 
-    private func refreshWithRunningTask(_ task: Task<Status<T>, Error>) async -> Status<T> {
-        self.cancel()
-
-        self.runningTask = task
-
-        // Can not throw
-        return try! await task.value
-    }
-
     func refresh() async {
-        self.status = await self.refreshWithRunningTask(Task {
+        self.status = await self.refreshWithRunningTask {
             await self.refreshDeferredData()
-        })
+        }
     }
 
     func refresh(minDurationSecs: UInt64) async {
-        async let newStatusAsync = await self.refreshWithRunningTask(Task {
+        async let newStatusAsync = await self.refreshWithRunningTask {
             await self.refreshDeferredData(preventLoadingState: true)
-        })
+        }
         async let sleep: ()? = try? await Task.sleep(nanoseconds: minDurationSecs * NSEC_PER_SEC)
         let (newStatus, _) = await (newStatusAsync, sleep)
 
@@ -88,6 +90,18 @@ enum Status<T> {
         }
 
         self.status = newStatus
+    }
+
+    private func refreshWithRunningTask(_ thunk: @escaping () async -> Status<T>) async -> Status<T> {
+        self.cancel()
+
+        let task = Task {
+            await thunk()
+        } as Task<Status<T>, Error>
+        self.runningTask = task
+
+        // Can not throw
+        return try! await task.value
     }
 
     private func refreshDeferredData(preventLoadingState: Bool = false) async -> Status<T> {
