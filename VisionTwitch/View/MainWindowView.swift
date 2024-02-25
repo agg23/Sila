@@ -6,27 +6,26 @@
 //
 
 import SwiftUI
+import MarkdownUI
 
 struct MainWindowView: View {
     var body: some View {
-        ZStack {
-            TabView {
-                // TODO: Change icon
-                TabPage(title: "Following", systemImage: Icon.following) {
-                    FollowedStreamsView()
-                }
+        TabView {
+            // TODO: Change icon
+            TabPage(title: "Following", systemImage: Icon.following) {
+                FollowedStreamsView()
+            }
 
-                TabPage(title: "Popular", systemImage: Icon.popular) {
-                    PopularView()
-                }
+            TabPage(title: "Popular", systemImage: Icon.popular) {
+                PopularView()
+            }
 
-                TabPage(title: "Categories", systemImage: Icon.category) {
-                    CategoryListView()
-                }
+            TabPage(title: "Categories", systemImage: Icon.category) {
+                CategoryListView()
+            }
 
-                TabPage(title: "Search", systemImage: Icon.search) {
-                    SearchView()
-                }
+            TabPage(title: "Search", systemImage: Icon.search) {
+                SearchView()
             }
         }
     }

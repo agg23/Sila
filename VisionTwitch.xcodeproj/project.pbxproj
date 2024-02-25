@@ -41,6 +41,9 @@
 		66364FBB2B8ABB9C005180B8 /* APIErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66364FB92B8ABB9C005180B8 /* APIErrorView.swift */; };
 		66364FBD2B8AF629005180B8 /* CircleBackgroundLessButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66364FBC2B8AF629005180B8 /* CircleBackgroundLessButton.swift */; };
 		66364FBE2B8AF629005180B8 /* CircleBackgroundLessButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66364FBC2B8AF629005180B8 /* CircleBackgroundLessButton.swift */; };
+		66364FC12B8B92B0005180B8 /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = 66364FC02B8B92B0005180B8 /* MarkdownUI */; };
+		66364FC42B8B9AAD005180B8 /* ChatExperimentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66364FC32B8B9AAD005180B8 /* ChatExperimentView.swift */; };
+		66364FC52B8B9AAD005180B8 /* ChatExperimentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66364FC32B8B9AAD005180B8 /* ChatExperimentView.swift */; };
 		663B72F92B6DB8E60031D661 /* RealityKitContent in Frameworks */ = {isa = PBXBuildFile; productRef = 663B72F82B6DB8E60031D661 /* RealityKitContent */; };
 		663B72FB2B6DB8E60031D661 /* VisionTwitchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663B72FA2B6DB8E60031D661 /* VisionTwitchApp.swift */; };
 		663B72FF2B6DB8E60031D661 /* ImmersiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663B72FE2B6DB8E60031D661 /* ImmersiveView.swift */; };
@@ -144,6 +147,7 @@
 		6633369B2B75BAB60098D188 /* AssetSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetSelectionView.swift; sourceTree = "<group>"; };
 		66364FB92B8ABB9C005180B8 /* APIErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIErrorView.swift; sourceTree = "<group>"; };
 		66364FBC2B8AF629005180B8 /* CircleBackgroundLessButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleBackgroundLessButton.swift; sourceTree = "<group>"; };
+		66364FC32B8B9AAD005180B8 /* ChatExperimentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatExperimentView.swift; sourceTree = "<group>"; };
 		663B72F32B6DB8E60031D661 /* VisionTwitch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VisionTwitch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		663B72F72B6DB8E60031D661 /* RealityKitContent */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = RealityKitContent; sourceTree = "<group>"; };
 		663B72FA2B6DB8E60031D661 /* VisionTwitchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionTwitchApp.swift; sourceTree = "<group>"; };
@@ -202,6 +206,7 @@
 				66F4E4302B8132F5008C565D /* Twitch in Frameworks */,
 				663B72F92B6DB8E60031D661 /* RealityKitContent in Frameworks */,
 				663B73312B6E06860031D661 /* Swifter in Frameworks */,
+				66364FC12B8B92B0005180B8 /* MarkdownUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -249,6 +254,14 @@
 				6633369B2B75BAB60098D188 /* AssetSelectionView.swift */,
 			);
 			path = AssetSelection;
+			sourceTree = "<group>";
+		};
+		66364FC22B8B9A97005180B8 /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				66364FC32B8B9AAD005180B8 /* ChatExperimentView.swift */,
+			);
+			path = Chat;
 			sourceTree = "<group>";
 		};
 		663B72EA2B6DB8E60031D661 = {
@@ -413,6 +426,7 @@
 				6633369A2B75BA7C0098D188 /* AssetSelection */,
 				66E102372B82D7FC007A44D4 /* Category */,
 				66125F612B84255D002169B5 /* Channel */,
+				66364FC22B8B9A97005180B8 /* Chat */,
 				66E102442B82E3D4007A44D4 /* Navigation */,
 				66F4E4232B811B5F008C565D /* Shared */,
 				66E102202B829332007A44D4 /* Stream */,
@@ -493,6 +507,7 @@
 				663B73302B6E06860031D661 /* Swifter */,
 				66F4E42F2B8132F5008C565D /* Twitch */,
 				66E102182B8262AC007A44D4 /* KeychainWrapper */,
+				66364FC02B8B92B0005180B8 /* MarkdownUI */,
 			);
 			productName = VisionTwitch;
 			productReference = 663B72F32B6DB8E60031D661 /* VisionTwitch.app */;
@@ -551,6 +566,7 @@
 				663B73322B6E86B00031D661 /* XCRemoteSwiftPackageReference "FlyingFox" */,
 				66F4E42E2B8132F5008C565D /* XCRemoteSwiftPackageReference "swift-twitch-client" */,
 				66E102172B8262AC007A44D4 /* XCRemoteSwiftPackageReference "KeychainWrapper" */,
+				66364FBF2B8B92AF005180B8 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
 			);
 			productRefGroup = 663B72F42B6DB8E60031D661 /* Products */;
 			projectDirPath = "";
@@ -618,6 +634,7 @@
 				660F73A22B7446D70011FD65 /* WebViewPlayer.swift in Sources */,
 				66E102122B82515A007A44D4 /* TagView.swift in Sources */,
 				66F8D1962B898141008C4F7C /* LoadingAsyncImage.swift in Sources */,
+				66364FC42B8B9AAD005180B8 /* ChatExperimentView.swift in Sources */,
 				66E102462B82E3E8007A44D4 /* Router.swift in Sources */,
 				663B73232B6DB9A30031D661 /* TwitchVideoView.swift in Sources */,
 				66E1023C2B82D85B007A44D4 /* CategoryGridView.swift in Sources */,
@@ -664,6 +681,7 @@
 				66E102272B8293EB007A44D4 /* StreamMock.swift in Sources */,
 				66125F602B83EF38002169B5 /* View+HighlightableButton.swift in Sources */,
 				663336952B75B7EA0098D188 /* View+WindowGeometryPreferences.swift in Sources */,
+				66364FC52B8B9AAD005180B8 /* ChatExperimentView.swift in Sources */,
 				660F73A32B7446D70011FD65 /* WebViewPlayer.swift in Sources */,
 				66125F572B83C88E002169B5 /* TabPage.swift in Sources */,
 				66E102402B82D8AF007A44D4 /* CategoryButtonView.swift in Sources */,
@@ -975,6 +993,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		66364FBF2B8B92AF005180B8 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/gonzalezreal/swift-markdown-ui";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.3.0;
+			};
+		};
 		663B732C2B6E066D0031D661 /* XCRemoteSwiftPackageReference "swifter" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/httpswift/swifter.git";
@@ -1010,6 +1036,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		66364FC02B8B92B0005180B8 /* MarkdownUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 66364FBF2B8B92AF005180B8 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */;
+			productName = MarkdownUI;
+		};
 		663B72F82B6DB8E60031D661 /* RealityKitContent */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = RealityKitContent;
