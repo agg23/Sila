@@ -14,7 +14,7 @@ struct PlayerControlsView: View {
 
     var body: some View {
         HStack {
-            Button {
+            CircleBackgroundLessButton(systemName: self.player.isPlaying ? "pause.fill" : "play.fill", tooltip: self.player.isPlaying ? "Pause" : "Play") {
                 if self.player.isPlaying {
                     self.player.pause()
                 } else {
@@ -22,15 +22,9 @@ struct PlayerControlsView: View {
                 }
 
                 self.onButtonPress?()
-            } label: {
-                if self.player.isPlaying {
-                    Image(systemName: "pause.fill")
-                } else {
-                    Image(systemName: "play.fill")
-                }
             }
-            .buttonStyle(.plain)
-            .buttonBorderShape(.circle)
+            .controlSize(.extraLarge)
+
             Button {
                 self.player.toggleMute()
                 self.onButtonPress?()
@@ -50,6 +44,10 @@ struct PlayerControlsView: View {
         }
         .padding()
     }
+}
+
+#Preview {
+    PlayerControlsView(player: WebViewPlayer())
 }
 
 #Preview {
