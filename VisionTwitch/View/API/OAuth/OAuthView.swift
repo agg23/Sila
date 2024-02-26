@@ -45,7 +45,9 @@ struct OAuthView: View {
 
                 let authUser = AuthUser(id: user.id, username: user.displayName, avatarUrl: URL(string: user.profileImageUrl))
 
-                self.authController.setLoggedInCredentials(withToken: token, authUser: authUser)
+                DispatchQueue.main.async {
+                    self.authController.setLoggedInCredentials(withToken: token, authUser: authUser)
+                }
             }
         case .failure:
             print("Failed to oauth")

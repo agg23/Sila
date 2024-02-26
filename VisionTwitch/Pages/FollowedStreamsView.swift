@@ -15,10 +15,15 @@ struct FollowedStreamsView: View {
     @State private var channelsLoader = DataLoader<[Twitch.User], AuthStatus>()
 
     var body: some View {
-        PickerTabView(leftTitle: "Live", leftView: {
-            self.liveStreams
-        }, rightTitle: "All Channels") {
-            self.channels
+        // If statement to hide the picker when not authorized
+        if self.authController.isAuthorized() {
+            PickerTabView(leftTitle: "Live", leftView: {
+                self.liveStreams
+            }, rightTitle: "All Channels") {
+                self.channels
+            }
+        } else {
+            NeedsLoginView(noAuthMessage: "your followed streams")
         }
     }
 
@@ -32,14 +37,14 @@ struct FollowedStreamsView: View {
             }
             let (streams, _) = try await api.getFollowedStreams(limit: 100)
             return streams
-        }) { streams in
+        }, noAuthMessage: "your followed streams") { streams in
             StreamGridView(streams: streams)
         }
     }
 
     @ViewBuilder
     var channels: some View {
-        AuthorizedStandardScrollableDataView(loader: self.$channelsLoader) { api, user in
+        AuthorizedStandardScrollableDataView(loader: self.$channelsLoader, task: { api, user in
             print("Request channels")
             let (_, channels, _) = try await api.getFollowedChannels(limit: 100)
 
@@ -47,7 +52,7 @@ struct FollowedStreamsView: View {
 
             let users = try await api.getUsers(userIDs: broadcasterIds)
             return users
-        } content: { channels in
+        }, noAuthMessage: "your followed streams") { channels in
             ChannelGridView(channels: channels)
         }
     }

@@ -65,6 +65,7 @@
 		663B73242B6DB9A30031D661 /* TwitchVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663B73222B6DB9A30031D661 /* TwitchVideoView.swift */; };
 		663B73272B6DBA8E0031D661 /* TwitchWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663B73262B6DBA8E0031D661 /* TwitchWebView.swift */; };
 		663B73282B6DBA8E0031D661 /* TwitchWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663B73262B6DBA8E0031D661 /* TwitchWebView.swift */; };
+		6672D37C2B8C3F7B00E9D0E9 /* NeedsLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6672D37B2B8C3F7B00E9D0E9 /* NeedsLoginView.swift */; };
 		66DF455D2B8BA645006C1D99 /* PopupVolumeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DF455C2B8BA645006C1D99 /* PopupVolumeSlider.swift */; };
 		66DF455E2B8BA645006C1D99 /* PopupVolumeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DF455C2B8BA645006C1D99 /* PopupVolumeSlider.swift */; };
 		66E102122B82515A007A44D4 /* TagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E102112B82515A007A44D4 /* TagView.swift */; };
@@ -172,6 +173,7 @@
 		663B731A2B6DB9430031D661 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		663B73222B6DB9A30031D661 /* TwitchVideoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitchVideoView.swift; sourceTree = "<group>"; };
 		663B73262B6DBA8E0031D661 /* TwitchWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitchWebView.swift; sourceTree = "<group>"; };
+		6672D37B2B8C3F7B00E9D0E9 /* NeedsLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NeedsLoginView.swift; sourceTree = "<group>"; };
 		66DF455C2B8BA645006C1D99 /* PopupVolumeSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupVolumeSlider.swift; sourceTree = "<group>"; };
 		66E102112B82515A007A44D4 /* TagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagView.swift; sourceTree = "<group>"; };
 		66E1021A2B8272E3007A44D4 /* Auth+Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Auth+Notification.swift"; sourceTree = "<group>"; };
@@ -429,6 +431,7 @@
 			children = (
 				66F4E4152B80292F008C565D /* OAuthWebView.swift */,
 				66F4E4272B812932008C565D /* OAuthView.swift */,
+				66364FB92B8ABB9C005180B8 /* APIErrorView.swift */,
 			);
 			path = OAuth;
 			sourceTree = "<group>";
@@ -439,8 +442,8 @@
 				66F4E4142B802916008C565D /* OAuth */,
 				66F4E41C2B811788008C565D /* AuthBadgeView.swift */,
 				66F4E43C2B818499008C565D /* DataView.swift */,
+				6672D37B2B8C3F7B00E9D0E9 /* NeedsLoginView.swift */,
 				66E885A72B8821D9004B4B8D /* StandardScrollableDataView.swift */,
-				66364FB92B8ABB9C005180B8 /* APIErrorView.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -685,6 +688,7 @@
 				663B72FF2B6DB8E60031D661 /* ImmersiveView.swift in Sources */,
 				66F4E41D2B811788008C565D /* AuthBadgeView.swift in Sources */,
 				66125F5F2B83EF38002169B5 /* View+HighlightableButton.swift in Sources */,
+				6672D37C2B8C3F7B00E9D0E9 /* NeedsLoginView.swift in Sources */,
 				66E8859F2B86C646004B4B8D /* DataLoader.swift in Sources */,
 				66E885A82B8821D9004B4B8D /* StandardScrollableDataView.swift in Sources */,
 				66125F662B84260D002169B5 /* UserMock.swift in Sources */,

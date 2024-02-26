@@ -34,13 +34,15 @@ struct AuthorizedStandardScrollableDataView<T, Content: View>: View {
     let loader: Binding<DataLoader<T, AuthStatus>>
     let task: (_: Helix, _: AuthUser?) async throws -> T
 
+    let noAuthMessage: String
+
     @ViewBuilder let content: (_: T) -> Content
 
     var body: some View {
         if self.authController.isAuthorized() {
             StandardScrollableDataView(loader: self.loader, task: self.task, content: self.content)
         } else {
-            Text("Not logged in")
+            NeedsLoginView(noAuthMessage: self.noAuthMessage)
         }
     }
 }
