@@ -39,7 +39,7 @@ struct StreamButtonView: View {
             }
         } imageOverlay: {
             HStack {
-                Image(systemName: "record.circle")
+                Image(systemName: Icon.viewerCount)
                     .symbolRenderingMode(.palette)
                     .foregroundStyle(.red, .white)
                 Text(self.stream.viewerCount.formatted(.number))

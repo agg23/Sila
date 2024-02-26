@@ -41,7 +41,7 @@ struct StreamStatusControlContentView: View {
     let user: User?
 
     var body: some View {
-        HStack {
+        HStack(alignment: .top) {
             LoadingAsyncImage(imageUrl: self.profileImageUrl(), aspectRatio: 1.0)
             VStack(alignment: .leading) {
                 Text(self.stream.title)
@@ -52,6 +52,9 @@ struct StreamStatusControlContentView: View {
                     .truncationMode(.tail)
             }
             Spacer()
+            Image(systemName: Icon.viewerCount)
+                .symbolRenderingMode(.palette)
+                .foregroundStyle(.red, .white)
             Text(self.stream.viewerCount.formatted(.number))
         }
     }

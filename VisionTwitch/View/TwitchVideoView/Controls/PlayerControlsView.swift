@@ -10,7 +10,7 @@ import Twitch
 import JunoUI
 
 struct PlayerControlsView: View {
-    @State private var volume: CGFloat = 0.0
+    @State private var volume: CGFloat = 0.5
 
     var player: WebViewPlayer
 
@@ -34,14 +34,16 @@ struct PlayerControlsView: View {
             StreamStatusControlView(stream: self.stream)
                 .padding(.horizontal)
 
-            Button {
+            CircleBackgroundLessButton(systemName: "arrow.clockwise", tooltip: "Debug reload") {
                 self.player.reload()
                 self.onButtonPress?()
-            } label: {
-                Image(systemName: "arrow.clockwise")
             }
 
             PopupVolumeSlider(volume: self.$volume)
+                .onChange(of: self.volume) { _, newValue in
+                    print(self.volume)
+                    self.player.setVolume(newValue / 10)
+                }
         }
         .padding()
     }

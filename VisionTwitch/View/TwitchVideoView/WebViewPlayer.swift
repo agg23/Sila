@@ -67,6 +67,12 @@ class WebViewPlayer {
         """)
     }
 
+    func setVolume(_ volume: Double) {
+        self.webView?.evaluateJavaScript("""
+            Twitch._player.setVolume(\(volume));
+        """)
+    }
+
     func reload() {
         self.webView?.reload()
     }
