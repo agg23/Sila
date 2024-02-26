@@ -15,6 +15,12 @@ struct PopupVolumeSlider: View {
     @State private var interactionTimer: Timer?
 
     let volume: Binding<CGFloat>
+    let isActive: Binding<Bool>?
+
+    init(volume: Binding<CGFloat>, isActive: Binding<Bool>? = nil) {
+        self.volume = volume
+        self.isActive = isActive
+    }
 
     let systemName = "speaker.wave.3.fill"
 
@@ -38,6 +44,12 @@ struct PopupVolumeSlider: View {
                 HStack {
                     HStack {
                         JunoSlider(sliderValue: self.volume, maxSliderValue: 1.0, baseHeight: 10.0, expandedHeight: 22.0, label: "Video volume") { editingChanged in
+                            if editingChanged {
+                                self.interactionTimer?.invalidate()
+                                self.interactionTimer = nil
+                            } else {
+                                self.resetTimer()
+                            }
                         }
                         .frame(width: 150)
                     }
@@ -60,6 +72,9 @@ struct PopupVolumeSlider: View {
                 self.resetTimer()
             }
         }
+        .onChange(of: self.isPresented, { _, newValue in
+            self.isActive?.wrappedValue = newValue
+        })
     }
 
     func resetTimer() {

@@ -11,12 +11,14 @@ import JunoUI
 
 struct PlayerControlsView: View {
     @State private var volume: CGFloat = 0.5
+    @State private var volumePreventClose = false
 
     var player: WebViewPlayer
 
     var stream: Twitch.Stream
 
-    var onButtonPress: (() -> Void)?
+    var onInteraction: (() -> Void)?
+    var activeChanged: ((Bool) -> Void)?
 
     var body: some View {
         HStack {
@@ -27,7 +29,7 @@ struct PlayerControlsView: View {
                     self.player.play()
                 }
 
-                self.onButtonPress?()
+                self.onInteraction?()
             }
             .controlSize(.extraLarge)
 
@@ -36,16 +38,19 @@ struct PlayerControlsView: View {
 
             CircleBackgroundLessButton(systemName: "arrow.clockwise", tooltip: "Debug reload") {
                 self.player.reload()
-                self.onButtonPress?()
+                self.onInteraction?()
             }
 
-            PopupVolumeSlider(volume: self.$volume)
+            PopupVolumeSlider(volume: self.$volume, isActive: self.$volumePreventClose)
                 .onChange(of: self.volume) { _, newValue in
                     print(self.volume)
-                    self.player.setVolume(newValue / 10)
+                    self.player.setVolume(newValue)
                 }
         }
         .padding()
+        .onChange(of: self.volumePreventClose) { _, newValue in
+            self.activeChanged?(newValue)
+        }
     }
 }
 
