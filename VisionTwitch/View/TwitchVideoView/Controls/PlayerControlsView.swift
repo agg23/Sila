@@ -43,7 +43,6 @@ struct PlayerControlsView: View {
 
             PopupVolumeSlider(volume: self.$volume, isActive: self.$volumePreventClose)
                 .onChange(of: self.volume) { _, newValue in
-                    print(self.volume)
                     self.player.setVolume(newValue)
                 }
         }

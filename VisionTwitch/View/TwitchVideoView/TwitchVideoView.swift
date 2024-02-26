@@ -15,9 +15,9 @@ struct TwitchVideoView: View {
 
     @State private var preventClose = false
 
-    let stream: Twitch.Stream
+    @State private var player = WebViewPlayer()
 
-    let player = WebViewPlayer()
+    let stream: Twitch.Stream
 
     var body: some View {
         let forceControlsDisplay = self.player.status == .idle
@@ -36,6 +36,7 @@ struct TwitchVideoView: View {
                     resetTimer()
                 }, activeChanged: { isActive in
                     if isActive {
+                        print("Controls are active")
                         self.showControlsTimer?.invalidate()
                         self.showControlsTimer = nil
                     } else {
@@ -49,6 +50,7 @@ struct TwitchVideoView: View {
     }
     
     func resetTimer() {
+        print("Resetting timer")
         self.showControlsTimer?.invalidate()
         self.showControlsTimer = Timer.scheduledTimer(withTimeInterval: 3, repeats: false, block: { _ in
             self.showControls = false

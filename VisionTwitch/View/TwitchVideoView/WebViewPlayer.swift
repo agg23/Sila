@@ -41,6 +41,13 @@ class WebViewPlayer {
                 }
             """)
         }
+
+        let _ = withObservationTracking {
+            self.volume
+        } onChange: {
+            self.setVolume(self.volume)
+        }
+
     }
 
     var isPlaying: Bool {

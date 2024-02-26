@@ -43,7 +43,7 @@ struct PopupVolumeSlider: View {
                 // TODO: Animation is broken with button snapping to the left side
                 HStack {
                     HStack {
-                        JunoSlider(sliderValue: self.volume, maxSliderValue: 1.0, baseHeight: 10.0, expandedHeight: 22.0, label: "Video volume") { editingChanged in
+                        JunoSlider(sliderValue: self.volume, maxSliderValue: 1.0, baseHeight: 10.0, expandedHeight: 22.0, label: "Volume") { editingChanged in
                             if editingChanged {
                                 self.interactionTimer?.invalidate()
                                 self.interactionTimer = nil
@@ -79,7 +79,7 @@ struct PopupVolumeSlider: View {
 
     func resetTimer() {
         self.interactionTimer?.invalidate()
-        self.interactionTimer = Timer.scheduledTimer(withTimeInterval: 5, repeats: false, block: { _ in
+        self.interactionTimer = Timer.scheduledTimer(withTimeInterval: 3, repeats: false, block: { _ in
             self.isPresented = false
         })
     }
