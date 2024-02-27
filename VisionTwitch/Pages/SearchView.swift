@@ -18,31 +18,32 @@ struct SearchView: View {
     @State private var categoriesExpanded = true
 
     var body: some View {
-        Group {
-            switch self.$loader.wrappedValue.get(task: {
-                guard let api = self.authController.status.api(), !self.text.isEmpty else {
-                    return ([], [])
-                }
-
-                async let (categories, _) = try await api.searchCategories(for: self.text)
-                async let (channels, _) = try await api.searchChannels(for: self.text)
-                return try await (categories, channels)
-            }, onChange: self.text) {
-            case .idle:
-                self.emptyState
-            case .loading:
-                ProgressView()
-            case .finished(let (categories, channels)):
-                if categories.isEmpty && channels.isEmpty {
-                    self.emptyState
-                } else {
-                    SearchListView(channels: channels, categories: categories)
-                }
-            case .error:
-                APIErrorView(loader: self.$loader)
-            }
-        }
-        .searchable(text: self.$text, placement: .navigationBarDrawer)
+//        Group {
+//            switch self.$loader.wrappedValue.get(task: {
+//                guard let api = self.authController.status.api(), !self.text.isEmpty else {
+//                    return ([], [])
+//                }
+//
+//                async let (categories, _) = try await api.searchCategories(for: self.text)
+//                async let (channels, _) = try await api.searchChannels(for: self.text)
+//                return try await (categories, channels)
+//            }, onChange: self.text) {
+//            case .idle:
+//                self.emptyState
+//            case .loading:
+//                ProgressView()
+//            case .finished(let (categories, channels)):
+//                if categories.isEmpty && channels.isEmpty {
+//                    self.emptyState
+//                } else {
+//                    SearchListView(channels: channels, categories: categories)
+//                }
+//            case .error:
+//                APIErrorView(loader: self.$loader)
+//            }
+//        }
+//        .searchable(text: self.$text, placement: .navigationBarDrawer)
+        Text("Broken")
     }
 
     @ViewBuilder

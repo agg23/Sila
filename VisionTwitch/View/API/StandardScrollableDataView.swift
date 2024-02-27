@@ -19,7 +19,7 @@ struct StandardScrollableDataView<T, Content: View>: View {
             ScrollGridView {
                 self.content(data)
             }
-            .refreshable(action: { await self.loader.wrappedValue.refresh(minDurationSecs: 1) })
+            .refreshable(action: { try? await self.loader.wrappedValue.refresh(minDurationSecs: 1) })
         }) { _ in
             ProgressView()
         } error: { (_: HelixError?) in

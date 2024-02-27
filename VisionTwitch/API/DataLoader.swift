@@ -16,74 +16,58 @@ enum Status<T> {
 
 @Observable class DataLoader<T, Changable: Equatable> {
     var status: Status<T> = .idle
-    @ObservationIgnored var changable: Changable? = nil
-    @ObservationIgnored var task: (() async throws -> T)? = nil
-    @ObservationIgnored var runningTask: Task<Status<T>, Error>? = nil
+    @ObservationIgnored private var changable: Changable? = nil
+    @ObservationIgnored private var task: (() async throws -> T)? = nil
+    @ObservationIgnored private var runningTask: Task<Status<T>, Error>? = nil
 
-    func get(task: @escaping () async throws -> T, onChange: Changable? = nil) -> Status<T> {
+    func loadIfNecessary(task: @escaping () async throws -> T, onChange: Changable? = nil) async throws {
         self.task = task
 
         // Check changes before updating it (if in idle)
         if onChange != nil && onChange != self.changable {
             // We need to refresh
-            Task {
-                await self.refresh()
-            }
             self.changable = onChange
-        }
 
-        switch self.status {
-        case .idle:
-            // Save changable for future updates
-            self.changable = onChange
-            break
-        default:
-            break
-        }
-
-        return self.status
-    }
-
-    func onAppear() async {
-        switch self.status {
-        case .idle:
-            // We want to refresh only if we haven't fetched data before
-            await self.refresh()
-        default:
-            break
-        }
-    }
-
-    func cancel() {
-        if let runningTask = self.runningTask {
-            runningTask.cancel()
-            self.runningTask = nil
-            // Drop out of loading state
+            try await self.refresh()
+        } else {
             switch self.status {
-            case .loading(let data):
-                if let data = data {
-                    self.status = .finished(data)
-                } else {
-                    self.status = .idle
-                }
+            case .idle:
+                // Save changable for future updates
+                self.changable = onChange
+                break
             default:
                 break
             }
         }
     }
 
-    func refresh() async {
-        self.status = await self.refreshWithRunningTask {
-            await self.refreshDeferredData()
+    func refresh() async throws {
+        self.status = try await self.refreshWithRunningTask {
+            try await self.refreshDeferredData()
         }
     }
 
-    func refresh(minDurationSecs: UInt64) async {
-        async let newStatusAsync = await self.refreshWithRunningTask {
-            await self.refreshDeferredData(preventLoadingState: true)
+    func completeCancel() {
+        self.runningTask = nil
+        // Drop out of loading state
+        switch self.status {
+        case .loading(let data):
+            if let data = data {
+                self.status = .finished(data)
+            } else {
+                self.status = .idle
+            }
+        default:
+            break
+        }
+    }
+
+    func refresh(minDurationSecs: UInt64) async throws {
+        async let newStatusAsync = try await self.refreshWithRunningTask {
+            try await self.refreshDeferredData(preventLoadingState: true)
         }
         async let sleep: ()? = try? await Task.sleep(nanoseconds: minDurationSecs * NSEC_PER_SEC)
-        let (newStatus, _) = await (newStatusAsync, sleep)
+        let (newStatus, _) = await (try newStatusAsync, sleep)
 
         guard !Task.isCancelled else {
             return
@@ -92,19 +76,26 @@ enum Status<T> {
         self.status = newStatus
     }
 
-    private func refreshWithRunningTask(_ thunk: @escaping () async -> Status<T>) async -> Status<T> {
+    private func cancel() {
+        if let runningTask = self.runningTask {
+            runningTask.cancel()
+            self.completeCancel()
+        }
+    }
+
+    private func refreshWithRunningTask(_ thunk: @escaping () async throws -> Status<T>) async throws -> Status<T> {
         self.cancel()
 
         let task = Task {
-            await thunk()
+            try await thunk()
         } as Task<Status<T>, Error>
         self.runningTask = task
 
-        // Can not throw
-        return try! await task.value
+        // Can only throw CancellationError
+        return try await task.value
     }
 
-    private func refreshDeferredData(preventLoadingState: Bool = false) async -> Status<T> {
+    private func refreshDeferredData(preventLoadingState: Bool = false) async throws -> Status<T> {
         guard let task = self.task else {
             fatalError("Incorrectly set up DataLoader")
         }
@@ -121,9 +112,7 @@ enum Status<T> {
                 break
             }
 
-            guard !Task.isCancelled else {
-                return self.status
-            }
+            try Task.checkCancellation()
 
             if !preventLoadingState {
                 self.status = .loading(existingData)
@@ -133,17 +122,12 @@ enum Status<T> {
 
             self.runningTask = nil
 
-            guard !Task.isCancelled else {
-                // We've cancelled. Don't assign data
-                return self.status
-            }
+            try Task.checkCancellation()
 
             return result
+        } catch let error as CancellationError {
+            throw error
         } catch {
-            guard !Task.isCancelled else {
-                return self.status
-            }
-
             self.runningTask = nil
 
             return .error(error)

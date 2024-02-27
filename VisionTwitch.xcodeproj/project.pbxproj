@@ -65,6 +65,8 @@
 		663B73242B6DB9A30031D661 /* TwitchVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663B73222B6DB9A30031D661 /* TwitchVideoView.swift */; };
 		663B73272B6DBA8E0031D661 /* TwitchWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663B73262B6DBA8E0031D661 /* TwitchWebView.swift */; };
 		663B73282B6DBA8E0031D661 /* TwitchWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663B73262B6DBA8E0031D661 /* TwitchWebView.swift */; };
+		666E97E92B8D7085008EE950 /* EmptyDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 666E97E82B8D7085008EE950 /* EmptyDataView.swift */; };
+		666E97EA2B8D7085008EE950 /* EmptyDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 666E97E82B8D7085008EE950 /* EmptyDataView.swift */; };
 		6672D37C2B8C3F7B00E9D0E9 /* NeedsLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6672D37B2B8C3F7B00E9D0E9 /* NeedsLoginView.swift */; };
 		66DF455D2B8BA645006C1D99 /* PopupVolumeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DF455C2B8BA645006C1D99 /* PopupVolumeSlider.swift */; };
 		66DF455E2B8BA645006C1D99 /* PopupVolumeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DF455C2B8BA645006C1D99 /* PopupVolumeSlider.swift */; };
@@ -173,6 +175,7 @@
 		663B731A2B6DB9430031D661 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		663B73222B6DB9A30031D661 /* TwitchVideoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitchVideoView.swift; sourceTree = "<group>"; };
 		663B73262B6DBA8E0031D661 /* TwitchWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitchWebView.swift; sourceTree = "<group>"; };
+		666E97E82B8D7085008EE950 /* EmptyDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyDataView.swift; sourceTree = "<group>"; };
 		6672D37B2B8C3F7B00E9D0E9 /* NeedsLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NeedsLoginView.swift; sourceTree = "<group>"; };
 		66DF455C2B8BA645006C1D99 /* PopupVolumeSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupVolumeSlider.swift; sourceTree = "<group>"; };
 		66E102112B82515A007A44D4 /* TagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagView.swift; sourceTree = "<group>"; };
@@ -475,6 +478,7 @@
 				66F4E4242B811B6C008C565D /* CloseButtonView.swift */,
 				6600E08B2B8BBBCB003B2270 /* DarkBackgroundView.swift */,
 				66125F582B83CE4E002169B5 /* DefaultToolbar.swift */,
+				666E97E82B8D7085008EE950 /* EmptyDataView.swift */,
 				66F8D1952B898141008C4F7C /* LoadingAsyncImage.swift */,
 				66125F5B2B83D9EC002169B5 /* PickerTabView.swift */,
 				66125F522B83C003002169B5 /* ScrollGridView.swift */,
@@ -659,6 +663,7 @@
 				66F8D1932B894253008C4F7C /* Route.swift in Sources */,
 				66E1022C2B82A592007A44D4 /* StreamGridView.swift in Sources */,
 				66E102352B82D788007A44D4 /* CategoryMock.swift in Sources */,
+				666E97E92B8D7085008EE950 /* EmptyDataView.swift in Sources */,
 				66125F692B84279A002169B5 /* ChannelButtonView.swift in Sources */,
 				66125F532B83C003002169B5 /* ScrollGridView.swift in Sources */,
 				66E102262B8293EB007A44D4 /* StreamMock.swift in Sources */,
@@ -709,6 +714,7 @@
 				66E102332B82D317007A44D4 /* CategoryListView.swift in Sources */,
 				66125F642B8425A7002169B5 /* ChannelGridView.swift in Sources */,
 				66E885A62B86DFE2004B4B8D /* AuthController+EnvironmentValues.swift in Sources */,
+				666E97EA2B8D7085008EE950 /* EmptyDataView.swift in Sources */,
 				663B73282B6DBA8E0031D661 /* TwitchWebView.swift in Sources */,
 				66125F6A2B84279A002169B5 /* ChannelButtonView.swift in Sources */,
 				663B73142B6DB9410031D661 /* VisionTwitchiOSApp.swift in Sources */,

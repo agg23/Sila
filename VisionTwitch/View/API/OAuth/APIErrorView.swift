@@ -15,7 +15,7 @@ struct APIErrorView<TData, TChange: Equatable>: View {
             Text("An error occurred")
             Button {
                 Task {
-                    await self.loader.wrappedValue.refresh()
+                    try? await self.loader.wrappedValue.refresh()
                 }
             } label: {
                 Label("Reload", systemImage: "arrow.clockwise")
