@@ -44,7 +44,7 @@ struct DataView<T, E: Error, Content: View, Loading: View, ErrorView: View>: Vie
                 case .loading(let data):
                     self.loading(data)
                 case .idle:
-                    Text("No data")
+                    self.loading(nil)
                 case .finished(let data):
                     self.content(data)
                 case .error(let error):
