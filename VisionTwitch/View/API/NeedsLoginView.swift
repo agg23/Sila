@@ -14,9 +14,9 @@ struct NeedsLoginView: View {
 
     var body: some View {
         VStack {
-            Text("To view \(self.noAuthMessage)")
+            Text("To view \(self.noAuthMessage):")
             Button {
-                self.authController.requestReauth()
+                self.authController.requestLoginReauthWithUI()
             } label: {
                 Text("Log In")
             }

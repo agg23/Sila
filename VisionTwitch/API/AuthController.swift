@@ -36,6 +36,8 @@ import WebKit
         let oauthToken = KeychainWrapper.default.string(forKey: AuthController.OAUTH_KEYCHAIN_KEY)
         let publicToken = KeychainWrapper.default.string(forKey: AuthController.PUBLIC_KEYCHAIN_KEY)
 
+        self.requestReauthSubject = PassthroughSubject()
+
         if let oauthToken = oauthToken, let user = user {
             // We're logged in. Create authed Helix instance
             // Won't throw
@@ -48,9 +50,12 @@ import WebKit
         } else {
             // No auth at all
             self.status = .none
-        }
 
-        self.requestReauthSubject = PassthroughSubject()
+            // Try to grab a public token
+            Task {
+                try? await self.requestPublicToken()
+            }
+        }
     }
 
     func setLoggedInCredentials(withToken token: String, authUser: AuthUser) {
@@ -90,20 +95,41 @@ import WebKit
         NotificationCenter.default.post(name: .twitchLogOut, object: nil, userInfo: nil)
     }
 
-    /// Request we show the sheet to relogin with current credentials
+    func isAuthorized() -> Bool {
+        switch self.status {
+        case .user:
+            return true
+        default:
+            return false
+        }
+    }
+
+    /// Request we rehandle authorization, whether logged in or public
     func requestReauth() {
+        switch self.status {
+        case .user:
+            self.requestLoginReauthWithUI()
+        case .publicLoggedOut, .none:
+            Task {
+                try? await self.requestPublicToken()
+            }
+        }
+    }
+
+    /// Request we show the sheet to relogin with current credentials
+    func requestLoginReauthWithUI() {
         DispatchQueue.main.async {
             self.requestReauthSubject.send(())
         }
     }
 
-    func updatePublicToken() async throws {
+    private func requestPublicToken() async throws {
         // Already authorized
         if self.isAuthorized() {
             return
         }
 
-        let token = try await requestPublicToken()
+        let token = try await self.fetchPublicToken()
 
         // We authorized since this request started, abort
         if self.isAuthorized() {
@@ -116,16 +142,7 @@ import WebKit
         self.updatePublicStore(token: token)
     }
 
-    func isAuthorized() -> Bool {
-        switch self.status {
-        case .user:
-            return true
-        default:
-            return false
-        }
-    }
-
-    private func requestPublicToken() async throws -> String {
+    private func fetchPublicToken() async throws -> String {
         var url = URL(string: "https://id.twitch.tv/oauth2/token")!
         url.append(queryItems: [
             URLQueryItem(name: "client_id", value: AuthController.CLIENT_ID),
