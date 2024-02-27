@@ -38,7 +38,17 @@ struct FollowedStreamsView: View {
             let (streams, _) = try await api.getFollowedStreams(limit: 100)
             return streams
         }, noAuthMessage: "your followed streams") { streams in
-            StreamGridView(streams: streams)
+            if streams.isEmpty {
+                EmptyDataView(message: "live followed streams") {
+                    Task {
+                        try? await self.liveStreamsLoader.refresh()
+                    }
+                }
+                // Fit it to the ScrollView
+                .containerRelativeFrame(.vertical)
+            } else {
+                StreamGridView(streams: streams)
+            }
         }
     }
 
@@ -52,8 +62,18 @@ struct FollowedStreamsView: View {
 
             let users = try await api.getUsers(userIDs: broadcasterIds)
             return users
-        }, noAuthMessage: "your followed streams") { channels in
-            ChannelGridView(channels: channels)
+        }, noAuthMessage: "your followed channels") { channels in
+            if channels.isEmpty {
+                EmptyDataView(message: "followed channels") {
+                    Task {
+                        try? await self.channelsLoader.refresh()
+                    }
+                }
+                // Fit it to the ScrollView
+                .containerRelativeFrame(.vertical)
+            } else {
+                ChannelGridView(channels: channels)
+            }
         }
     }
 }

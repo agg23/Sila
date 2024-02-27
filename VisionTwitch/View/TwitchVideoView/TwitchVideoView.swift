@@ -10,6 +10,8 @@ import Twitch
 import WebKit
 
 struct TwitchVideoView: View {
+    let controlsTimerDuration = 3.0
+
     @State private var showControls = false
     @State private var showControlsTimer: Timer?
 
@@ -52,7 +54,7 @@ struct TwitchVideoView: View {
     func resetTimer() {
         print("Resetting timer")
         self.showControlsTimer?.invalidate()
-        self.showControlsTimer = Timer.scheduledTimer(withTimeInterval: 3, repeats: false, block: { _ in
+        self.showControlsTimer = Timer.scheduledTimer(withTimeInterval: self.controlsTimerDuration, repeats: false, block: { _ in
             self.showControls = false
         })
     }
