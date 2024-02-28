@@ -84,6 +84,9 @@ struct ChannelViewContent: View {
             }
         }
         .navigationTitle(self.channelUser.displayName)
+        .toolbar {
+            ShareLink(item: URL(string: "https://twitch.tv/\(self.channelUser.displayName)")!)
+        }
     }
 
     var profileImage: some View {
