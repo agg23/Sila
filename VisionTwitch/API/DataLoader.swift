@@ -130,6 +130,10 @@ enum Status<T> {
         } catch {
             self.runningTask = nil
 
+            if let error = error as? DecodingError {
+                print(error)
+            }
+
             return .error(error)
         }
     }

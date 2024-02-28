@@ -15,29 +15,7 @@ struct StreamButtonView: View {
     let stream: Twitch.Stream
 
     var body: some View {
-        AsyncImageButtonView(imageUrl: buildImageUrl(using: self.stream), aspectRatio: 16.0/9.0, overlayAlignment: .bottomTrailing) {
-            openWindow(id: "channelVideo", value: stream)
-        } content: {
-            VStack(alignment: .leading) {
-                HStack {
-                    Text(self.stream.gameName)
-                    Spacer()
-                    Text(self.stream.startedAt.formatted())
-                }
-                .font(.subheadline.weight(.medium))
-                .foregroundStyle(.secondary)
-                .lineLimit(1)
-
-                Text(self.stream.title)
-                    .font(.title3)
-                    .lineLimit(1)
-                Text(self.stream.userName)
-                    .truncationMode(.tail)
-                    .lineLimit(1)
-
-//                    tagList(stream.tags)
-            }
-        } imageOverlay: {
+        SharedStreamButtonView(source: .stream(self.stream), displayUrl: self.stream.thumbnailURL, preTitleLeft: self.stream.gameName, preTitleRight: self.stream.startedAt.formatted(), title: self.stream.title, subtitle: self.stream.userName) {
             HStack {
                 Image(systemName: Icon.viewerCount)
                     .symbolRenderingMode(.palette)
@@ -88,14 +66,15 @@ struct StreamButtonView: View {
         }
     }
 
-    @ViewBuilder
-    func tagList(_ list: [String]) -> some View {
-        HStack {
-            ForEach(list, id: \.self) { tag in
-                TagView(text: tag)
-            }
-        }
-    }
+//    @ViewBuilder
+//    func tagList(_ list: [String]) -> some View {
+//        // TODO: Unused
+//        HStack {
+//            ForEach(list, id: \.self) { tag in
+//                TagView(text: tag)
+//            }
+//        }
+//    }
 
     func buildImageUrl(using stream: Twitch.Stream) -> URL? {
         let url = stream.thumbnailURL.replacingOccurrences(of: "{width}", with: "960").replacingOccurrences(of: "{height}", with: "540")

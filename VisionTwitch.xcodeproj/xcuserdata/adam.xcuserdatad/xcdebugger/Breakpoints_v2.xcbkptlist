@@ -3,4 +3,69 @@
    uuid = "DFE59ABF-CB12-4624-8A1B-2D3827582048"
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "444D9B03-527B-4629-80A9-DF74D0EFAD90"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../Library/Developer/Xcode/DerivedData/VisionTwitch-hdobqkaqfroincdmgtoupdlgggbe/SourcePackages/checkouts/swift-twitch-client/Sources/Twitch/API/Helix.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "80"
+            endingLineNumber = "80"
+            landmarkName = "decode(_:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "444D9B03-527B-4629-80A9-DF74D0EFAD90 - 1ff0181c103b73b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Twitch.Helix.decode&lt;&#x3c4;_0_0 where &#x3c4;_0_0: Swift.Decodable&gt;(Foundation.Data) throws -&gt; (Swift.String, Twitch.HelixData&lt;&#x3c4;_0_0&gt;)"
+                  moduleName = "VisionTwitch"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/adam/Library/Developer/Xcode/DerivedData/VisionTwitch-hdobqkaqfroincdmgtoupdlgggbe/SourcePackages/checkouts/swift-twitch-client/Sources/Twitch/API/Helix.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "80"
+                  endingLineNumber = "80"
+                  offsetFromSymbolStart = "140">
+               </Location>
+               <Location
+                  uuid = "444D9B03-527B-4629-80A9-DF74D0EFAD90 - 1ff0181c103b73b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Twitch.Helix.decode&lt;&#x3c4;_0_0 where &#x3c4;_0_0: Swift.Decodable&gt;(Foundation.Data) throws -&gt; (Swift.String, Twitch.HelixData&lt;&#x3c4;_0_0&gt;)"
+                  moduleName = "VisionTwitch"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/adam/Library/Developer/Xcode/DerivedData/VisionTwitch-hdobqkaqfroincdmgtoupdlgggbe/SourcePackages/checkouts/swift-twitch-client/Sources/Twitch/API/Helix.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "80"
+                  endingLineNumber = "80"
+                  offsetFromSymbolStart = "116">
+               </Location>
+               <Location
+                  uuid = "444D9B03-527B-4629-80A9-DF74D0EFAD90 - 1ff0181c103b73b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Twitch.Helix.decode&lt;&#x3c4;_0_0 where &#x3c4;_0_0: Swift.Decodable&gt;(Foundation.Data) throws -&gt; (Swift.String, Twitch.HelixData&lt;&#x3c4;_0_0&gt;)"
+                  moduleName = "VisionTwitch"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/adam/Library/Developer/Xcode/DerivedData/VisionTwitch-hdobqkaqfroincdmgtoupdlgggbe/SourcePackages/checkouts/swift-twitch-client/Sources/Twitch/API/Helix.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "80"
+                  endingLineNumber = "80"
+                  offsetFromSymbolStart = "696">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

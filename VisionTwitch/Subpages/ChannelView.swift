@@ -41,6 +41,7 @@ struct ChannelViewContent: View {
     @Environment(\.openWindow) private var openWindow
 
     @State private var userLoader = DataLoader<[Twitch.Stream], AuthStatus>()
+    @State private var vodLoader = DataLoader<[Video], AuthStatus>()
 
     let channelUser: User
 
@@ -74,6 +75,13 @@ struct ChannelViewContent: View {
                 }
                 Spacer()
             }
+            .padding()
+            AuthorizedStandardScrollableDataView(loader: self.$vodLoader, task: { api, _ in
+                let (videos, _) = try await api.getVideosByUserId(self.channelUser.id)
+                return videos
+            }, noAuthMessage: "this channel's VoDs") { videos in
+                VODGridView(videos: videos)
+            }
         }
         .navigationTitle(self.channelUser.displayName)
     }
@@ -85,5 +93,8 @@ struct ChannelViewContent: View {
 }
 
 #Preview {
-    ChannelViewContent(channelUser: USER_MOCK())
+    NavStack {
+        ChannelViewContent(channelUser: USER_MOCK())
+            .navigationTitle(USER_MOCK().displayName)
+    }
 }
