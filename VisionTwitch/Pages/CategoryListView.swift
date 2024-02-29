@@ -9,7 +9,7 @@ import SwiftUI
 import Twitch
 
 struct CategoryListView: View {
-    @State private var loader = DataLoader<[Game], AuthStatus>()
+    @State private var loader = StandardDataLoader<[Game]>()
 
     var body: some View {
         StandardScrollableDataView(loader: self.$loader) { api, user in

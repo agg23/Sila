@@ -9,7 +9,7 @@ import SwiftUI
 import Twitch
 
 struct CategoryView: View {
-    @State private var loader = DataLoader<([Twitch.Stream], Game), AuthStatus>()
+    @State private var loader = StandardDataLoader<([Twitch.Stream], Game)>()
 
     var category: GameWrapper
 

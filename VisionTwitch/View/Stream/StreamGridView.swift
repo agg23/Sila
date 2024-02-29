@@ -12,19 +12,23 @@ struct StreamGridView: View {
     let streams: [Twitch.Stream]
 
     var body: some View {
-        LazyVGrid(columns: [
-            GridItem(),
-            GridItem(),
-            GridItem(),
-            GridItem()
-        ], content: {
-            ForEach(self.streams, id: \.id) { stream in
-                StreamButtonView(stream: stream)
-            }
-        })
+        VStack {
+            LazyVGrid(columns: [
+                GridItem(),
+                GridItem(),
+                GridItem(),
+                GridItem()
+            ], content: {
+                ForEach(self.streams) { stream in
+                    StreamButtonView(stream: stream)
+                }
+            })
+        }
     }
 }
 
 #Preview {
-    StreamGridView(streams: STREAMS_LIST_MOCK())
+    NavStack {
+        StreamGridView(streams: STREAMS_LIST_MOCK())
+    }
 }

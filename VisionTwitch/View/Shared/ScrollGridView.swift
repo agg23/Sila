@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ScrollGridView<Content: View>: View {
-    var content: () -> Content
+    @ViewBuilder let content: () -> Content
 
     var body: some View {
         ScrollView {

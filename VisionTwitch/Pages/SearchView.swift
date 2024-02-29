@@ -11,7 +11,7 @@ import Twitch
 struct SearchView: View {
     @Environment(\.authController) private var authController
 
-    @State private var loader = DataLoader<([Twitch.Category], [Channel]), String>()
+//    @State private var loader = DataLoader<([Twitch.Category], [Channel]), String>()
     @State private var text = ""
 
     @State private var channelsExpanded = true

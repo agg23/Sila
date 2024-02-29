@@ -9,13 +9,19 @@ import SwiftUI
 import Twitch
 
 struct PopularView: View {
-    @State private var loader = DataLoader<[Twitch.Stream], AuthStatus>()
+    @State private var loader = StandardDataLoader<([Twitch.Stream], String?)>()
 
     var body: some View {
         StandardScrollableDataView(loader: self.$loader) { api, _ in
-            let (streams, _) = try await api.getStreams(limit: 100)
-            return streams
-        } content: { streams in
+            return try await api.getStreams(limit: 100)
+        } onPaginationThresholdMet: {
+            print("Loading more")
+            await self.loader.requestMore { data, apiAndUser in
+                let (newData, cursor) = try await apiAndUser.0.getStreams(limit: 100, after: data.1)
+
+                return (data.0 + newData, cursor)
+            }
+        } content: { streams, _ in
             StreamGridView(streams: streams)
         }
     }

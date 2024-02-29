@@ -11,7 +11,7 @@ import Twitch
 struct DataView<T, E: Error, Content: View, Loading: View, ErrorView: View>: View {
     @Environment(\.authController) private var authController
 
-    let loader: Binding<DataLoader<T, AuthStatus>>
+    let loader: Binding<StandardDataLoader<T>>
     let task: (_: Helix, _: AuthUser?) async throws -> T
 
     @ViewBuilder let content: (_: T) -> Content
@@ -26,7 +26,7 @@ struct DataView<T, E: Error, Content: View, Loading: View, ErrorView: View>: Vie
                     self.loading(data)
                 case .idle:
                     self.loading(nil)
-                case .finished(let data):
+                case .finished(let data), .loadingMore(let data):
                     self.content(data)
                 case .error(let error):
                     self.error(error as? E)
@@ -34,10 +34,10 @@ struct DataView<T, E: Error, Content: View, Loading: View, ErrorView: View>: Vie
             }
             .task(id: self.authController.status, {
                 do {
-                    try await self.loader.wrappedValue.loadIfNecessary(task: {
+                    try await self.loader.wrappedValue.loadIfNecessary(task: { (api, user) in
                         // We have some auth info, run the task
                         do {
-                            return try await self.task(apiAndUser.0, apiAndUser.1)
+                            return try await self.task(api, user)
                         } catch let error as HelixError {
                             // This is ugly
                             switch error {
@@ -53,7 +53,7 @@ struct DataView<T, E: Error, Content: View, Loading: View, ErrorView: View>: Vie
                         } catch {
                             throw error
                         }
-                    }, onChange: self.authController.status)
+                    }, dataAugment: apiAndUser, onChange: self.authController.status)
                 } catch is CancellationError {
                     print("Cancellation error")
                     self.loader.wrappedValue.completeCancel()

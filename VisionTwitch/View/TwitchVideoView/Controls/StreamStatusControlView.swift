@@ -9,7 +9,7 @@ import SwiftUI
 import Twitch
 
 struct StreamStatusControlView: View {
-    @State private var loader = DataLoader<User?, AuthStatus>()
+    @State private var loader = StandardDataLoader<User?>()
 
     let stream: Twitch.Stream
 

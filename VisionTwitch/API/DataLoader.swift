@@ -6,22 +6,30 @@
 //
 
 import SwiftUI
+import Twitch
 
 enum Status<T> {
     case loading(T?)
     case idle
     case finished(T)
+    /// Loading additional pages of data
+    case loadingMore(T)
     case error(Error)
 }
 
-@Observable class DataLoader<T, Changable: Equatable> {
+typealias StandardDataLoader<T> = DataLoader<T, (Helix, AuthUser?), AuthStatus>
+
+@Observable class DataLoader<T, DataAugment, Changable: Equatable> {
     var status: Status<T> = .idle
+
     @ObservationIgnored private var changable: Changable? = nil
-    @ObservationIgnored private var task: (() async throws -> T)? = nil
+    @ObservationIgnored private var task: ((_: DataAugment) async throws -> T)? = nil
+    @ObservationIgnored private var dataAugment: DataAugment? = nil
     @ObservationIgnored private var runningTask: Task<Status<T>, Error>? = nil
 
-    func loadIfNecessary(task: @escaping () async throws -> T, onChange: Changable? = nil) async throws {
+    func loadIfNecessary(task: @escaping (_: DataAugment) async throws -> T, dataAugment: DataAugment, onChange: Changable? = nil) async throws {
         self.task = task
+        self.dataAugment = dataAugment
 
         // Check changes before updating it (if in idle)
         if onChange != nil && onChange != self.changable {
@@ -76,6 +84,36 @@ enum Status<T> {
         self.status = newStatus
     }
 
+    func requestMore(withGetter task: (_: T, _: DataAugment) async throws -> T) async {
+        guard let dataAugment = self.dataAugment else {
+            fatalError("Incorrectly set up DataLoader")
+        }
+
+        switch self.status {
+        case .finished(let data):
+            self.status = .loadingMore(data)
+
+            do {
+                let newData = try await task(data, dataAugment)
+
+                self.status = .finished(newData)
+            } catch {
+                self.status = .finished(data)
+                return
+            }
+        default:
+            break
+        }
+    }
+
+    func isLoadingMore() -> Bool {
+        if case .loadingMore = status {
+            return true
+        }
+
+        return false
+    }
+
     private func cancel() {
         if let runningTask = self.runningTask {
             runningTask.cancel()
@@ -96,7 +134,7 @@ enum Status<T> {
     }
 
     private func refreshDeferredData(preventLoadingState: Bool = false) async throws -> Status<T> {
-        guard let task = self.task else {
+        guard let task = self.task, let dataAugment = self.dataAugment else {
             fatalError("Incorrectly set up DataLoader")
         }
 
@@ -118,7 +156,7 @@ enum Status<T> {
                 self.status = .loading(existingData)
             }
 
-            let result = try await Status<T>.finished(task())
+            let result = try await Status<T>.finished(task(dataAugment))
 
             self.runningTask = nil
 

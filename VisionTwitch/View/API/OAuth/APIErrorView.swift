@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-struct APIErrorView<TData, TChange: Equatable>: View {
-    let loader: Binding<DataLoader<TData, TChange>>
+struct APIErrorView<TData, TDataAugment, TChange: Equatable>: View {
+    let loader: Binding<DataLoader<TData, TDataAugment, TChange>>
 
     var body: some View {
         VStack {

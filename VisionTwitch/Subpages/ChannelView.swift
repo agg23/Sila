@@ -9,7 +9,7 @@ import SwiftUI
 import Twitch
 
 struct ChannelView: View {
-    @State private var loader = DataLoader<User, AuthStatus>()
+    @State private var loader = StandardDataLoader<User>()
 
     let channel: UserWrapper
 
@@ -40,8 +40,8 @@ struct ChannelView: View {
 struct ChannelViewContent: View {
     @Environment(\.openWindow) private var openWindow
 
-    @State private var userLoader = DataLoader<[Twitch.Stream], AuthStatus>()
-    @State private var vodLoader = DataLoader<[Video], AuthStatus>()
+    @State private var userLoader = StandardDataLoader<[Twitch.Stream]>()
+    @State private var vodLoader = StandardDataLoader<[Video]>()
 
     let channelUser: User
 

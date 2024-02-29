@@ -11,8 +11,8 @@ import Twitch
 struct FollowedStreamsView: View {
     @Environment(\.authController) private var authController
 
-    @State private var liveStreamsLoader = DataLoader<[Twitch.Stream], AuthStatus>()
-    @State private var channelsLoader = DataLoader<[Twitch.User], AuthStatus>()
+    @State private var liveStreamsLoader = StandardDataLoader<([Twitch.Stream], String?)>()
+    @State private var channelsLoader = StandardDataLoader<[Twitch.User]>()
 
     var body: some View {
         // If statement to hide the picker when not authorized
@@ -29,15 +29,20 @@ struct FollowedStreamsView: View {
 
     @ViewBuilder
     var liveStreams: some View {
-        AuthorizedStandardScrollableDataView(loader: self.$liveStreamsLoader, task: { (api, user) in
+        AuthorizedStandardScrollableDataView(loader: self.$liveStreamsLoader, task: { api, user in
             print("Request live")
             guard user != nil else {
                 // If we have no user, we're unauthenticated and this is a buffered task
-                return []
+                return ([], nil)
             }
-            let (streams, _) = try await api.getFollowedStreams(limit: 100)
-            return streams
-        }, noAuthMessage: "your followed streams") { streams in
+            return try await api.getFollowedStreams(limit: 100)
+        }, noAuthMessage: "your followed streams") {
+            await self.liveStreamsLoader.requestMore { data, apiAndUser in
+                let (newData, cursor) = try await apiAndUser.0.getFollowedStreams(limit: 100, after: data.1)
+
+                return (data.0 + newData, cursor)
+            }
+        } content: { (streams, _) in
             if streams.isEmpty {
                 EmptyDataView(message: "live followed streams") {
                     Task {
@@ -54,8 +59,8 @@ struct FollowedStreamsView: View {
 
     @ViewBuilder
     var channels: some View {
+        // TODO: Does not support pagination, but I believe will fetch all 100 channels (probably all anyone has)
         AuthorizedStandardScrollableDataView(loader: self.$channelsLoader, task: { api, user in
-            print("Request channels")
             let (_, channels, _) = try await api.getFollowedChannels(limit: 100)
 
             let broadcasterIds = channels.map({$0.broadcasterId})
