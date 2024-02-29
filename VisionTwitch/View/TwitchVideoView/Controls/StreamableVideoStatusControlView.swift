@@ -52,9 +52,9 @@ struct StreamableVideoStatusControlContentView: View {
     var body: some View {
         switch self.streamableVideo {
         case .stream(let stream):
-            StreamableVideoStatusDisplayView(title: stream.title, userName: stream.userName, profileImageUrl: self.profileImageUrl(), viewerCount: stream.viewerCount)
+            StreamableVideoStatusDisplayView(title: stream.title, userName: stream.userName, gameName: stream.gameName, profileImageUrl: self.profileImageUrl(), viewerCount: stream.viewerCount)
         case .video(let video):
-            StreamableVideoStatusDisplayView(title: video.title, userName: video.userName, profileImageUrl: self.profileImageUrl(), viewerCount: nil)
+            StreamableVideoStatusDisplayView(title: video.title, userName: video.userName, gameName: nil, profileImageUrl: self.profileImageUrl(), viewerCount: nil)
         }
     }
 
@@ -70,6 +70,7 @@ struct StreamableVideoStatusControlContentView: View {
 struct StreamableVideoStatusDisplayView: View {
     let title: String
     let userName: String
+    let gameName: String?
     let profileImageUrl: URL?
     let viewerCount: Int?
 
@@ -83,6 +84,10 @@ struct StreamableVideoStatusDisplayView: View {
                 Text(self.userName)
                     .lineLimit(1)
                     .truncationMode(.tail)
+                Text(self.gameName ?? "")
+                    .lineLimit(1)
+                    .truncationMode(.tail)
+                    .foregroundColor(.secondary)
             }
             Spacer()
             if let viewerCount = viewerCount {
