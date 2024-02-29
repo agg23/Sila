@@ -19,14 +19,14 @@ struct TwitchVideoView: View {
 
     @State private var player = WebViewPlayer()
 
-    let stream: Twitch.Stream
+    let streamableVideo: StreamableVideo
 
     var body: some View {
         let forceControlsDisplay = self.player.status == .idle
         let controlOpacity = self.showControls || forceControlsDisplay ? 1.0 : 0.0
 
         ZStack {
-            TwitchWebView(player: self.player, channel: self.stream.userName)
+            TwitchWebView(player: self.player, streamableVideo: self.streamableVideo)
                 .onTapGesture {
                     self.showControls = true
                     
@@ -34,7 +34,7 @@ struct TwitchVideoView: View {
                 }
         }
         .ornament(attachmentAnchor: .scene(.bottom), contentAlignment: .top) {
-                PlayerControlsView(player: player, stream: self.stream, onInteraction: {
+            PlayerControlsView(player: player, streamableVideo: self.streamableVideo, onInteraction: {
                     resetTimer()
                 }, activeChanged: { isActive in
                     if isActive {
@@ -61,5 +61,5 @@ struct TwitchVideoView: View {
 }
 
 #Preview {
-    TwitchVideoView(stream: STREAM_MOCK())
+    TwitchVideoView(streamableVideo: .stream(STREAM_MOCK()))
 }

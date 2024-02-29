@@ -11,14 +11,14 @@ import WebKit
 struct TwitchWebView: UIViewRepresentable {
     typealias UIViewType = WKWebView
 
-    let channel: String
+    let streamableVideo: StreamableVideo
 
     let webView: WKWebView
     let player: WebViewPlayer
 
-    init(player: WebViewPlayer, channel: String) {
+    init(player: WebViewPlayer, streamableVideo: StreamableVideo) {
         self.player = player
-        self.channel = channel
+        self.streamableVideo = streamableVideo
 
         let overrideScript = WKUserScript(source: """
             // Set custom window parent
@@ -132,7 +132,14 @@ struct TwitchWebView: UIViewRepresentable {
         webView.configuration.userContentController.add(context.coordinator, name: "twitch")
 
         // Also supports quality=auto&volume=0.39&muted=false
-        webView.load(URLRequest(url: URL(string: "https://player.twitch.tv/?channel=\(self.channel)&parent=twitch.tv&controls=false&player=popout")!))
+        var urlVideoSegment: String
+        switch self.streamableVideo {
+        case .stream(let stream):
+            urlVideoSegment = "channel=\(stream.userName)"
+        case .video(let video):
+            urlVideoSegment = "video=\(video.id)"
+        }
+        webView.load(URLRequest(url: URL(string: "https://player.twitch.tv/?\(urlVideoSegment)&parent=twitch.tv&controls=false&player=popout")!))
 
         return webView
     }
@@ -254,5 +261,5 @@ class TwitchWebViewCoordinator: NSObject, WKUIDelegate, WKNavigationDelegate, WK
 }
 
 #Preview {
-    TwitchWebView(player: WebViewPlayer(), channel: "BarbarousKing")
+    TwitchWebView(player: WebViewPlayer(), streamableVideo: .stream(STREAM_MOCK()))
 }

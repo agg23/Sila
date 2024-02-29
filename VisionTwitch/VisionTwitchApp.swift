@@ -20,11 +20,21 @@ struct VisionTwitchApp: App {
         }
         .environment(\.authController, self.authController)
 
-        WindowGroup(id: "channelVideo", for: Twitch.Stream.self) { stream in
+        WindowGroup(id: "stream", for: Twitch.Stream.self) { stream in
             if let stream = stream.wrappedValue {
-                TwitchWindowView(stream: stream)
+                TwitchWindowView(streamableVideo: .stream(stream))
             } else {
                 Text("No channel specified")
+            }
+        }
+        .environment(\.authController, self.authController)
+        .defaultSize(CGSize(width: 800.0, height: 450.0))
+
+        WindowGroup(id: "vod", for: Twitch.Video.self) { video in
+            if let video = video.wrappedValue {
+                TwitchWindowView(streamableVideo: .video(video))
+            } else {
+                Text("No video specified")
             }
         }
         .environment(\.authController, self.authController)

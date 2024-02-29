@@ -15,7 +15,7 @@ struct PlayerControlsView: View {
 
     var player: WebViewPlayer
 
-    var stream: Twitch.Stream
+    let streamableVideo: StreamableVideo
 
     var onInteraction: (() -> Void)?
     var activeChanged: ((Bool) -> Void)?
@@ -33,7 +33,7 @@ struct PlayerControlsView: View {
             }
             .controlSize(.extraLarge)
 
-            StreamStatusControlView(stream: self.stream)
+            StreamableVideoStatusControlView(streamableVideo: self.streamableVideo)
                 .padding(.horizontal)
 
             CircleBackgroundLessButton(systemName: "arrow.clockwise", tooltip: "Debug reload") {
@@ -47,7 +47,7 @@ struct PlayerControlsView: View {
                 }
 
             // Force CircleBackgroundLessButton styles
-            ShareLink(item: URL(string: "https://twitch.tv/\(self.stream.userName)")!)
+            ShareLink(item: URL(string: "https://twitch.tv/\(self.userName())")!)
             .labelStyle(.iconOnly)
             .buttonBorderShape(.circle)
             .buttonStyle(.borderless)
@@ -57,16 +57,25 @@ struct PlayerControlsView: View {
             self.activeChanged?(newValue)
         }
     }
+
+    func userName() -> String {
+        switch self.streamableVideo {
+        case .stream(let stream):
+            return stream.userName
+        case .video(let video):
+            return video.userName
+        }
+    }
 }
 
 #Preview {
-    PlayerControlsView(player: WebViewPlayer(), stream: STREAM_MOCK())
+    PlayerControlsView(player: WebViewPlayer(), streamableVideo: .stream(STREAM_MOCK()))
 }
 
 #Preview {
     Rectangle()
         .ornament(attachmentAnchor: .scene(.bottom)) {
-            PlayerControlsView(player: WebViewPlayer(), stream: STREAM_MOCK())
+            PlayerControlsView(player: WebViewPlayer(), streamableVideo: .stream(STREAM_MOCK()))
                 .glassBackgroundEffect()
         }
 }

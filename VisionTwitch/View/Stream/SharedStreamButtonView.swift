@@ -43,9 +43,9 @@ struct SharedStreamButtonView<ImageOverlay: View>: View {
         AsyncImageButtonView(imageUrl: buildImageUrl(using: self.displayUrl), aspectRatio: 16.0/9.0, overlayAlignment: .bottomTrailing) {
             switch self.source {
             case .stream(let stream):
-                openWindow(id: "channelVideo", value: stream)
+                openWindow(id: "stream", value: stream)
             case .video(let video):
-                openWindow(id: "channelVideo", value: video)
+                openWindow(id: "vod", value: video)
             }
         } content: {
             VStack(alignment: .leading) {
