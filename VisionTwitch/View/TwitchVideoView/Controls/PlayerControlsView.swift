@@ -45,6 +45,8 @@ struct PlayerControlsView: View {
                 .onChange(of: self.volume) { _, newValue in
                     self.player.setVolume(newValue)
                 }
+
+            ShareLink(item: URL(string: "https://twitch.tv/")!)
         }
         .padding()
         .onChange(of: self.volumePreventClose) { _, newValue in
