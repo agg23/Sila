@@ -34,20 +34,24 @@ struct TwitchVideoView: View {
                 }
         }
         .ornament(attachmentAnchor: .scene(.bottom), contentAlignment: .top) {
-            PlayerControlsView(player: player, streamableVideo: self.streamableVideo, onInteraction: {
-                    resetTimer()
-                }, activeChanged: { isActive in
-                    if isActive {
-                        print("Controls are active")
-                        self.showControlsTimer?.invalidate()
-                        self.showControlsTimer = nil
-                    } else {
-                        self.resetTimer()
-                    }
-                })
-                    .glassBackgroundEffect()
-                    .opacity(controlOpacity)
-                    .animation(.easeInOut(duration: 0.5), value: controlOpacity)
+            VStack {
+                // Add spacing between main window and PlayerControlsView to allow for the window resizer
+                Color.clear.frame(height: 32)
+                PlayerControlsView(player: player, streamableVideo: self.streamableVideo, onInteraction: {
+                        resetTimer()
+                    }, activeChanged: { isActive in
+                        if isActive {
+                            print("Controls are active")
+                            self.showControlsTimer?.invalidate()
+                            self.showControlsTimer = nil
+                        } else {
+                            self.resetTimer()
+                        }
+                    })
+                        .glassBackgroundEffect()
+                        .opacity(controlOpacity)
+                        .animation(.easeInOut(duration: 0.5), value: controlOpacity)
+                }
             }
     }
     
