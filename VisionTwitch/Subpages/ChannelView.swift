@@ -86,6 +86,8 @@ struct ChannelViewContent: View {
             } content: { videos, _ in
                 VODGridView(videos: videos)
             }
+            // Make profile image be pushed to the top
+            Spacer()
         }
         .navigationTitle(self.channelUser.displayName)
         .toolbar {

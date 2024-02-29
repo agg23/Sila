@@ -46,7 +46,11 @@ struct PlayerControlsView: View {
                     self.player.setVolume(newValue)
                 }
 
-            ShareLink(item: URL(string: "https://twitch.tv/")!)
+            // Force CircleBackgroundLessButton styles
+            ShareLink(item: URL(string: "https://twitch.tv/\(self.stream.userName)")!)
+            .labelStyle(.iconOnly)
+            .buttonBorderShape(.circle)
+            .buttonStyle(.borderless)
         }
         .padding()
         .onChange(of: self.volumePreventClose) { _, newValue in
