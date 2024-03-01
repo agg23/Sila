@@ -8,13 +8,14 @@
 import TwitchIRC
 
 extension PrivateMessage {
-    init(channel: String, chatColor: String, userDisplayName: String, message: String) {
+    init(channel: String, chatColor: String, userDisplayName: String, message: String, emotes: String? = nil) {
         self.init()
 
         self.channel = channel
         self.displayName = userDisplayName
         self.message = message
         self.color = chatColor
+        self.emotes = emotes ?? ""
     }
 }
 
