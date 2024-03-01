@@ -57,10 +57,10 @@
     {
       "identity" : "swift-markdown-ui",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/gonzalezreal/swift-markdown-ui",
+      "location" : "https://github.com/kchro3/swift-markdown-ui/",
       "state" : {
-        "revision" : "ae799d015a5374708f7b4c85f3294c05f2a564e2",
-        "version" : "2.3.0"
+        "branch" : "kchro3/make-blocknodes-public",
+        "revision" : "4fd836761e7178150adc370d216f748a21914684"
       }
     },
     {
