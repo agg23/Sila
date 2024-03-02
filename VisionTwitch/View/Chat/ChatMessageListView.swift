@@ -16,7 +16,7 @@ struct ChatMessageListView: View {
             ScrollView {
                 LazyVStack {
                     ForEach(self.messages) { message in
-                        ChatMessageView(message: message)
+                        SubviewTest(message: message)
                     }
 
                     Color.clear
@@ -40,7 +40,7 @@ struct ChatMessageListView: View {
                 proxy.scrollTo(self.messages.last)
             }
         }
-
+        .frame(width: 300)
     }
 }
 

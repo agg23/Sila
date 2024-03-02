@@ -10,32 +10,54 @@ import SubviewAttachingTextView
 import Nuke
 import NukeUI
 import Gifu
+import TwitchIRC
 
-struct SubviewTestList: View {
-    var body: some View {
-        List {
-            ForEach(0..<200) { _ in
-                SubviewTest()
-            }
-        }
-    }
-}
+//struct SubviewTestList: View {
+//    var body: some View {
+////        List {
+////            ForEach(0..<200) { _ in
+////                SubviewTest()
+////            }
+////        }
+//        SubviewTest()
+//    }
+//}
 
 struct SubviewTest: View {
-    let attributedString: NSAttributedString
+    private let attributedString: NSAttributedString
 
     @MainActor
-    init() {
-//        let imageView = UIImageView(image: UIImage(systemName: "square.and.arrow.up"))
-        let imageView = ImageView(frame: .init(x: 0, y: 0, width: 28, height: 28))
-        imageView.setImage(with: URL(string: "https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_07de0906cc7141b3808695f6d14cad1f/default/light/1.0")!)
-        let attachment = SubviewTextAttachment(view: imageView)
+    init(message: PrivateMessage) {
+        let attributedString = NSMutableAttributedString(string: message.message)
 
-        let attributedString = NSMutableAttributedString(string: "This is a test string")
-//        attributedString.addAttribute(.attachment, value: attachment, range: NSRange(location: 3, length: 7))
-        attributedString.append(NSAttributedString(attachment: attachment))
+        var removedCharCount = 0
+        
+        var emotes = message.parseEmotes()
 
-        attributedString.append(NSAttributedString(string: "Additional string content."))
+        // Sometimes emotes can be out of order
+        emotes.sort { a, b in
+            a.startIndex < b.startIndex
+        }
+
+        for emote in emotes {
+            let attachmentString = createAttachmentString(using: emote)
+
+            let length = emote.endIndex - emote.startIndex + 1
+
+            attributedString.replaceCharacters(in: .init(location: emote.startIndex - removedCharCount, length: length), with: attachmentString)
+
+            removedCharCount += length
+        }
+
+//        let imageView = ImageView(frame: .init(x: 0, y: 0, width: 28, height: 28))
+//        imageView.setImage(with: URL(string: "https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_07de0906cc7141b3808695f6d14cad1f/default/light/1.0")!)
+//        let attachment = SubviewTextAttachment(view: imageView)
+//
+//        let attributedString = NSMutableAttributedString(string: "This is a test string")
+////        attributedString.addAttribute(.attachment, value: attachment, range: NSRange(location: 3, length: 7))
+//        attributedString.append(NSAttributedString(attachment: attachment))
+//
+//        attributedString.append(NSAttributedString(string: "Additional string content."))
 
         self.attributedString = attributedString
     }
@@ -43,6 +65,14 @@ struct SubviewTest: View {
     var body: some View {
         SubviewAttachingTextSUIView(attributedString: self.attributedString)
     }
+}
+
+private func createAttachmentString(using emote: Emote) -> NSAttributedString {
+    let imageView = ImageView(frame: .init(x: 0, y: 0, width: 28, height: 28))
+    imageView.setImage(with: URL(string: emoteUrl(from: emote.id))!)
+    let attachment = SubviewTextAttachment(view: imageView)
+
+    return NSAttributedString(attachment: attachment)
 }
 
 final class ImageView: UIView {
@@ -62,8 +92,6 @@ final class ImageView: UIView {
             return view
         }
 
-        self.imageView.backgroundColor = .green
-
         super.init(frame: frame)
 
         self.addSubview(self.imageView)
@@ -80,8 +108,4 @@ final class ImageView: UIView {
     private func prepareForReuse() {
         self.imageView.reset()
     }
-}
-
-#Preview {
-    SubviewTest()
 }
