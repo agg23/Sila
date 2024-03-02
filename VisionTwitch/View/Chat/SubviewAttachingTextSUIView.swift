@@ -123,18 +123,14 @@ private func buildString(from message: PrivateMessage) -> NSAttributedString {
     }
 
     for emote in emotes {
-//            if emote.isAnimated && emotes.count > 2 {
-//                print(message)
-//                print(message.emotes)
-//            }
-
         let attachmentString = createAttachmentString(using: emote)
 
         let length = emote.endIndex - emote.startIndex + 1
 
         attributedString.replaceCharacters(in: .init(location: emote.startIndex - removedCharCount, length: length), with: attachmentString)
 
-        removedCharCount += length
+        // Substring is replaced by a single character, make sure to include that
+        removedCharCount += length - 1
     }
 
     return attributedString
@@ -197,6 +193,8 @@ class WrapperView: SubviewAttachingTextView {
     }
 
     init() {
+        // TODO: Probable initial render perf gains if we could figure out how to start in TextKit 1 mode
+        // The static init(usingTextLayoutManager:)
         super.init(frame: .zero, textContainer: nil)
 
         self.textContainer.lineFragmentPadding = 0
@@ -214,4 +212,8 @@ class WrapperView: SubviewAttachingTextView {
 //        let boundingRect = self.attributedText.boundingRect(with: CGSize(width: self.textContainer.size.width, height: .greatestFiniteMagnitude), context: nil)
 //        return boundingRect.size
 //    }
+}
+
+#Preview {
+    EmoteTextView(message: PrivateMessage(channel: "mistermv", chatColor: "#1E90FF", userDisplayName: "damasenpai", message: "claraqDISCO claraqDISCO claraqDISCO claraqDISCO claraqDISCO", emotes: "emotesv2_b01874d1da9f479aa49df41c48164233:0-10,12-22,24-34,36-46,48-58"))
 }
