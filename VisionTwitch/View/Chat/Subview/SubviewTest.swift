@@ -40,6 +40,11 @@ struct SubviewTest: View {
         }
 
         for emote in emotes {
+//            if emote.isAnimated && emotes.count > 2 {
+//                print(message)
+//                print(message.emotes)
+//            }
+
             let attachmentString = createAttachmentString(using: emote)
 
             let length = emote.endIndex - emote.startIndex + 1

@@ -5,11 +5,14 @@
 //  Created by Adam Gastineau on 2/29/24.
 //
 
+import Foundation
 import TwitchIRC
 
 extension PrivateMessage {
     init(channel: String, chatColor: String, userDisplayName: String, message: String, emotes: String? = nil) {
         self.init()
+
+        self.id = UUID().uuidString
 
         self.channel = channel
         self.displayName = userDisplayName

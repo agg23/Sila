@@ -28,8 +28,8 @@ struct MainWindowView: View {
 //                SearchView()
 //            }
 //        }
-//        ChatView(channel: "esl_dota2")
-        SubviewTestList()
+        ChatView(channel: "mistermv")
+//        SubviewTestList()
     }
 }
 

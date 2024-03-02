@@ -173,8 +173,8 @@
             filePath = "VisionTwitch/View/Chat/SubviewAttachingTextSUIView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "105"
-            endingLineNumber = "105"
+            startingLineNumber = "214"
+            endingLineNumber = "214"
             landmarkName = "WrapperView"
             landmarkType = "3">
          </BreakpointContent>

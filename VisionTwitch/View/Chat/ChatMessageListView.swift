@@ -16,7 +16,7 @@ struct ChatMessageListView: View {
             ScrollView {
                 LazyVStack {
                     ForEach(self.messages) { message in
-                        SubviewTest(message: message)
+                        EmoteTextView(message: message)
                     }
 
                     Color.clear

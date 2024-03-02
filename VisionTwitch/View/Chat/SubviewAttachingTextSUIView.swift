@@ -8,6 +8,7 @@
 import UIKit
 import SwiftUI
 import SubviewAttachingTextView
+import TwitchIRC
 
 struct SubviewAttachingTextSUIView: UIViewRepresentable {
     let attributedString: NSAttributedString
@@ -48,6 +49,114 @@ struct SubviewAttachingTextSUIView: UIViewRepresentable {
         )
 
         return boundingRect.height
+    }
+}
+
+struct EmoteTextView: UIViewRepresentable {
+    let message: PrivateMessage
+
+    func makeUIView(context: Context) -> WrapperView {
+        WrapperView()
+    }
+
+    func makeCoordinator() -> EmoteTextCoordinator {
+        Coordinator(message: self.message)
+    }
+
+    func updateUIView(_ view: WrapperView, context: Context) {
+        context.coordinator.update(message: self.message)
+
+        view.attributedText = context.coordinator.attributedString
+    }
+}
+
+extension EmoteTextView {
+    func sizeThatFits(_ proposal: ProposedViewSize, uiView: WrapperView, context: Context) -> CGSize? {
+        let dimensions = proposal.replacingUnspecifiedDimensions(
+            by: .init(
+                width: 0,
+                height: CGFloat.greatestFiniteMagnitude
+            )
+        )
+
+        let calculatedHeight = calculateTextViewHeight(
+            containerSize: dimensions,
+            attributedString: uiView.attributedText
+        )
+
+        return .init(
+            width: dimensions.width,
+            height: calculatedHeight
+        )
+    }
+
+    private func calculateTextViewHeight(containerSize: CGSize,
+                                         attributedString: NSAttributedString) -> CGFloat {
+        let boundingRect = attributedString.boundingRect(
+            with: .init(width: containerSize.width, height: .greatestFiniteMagnitude),
+            options: [.usesLineFragmentOrigin, .usesFontLeading],
+            context: nil
+        )
+
+        return boundingRect.height
+    }
+}
+
+private func createAttachmentString(using emote: Emote) -> NSAttributedString {
+    let imageView = ImageView(frame: .init(x: 0, y: 0, width: 28, height: 28))
+    imageView.setImage(with: URL(string: emoteUrl(from: emote.id))!)
+    let attachment = SubviewTextAttachment(view: imageView)
+
+    return NSAttributedString(attachment: attachment)
+}
+
+private func buildString(from message: PrivateMessage) -> NSAttributedString {
+    let attributedString = NSMutableAttributedString(string: message.message)
+
+    var removedCharCount = 0
+
+    var emotes = message.parseEmotes()
+
+    // Sometimes emotes can be out of order
+    emotes.sort { a, b in
+        a.startIndex < b.startIndex
+    }
+
+    for emote in emotes {
+//            if emote.isAnimated && emotes.count > 2 {
+//                print(message)
+//                print(message.emotes)
+//            }
+
+        let attachmentString = createAttachmentString(using: emote)
+
+        let length = emote.endIndex - emote.startIndex + 1
+
+        attributedString.replaceCharacters(in: .init(location: emote.startIndex - removedCharCount, length: length), with: attachmentString)
+
+        removedCharCount += length
+    }
+
+    return attributedString
+}
+
+class EmoteTextCoordinator: NSObject {
+    private var message: PrivateMessage
+
+    private(set) var attributedString: NSAttributedString
+
+    init(message: PrivateMessage) {
+        self.message = message
+        self.attributedString = buildString(from: message)
+    }
+
+    func update(message: PrivateMessage) {
+        guard message.id != self.message.id else {
+            // Same message, nothing to do
+            return
+        }
+
+        self.attributedString = buildString(from: message)
     }
 }
 
