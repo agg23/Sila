@@ -1,6 +1,15 @@
 {
   "pins" : [
     {
+      "identity" : "gifu",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/agg23/Gifu.git",
+      "state" : {
+        "branch" : "master",
+        "revision" : "e8090f3b9313c89833258d8edd56b48208214fcf"
+      }
+    },
+    {
       "identity" : "junoslider",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/christianselig/JunoSlider.git",
@@ -19,21 +28,21 @@
       }
     },
     {
-      "identity" : "networkimage",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/gonzalezreal/NetworkImage",
-      "state" : {
-        "revision" : "7aff8d1b31148d32c5933d75557d42f6323ee3d1",
-        "version" : "6.0.0"
-      }
-    },
-    {
       "identity" : "nuke",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/kean/Nuke.git",
       "state" : {
         "revision" : "8ecbfc886da39bccb01c34abef5f2ff4073ad633",
         "version" : "12.4.0"
+      }
+    },
+    {
+      "identity" : "subviewattachingtextview",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/agg23/SubviewAttachingTextView.git",
+      "state" : {
+        "branch" : "master",
+        "revision" : "4f113093aa25d2e8a55fc59fda078107ddc136f3"
       }
     },
     {
@@ -61,15 +70,6 @@
       "state" : {
         "revision" : "12358d55a3824bd5fed310b999ea8cf83a9a1a65",
         "version" : "1.0.3"
-      }
-    },
-    {
-      "identity" : "swift-markdown-ui",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/kchro3/swift-markdown-ui/",
-      "state" : {
-        "branch" : "kchro3/make-blocknodes-public",
-        "revision" : "4fd836761e7178150adc370d216f748a21914684"
       }
     },
     {
