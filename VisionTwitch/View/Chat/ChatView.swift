@@ -31,6 +31,12 @@ struct ChatView: View {
                         try await self.chatClient.join(to: self.channel)
 
                         for try await message in stream {
+                            // Close connection
+                            if Task.isCancelled {
+                                self.chatClient.disconnect()
+                                return
+                            }
+
                             switch message {
                             case .privateMessage(let message):
                                 self.appendChatMessage(message)

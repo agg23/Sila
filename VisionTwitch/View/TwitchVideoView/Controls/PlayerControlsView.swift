@@ -17,6 +17,10 @@ struct PlayerControlsView: View {
 
     let streamableVideo: StreamableVideo
 
+    @Binding var showChat: Bool
+
+    var onToggleChat: () -> Void
+
     var onInteraction: (() -> Void)?
     var activeChanged: ((Bool) -> Void)?
 
@@ -46,6 +50,11 @@ struct PlayerControlsView: View {
                     self.player.setVolume(newValue)
                 }
 
+            CircleBackgroundLessButton(systemName: "message", tooltip: self.showChat ? "Hide Chat" : "Show Chat") {
+                self.showChat.toggle()
+                self.onInteraction?()
+            }
+
             // Force CircleBackgroundLessButton styles
             ShareLink(item: URL(string: "https://twitch.tv/\(self.userName())")!)
             .labelStyle(.iconOnly)
@@ -69,13 +78,17 @@ struct PlayerControlsView: View {
 }
 
 #Preview {
-    PlayerControlsView(player: WebViewPlayer(), streamableVideo: .stream(STREAM_MOCK()))
+    PlayerControlsView(player: WebViewPlayer(), streamableVideo: .stream(STREAM_MOCK()), showChat: .constant(false)) {
+
+    }
 }
 
 #Preview {
     Rectangle()
         .ornament(attachmentAnchor: .scene(.bottom)) {
-            PlayerControlsView(player: WebViewPlayer(), streamableVideo: .stream(STREAM_MOCK()))
-                .glassBackgroundEffect()
+            PlayerControlsView(player: WebViewPlayer(), streamableVideo: .stream(STREAM_MOCK()), showChat: .constant(true)) {
+
+            }
+            .glassBackgroundEffect()
         }
 }

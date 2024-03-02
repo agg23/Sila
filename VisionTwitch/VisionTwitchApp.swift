@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Twitch
+import VisionPane
 
 @main
 struct VisionTwitchApp: App {
@@ -20,7 +21,7 @@ struct VisionTwitchApp: App {
         }
         .environment(\.authController, self.authController)
 
-        WindowGroup(id: "stream", for: Twitch.Stream.self) { stream in
+        WindowGroup.Pane(id: "stream", for: Twitch.Stream.self) { stream in
             if let stream = stream.wrappedValue {
                 TwitchWindowView(streamableVideo: .stream(stream))
             } else {

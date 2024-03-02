@@ -8,12 +8,14 @@
 import SwiftUI
 import Twitch
 import WebKit
+import VisionPane
 
 struct TwitchVideoView: View {
     let controlsTimerDuration = 3.0
 
     @State private var showControls = false
     @State private var showControlsTimer: Timer?
+    @State private var showChat = false
 
     @State private var preventClose = false
 
@@ -33,24 +35,30 @@ struct TwitchVideoView: View {
                     resetTimer()
                 }
         }
+        .pane(isPresented: self.$showChat) {
+            // TODO: Handle VoDs
+            if case .stream(let stream) = self.streamableVideo {
+                ChatPaneView(channel: stream.userName)
+            }
+        }
         .ornament(attachmentAnchor: .scene(.bottom), contentAlignment: .top) {
             VStack {
                 // Add spacing between main window and PlayerControlsView to allow for the window resizer
                 Color.clear.frame(height: 32)
-                PlayerControlsView(player: player, streamableVideo: self.streamableVideo, onInteraction: {
-                        resetTimer()
-                    }, activeChanged: { isActive in
-                        if isActive {
-                            print("Controls are active")
-                            self.showControlsTimer?.invalidate()
-                            self.showControlsTimer = nil
-                        } else {
-                            self.resetTimer()
-                        }
-                    })
-                        .glassBackgroundEffect()
-                        .opacity(controlOpacity)
-                        .animation(.easeInOut(duration: 0.5), value: controlOpacity)
+                PlayerControlsView(player: player, streamableVideo: self.streamableVideo, showChat: self.$showChat) {
+                    resetTimer()
+                } activeChanged: { isActive in
+                    if isActive {
+                        print("Controls are active")
+                        self.showControlsTimer?.invalidate()
+                        self.showControlsTimer = nil
+                    } else {
+                        self.resetTimer()
+                    }
+                }
+                    .glassBackgroundEffect()
+                    .opacity(controlOpacity)
+                    .animation(.easeInOut(duration: 0.5), value: controlOpacity)
                 }
             }
     }

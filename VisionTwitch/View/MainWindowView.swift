@@ -6,30 +6,28 @@
 //
 
 import SwiftUI
-import MarkdownUI
 
 struct MainWindowView: View {
     var body: some View {
-//        TabView {
-//            // TODO: Change icon
-//            TabPage(title: "Following", systemImage: Icon.following) {
-//                FollowedStreamsView()
-//            }
-//
-//            TabPage(title: "Popular", systemImage: Icon.popular) {
-//                PopularView()
-//            }
-//
-//            TabPage(title: "Categories", systemImage: Icon.category) {
-//                CategoryListView()
-//            }
-//
-//            TabPage(title: "Search", systemImage: Icon.search) {
-//                SearchView()
-//            }
-//        }
-        ChatView(channel: "mistermv")
-//        SubviewTestList()
+        TabView {
+            // TODO: Change icon
+            TabPage(title: "Following", systemImage: Icon.following) {
+                FollowedStreamsView()
+            }
+
+            TabPage(title: "Popular", systemImage: Icon.popular) {
+                PopularView()
+            }
+
+            TabPage(title: "Categories", systemImage: Icon.category) {
+                CategoryListView()
+            }
+
+            TabPage(title: "Search", systemImage: Icon.search) {
+                SearchView()
+            }
+        }
+//        ChatView(channel: "mistermv")
     }
 }
 
