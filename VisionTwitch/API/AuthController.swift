@@ -19,7 +19,7 @@ import WebKit
     static let CLIENT_SECRET = (Bundle.main.infoDictionary?["API_SECRET"] as! String).replacingOccurrences(of: "\"", with: "")
     static let REDIRECT_URL = "http://localhost"
 
-    private static let USER_USER_DEFAULTS_KEY = "user_info"
+    private static let USER_USERDEFAULTS_KEY = "user_info"
     private static let OAUTH_KEYCHAIN_KEY = "oauth_token"
     private static let PUBLIC_KEYCHAIN_KEY = "public_token"
 
@@ -29,7 +29,7 @@ import WebKit
     init() {
         var user: AuthUser? = nil
 
-        if let authUserData = UserDefaults.standard.object(forKey: AuthController.USER_USER_DEFAULTS_KEY) as? Data, let authUser = try? JSONDecoder().decode(AuthUser.self, from: authUserData) {
+        if let authUserData = UserDefaults.standard.object(forKey: AuthController.USER_USERDEFAULTS_KEY) as? Data, let authUser = try? JSONDecoder().decode(AuthUser.self, from: authUserData) {
             user = authUser
         }
 
@@ -188,10 +188,10 @@ import WebKit
     private func updateUserStore(token: String?, authUser: AuthUser?) {
         if let authUser = authUser {
             if let encoded = try? JSONEncoder().encode(authUser) {
-                UserDefaults.standard.setValue(encoded, forKey: AuthController.USER_USER_DEFAULTS_KEY)
+                UserDefaults.standard.setValue(encoded, forKey: AuthController.USER_USERDEFAULTS_KEY)
             }
         } else {
-            UserDefaults.standard.setValue(nil, forKey: AuthController.USER_USER_DEFAULTS_KEY)
+            UserDefaults.standard.setValue(nil, forKey: AuthController.USER_USERDEFAULTS_KEY)
         }
 
         if let token = token {

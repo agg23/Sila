@@ -139,7 +139,7 @@ struct TwitchWebView: UIViewRepresentable {
         case .video(let video):
             urlVideoSegment = "video=\(video.id)"
         }
-        webView.load(URLRequest(url: URL(string: "https://player.twitch.tv/?\(urlVideoSegment)&parent=twitch.tv&controls=false&player=popout")!))
+        webView.load(URLRequest(url: URL(string: "https://player.twitch.tv/?\(urlVideoSegment)&parent=twitch.tv&quality=\(self.player.quality)&volume=\(self.player.volume)&controls=false&autoplay=true&muted=false&player=popout")!))
 
         return webView
     }

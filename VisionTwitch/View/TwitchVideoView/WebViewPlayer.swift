@@ -47,6 +47,9 @@ struct VideoQuality {
     weak var webView: WKWebView?
 
     init() {
+        self.volume = SharedPlaybackSettings.getVolume()
+        self.quality = SharedPlaybackSettings.getQuality()
+
         NotificationCenter.default.addObserver(forName: .twitchMuteAll, object: nil, queue: nil) { notification in
             self.webView?.evaluateJavaScript("""
                 let video = document.getElementsByTagName("video");
@@ -61,7 +64,6 @@ struct VideoQuality {
         } onChange: {
             self.setVolume(self.volume)
         }
-
     }
 
     var isPlaying: Bool {
@@ -120,5 +122,8 @@ struct VideoQuality {
 
         self.quality = event.quality
         self.availableQualities = event.availableQualities
+
+        SharedPlaybackSettings.setVolume(self.volume)
+        SharedPlaybackSettings.setQuality(self.quality)
     }
 }

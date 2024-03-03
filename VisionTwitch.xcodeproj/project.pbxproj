@@ -54,6 +54,8 @@
 		66125F6A2B84279A002169B5 /* ChannelButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66125F682B84279A002169B5 /* ChannelButtonView.swift */; };
 		66125F6F2B842F82002169B5 /* ChannelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66125F6E2B842F82002169B5 /* ChannelView.swift */; };
 		66125F702B842F82002169B5 /* ChannelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66125F6E2B842F82002169B5 /* ChannelView.swift */; };
+		6614CD4D2B94FDA400A3EE17 /* SharedPlaybackSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6614CD4C2B94FDA400A3EE17 /* SharedPlaybackSettings.swift */; };
+		6614CD4E2B94FDA400A3EE17 /* SharedPlaybackSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6614CD4C2B94FDA400A3EE17 /* SharedPlaybackSettings.swift */; };
 		663336942B75B7EA0098D188 /* View+WindowGeometryPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663336932B75B7EA0098D188 /* View+WindowGeometryPreferences.swift */; };
 		663336952B75B7EA0098D188 /* View+WindowGeometryPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663336932B75B7EA0098D188 /* View+WindowGeometryPreferences.swift */; };
 		66364FBA2B8ABB9C005180B8 /* APIErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66364FB92B8ABB9C005180B8 /* APIErrorView.swift */; };
@@ -190,6 +192,7 @@
 		66125F652B84260D002169B5 /* UserMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMock.swift; sourceTree = "<group>"; };
 		66125F682B84279A002169B5 /* ChannelButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelButtonView.swift; sourceTree = "<group>"; };
 		66125F6E2B842F82002169B5 /* ChannelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelView.swift; sourceTree = "<group>"; };
+		6614CD4C2B94FDA400A3EE17 /* SharedPlaybackSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedPlaybackSettings.swift; sourceTree = "<group>"; };
 		662C4FE92B856F7100A84C7A /* Keys.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Keys.xcconfig; sourceTree = "<group>"; };
 		663336932B75B7EA0098D188 /* View+WindowGeometryPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+WindowGeometryPreferences.swift"; sourceTree = "<group>"; };
 		66364FB92B8ABB9C005180B8 /* APIErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIErrorView.swift; sourceTree = "<group>"; };
@@ -430,10 +433,11 @@
 			children = (
 				6600E0872B8BB5AF003B2270 /* Controls */,
 				660F73A12B7446D70011FD65 /* WebViewPlayer.swift */,
+				6614CD4C2B94FDA400A3EE17 /* SharedPlaybackSettings.swift */,
+				66C96BEC2B900E7F0016A91B /* StreamableVideo.swift */,
 				663B73262B6DBA8E0031D661 /* TwitchWebView.swift */,
 				663B73222B6DB9A30031D661 /* TwitchVideoView.swift */,
 				66F4E40E2B7D8FD3008C565D /* Twitch+Notification.swift */,
-				66C96BEC2B900E7F0016A91B /* StreamableVideo.swift */,
 			);
 			path = TwitchVideoView;
 			sourceTree = "<group>";
@@ -752,6 +756,7 @@
 				66E102262B8293EB007A44D4 /* StreamMock.swift in Sources */,
 				660F73A22B7446D70011FD65 /* WebViewPlayer.swift in Sources */,
 				6600E0852B8BB384003B2270 /* Stream.swift in Sources */,
+				6614CD4D2B94FDA400A3EE17 /* SharedPlaybackSettings.swift in Sources */,
 				660AFF602B93A2310003186E /* TextImageView.swift in Sources */,
 				66E102122B82515A007A44D4 /* TagView.swift in Sources */,
 				66F8D1962B898141008C4F7C /* LoadingAsyncImage.swift in Sources */,
@@ -811,6 +816,7 @@
 				663B73142B6DB9410031D661 /* VisionTwitchiOSApp.swift in Sources */,
 				66E102272B8293EB007A44D4 /* StreamMock.swift in Sources */,
 				66125F602B83EF38002169B5 /* View+HighlightableButton.swift in Sources */,
+				6614CD4E2B94FDA400A3EE17 /* SharedPlaybackSettings.swift in Sources */,
 				663336952B75B7EA0098D188 /* View+WindowGeometryPreferences.swift in Sources */,
 				66364FC52B8B9AAD005180B8 /* ChatExperimentView.swift in Sources */,
 				660F73A32B7446D70011FD65 /* WebViewPlayer.swift in Sources */,
