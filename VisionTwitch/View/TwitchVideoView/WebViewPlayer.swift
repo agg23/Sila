@@ -25,7 +25,12 @@ struct TwitchEvent {
     let channelId: String?
     let channel: String?
     let quality: String
-    let availableQualities: [String]
+    let availableQualities: [VideoQuality]
+}
+
+struct VideoQuality {
+    let quality: String
+    let name: String
 }
 
 @Observable class WebViewPlayer {
@@ -37,7 +42,7 @@ struct TwitchEvent {
     var channel: String? = nil
     var channelId: String? = nil
     var quality: String = "auto"
-    var availableQualities: [String] = []
+    var availableQualities: [VideoQuality] = []
 
     weak var webView: WKWebView?
 
@@ -86,6 +91,12 @@ struct TwitchEvent {
     func setVolume(_ volume: Double) {
         self.webView?.evaluateJavaScript("""
             Twitch._player.setVolume(\(volume));
+        """)
+    }
+
+    func setQuality(_ quality: String) {
+        self.webView?.evaluateJavaScript("""
+            Twitch._player.setQuality("\(quality)");
         """)
     }
 

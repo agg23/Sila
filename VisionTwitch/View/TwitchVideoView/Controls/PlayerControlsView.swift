@@ -23,6 +23,8 @@ struct PlayerControlsView: View {
     let activeChanged: ((Bool) -> Void)?
 
     var body: some View {
+        let qualityBinding = Binding(get: { self.player.quality }, set: { self.player.setQuality($0) })
+
         HStack {
             CircleBackgroundLessButton(systemName: self.player.isPlaying ? "pause.fill" : "play.fill", tooltip: self.player.isPlaying ? "Pause" : "Play") {
                 if self.player.isPlaying {
@@ -47,6 +49,22 @@ struct PlayerControlsView: View {
                 .onChange(of: self.volume) { _, newValue in
                     self.player.setVolume(newValue)
                 }
+
+            // For some reason embedding a picker in a menu displays a picker with the menu style, with the menu's launch button
+            Menu {
+                Picker("Quality", selection: qualityBinding) {
+                    // Qualties are saved in reverse order
+                    ForEach(self.player.availableQualities.reversed(), id: \.quality) { quality in
+                        Button(quality.name) {
+                            self.player.setQuality(quality.quality)
+                        }
+                    }
+                }
+            } label: {
+                Image(systemName: "4k.tv")
+            }
+            .buttonStyle(.borderless)
+            .buttonBorderShape(.circle)
 
             CircleBackgroundLessButton(systemName: "message", tooltip: self.showChat ? "Hide Chat" : "Show Chat") {
                 self.showChat.toggle()
@@ -75,8 +93,16 @@ struct PlayerControlsView: View {
     }
 }
 
+private func previewPlayer() -> WebViewPlayer {
+    let player = WebViewPlayer()
+    player.quality = "1080p"
+    player.availableQualities = [VideoQuality(quality: "chunked", name: "1080p"), VideoQuality(quality: "720p", name: "720p"), VideoQuality(quality: "480p", name: "480p"), VideoQuality(quality: "240p", name: "240p")]
+
+    return player
+}
+
 #Preview {
-    PlayerControlsView(player: WebViewPlayer(), streamableVideo: .stream(STREAM_MOCK()), showChat: .constant(false)) {
+    PlayerControlsView(player: previewPlayer(), streamableVideo: .stream(STREAM_MOCK()), showChat: .constant(false)) {
 
     } activeChanged: { _ in
 
@@ -86,7 +112,7 @@ struct PlayerControlsView: View {
 #Preview {
     Rectangle()
         .ornament(attachmentAnchor: .scene(.bottom)) {
-            PlayerControlsView(player: WebViewPlayer(), streamableVideo: .stream(STREAM_MOCK()), showChat: .constant(true)) {
+            PlayerControlsView(player: previewPlayer(), streamableVideo: .stream(STREAM_MOCK()), showChat: .constant(true)) {
 
             } activeChanged: { _ in
 

@@ -245,8 +245,15 @@ class TwitchWebViewCoordinator: NSObject, WKUIDelegate, WKNavigationDelegate, WK
         let channelName = params["channelName"] as? String
         let rawQualities = params["qualitiesAvailable"] as? [NSDictionary] ?? []
 
-        let qualities = rawQualities.compactMap { quality in
-            quality["name"] as? String
+        // compactMap is not inferring type here for some reason
+        let qualities: [VideoQuality] = rawQualities.compactMap { quality in
+            let group = quality["group"] as? String
+
+            guard let group = group else {
+                return nil
+            }
+
+            return VideoQuality(quality: group, name: (quality["name"] as? String) ?? group)
         }
 
         let status: PlaybackStatus
