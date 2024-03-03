@@ -10,7 +10,6 @@ import Twitch
 
 struct StreamButtonView: View {
     @Environment(Router.self) private var router
-    @Environment(\.openWindow) private var openWindow
 
     let stream: Twitch.Stream
 
@@ -40,6 +39,7 @@ struct StreamButtonView: View {
                 Label("More in this Category", systemImage: Icon.category)
             }
 
+            #if VOD_ENABLED
             if let last = self.router.path.last {
                 switch last {
                 case .channel:
@@ -51,6 +51,7 @@ struct StreamButtonView: View {
             } else {
                 channelButton
             }
+            #endif
 
             if let last = self.router.path.last {
                 switch last {

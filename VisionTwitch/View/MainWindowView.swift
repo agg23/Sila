@@ -23,11 +23,12 @@ struct MainWindowView: View {
                 CategoryListView()
             }
 
+            #if VOD_ENABLED
             TabPage(title: "Search", systemImage: Icon.search) {
                 SearchView()
             }
+            #endif
         }
-//        ChatView(channel: "mistermv")
     }
 }
 

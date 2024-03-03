@@ -16,9 +16,6 @@ struct ChatPaneView: View {
     var body: some View {
         NavigationStack {
             ChatView(channel: self.channel)
-                .toolbar(content: {
-                    
-                })
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) {
                         Button {
@@ -27,16 +24,6 @@ struct ChatPaneView: View {
                             Label("Dismiss", systemImage: "xmark")
                         }
                         .help("Dismiss")
-                    }
-
-                    ToolbarItem(placement: .topBarTrailing) {
-                        Button {
-
-                        } label: {
-                            // TODO: Change this icon
-                            Label("Pop Out", systemImage: "rectangle.portrait.and.arrow.right")
-                        }
-                        .help("Pop Out")
                     }
                 }
         }

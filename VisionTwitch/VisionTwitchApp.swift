@@ -31,6 +31,7 @@ struct VisionTwitchApp: App {
         .environment(\.authController, self.authController)
         .defaultSize(CGSize(width: 800.0, height: 450.0))
 
+        #if VOD_ENABLED
         WindowGroup(id: "vod", for: Twitch.Video.self) { video in
             if let video = video.wrappedValue {
                 TwitchWindowView(streamableVideo: .video(video))
@@ -40,10 +41,6 @@ struct VisionTwitchApp: App {
         }
         .environment(\.authController, self.authController)
         .defaultSize(CGSize(width: 800.0, height: 450.0))
-
-//        WindowGroup(id: "chat") {
-//            ChatWebView()
-//        }
-//        .defaultSize(width: 300, height: 500)
+        #endif
     }
 }
