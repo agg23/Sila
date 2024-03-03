@@ -21,14 +21,23 @@ struct TwitchEvent {
     let muted: Bool
     let playback: PlaybackStatus
     let volume: Double
+
+    let channelId: String?
+    let channel: String?
+    let quality: String
+    let availableQualities: [String]
 }
 
-@Observable
-class WebViewPlayer {
+@Observable class WebViewPlayer {
     var status: PlaybackStatus = .idle
 
     var muted: Bool = true
     var volume: Double = 0.0
+
+    var channel: String? = nil
+    var channelId: String? = nil
+    var quality: String = "auto"
+    var availableQualities: [String] = []
 
     weak var webView: WKWebView?
 
@@ -89,5 +98,16 @@ class WebViewPlayer {
         self.muted = event.muted
         self.status = event.playback
         self.volume = event.volume
+
+        if let channelId = event.channelId {
+            self.channelId = channelId
+        }
+
+        if let channel = event.channel {
+            self.channel = channel
+        }
+
+        self.quality = event.quality
+        self.availableQualities = event.availableQualities
     }
 }

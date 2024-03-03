@@ -45,7 +45,7 @@ struct TwitchVideoView: View {
             VStack {
                 // Add spacing between main window and PlayerControlsView to allow for the window resizer
                 Color.clear.frame(height: 32)
-                PlayerControlsView(player: player, streamableVideo: self.streamableVideo, showChat: self.$showChat) {
+                PlayerControlsView(player: self.player, streamableVideo: self.streamableVideo, showChat: self.$showChat) {
                     resetTimer()
                 } activeChanged: { isActive in
                     if isActive {
@@ -59,8 +59,23 @@ struct TwitchVideoView: View {
                     .glassBackgroundEffect()
                     .opacity(controlOpacity)
                     .animation(.easeInOut(duration: 0.5), value: controlOpacity)
-                }
             }
+        }
+        .onAppear {
+            let channel: String
+            let channelId: String
+            switch self.streamableVideo {
+            case .stream(let stream):
+                channel = stream.userName
+                channelId = stream.userId
+            case .video(let video):
+                channel = video.userName
+                channelId = video.userId
+            }
+
+            self.player.channelId = channelId
+            self.player.channel = channel
+        }
     }
     
     func resetTimer() {

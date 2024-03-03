@@ -9,30 +9,58 @@ import SwiftUI
 import Twitch
 
 struct StreamableVideoStatusControlView: View {
-    @State private var loader = StandardDataLoader<User?>()
+    @State private var loader = StandardDataLoader<(User?, StreamableVideo?)>()
 
+    let player: WebViewPlayer
     let streamableVideo: StreamableVideo
 
     var body: some View {
         DataView(loader: self.$loader, task: { api, _ in
-            let users = try await api.getUsers(userIDs: [self.userId()])
-
-            guard !users.isEmpty else {
-                return nil
-            }
-
-            return users[0]
-        }, content: { user in
-            StreamableVideoStatusControlContentView(streamableVideo: self.streamableVideo, user: user)
-        }, loading: { user in
-            StreamableVideoStatusControlContentView(streamableVideo: self.streamableVideo, user: user ?? nil)
+            let task = self.createTask(requestStream: false, channelId: self.userId())
+            return try await task(api)
+        }, content: { user, stream in
+            StreamableVideoStatusControlContentView(streamableVideo: stream ?? self.streamableVideo, user: user)
+        }, loading: { data in
+            StreamableVideoStatusControlContentView(streamableVideo: data?.1 ?? self.streamableVideo, user: data?.0)
         }, error: { (_: HelixError?) in
             StreamableVideoStatusControlContentView(streamableVideo: self.streamableVideo, user: nil)
+        })
+        .onChange(of: self.player.channelId, { oldValue, newValue in
+            guard oldValue != nil, let newValue = newValue else {
+                // If we're changing from (or to) an empty value, ignore it
+                return
+            }
+
+            // TODO: Do we need to cancel this?
+            Task {
+                await self.loader.requestMore { _, apiAndUser in
+                    let task = self.createTask(requestStream: true, channelId: newValue)
+                    return try await task(apiAndUser.0)
+                }
+            }
         })
         .padding()
         .frame(width: 600, height: 100)
         .insetBackground()
         .clipShape(.rect(cornerRadius: 20))
+    }
+
+    func createTask(requestStream: Bool = false, channelId: String) -> (Helix) async throws -> (User?, StreamableVideo?) {
+        return { api in
+            async let usersAsync = await api.getUsers(userIDs: [channelId])
+
+            if requestStream {
+                async let streamsAsync = await api.getStreams(userIDs: [channelId])
+
+                let (users, streams) = try await (usersAsync, streamsAsync)
+
+                return (users.first, streams.0.first.map({ stream in .stream(stream) }))
+            } else {
+                let users = try await usersAsync
+
+                return (users.first, nil)
+            }
+        }
     }
 
     func userId() -> String {
@@ -101,9 +129,9 @@ struct StreamableVideoStatusDisplayView: View {
 }
 
 #Preview {
-    StreamableVideoStatusControlView(streamableVideo: .stream(STREAM_MOCK()))
+    StreamableVideoStatusControlView(player: WebViewPlayer(), streamableVideo: .stream(STREAM_MOCK()))
 }
 
 #Preview {
-    StreamableVideoStatusControlView(streamableVideo: .video(VIDEO_MOCK()))
+    StreamableVideoStatusControlView(player: WebViewPlayer(), streamableVideo: .video(VIDEO_MOCK()))
 }

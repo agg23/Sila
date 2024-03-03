@@ -13,16 +13,14 @@ struct PlayerControlsView: View {
     @State private var volume: CGFloat = 0.5
     @State private var volumePreventClose = false
 
-    var player: WebViewPlayer
+    let player: WebViewPlayer
 
     let streamableVideo: StreamableVideo
 
     @Binding var showChat: Bool
 
-    var onToggleChat: () -> Void
-
-    var onInteraction: (() -> Void)?
-    var activeChanged: ((Bool) -> Void)?
+    let onInteraction: (() -> Void)?
+    let activeChanged: ((Bool) -> Void)?
 
     var body: some View {
         HStack {
@@ -37,7 +35,7 @@ struct PlayerControlsView: View {
             }
             .controlSize(.extraLarge)
 
-            StreamableVideoStatusControlView(streamableVideo: self.streamableVideo)
+            StreamableVideoStatusControlView(player: self.player, streamableVideo: self.streamableVideo)
                 .padding(.horizontal)
 
             CircleBackgroundLessButton(systemName: "arrow.clockwise", tooltip: "Debug reload") {
@@ -80,6 +78,8 @@ struct PlayerControlsView: View {
 #Preview {
     PlayerControlsView(player: WebViewPlayer(), streamableVideo: .stream(STREAM_MOCK()), showChat: .constant(false)) {
 
+    } activeChanged: { _ in
+
     }
 }
 
@@ -87,6 +87,8 @@ struct PlayerControlsView: View {
     Rectangle()
         .ornament(attachmentAnchor: .scene(.bottom)) {
             PlayerControlsView(player: WebViewPlayer(), streamableVideo: .stream(STREAM_MOCK()), showChat: .constant(true)) {
+
+            } activeChanged: { _ in
 
             }
             .glassBackgroundEffect()

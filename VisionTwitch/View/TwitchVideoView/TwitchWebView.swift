@@ -77,16 +77,16 @@ struct TwitchWebView: UIViewRepresentable {
             };
         """, injectionTime: .atDocumentEnd, forMainFrameOnly: false)
 
-        let hideChromeScript = WKUserScript(source: """
-            const style = document.createElement("style");
-            style.textContent = `
-              video ~ * {
-                display: none;
-              }
-            `;
-
-            document.head.appendChild(style);
-            """, injectionTime: .atDocumentEnd, forMainFrameOnly: false)
+//        let hideChromeScript = WKUserScript(source: """
+//            const style = document.createElement("style");
+//            style.textContent = `
+//              video ~ * {
+//                display: none;
+//              }
+//            `;
+//
+//            document.head.appendChild(style);
+//            """, injectionTime: .atDocumentEnd, forMainFrameOnly: false)
 
         let disableZoomScript = WKUserScript(source: """
             var meta = document.createElement('meta');
@@ -185,21 +185,22 @@ class TwitchWebViewCoordinator: NSObject, WKUIDelegate, WKNavigationDelegate, WK
             });
         """)
 
-        webView.evaluateJavaScript("""
-            (() => {
-                const video = document.getElementsByTagName("video");
-
-                if (video.length < 1) {
-                    console.error("No video tag found");
-                    return;
-                }
-
-                video[0].addEventListener("webkitplaybacktargetavailabilitychanged", () => {
-                    console.log("Showing picker");
-                    video[0].webkitShowPlaybackTargetPicker();
-                });
-            });
-        """)
+        // TODO: Vision doesn't seem to let you AirPlay
+//        webView.evaluateJavaScript("""
+//            (() => {
+//                const video = document.getElementsByTagName("video");
+//
+//                if (video.length < 1) {
+//                    console.error("No video tag found");
+//                    return;
+//                }
+//
+//                video[0].addEventListener("webkitplaybacktargetavailabilitychanged", () => {
+//                    console.log("Showing picker");
+//                    video[0].webkitShowPlaybackTargetPicker();
+//                });
+//            });
+//        """)
     }
 
 //     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
@@ -230,19 +231,26 @@ class TwitchWebViewCoordinator: NSObject, WKUIDelegate, WKNavigationDelegate, WK
 //        decisionHandler(.allow)
 //    }
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-//        print(message)
         let body = message.body as! NSDictionary
         let params = body["params"] as? NSDictionary ?? [:]
 
+        // Playback info
         let currentTime = params["currentTime"] as? NSNumber ?? 0.0
         let muted = ((params["muted"] as? NSNumber) ?? 0) == 1
-        let playback = params["playback"] as? NSString ?? "Idle"
+        let playback = params["playback"] as? String ?? "Idle"
         let volume = params["volume"] as? NSNumber ?? 0.0
+        let quality = params["quality"] as? String ?? "auto"
 
-//        print("Time: \(currentTime), muted: \(muted), playback: \(playback), volume: \(volume)")
+        let channelId = params["channelID"] as? String
+        let channelName = params["channelName"] as? String
+        let rawQualities = params["qualitiesAvailable"] as? [NSDictionary] ?? []
+
+        let qualities = rawQualities.compactMap { quality in
+            quality["name"] as? String
+        }
 
         let status: PlaybackStatus
-        switch (playback.lowercased) {
+        switch (playback.lowercased()) {
         case "idle":
             status = .idle
         case "buffering":
@@ -256,7 +264,7 @@ class TwitchWebViewCoordinator: NSObject, WKUIDelegate, WKNavigationDelegate, WK
             status = .idle
         }
 
-        self.player?.applyEvent(TwitchEvent(currentTime: currentTime.doubleValue, muted: muted, playback: status, volume: volume.doubleValue))
+        self.player?.applyEvent(TwitchEvent(currentTime: currentTime.doubleValue, muted: muted, playback: status, volume: volume.doubleValue, channelId: channelId, channel: channelName, quality: quality, availableQualities: qualities))
     }
 }
 
