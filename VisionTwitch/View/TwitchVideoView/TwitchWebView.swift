@@ -111,10 +111,13 @@ struct TwitchWebView: UIViewRepresentable {
         // Allow videos to not play in the native player
         configuration.allowsInlineMediaPlayback = true
 
+        configuration.requiresUserActionForMediaPlayback = false
+        configuration.mediaTypesRequiringUserActionForPlayback = []
+
         // Disable selection of anything in WebView
         configuration.preferences.isTextInteractionEnabled = false
 
-        // Enable Airplay support
+        // Enable Airplay support (doesn't work)s
         configuration.allowsAirPlayForMediaPlayback = true
 
         self.webView = WKWebView(frame: .zero, configuration: configuration)
