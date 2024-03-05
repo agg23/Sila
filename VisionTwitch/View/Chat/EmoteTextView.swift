@@ -121,6 +121,8 @@ class EmoteTextCoordinator: NSObject {
 class EmoteUITextView: SubviewAttachingTextView {
     override var attributedText: NSAttributedString! {
         didSet {
+            self.textColor = .white
+            self.font = .systemFont(ofSize: 17, weight: .regular)
             self.invalidateIntrinsicContentSize()
         }
     }
@@ -132,7 +134,6 @@ class EmoteUITextView: SubviewAttachingTextView {
 
         self.textContainer.lineFragmentPadding = 0
         self.textContainerInset = .zero
-        self.textColor = .white
 
         self.isEditable = false
         self.isScrollEnabled = false
@@ -144,5 +145,12 @@ class EmoteUITextView: SubviewAttachingTextView {
 }
 
 #Preview {
-    EmoteTextView(message: PrivateMessage(channel: "mistermv", chatColor: "#1E90FF", userDisplayName: "damasenpai", message: "claraqDISCO claraqDISCO claraqDISCO claraqDISCO claraqDISCO", emotes: "emotesv2_b01874d1da9f479aa49df41c48164233:0-10,12-22,24-34,36-46,48-58"))
+    VStack(alignment: .leading) {
+        EmoteTextView(message: PrivateMessage(channel: "mistermv", chatColor: "#1E90FF", userDisplayName: "damasenpai", message: "claraqDISCO claraqDISCO claraqDISCO claraqDISCO claraqDISCO With additional", emotes: "emotesv2_b01874d1da9f479aa49df41c48164233:0-10,12-22,24-34,36-46,48-58"))
+        EmoteTextView(message: PrivateMessage(channel: "mistermv", chatColor: "#1E90FF", userDisplayName: "damasenpai", message: "claraqDISCO claraqDISCO claraqDISCO claraqDISCO claraqDISCO With additional text foo bar", emotes: "emotesv2_b01874d1da9f479aa49df41c48164233:0-10,12-22,24-34,36-46,48-58"))
+        EmoteTextView(message: PrivateMessage(channel: "mistermv", chatColor: "#1E90FF", userDisplayName: "damasenpai", message: "claraqDISCO claraqDISCO claraqDISCO claraqDISCO claraqDISCO With additional text foo bar test even", emotes: "emotesv2_b01874d1da9f479aa49df41c48164233:0-10,12-22,24-34,36-46,48-58"))
+        EmoteTextView(message: PrivateMessage(channel: "mistermv", chatColor: "#1E90FF", userDisplayName: "damasenpai", message: "claraqDISCO claraqDISCO claraqDISCO claraqDISCO claraqDISCO With additional text foo bar test even more text what is going on", emotes: "emotesv2_b01874d1da9f479aa49df41c48164233:0-10,12-22,24-34,36-46,48-58"))
+        Text("With additional text")
+    }
+    .frame(width: 300)
 }
