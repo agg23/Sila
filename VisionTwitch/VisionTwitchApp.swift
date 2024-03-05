@@ -8,6 +8,7 @@
 import SwiftUI
 import Twitch
 import VisionPane
+import TwitchIRC
 
 @main
 struct VisionTwitchApp: App {
@@ -18,7 +19,9 @@ struct VisionTwitchApp: App {
     var body: some Scene {
         WindowGroup {
             MainWindowView()
+                .frame(width: 1400, height: 800)
         }
+        .windowResizability(.contentSize)
         .environment(\.authController, self.authController)
 
         WindowGroup.Pane(id: "stream", for: Twitch.Stream.self) { stream in
@@ -29,7 +32,7 @@ struct VisionTwitchApp: App {
             }
         }
         .environment(\.authController, self.authController)
-        .defaultSize(CGSize(width: 800.0, height: 450.0))
+        .defaultSize(CGSize(width: 1280.0, height: 720.0))
 
         #if VOD_ENABLED
         WindowGroup(id: "vod", for: Twitch.Video.self) { video in
@@ -40,7 +43,7 @@ struct VisionTwitchApp: App {
             }
         }
         .environment(\.authController, self.authController)
-        .defaultSize(CGSize(width: 800.0, height: 450.0))
+        .defaultSize(CGSize(width: 1280.0, height: 720.0))
         #endif
     }
 }
