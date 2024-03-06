@@ -13,8 +13,8 @@ import VisionPane
 struct TwitchVideoView: View {
     let controlsTimerDuration = 3.0
 
-    @State private var showControls = false
-    @State private var showControlsTimer: Timer?
+    @State private var controlVisibility = Visibility.hidden
+    @State private var controlVisibilityTimer: Timer?
     @State private var showChat = false
 
     @State private var preventClose = false
@@ -25,13 +25,14 @@ struct TwitchVideoView: View {
 
     var body: some View {
         let forceControlsDisplay = self.player.status == .idle
-        let controlOpacity = self.showControls || forceControlsDisplay ? 1.0 : 0.0
 
         ZStack {
             TwitchWebView(player: self.player, streamableVideo: self.streamableVideo)
                 .onTapGesture {
-                    self.showControls = true
-                    
+                    withAnimation {
+                        self.controlVisibility = .visible
+                    }
+
                     resetTimer()
                 }
         }
@@ -41,7 +42,7 @@ struct TwitchVideoView: View {
                 ChatPaneView(channel: stream.userName)
             }
         }
-        .ornament(attachmentAnchor: .scene(.bottom), contentAlignment: .top) {
+        .ornament(visibility: self.controlVisibility, attachmentAnchor: .scene(.bottom), contentAlignment: .top) {
             VStack {
                 // Add spacing between main window and PlayerControlsView to allow for the window resizer
                 Color.clear.frame(height: 32)
@@ -50,17 +51,16 @@ struct TwitchVideoView: View {
                 } activeChanged: { isActive in
                     if isActive {
                         print("Controls are active")
-                        self.showControlsTimer?.invalidate()
-                        self.showControlsTimer = nil
+                        self.controlVisibilityTimer?.invalidate()
+                        self.controlVisibilityTimer = nil
                     } else {
                         self.resetTimer()
                     }
                 }
                     .glassBackgroundEffect()
-                    .opacity(controlOpacity)
-                    .animation(.easeInOut(duration: 0.5), value: controlOpacity)
             }
         }
+        .persistentSystemOverlays(self.controlVisibility)
         .onAppear {
             let channel: String
             let channelId: String
@@ -80,9 +80,11 @@ struct TwitchVideoView: View {
     
     func resetTimer() {
         print("Resetting timer")
-        self.showControlsTimer?.invalidate()
-        self.showControlsTimer = Timer.scheduledTimer(withTimeInterval: self.controlsTimerDuration, repeats: false, block: { _ in
-            self.showControls = false
+        self.controlVisibilityTimer?.invalidate()
+        self.controlVisibilityTimer = Timer.scheduledTimer(withTimeInterval: self.controlsTimerDuration, repeats: false, block: { _ in
+            withAnimation {
+                self.controlVisibility = .hidden
+            }
         })
     }
 }
