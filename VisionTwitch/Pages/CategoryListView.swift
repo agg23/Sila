@@ -16,7 +16,7 @@ struct CategoryListView: View {
             let (categories, _) = try await api.getTopGames(limit: 100)
             return categories
         } content: { categories in
-            if !categories.isEmpty {
+            if categories.isEmpty {
                 EmptyDataView(title: "No Categories", systemImage: Icon.category, message: "categories") {
                     Task {
                         try await self.loader.refresh()

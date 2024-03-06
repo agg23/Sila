@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct MainWindowView: View {
+    @Environment(\.scenePhase) private var scene
+
     var body: some View {
         TabView {
             // TODO: Change icon
@@ -32,6 +34,14 @@ struct MainWindowView: View {
             TabPage(title: "Settings", systemImage: Icon.settings, content: {
                 SettingsView()
             }, disableToolbar: true)
+        }
+        .onAppear {
+            WindowController.shared.mainWindowSpawned = true
+        }
+        .onChange(of: self.scene) { oldValue, newValue in
+            if newValue == .background {
+                WindowController.shared.mainWindowSpawned = false
+            }
         }
     }
 }

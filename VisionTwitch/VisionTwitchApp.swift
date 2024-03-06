@@ -17,9 +17,13 @@ struct VisionTwitchApp: App {
     @State var authController = AuthController()
 
     var body: some Scene {
-        WindowGroup {
+        WindowGroup(for: String.self) { main in
             MainWindowView()
                 .frame(width: 1400, height: 800)
+        } defaultValue: {
+            // Set default value so there's a shared ID we can use to reuse the window
+            // TODO: This doesn't work for some reason
+            return "main"
         }
         .windowResizability(.contentSize)
         .environment(\.authController, self.authController)

@@ -94,6 +94,8 @@
 		66A5ADB92B96DAA20025EF75 /* LicensesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A5ADB72B96DAA20025EF75 /* LicensesView.swift */; };
 		66A5ADBB2B97E98E0025EF75 /* Licenses.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 66A5ADBA2B97E98E0025EF75 /* Licenses.xcstrings */; };
 		66A5ADBC2B97E98E0025EF75 /* Licenses.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 66A5ADBA2B97E98E0025EF75 /* Licenses.xcstrings */; };
+		66A5ADBE2B9933730025EF75 /* WindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A5ADBD2B9933730025EF75 /* WindowController.swift */; };
+		66A5ADBF2B9933730025EF75 /* WindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A5ADBD2B9933730025EF75 /* WindowController.swift */; };
 		66C96BDB2B8EB1C00016A91B /* VODGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C96BDA2B8EB1C00016A91B /* VODGridView.swift */; };
 		66C96BDC2B8EB1C00016A91B /* VODGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C96BDA2B8EB1C00016A91B /* VODGridView.swift */; };
 		66C96BDE2B8EC2D10016A91B /* VideoMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C96BDD2B8EC2D10016A91B /* VideoMock.swift */; };
@@ -225,6 +227,7 @@
 		66A5ADB42B96DA160025EF75 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		66A5ADB72B96DAA20025EF75 /* LicensesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicensesView.swift; sourceTree = "<group>"; };
 		66A5ADBA2B97E98E0025EF75 /* Licenses.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = Licenses.xcstrings; path = VisionTwitch/Licenses.xcstrings; sourceTree = SOURCE_ROOT; };
+		66A5ADBD2B9933730025EF75 /* WindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowController.swift; sourceTree = "<group>"; };
 		66C96BDA2B8EB1C00016A91B /* VODGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VODGridView.swift; sourceTree = "<group>"; };
 		66C96BDD2B8EC2D10016A91B /* VideoMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoMock.swift; sourceTree = "<group>"; };
 		66C96BE02B8EC4510016A91B /* VODButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VODButtonView.swift; sourceTree = "<group>"; };
@@ -549,6 +552,7 @@
 				66F4E41F2B8118E9008C565D /* MainWindowView.swift */,
 				66E1021D2B8273B0007A44D4 /* TwitchWindowView.swift */,
 				663B72FE2B6DB8E60031D661 /* ImmersiveView.swift */,
+				66A5ADBD2B9933730025EF75 /* WindowController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -793,6 +797,7 @@
 				66F8D1902B88581D008C4F7C /* Icon.swift in Sources */,
 				66E102322B82D317007A44D4 /* CategoryListView.swift in Sources */,
 				66E1021B2B8272E3007A44D4 /* Auth+Notification.swift in Sources */,
+				66A5ADBE2B9933730025EF75 /* WindowController.swift in Sources */,
 				66125F502B83B913002169B5 /* CategoryView.swift in Sources */,
 				66F8D1992B89A051008C4F7C /* SearchView.swift in Sources */,
 				66028DFF2B917AD800696071 /* PrivateMessageMock.swift in Sources */,
@@ -827,6 +832,7 @@
 				66E885A62B86DFE2004B4B8D /* AuthController+EnvironmentValues.swift in Sources */,
 				66028E002B917AD800696071 /* PrivateMessageMock.swift in Sources */,
 				666E97EA2B8D7085008EE950 /* EmptyDataView.swift in Sources */,
+				66A5ADBF2B9933730025EF75 /* WindowController.swift in Sources */,
 				663B73282B6DBA8E0031D661 /* TwitchWebView.swift in Sources */,
 				66125F6A2B84279A002169B5 /* ChannelButtonView.swift in Sources */,
 				663B73142B6DB9410031D661 /* VisionTwitchiOSApp.swift in Sources */,
