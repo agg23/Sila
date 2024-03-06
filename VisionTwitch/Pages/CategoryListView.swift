@@ -16,7 +16,16 @@ struct CategoryListView: View {
             let (categories, _) = try await api.getTopGames(limit: 100)
             return categories
         } content: { categories in
-            CategoryGridView(categories: categories)
+            if !categories.isEmpty {
+                EmptyDataView(title: "No Categories", systemImage: Icon.category, message: "categories") {
+                    Task {
+                        try await self.loader.refresh()
+                    }
+                }
+                .containerRelativeFrame(.vertical)
+            } else {
+                CategoryGridView(categories: categories)
+            }
         }
     }
 }

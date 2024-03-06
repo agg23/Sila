@@ -22,7 +22,16 @@ struct PopularView: View {
                 return (data.0 + newData, cursor)
             }
         } content: { streams, _ in
-            StreamGridView(streams: streams)
+            if streams.isEmpty {
+                EmptyDataView(title: "No Livestreams", systemImage: Icon.popular, message: "livestreams") {
+                    Task {
+                        try await self.loader.refresh()
+                    }
+                }
+                .containerRelativeFrame(.vertical)
+            } else {
+                StreamGridView(streams: streams)
+            }
         }
     }
 }
@@ -31,6 +40,16 @@ struct PopularView: View {
     TabPage(title: "Popular", systemImage: "star") {
         ScrollGridView {
             StreamGridView(streams: STREAMS_LIST_MOCK())
+        }
+    }
+}
+
+#Preview {
+    TabPage(title: "Popular", systemImage: "star") {
+        ScrollGridView {
+            EmptyDataView(title: "No Livestreams", systemImage: Icon.popular, message: "any livestreams") {
+
+            }
         }
     }
 }

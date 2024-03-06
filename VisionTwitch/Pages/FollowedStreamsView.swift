@@ -48,11 +48,12 @@ struct FollowedStreamsView: View {
             }
         } content: { (streams, _) in
             if streams.isEmpty {
-                EmptyDataView(message: "live followed streams") {
+                EmptyDataView(title: "No Livestreams", systemImage: Icon.following, message: "live followed streams") {
                     Task {
                         try? await self.liveStreamsLoader.refresh()
                     }
                 }
+                .background(.red)
                 // Fit it to the ScrollView
                 .containerRelativeFrame(.vertical)
             } else {
@@ -73,7 +74,7 @@ struct FollowedStreamsView: View {
             return users
         }, noAuthMessage: "your followed channels") { channels in
             if channels.isEmpty {
-                EmptyDataView(message: "followed channels") {
+                EmptyDataView(title: "No Followed Channels", systemImage: Icon.following, message: "followed channels") {
                     Task {
                         try? await self.channelsLoader.refresh()
                     }
