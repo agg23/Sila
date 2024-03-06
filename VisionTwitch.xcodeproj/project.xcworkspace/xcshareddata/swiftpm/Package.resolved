@@ -37,15 +37,6 @@
       }
     },
     {
-      "identity" : "subviewattachingtextview",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/agg23/SubviewAttachingTextView.git",
-      "state" : {
-        "branch" : "master",
-        "revision" : "4f113093aa25d2e8a55fc59fda078107ddc136f3"
-      }
-    },
-    {
       "identity" : "swift-atomics",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-atomics.git",

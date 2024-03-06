@@ -12,6 +12,7 @@ struct Icon {
     static let popular = "star"
     static let category = "gamecontroller"
     static let search = "magnifyingglass"
+    static let settings = "gear"
 
     static let account = "person.fill"
 

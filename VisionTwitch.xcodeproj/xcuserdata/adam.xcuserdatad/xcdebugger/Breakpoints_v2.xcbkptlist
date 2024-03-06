@@ -349,5 +349,69 @@
             </Locations>
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "F966686F-6036-45C6-8CAC-C3A648F61AB5"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../Library/Developer/Xcode/DerivedData/VisionTwitch-hdobqkaqfroincdmgtoupdlgggbe/SourcePackages/checkouts/SubviewAttachingTextView/SubviewAttachingTextView/SubviewAttachingTextViewBehavior.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "109"
+            endingLineNumber = "109"
+            landmarkName = "layoutAttachedSubviews()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "F966686F-6036-45C6-8CAC-C3A648F61AB5 - aa068ac19f945d7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SubviewAttachingTextView.SubviewAttachingTextViewBehavior.layoutAttachedSubviews() -&gt; ()"
+                  moduleName = "VisionTwitch"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/adam/Library/Developer/Xcode/DerivedData/VisionTwitch-hdobqkaqfroincdmgtoupdlgggbe/SourcePackages/checkouts/SubviewAttachingTextView/SubviewAttachingTextView/SubviewAttachingTextViewBehavior.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "109"
+                  endingLineNumber = "109"
+                  offsetFromSymbolStart = "864">
+               </Location>
+               <Location
+                  uuid = "F966686F-6036-45C6-8CAC-C3A648F61AB5 - aa068ac19f945d7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SubviewAttachingTextView.SubviewAttachingTextViewBehavior.layoutAttachedSubviews() -&gt; ()"
+                  moduleName = "VisionTwitch"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/adam/Library/Developer/Xcode/DerivedData/VisionTwitch-hdobqkaqfroincdmgtoupdlgggbe/SourcePackages/checkouts/SubviewAttachingTextView/SubviewAttachingTextView/SubviewAttachingTextViewBehavior.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "109"
+                  endingLineNumber = "109"
+                  offsetFromSymbolStart = "920">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "6E244840-CB9F-434A-B456-00805461C460"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../SubviewAttachingTextView/SubviewAttachingTextView/SubviewAttachingTextViewBehavior.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "117"
+            endingLineNumber = "117"
+            landmarkName = "layoutAttachedSubviews()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

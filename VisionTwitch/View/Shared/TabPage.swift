@@ -12,11 +12,23 @@ struct TabPage<Content: View>: View {
     let systemImage: String
     let content: () -> Content
 
+    let disableToolbar: Bool
+
+    init(title: String, systemImage: String, @ViewBuilder content: @escaping () -> Content, disableToolbar: Bool = false) {
+        self.title = title
+        self.systemImage = systemImage
+        self.content = content
+
+        self.disableToolbar = disableToolbar
+    }
+
     var body: some View {
         NavStack {
             self.content()
                 .toolbar {
-                    defaultToolbar()
+                    if !self.disableToolbar {
+                        defaultToolbar()
+                    }
                 }
                 .navigationTitle(self.title)
                 .navigationDestination(for: Route.self, destination: { route in
@@ -31,6 +43,8 @@ struct TabPage<Content: View>: View {
                             .toolbar {
                                 defaultToolbar()
                             }
+                    case .settingsLicenses:
+                        LicensesView()
                     }
                 })
         }

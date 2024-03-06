@@ -28,6 +28,10 @@ struct MainWindowView: View {
                 SearchView()
             }
             #endif
+
+            TabPage(title: "Settings", systemImage: Icon.settings, content: {
+                SettingsView()
+            }, disableToolbar: true)
         }
     }
 }
