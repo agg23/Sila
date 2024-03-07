@@ -24,16 +24,18 @@ struct TwitchVideoView: View {
     let streamableVideo: StreamableVideo
 
     var body: some View {
-        let forceControlsDisplay = self.player.status == .idle
-
         ZStack {
             TwitchWebView(player: self.player, streamableVideo: self.streamableVideo)
                 .onTapGesture {
-                    withAnimation {
-                        self.controlVisibility = .visible
+                    if self.controlVisibility == .visible {
+                        clearTimer()
+                    } else {
+                        resetTimer()
                     }
 
-                    resetTimer()
+                    withAnimation {
+                        self.controlVisibility = self.controlVisibility != .visible ? .visible : .hidden
+                    }
                 }
         }
         .pane(isPresented: self.$showChat) {
@@ -47,12 +49,17 @@ struct TwitchVideoView: View {
                 // Add spacing between main window and PlayerControlsView to allow for the window resizer
                 Color.clear.frame(height: 32)
                 PlayerControlsView(player: self.player, streamableVideo: self.streamableVideo, showChat: self.$showChat) {
-                    resetTimer()
+                    withAnimation {
+                        self.controlVisibility = .visible
+                    }
+                    self.resetTimer()
                 } activeChanged: { isActive in
                     if isActive {
                         print("Controls are active")
-                        self.controlVisibilityTimer?.invalidate()
-                        self.controlVisibilityTimer = nil
+                        withAnimation {
+                            self.controlVisibility = .visible
+                        }
+                        self.clearTimer()
                     } else {
                         self.resetTimer()
                     }
@@ -60,7 +67,6 @@ struct TwitchVideoView: View {
                     .glassBackgroundEffect()
             }
         }
-        .persistentSystemOverlays(self.controlVisibility)
         .onAppear {
             let channel: String
             let channelId: String
@@ -76,6 +82,15 @@ struct TwitchVideoView: View {
             self.player.channelId = channelId
             self.player.channel = channel
         }
+        .onChange(of: self.player.status) { oldValue, newValue in
+            if newValue == .idle {
+                withAnimation {
+                    self.controlVisibility = .visible
+                }
+            } else if oldValue == .idle && newValue != .idle {
+                self.resetTimer()
+            }
+        }
     }
     
     func resetTimer() {
@@ -86,6 +101,11 @@ struct TwitchVideoView: View {
                 self.controlVisibility = .hidden
             }
         })
+    }
+
+    func clearTimer() {
+        self.controlVisibilityTimer?.invalidate()
+        self.controlVisibilityTimer = nil
     }
 }
 

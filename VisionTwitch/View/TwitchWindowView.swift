@@ -20,6 +20,9 @@ struct TwitchWindowView: View {
         TwitchVideoView(streamableVideo: self.streamableVideo)
             // Set aspect ratio and enforce uniform resizing
             .windowGeometryPreferences(minimumSize: CGSize(width: 160.0, height: 90.0), resizingRestrictions: .uniform)
+            // Having the overlay hidden all of the time has the intended interaction of opening and closing
+            // The only issue is the grabber is not constantly visible while the video is paused
+            .persistentSystemOverlays(.hidden)
             .onAppear {
                 WindowController.shared.refPlaybackWindow()
                 NotificationCenter.default.post(name: .twitchMuteAll, object: nil, userInfo: nil)
