@@ -78,7 +78,7 @@ struct ChannelViewContent: View {
             .padding()
             AuthorizedStandardScrollableDataView(loader: self.$vodLoader, task: { api, _ in
                 return try await api.getVideosByUserId(self.channelUser.id)
-            }, noAuthMessage: "this channel's VoDs") {
+            }, noAuthMessage: "this channel's VoDs", noAuthSystemImage: Icon.channel) {
                 await self.vodLoader.requestMore { data, apiAndUser in
                     let newData = try await apiAndUser.0.getVideosByUserId(self.channelUser.id, after: data.1)
                     return (data.0 + newData.0, newData.1)

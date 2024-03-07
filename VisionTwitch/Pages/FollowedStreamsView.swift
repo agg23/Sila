@@ -27,7 +27,7 @@ struct FollowedStreamsView: View {
             self.liveStreams
             #endif
         } else {
-            NeedsLoginView(noAuthMessage: "your followed streams")
+            NeedsLoginView(noAuthMessage: "your followed streams", systemImage: Icon.following)
         }
     }
 
@@ -40,7 +40,7 @@ struct FollowedStreamsView: View {
                 return ([], nil)
             }
             return try await api.getFollowedStreams(limit: 100)
-        }, noAuthMessage: "your followed streams") {
+        }, noAuthMessage: "your followed streams", noAuthSystemImage: Icon.following) {
             await self.liveStreamsLoader.requestMore { data, apiAndUser in
                 let (newData, cursor) = try await apiAndUser.0.getFollowedStreams(limit: 100, after: data.1)
 
@@ -72,7 +72,7 @@ struct FollowedStreamsView: View {
 
             let users = try await api.getUsers(userIDs: broadcasterIds)
             return users
-        }, noAuthMessage: "your followed channels") { channels in
+        }, noAuthMessage: "your followed channels", noAuthSystemImage: Icon.following) { channels in
             if channels.isEmpty {
                 EmptyDataView(title: "No Followed Channels", systemImage: Icon.following, message: "followed channels") {
                     Task {

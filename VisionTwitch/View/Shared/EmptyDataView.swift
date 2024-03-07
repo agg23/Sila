@@ -14,14 +14,7 @@ struct EmptyDataView: View {
     let reload: (() -> Void)?
 
     var body: some View {
-        VStack {
-            ContentUnavailableView(self.title, systemImage: self.systemImage, description: Text("Could not find any \(self.message)."))
-            if let reload = self.reload {
-                Button("Reload", systemImage: "arrow.clockwise") {
-                    reload()
-                }
-            }
-        }
+        EmptyContentView(title: self.title, systemImage: self.systemImage, description: "Could not find any \(self.message).", buttonTitle: "Reload", buttonSystemImage: "arrow.clockwise", action: self.reload)
     }
 }
 

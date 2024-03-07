@@ -50,15 +50,17 @@ struct AuthorizedStandardScrollableDataView<T, Content: View>: View {
     let task: (_: Helix, _: AuthUser?) async throws -> T
 
     let noAuthMessage: String
+    let noAuthSystemImage: String
 
     let onPaginationThresholdMet: (() async -> Void)?
 
     @ViewBuilder let content: (_: T) -> Content
 
-    init(loader: Binding<StandardDataLoader<T>>, task: @escaping (Helix, AuthUser?) async throws -> T, noAuthMessage: String, onPaginationThresholdMet: (() async -> Void)? = nil, @ViewBuilder content: @escaping (T) -> Content) {
+    init(loader: Binding<StandardDataLoader<T>>, task: @escaping (Helix, AuthUser?) async throws -> T, noAuthMessage: String, noAuthSystemImage: String, onPaginationThresholdMet: (() async -> Void)? = nil, @ViewBuilder content: @escaping (T) -> Content) {
         self.loader = loader
         self.task = task
         self.noAuthMessage = noAuthMessage
+        self.noAuthSystemImage = noAuthSystemImage
         self.onPaginationThresholdMet = onPaginationThresholdMet
         self.content = content
     }
@@ -67,7 +69,7 @@ struct AuthorizedStandardScrollableDataView<T, Content: View>: View {
         if self.authController.isAuthorized() {
             StandardScrollableDataView(loader: self.loader, task: self.task, onPaginationThresholdMet: self.onPaginationThresholdMet, content: self.content)
         } else {
-            NeedsLoginView(noAuthMessage: self.noAuthMessage)
+            NeedsLoginView(noAuthMessage: self.noAuthMessage, systemImage: self.noAuthSystemImage)
         }
     }
 }
