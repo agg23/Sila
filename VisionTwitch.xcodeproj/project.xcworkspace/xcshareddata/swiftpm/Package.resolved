@@ -68,8 +68,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-nio.git",
       "state" : {
-        "revision" : "635b2589494c97e48c62514bc8b37ced762e0a62",
-        "version" : "2.63.0"
+        "revision" : "fc63f0cf4e55a4597407a9fc95b16a2bc44b4982",
+        "version" : "2.64.0"
       }
     },
     {
@@ -77,8 +77,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-nio-extras.git",
       "state" : {
-        "revision" : "363da63c1966405764f380c627409b2f9d9e710b",
-        "version" : "1.21.0"
+        "revision" : "a3b640d7dc567225db7c94386a6e71aded1bfa63",
+        "version" : "1.22.0"
       }
     },
     {
@@ -123,7 +123,7 @@
       "location" : "https://github.com/agg23/swift-twitch-client",
       "state" : {
         "branch" : "main",
-        "revision" : "99f511dfd9a4b9a8de15f5fa4a4fd4cc110b6c67"
+        "revision" : "320a3d4815ca04371d99c3f8c6f7f501e95095c4"
       }
     },
     {
