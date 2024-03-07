@@ -11,7 +11,7 @@ import WebKit
 import VisionPane
 
 struct TwitchVideoView: View {
-    let controlsTimerDuration = 3.0
+    let controlsTimerDuration = 5.0
 
     @State private var controlVisibility = Visibility.hidden
     @State private var controlVisibilityTimer: Timer?
@@ -26,6 +26,9 @@ struct TwitchVideoView: View {
     var body: some View {
         ZStack {
             TwitchWebView(player: self.player, streamableVideo: self.streamableVideo)
+                .background {
+                    ProgressView()
+                }
                 .onTapGesture {
                     if self.controlVisibility == .visible {
                         clearTimer()

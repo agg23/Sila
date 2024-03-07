@@ -122,6 +122,9 @@ struct TwitchWebView: UIViewRepresentable {
 
         self.webView = WKWebView(frame: .zero, configuration: configuration)
 
+        self.webView.isOpaque = false
+        self.webView.scrollView.backgroundColor = .clear
+
         // Disable all interaction with WKWebView
         for subview in self.webView.scrollView.subviews {
             subview.isUserInteractionEnabled = false
