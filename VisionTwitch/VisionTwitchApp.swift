@@ -19,7 +19,8 @@ struct VisionTwitchApp: App {
     var body: some Scene {
         WindowGroup(for: String.self) { main in
             MainWindowView()
-                .frame(width: 1400, height: 800)
+            // This is the default window size of the launching animation
+            .frame(width: 1280.0, height: 720.0)
         } defaultValue: {
             // Set default value so there's a shared ID we can use to reuse the window
             // TODO: This doesn't work for some reason
