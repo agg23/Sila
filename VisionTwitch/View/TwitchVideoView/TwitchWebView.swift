@@ -121,6 +121,11 @@ struct TwitchWebView: UIViewRepresentable {
         configuration.allowsAirPlayForMediaPlayback = true
 
         self.webView = WKWebView(frame: .zero, configuration: configuration)
+
+        // Disable all interaction with WKWebView
+        for subview in self.webView.scrollView.subviews {
+            subview.isUserInteractionEnabled = false
+        }
     }
 
     func makeCoordinator() -> TwitchWebViewCoordinator {
