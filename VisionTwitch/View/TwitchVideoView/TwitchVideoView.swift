@@ -13,6 +13,8 @@ import VisionPane
 struct TwitchVideoView: View {
     let controlsTimerDuration = 5.0
 
+    @State private var loading = true
+
     @State private var controlVisibility = Visibility.hidden
     @State private var controlVisibilityTimer: Timer?
     @State private var showChat = false
@@ -25,9 +27,11 @@ struct TwitchVideoView: View {
 
     var body: some View {
         ZStack {
-            TwitchWebView(player: self.player, streamableVideo: self.streamableVideo)
-                .background {
-                    ProgressView()
+            TwitchWebView(player: self.player, streamableVideo: self.streamableVideo, loading: self.$loading)
+                .overlay {
+                    if self.loading {
+                        ProgressView()
+                    }
                 }
                 .onTapGesture {
                     if self.controlVisibility == .visible {
