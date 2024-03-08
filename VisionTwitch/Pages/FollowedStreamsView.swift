@@ -42,7 +42,11 @@ struct FollowedStreamsView: View {
             return try await api.getFollowedStreams(limit: 100)
         }, noAuthMessage: "your followed streams", noAuthSystemImage: Icon.following) {
             await self.liveStreamsLoader.requestMore { data, apiAndUser in
-                let (newData, cursor) = try await apiAndUser.0.getFollowedStreams(limit: 100, after: data.1)
+                guard let originalCusor = data.1 else {
+                    return data
+                }
+
+                let (newData, cursor) = try await apiAndUser.0.getFollowedStreams(limit: 100, after: originalCusor)
 
                 return (data.0 + newData, cursor)
             }
