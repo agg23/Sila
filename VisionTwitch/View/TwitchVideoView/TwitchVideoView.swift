@@ -49,6 +49,7 @@ struct TwitchVideoView: View {
             // TODO: Handle VoDs
             if case .stream(let stream) = self.streamableVideo {
                 ChatPaneView(channel: stream.userName)
+                    .glassBackgroundEffect(tint: .black.opacity(0.5))
             }
         }
         .ornament(visibility: self.controlVisibility, attachmentAnchor: .scene(.bottom), contentAlignment: .top) {

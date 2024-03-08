@@ -3,7 +3,7 @@
     {
       "identity" : "gifu",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/agg23/Gifu.git",
+      "location" : "https://github.com/agg23/Gifu",
       "state" : {
         "branch" : "master",
         "revision" : "e8090f3b9313c89833258d8edd56b48208214fcf"

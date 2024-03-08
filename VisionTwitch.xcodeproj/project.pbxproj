@@ -23,9 +23,6 @@
 		66028E002B917AD800696071 /* PrivateMessageMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66028DFE2B917AD800696071 /* PrivateMessageMock.swift */; };
 		66028E022B917CD200696071 /* PrivateMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66028E012B917CD200696071 /* PrivateMessage.swift */; };
 		66028E032B917CD200696071 /* PrivateMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66028E012B917CD200696071 /* PrivateMessage.swift */; };
-		660AFF602B93A2310003186E /* TextImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660AFF5F2B93A2310003186E /* TextImageView.swift */; };
-		660AFF612B93A2310003186E /* TextImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660AFF5F2B93A2310003186E /* TextImageView.swift */; };
-		660AFF672B93A6260003186E /* Gifu in Frameworks */ = {isa = PBXBuildFile; productRef = 660AFF662B93A6260003186E /* Gifu */; };
 		660AFF6C2B93A9A60003186E /* ChatPaneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660AFF6B2B93A9A60003186E /* ChatPaneView.swift */; };
 		660AFF6D2B93A9A60003186E /* ChatPaneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660AFF6B2B93A9A60003186E /* ChatPaneView.swift */; };
 		660AFF762B93AD390003186E /* VisionPane in Frameworks */ = {isa = PBXBuildFile; productRef = 660AFF752B93AD390003186E /* VisionPane */; };
@@ -64,7 +61,6 @@
 		66364FC42B8B9AAD005180B8 /* ChatExperimentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66364FC32B8B9AAD005180B8 /* ChatExperimentView.swift */; };
 		66364FC52B8B9AAD005180B8 /* ChatExperimentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66364FC32B8B9AAD005180B8 /* ChatExperimentView.swift */; };
 		66364FC82B8BA49A005180B8 /* JunoUI in Frameworks */ = {isa = PBXBuildFile; productRef = 66364FC72B8BA49A005180B8 /* JunoUI */; };
-		663842BE2B96A80C0012C430 /* SubviewAttachingTextView in Frameworks */ = {isa = PBXBuildFile; productRef = 663842BD2B96A80C0012C430 /* SubviewAttachingTextView */; };
 		663B72F92B6DB8E60031D661 /* RealityKitContent in Frameworks */ = {isa = PBXBuildFile; productRef = 663B72F82B6DB8E60031D661 /* RealityKitContent */; };
 		663B72FB2B6DB8E60031D661 /* VisionTwitchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663B72FA2B6DB8E60031D661 /* VisionTwitchApp.swift */; };
 		663B72FF2B6DB8E60031D661 /* ImmersiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663B72FE2B6DB8E60031D661 /* ImmersiveView.swift */; };
@@ -81,13 +77,16 @@
 		663B73282B6DBA8E0031D661 /* TwitchWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663B73262B6DBA8E0031D661 /* TwitchWebView.swift */; };
 		663E38072B9226D3002E0530 /* Nuke in Frameworks */ = {isa = PBXBuildFile; productRef = 663E38062B9226D3002E0530 /* Nuke */; };
 		663E38092B9226D3002E0530 /* NukeUI in Frameworks */ = {isa = PBXBuildFile; productRef = 663E38082B9226D3002E0530 /* NukeUI */; };
-		663E38132B924761002E0530 /* EmoteTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663E38122B924761002E0530 /* EmoteTextView.swift */; };
-		663E38142B924761002E0530 /* EmoteTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663E38122B924761002E0530 /* EmoteTextView.swift */; };
-		663E381B2B924B65002E0530 /* SubviewAttachingTextView in Frameworks */ = {isa = PBXBuildFile; productRef = 663E381A2B924B65002E0530 /* SubviewAttachingTextView */; };
 		663E38212B9252EB002E0530 /* Gifu in Frameworks */ = {isa = PBXBuildFile; productRef = 663E38202B9252EB002E0530 /* Gifu */; };
 		666E97E92B8D7085008EE950 /* EmptyDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 666E97E82B8D7085008EE950 /* EmptyDataView.swift */; };
 		666E97EA2B8D7085008EE950 /* EmptyDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 666E97E82B8D7085008EE950 /* EmptyDataView.swift */; };
 		6672D37C2B8C3F7B00E9D0E9 /* NeedsLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6672D37B2B8C3F7B00E9D0E9 /* NeedsLoginView.swift */; };
+		66891FF42B9A9535000C0D92 /* AsyncAnimatedImageUI in Frameworks */ = {isa = PBXBuildFile; productRef = 66891FF32B9A9535000C0D92 /* AsyncAnimatedImageUI */; };
+		66891FF62B9A9590000C0D92 /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66891FF52B9A9590000C0D92 /* ChatMessage.swift */; };
+		66891FF82B9A9E72000C0D92 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66891FF72B9A9E72000C0D92 /* Color.swift */; };
+		66891FF92B9A9E72000C0D92 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66891FF72B9A9E72000C0D92 /* Color.swift */; };
+		66891FFB2B9AA058000C0D92 /* View+BackgroundTint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66891FFA2B9AA058000C0D92 /* View+BackgroundTint.swift */; };
+		66891FFC2B9AA058000C0D92 /* View+BackgroundTint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66891FFA2B9AA058000C0D92 /* View+BackgroundTint.swift */; };
 		66A5ADB52B96DA160025EF75 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A5ADB42B96DA160025EF75 /* SettingsView.swift */; };
 		66A5ADB62B96DA160025EF75 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A5ADB42B96DA160025EF75 /* SettingsView.swift */; };
 		66A5ADB82B96DAA20025EF75 /* LicensesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A5ADB72B96DAA20025EF75 /* LicensesView.swift */; };
@@ -188,7 +187,6 @@
 		66028DFB2B917A8200696071 /* ChatMessageListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessageListView.swift; sourceTree = "<group>"; };
 		66028DFE2B917AD800696071 /* PrivateMessageMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateMessageMock.swift; sourceTree = "<group>"; };
 		66028E012B917CD200696071 /* PrivateMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateMessage.swift; sourceTree = "<group>"; };
-		660AFF5F2B93A2310003186E /* TextImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextImageView.swift; sourceTree = "<group>"; };
 		660AFF6B2B93A9A60003186E /* ChatPaneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatPaneView.swift; sourceTree = "<group>"; };
 		660F73A12B7446D70011FD65 /* WebViewPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewPlayer.swift; sourceTree = "<group>"; };
 		660F73A42B745D710011FD65 /* PlayerControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerControlsView.swift; sourceTree = "<group>"; };
@@ -223,9 +221,11 @@
 		663B731A2B6DB9430031D661 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		663B73222B6DB9A30031D661 /* TwitchVideoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitchVideoView.swift; sourceTree = "<group>"; };
 		663B73262B6DBA8E0031D661 /* TwitchWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitchWebView.swift; sourceTree = "<group>"; };
-		663E38122B924761002E0530 /* EmoteTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmoteTextView.swift; sourceTree = "<group>"; };
 		666E97E82B8D7085008EE950 /* EmptyDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyDataView.swift; sourceTree = "<group>"; };
 		6672D37B2B8C3F7B00E9D0E9 /* NeedsLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NeedsLoginView.swift; sourceTree = "<group>"; };
+		66891FF52B9A9590000C0D92 /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
+		66891FF72B9A9E72000C0D92 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		66891FFA2B9AA058000C0D92 /* View+BackgroundTint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+BackgroundTint.swift"; sourceTree = "<group>"; };
 		66A5ADB42B96DA160025EF75 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		66A5ADB72B96DAA20025EF75 /* LicensesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicensesView.swift; sourceTree = "<group>"; };
 		66A5ADBA2B97E98E0025EF75 /* Licenses.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = Licenses.xcstrings; path = VisionTwitch/Licenses.xcstrings; sourceTree = SOURCE_ROOT; };
@@ -277,15 +277,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				663E381B2B924B65002E0530 /* SubviewAttachingTextView in Frameworks */,
-				663842BE2B96A80C0012C430 /* SubviewAttachingTextView in Frameworks */,
 				66E102192B8262AC007A44D4 /* KeychainWrapper in Frameworks */,
 				660AFF762B93AD390003186E /* VisionPane in Frameworks */,
-				660AFF672B93A6260003186E /* Gifu in Frameworks */,
 				663E38092B9226D3002E0530 /* NukeUI in Frameworks */,
 				66F4E4302B8132F5008C565D /* Twitch in Frameworks */,
 				663B72F92B6DB8E60031D661 /* RealityKitContent in Frameworks */,
 				663E38212B9252EB002E0530 /* Gifu in Frameworks */,
+				66891FF42B9A9535000C0D92 /* AsyncAnimatedImageUI in Frameworks */,
 				663E38072B9226D3002E0530 /* Nuke in Frameworks */,
 				66364FC82B8BA49A005180B8 /* JunoUI in Frameworks */,
 			);
@@ -360,11 +358,10 @@
 			isa = PBXGroup;
 			children = (
 				66364FC32B8B9AAD005180B8 /* ChatExperimentView.swift */,
+				66891FF52B9A9590000C0D92 /* ChatMessage.swift */,
 				66028DFB2B917A8200696071 /* ChatMessageListView.swift */,
 				660AFF6B2B93A9A60003186E /* ChatPaneView.swift */,
 				66028DF82B91798C00696071 /* ChatView.swift */,
-				663E38122B924761002E0530 /* EmoteTextView.swift */,
-				660AFF5F2B93A2310003186E /* TextImageView.swift */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -575,6 +572,7 @@
 				66125F522B83C003002169B5 /* ScrollGridView.swift */,
 				66125F552B83C88E002169B5 /* TabPage.swift */,
 				66E102112B82515A007A44D4 /* TagView.swift */,
+				66891FFA2B9AA058000C0D92 /* View+BackgroundTint.swift */,
 				66125F5E2B83EF38002169B5 /* View+HighlightableButton.swift */,
 			);
 			path = Shared;
@@ -608,6 +606,7 @@
 		66F8D18E2B88580D008C4F7C /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				66891FF72B9A9E72000C0D92 /* Color.swift */,
 				66F8D18F2B88581D008C4F7C /* Icon.swift */,
 			);
 			path = Util;
@@ -636,11 +635,9 @@
 				66364FC72B8BA49A005180B8 /* JunoUI */,
 				663E38062B9226D3002E0530 /* Nuke */,
 				663E38082B9226D3002E0530 /* NukeUI */,
-				663E381A2B924B65002E0530 /* SubviewAttachingTextView */,
 				663E38202B9252EB002E0530 /* Gifu */,
-				660AFF662B93A6260003186E /* Gifu */,
 				660AFF752B93AD390003186E /* VisionPane */,
-				663842BD2B96A80C0012C430 /* SubviewAttachingTextView */,
+				66891FF32B9A9535000C0D92 /* AsyncAnimatedImageUI */,
 			);
 			productName = VisionTwitch;
 			productReference = 663B72F32B6DB8E60031D661 /* VisionTwitch.app */;
@@ -697,9 +694,8 @@
 				66E102172B8262AC007A44D4 /* XCRemoteSwiftPackageReference "KeychainWrapper" */,
 				66364FC62B8BA499005180B8 /* XCRemoteSwiftPackageReference "JunoSlider" */,
 				663E38052B9226D3002E0530 /* XCRemoteSwiftPackageReference "Nuke" */,
-				660AFF652B93A6260003186E /* XCRemoteSwiftPackageReference "Gifu" */,
 				660AFF742B93AD390003186E /* XCLocalSwiftPackageReference "../VisionPane" */,
-				663842BC2B96A80C0012C430 /* XCLocalSwiftPackageReference "../SubviewAttachingTextView" */,
+				66891FF22B9A9535000C0D92 /* XCLocalSwiftPackageReference "../AsyncAnimatedImage" */,
 			);
 			productRefGroup = 663B72F42B6DB8E60031D661 /* Products */;
 			projectDirPath = "";
@@ -760,10 +756,13 @@
 				66F4E42C2B812A32008C565D /* AuthController.swift in Sources */,
 				66028E022B917CD200696071 /* PrivateMessage.swift in Sources */,
 				66C96BE42B8ECB660016A91B /* SharedStreamButtonView.swift in Sources */,
+				66891FF62B9A9590000C0D92 /* ChatMessage.swift in Sources */,
 				66125F632B8425A7002169B5 /* ChannelGridView.swift in Sources */,
 				66E1023F2B82D8AF007A44D4 /* CategoryButtonView.swift in Sources */,
 				66364FBD2B8AF629005180B8 /* CircleBackgroundLessButton.swift in Sources */,
 				66F4E4342B813A1F008C565D /* FollowedStreamsView.swift in Sources */,
+				66891FFB2B9AA058000C0D92 /* View+BackgroundTint.swift in Sources */,
+				66891FF82B9A9E72000C0D92 /* Color.swift in Sources */,
 				6600E0892B8BB5E8003B2270 /* StreamableVideoStatusControlView.swift in Sources */,
 				66F8D1A02B8A8F4B008C4F7C /* ChannelMock.swift in Sources */,
 				66F8D1932B894253008C4F7C /* Route.swift in Sources */,
@@ -781,7 +780,6 @@
 				660F73A22B7446D70011FD65 /* WebViewPlayer.swift in Sources */,
 				6600E0852B8BB384003B2270 /* Stream.swift in Sources */,
 				6614CD4D2B94FDA400A3EE17 /* SharedPlaybackSettings.swift in Sources */,
-				660AFF602B93A2310003186E /* TextImageView.swift in Sources */,
 				66E102122B82515A007A44D4 /* TagView.swift in Sources */,
 				66F8D1962B898141008C4F7C /* LoadingAsyncImage.swift in Sources */,
 				66364FC42B8B9AAD005180B8 /* ChatExperimentView.swift in Sources */,
@@ -814,7 +812,6 @@
 				66125F5F2B83EF38002169B5 /* View+HighlightableButton.swift in Sources */,
 				6672D37C2B8C3F7B00E9D0E9 /* NeedsLoginView.swift in Sources */,
 				66E8859F2B86C646004B4B8D /* DataLoader.swift in Sources */,
-				663E38132B924761002E0530 /* EmoteTextView.swift in Sources */,
 				66E885A82B8821D9004B4B8D /* StandardScrollableDataView.swift in Sources */,
 				66125F662B84260D002169B5 /* UserMock.swift in Sources */,
 			);
@@ -829,6 +826,7 @@
 				66A5ADC22B9949C40025EF75 /* EmptyContentView.swift in Sources */,
 				66F8D1912B88581D008C4F7C /* Icon.swift in Sources */,
 				6600E0912B8BC0FD003B2270 /* InsetBackground.swift in Sources */,
+				66891FFC2B9AA058000C0D92 /* View+BackgroundTint.swift in Sources */,
 				660AFF6D2B93A9A60003186E /* ChatPaneView.swift in Sources */,
 				663B73162B6DB9410031D661 /* ContentView.swift in Sources */,
 				66E1024A2B82E496007A44D4 /* NavStack.swift in Sources */,
@@ -848,7 +846,6 @@
 				663336952B75B7EA0098D188 /* View+WindowGeometryPreferences.swift in Sources */,
 				66364FC52B8B9AAD005180B8 /* ChatExperimentView.swift in Sources */,
 				660F73A32B7446D70011FD65 /* WebViewPlayer.swift in Sources */,
-				663E38142B924761002E0530 /* EmoteTextView.swift in Sources */,
 				66125F572B83C88E002169B5 /* TabPage.swift in Sources */,
 				66E102402B82D8AF007A44D4 /* CategoryButtonView.swift in Sources */,
 				66E1021C2B8272E3007A44D4 /* Auth+Notification.swift in Sources */,
@@ -873,7 +870,7 @@
 				66F4E4102B7D8FD3008C565D /* Twitch+Notification.swift in Sources */,
 				66F4E4352B813A1F008C565D /* FollowedStreamsView.swift in Sources */,
 				66C96BEE2B900E7F0016A91B /* StreamableVideo.swift in Sources */,
-				660AFF612B93A2310003186E /* TextImageView.swift in Sources */,
+				66891FF92B9A9E72000C0D92 /* Color.swift in Sources */,
 				66125F542B83C003002169B5 /* ScrollGridView.swift in Sources */,
 				66C96BE82B8ECD5D0016A91B /* Video.swift in Sources */,
 				66DF455E2B8BA645006C1D99 /* PopupVolumeSlider.swift in Sources */,
@@ -1181,21 +1178,13 @@
 			isa = XCLocalSwiftPackageReference;
 			relativePath = ../VisionPane;
 		};
-		663842BC2B96A80C0012C430 /* XCLocalSwiftPackageReference "../SubviewAttachingTextView" */ = {
+		66891FF22B9A9535000C0D92 /* XCLocalSwiftPackageReference "../AsyncAnimatedImage" */ = {
 			isa = XCLocalSwiftPackageReference;
-			relativePath = ../SubviewAttachingTextView;
+			relativePath = ../AsyncAnimatedImage;
 		};
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		660AFF652B93A6260003186E /* XCRemoteSwiftPackageReference "Gifu" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/agg23/Gifu.git";
-			requirement = {
-				branch = master;
-				kind = branch;
-			};
-		};
 		66364FC62B8BA499005180B8 /* XCRemoteSwiftPackageReference "JunoSlider" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/christianselig/JunoSlider.git";
@@ -1231,11 +1220,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		660AFF662B93A6260003186E /* Gifu */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 660AFF652B93A6260003186E /* XCRemoteSwiftPackageReference "Gifu" */;
-			productName = Gifu;
-		};
 		660AFF752B93AD390003186E /* VisionPane */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = VisionPane;
@@ -1244,10 +1228,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 66364FC62B8BA499005180B8 /* XCRemoteSwiftPackageReference "JunoSlider" */;
 			productName = JunoUI;
-		};
-		663842BD2B96A80C0012C430 /* SubviewAttachingTextView */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = SubviewAttachingTextView;
 		};
 		663B72F82B6DB8E60031D661 /* RealityKitContent */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -1263,13 +1243,13 @@
 			package = 663E38052B9226D3002E0530 /* XCRemoteSwiftPackageReference "Nuke" */;
 			productName = NukeUI;
 		};
-		663E381A2B924B65002E0530 /* SubviewAttachingTextView */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = SubviewAttachingTextView;
-		};
 		663E38202B9252EB002E0530 /* Gifu */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Gifu;
+		};
+		66891FF32B9A9535000C0D92 /* AsyncAnimatedImageUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AsyncAnimatedImageUI;
 		};
 		66E102182B8262AC007A44D4 /* KeychainWrapper */ = {
 			isa = XCSwiftPackageProductDependency;
