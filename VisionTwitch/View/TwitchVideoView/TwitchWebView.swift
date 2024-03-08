@@ -207,6 +207,16 @@ class TwitchWebViewCoordinator: NSObject, WKUIDelegate, WKNavigationDelegate, WK
             });
         """)
 
+        // Bypass content restriction screen
+        webView.evaluateJavaScript("""
+            const gate = document.getElementById("channel-player-gate")
+            const buttons = gate?.getElementsByTagName("button")
+
+            if (buttons.length > 0) {
+                buttons[0].click()
+            }
+        """)
+
         // TODO: Vision doesn't seem to let you AirPlay
 //        webView.evaluateJavaScript("""
 //            (() => {

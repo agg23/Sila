@@ -92,6 +92,10 @@ struct VideoQuality {
 
     func setVolume(_ volume: Double) {
         self.webView?.evaluateJavaScript("""
+            if (\(self.muted)) {
+                Twitch._player.setMuted(false);
+            }
+
             Twitch._player.setVolume(\(volume));
         """)
     }

@@ -60,6 +60,11 @@ struct PlayerControlsView: View {
 
                     self.volume = newValue
                 }
+                .onChange(of: self.player.muted) { _, newValue in
+                    if (newValue) {
+                        self.volume = 0
+                    }
+                }
 
             // For some reason embedding a picker in a menu displays a picker with the menu style, with the menu's launch button
             Menu {
