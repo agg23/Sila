@@ -29,22 +29,22 @@ struct VisionTwitchApp: App {
         .windowResizability(.contentSize)
         .environment(\.authController, self.authController)
 
-        WindowGroup.Pane(id: "stream", for: Twitch.Stream.self) { stream in
-            if let stream = stream.wrappedValue {
-                TwitchWindowView(streamableVideo: .stream(stream))
-            } else {
-                Text("No channel specified")
+        WindowGroup(id: "stream", for: Twitch.Stream.self) { $stream in
+            PaneProvider {
+                TwitchStreamVideoView(stream: stream)
             }
+        } defaultValue: {
+            // Providing a default allows us to refocus an open window
+            // TODO: Replace with actual value
+            STREAM_MOCK()
         }
         .environment(\.authController, self.authController)
         .defaultSize(CGSize(width: 1280.0, height: 720.0))
 
         #if VOD_ENABLED
-        WindowGroup(id: "vod", for: Twitch.Video.self) { video in
-            if let video = video.wrappedValue {
-                TwitchWindowView(streamableVideo: .video(video))
-            } else {
-                Text("No video specified")
+        WindowGroup(id: "vod", for: Twitch.Video.self) { $video in
+            PaneProvider {
+                TwitchVoDVideoView(video: video)
             }
         }
         .environment(\.authController, self.authController)

@@ -29,25 +29,23 @@ struct TwitchVideoView: View {
     @Binding var player: WebViewPlayer
 
     var body: some View {
-        ZStack {
-            TwitchWebView(player: self.player, streamableVideo: self.streamableVideo, loading: self.$loading, delayLoading: self.delayLoading)
-                .overlay {
-                    if self.loading || self.delayLoading {
-                        ProgressView()
-                    }
+        TwitchWebView(player: self.player, streamableVideo: self.streamableVideo, loading: self.$loading, delayLoading: self.delayLoading)
+            .overlay {
+                if self.loading || self.delayLoading {
+                    ProgressView()
                 }
-                .onTapGesture {
-                    if self.controlVisibility == .visible {
-                        clearTimer()
-                    } else {
-                        resetTimer()
-                    }
+            }
+            .onTapGesture {
+                if self.controlVisibility == .visible {
+                    clearTimer()
+                } else {
+                    resetTimer()
+                }
 
-                    withAnimation {
-                        self.controlVisibility = self.controlVisibility != .visible ? .visible : .hidden
-                    }
+                withAnimation {
+                    self.controlVisibility = self.controlVisibility != .visible ? .visible : .hidden
                 }
-        }
+            }
         .pane(isPresented: self.$showChat) {
             // TODO: Handle VoDs
             if case .stream(let stream) = self.streamableVideo {
