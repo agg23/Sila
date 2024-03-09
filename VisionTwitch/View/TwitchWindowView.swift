@@ -24,13 +24,12 @@ struct TwitchWindowView: View {
             // The only issue is the grabber is not constantly visible while the video is paused
             .persistentSystemOverlays(.hidden)
             .onAppear {
-                WindowController.shared.refPlaybackWindow()
+                WindowController.shared.refPlaybackWindow(with: self.streamableVideo.id())
                 NotificationCenter.default.post(name: .twitchMuteAll, object: nil, userInfo: nil)
             }
             .onChange(of: self.scene) { oldValue, newValue in
-                print("Old \(oldValue), new \(newValue)")
                 if newValue == .background {
-                    if WindowController.shared.derefPlaybackWindow() && !WindowController.shared.mainWindowSpawned {
+                    if WindowController.shared.derefPlaybackWindow(with: self.streamableVideo.id()) && !WindowController.shared.mainWindowSpawned {
                         // Closed window, reopen main
                         openWindow(value: "main")
                     }

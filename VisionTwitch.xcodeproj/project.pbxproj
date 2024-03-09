@@ -63,7 +63,6 @@
 		66364FC82B8BA49A005180B8 /* JunoUI in Frameworks */ = {isa = PBXBuildFile; productRef = 66364FC72B8BA49A005180B8 /* JunoUI */; };
 		663B72F92B6DB8E60031D661 /* RealityKitContent in Frameworks */ = {isa = PBXBuildFile; productRef = 663B72F82B6DB8E60031D661 /* RealityKitContent */; };
 		663B72FB2B6DB8E60031D661 /* VisionTwitchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663B72FA2B6DB8E60031D661 /* VisionTwitchApp.swift */; };
-		663B72FF2B6DB8E60031D661 /* ImmersiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663B72FE2B6DB8E60031D661 /* ImmersiveView.swift */; };
 		663B73012B6DB8E60031D661 /* ImageBasedLighting.skybox in Resources */ = {isa = PBXBuildFile; fileRef = 663B73002B6DB8E60031D661 /* ImageBasedLighting.skybox */; };
 		663B73032B6DB8E80031D661 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 663B73022B6DB8E80031D661 /* Assets.xcassets */; };
 		663B73062B6DB8E80031D661 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 663B73052B6DB8E80031D661 /* Preview Assets.xcassets */; };
@@ -209,7 +208,6 @@
 		663B72F32B6DB8E60031D661 /* VisionTwitch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VisionTwitch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		663B72F72B6DB8E60031D661 /* RealityKitContent */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = RealityKitContent; sourceTree = "<group>"; };
 		663B72FA2B6DB8E60031D661 /* VisionTwitchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionTwitchApp.swift; sourceTree = "<group>"; };
-		663B72FE2B6DB8E60031D661 /* ImmersiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImmersiveView.swift; sourceTree = "<group>"; };
 		663B73002B6DB8E60031D661 /* ImageBasedLighting.skybox */ = {isa = PBXFileReference; lastKnownFileType = file.skybox; path = ImageBasedLighting.skybox; sourceTree = "<group>"; };
 		663B73022B6DB8E80031D661 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		663B73052B6DB8E80031D661 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -327,6 +325,14 @@
 			path = ViewModifiers;
 			sourceTree = "<group>";
 		};
+		660BC1F42B9BB5B10043750C /* Window */ = {
+			isa = PBXGroup;
+			children = (
+				66A5ADBD2B9933730025EF75 /* WindowController.swift */,
+			);
+			path = Window;
+			sourceTree = "<group>";
+		};
 		66125F4E2B83B8FD002169B5 /* Subpages */ = {
 			isa = PBXGroup;
 			children = (
@@ -395,6 +401,7 @@
 				66F4E4312B813986008C565D /* Pages */,
 				66125F4E2B83B8FD002169B5 /* Subpages */,
 				66F8D18E2B88580D008C4F7C /* Util */,
+				660BC1F42B9BB5B10043750C /* Window */,
 				66F4E4222B811B51008C565D /* View */,
 				663B72FA2B6DB8E60031D661 /* VisionTwitchApp.swift */,
 				663B73002B6DB8E60031D661 /* ImageBasedLighting.skybox */,
@@ -551,8 +558,6 @@
 				66C96BD92B8EB1AB0016A91B /* VOD */,
 				66F4E41F2B8118E9008C565D /* MainWindowView.swift */,
 				66E1021D2B8273B0007A44D4 /* TwitchWindowView.swift */,
-				663B72FE2B6DB8E60031D661 /* ImmersiveView.swift */,
-				66A5ADBD2B9933730025EF75 /* WindowController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -807,7 +812,6 @@
 				66C96BDB2B8EB1C00016A91B /* VODGridView.swift in Sources */,
 				66F4E4162B80292F008C565D /* OAuthWebView.swift in Sources */,
 				66F4E4202B8118E9008C565D /* MainWindowView.swift in Sources */,
-				663B72FF2B6DB8E60031D661 /* ImmersiveView.swift in Sources */,
 				66F4E41D2B811788008C565D /* AuthBadgeView.swift in Sources */,
 				66125F5F2B83EF38002169B5 /* View+HighlightableButton.swift in Sources */,
 				6672D37C2B8C3F7B00E9D0E9 /* NeedsLoginView.swift in Sources */,

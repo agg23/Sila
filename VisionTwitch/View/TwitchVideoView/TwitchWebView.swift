@@ -91,6 +91,17 @@ struct TwitchWebView: UIViewRepresentable {
 //            document.head.appendChild(style);
 //            """, injectionTime: .atDocumentEnd, forMainFrameOnly: false)
 
+        let hideLoadingScript = WKUserScript(source: """
+            const style = document.createElement("style");
+            style.textContent = `
+              .tw-loading-spinner {
+                display: none;
+              }
+            `;
+
+            document.head.appendChild(style);
+            """, injectionTime: .atDocumentEnd, forMainFrameOnly: false)
+
         let disableZoomScript = WKUserScript(source: """
             var meta = document.createElement('meta');
             meta.name = 'viewport';
@@ -106,6 +117,7 @@ struct TwitchWebView: UIViewRepresentable {
         controller.addUserScript(injectVideoGetter)
         // TODO: It seems like hiding the Chrome is breaking the video playback somehow
 //        controller.addUserScript(hideChromeScript)
+        controller.addUserScript(hideLoadingScript)
         controller.addUserScript(disableZoomScript)
 
         let configuration = WKWebViewConfiguration()
@@ -172,7 +184,8 @@ class TwitchWebViewCoordinator: NSObject, WKUIDelegate, WKNavigationDelegate, WK
     weak var webView: WKWebView?
     let loading: Binding<Bool>?
 
-    var lastStatus: PlaybackStatus = .buffering
+    var lastStatus: PlaybackStatus = .idle
+    var retriedPlayCount = 0
 
     init(player: WebViewPlayer, webView: WKWebView, loading: Binding<Bool>?){
         self.player = player
@@ -303,10 +316,40 @@ class TwitchWebViewCoordinator: NSObject, WKUIDelegate, WKNavigationDelegate, WK
             status = .idle
         }
 
-        if status != .buffering && self.lastStatus == .buffering {
-            // Complete loading
+        if (status != self.lastStatus) {
+            print(status)
+        }
+
+        if self.lastStatus == .buffering {
+            if status == .idle {
+                // If we've gone from buffering straight to idle, something is wrong
+                if self.retriedPlayCount < 2 {
+                    // Try to play again
+                    print("Retrying play")
+                    self.retriedPlayCount += 1
+                    self.player?.play()
+                } else {
+                    // Something is very wrong
+                    self.retriedPlayCount = 0
+                    self.player?.reload()
+
+                    DispatchQueue.main.async {
+                        self.loading?.wrappedValue = true
+                    }
+                }
+            } else if status != .buffering  {
+                // Not idle, not buffering
+                // Complete loading
+                DispatchQueue.main.async {
+                    self.loading?.wrappedValue = false
+                }
+
+                self.retriedPlayCount = 0
+            }
+        } else if status == .buffering {
+            // lastStatus is not buffering
             DispatchQueue.main.async {
-                self.loading?.wrappedValue = false
+                self.loading?.wrappedValue = true
             }
         }
 
