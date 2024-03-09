@@ -88,7 +88,7 @@ struct PlayerControlsView: View {
             }
 
             // Force CircleBackgroundLessButton styles
-            ShareLink(item: URL(string: "https://twitch.tv/\(self.userName())")!)
+            ShareLink(item: URL(string: "https://twitch.tv/\(self.userLogin())")!)
             .labelStyle(.iconOnly)
             .buttonBorderShape(.circle)
             .buttonStyle(.borderless)
@@ -99,12 +99,12 @@ struct PlayerControlsView: View {
         }
     }
 
-    func userName() -> String {
+    func userLogin() -> String {
         switch self.streamableVideo {
         case .stream(let stream):
-            return stream.userName
+            return stream.userLogin
         case .video(let video):
-            return video.userName
+            return video.userLogin
         }
     }
 }

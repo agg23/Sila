@@ -91,7 +91,7 @@ struct ChannelViewContent: View {
         }
         .navigationTitle(self.channelUser.displayName)
         .toolbar {
-            ShareLink(item: URL(string: "https://twitch.tv/\(self.channelUser.displayName)")!)
+            ShareLink(item: URL(string: "https://twitch.tv/\(self.channelUser.login)")!)
         }
     }
 

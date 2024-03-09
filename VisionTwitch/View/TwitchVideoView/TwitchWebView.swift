@@ -167,7 +167,8 @@ struct TwitchWebView: UIViewRepresentable {
         var urlVideoSegment: String
         switch self.streamableVideo {
         case .stream(let stream):
-            urlVideoSegment = "channel=\(stream.userName)"
+            // userLogin instead of userName as their userName may not be in Roman characters
+            urlVideoSegment = "channel=\(stream.userLogin)"
         case .video(let video):
             urlVideoSegment = "video=\(video.id)"
         }
