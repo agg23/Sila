@@ -52,6 +52,8 @@
 		66125F702B842F82002169B5 /* ChannelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66125F6E2B842F82002169B5 /* ChannelView.swift */; };
 		6614CD4D2B94FDA400A3EE17 /* SharedPlaybackSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6614CD4C2B94FDA400A3EE17 /* SharedPlaybackSettings.swift */; };
 		6614CD4E2B94FDA400A3EE17 /* SharedPlaybackSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6614CD4C2B94FDA400A3EE17 /* SharedPlaybackSettings.swift */; };
+		6625353B2B9CE6F600EBD081 /* AsyncAnimatedImageUI in Frameworks */ = {isa = PBXBuildFile; productRef = 6625353A2B9CE6F600EBD081 /* AsyncAnimatedImageUI */; };
+		6625353E2B9CF0FE00EBD081 /* AsyncAnimatedImageUI in Frameworks */ = {isa = PBXBuildFile; productRef = 6625353D2B9CF0FE00EBD081 /* AsyncAnimatedImageUI */; };
 		663336942B75B7EA0098D188 /* View+WindowGeometryPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663336932B75B7EA0098D188 /* View+WindowGeometryPreferences.swift */; };
 		663336952B75B7EA0098D188 /* View+WindowGeometryPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663336932B75B7EA0098D188 /* View+WindowGeometryPreferences.swift */; };
 		66364FBA2B8ABB9C005180B8 /* APIErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66364FB92B8ABB9C005180B8 /* APIErrorView.swift */; };
@@ -76,7 +78,6 @@
 		663B73282B6DBA8E0031D661 /* TwitchWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663B73262B6DBA8E0031D661 /* TwitchWebView.swift */; };
 		663E38072B9226D3002E0530 /* Nuke in Frameworks */ = {isa = PBXBuildFile; productRef = 663E38062B9226D3002E0530 /* Nuke */; };
 		663E38092B9226D3002E0530 /* NukeUI in Frameworks */ = {isa = PBXBuildFile; productRef = 663E38082B9226D3002E0530 /* NukeUI */; };
-		663E38212B9252EB002E0530 /* Gifu in Frameworks */ = {isa = PBXBuildFile; productRef = 663E38202B9252EB002E0530 /* Gifu */; };
 		666E97E92B8D7085008EE950 /* EmptyDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 666E97E82B8D7085008EE950 /* EmptyDataView.swift */; };
 		666E97EA2B8D7085008EE950 /* EmptyDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 666E97E82B8D7085008EE950 /* EmptyDataView.swift */; };
 		6672D37C2B8C3F7B00E9D0E9 /* NeedsLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6672D37B2B8C3F7B00E9D0E9 /* NeedsLoginView.swift */; };
@@ -277,12 +278,13 @@
 			files = (
 				66E102192B8262AC007A44D4 /* KeychainWrapper in Frameworks */,
 				660AFF762B93AD390003186E /* VisionPane in Frameworks */,
+				6625353E2B9CF0FE00EBD081 /* AsyncAnimatedImageUI in Frameworks */,
 				663E38092B9226D3002E0530 /* NukeUI in Frameworks */,
 				66F4E4302B8132F5008C565D /* Twitch in Frameworks */,
 				663B72F92B6DB8E60031D661 /* RealityKitContent in Frameworks */,
-				663E38212B9252EB002E0530 /* Gifu in Frameworks */,
 				66891FF42B9A9535000C0D92 /* AsyncAnimatedImageUI in Frameworks */,
 				663E38072B9226D3002E0530 /* Nuke in Frameworks */,
+				6625353B2B9CE6F600EBD081 /* AsyncAnimatedImageUI in Frameworks */,
 				66364FC82B8BA49A005180B8 /* JunoUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -640,9 +642,10 @@
 				66364FC72B8BA49A005180B8 /* JunoUI */,
 				663E38062B9226D3002E0530 /* Nuke */,
 				663E38082B9226D3002E0530 /* NukeUI */,
-				663E38202B9252EB002E0530 /* Gifu */,
 				660AFF752B93AD390003186E /* VisionPane */,
 				66891FF32B9A9535000C0D92 /* AsyncAnimatedImageUI */,
+				6625353A2B9CE6F600EBD081 /* AsyncAnimatedImageUI */,
+				6625353D2B9CF0FE00EBD081 /* AsyncAnimatedImageUI */,
 			);
 			productName = VisionTwitch;
 			productReference = 663B72F32B6DB8E60031D661 /* VisionTwitch.app */;
@@ -700,7 +703,7 @@
 				66364FC62B8BA499005180B8 /* XCRemoteSwiftPackageReference "JunoSlider" */,
 				663E38052B9226D3002E0530 /* XCRemoteSwiftPackageReference "Nuke" */,
 				660AFF742B93AD390003186E /* XCLocalSwiftPackageReference "../VisionPane" */,
-				66891FF22B9A9535000C0D92 /* XCLocalSwiftPackageReference "../AsyncAnimatedImage" */,
+				6625353C2B9CF0FD00EBD081 /* XCRemoteSwiftPackageReference "AsyncAnimatedImage" */,
 			);
 			productRefGroup = 663B72F42B6DB8E60031D661 /* Products */;
 			projectDirPath = "";
@@ -1182,13 +1185,17 @@
 			isa = XCLocalSwiftPackageReference;
 			relativePath = ../VisionPane;
 		};
-		66891FF22B9A9535000C0D92 /* XCLocalSwiftPackageReference "../AsyncAnimatedImage" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = ../AsyncAnimatedImage;
-		};
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		6625353C2B9CF0FD00EBD081 /* XCRemoteSwiftPackageReference "AsyncAnimatedImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ericlewis/AsyncAnimatedImage.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 		66364FC62B8BA499005180B8 /* XCRemoteSwiftPackageReference "JunoSlider" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/christianselig/JunoSlider.git";
@@ -1228,6 +1235,15 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = VisionPane;
 		};
+		6625353A2B9CE6F600EBD081 /* AsyncAnimatedImageUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AsyncAnimatedImageUI;
+		};
+		6625353D2B9CF0FE00EBD081 /* AsyncAnimatedImageUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6625353C2B9CF0FD00EBD081 /* XCRemoteSwiftPackageReference "AsyncAnimatedImage" */;
+			productName = AsyncAnimatedImageUI;
+		};
 		66364FC72B8BA49A005180B8 /* JunoUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 66364FC62B8BA499005180B8 /* XCRemoteSwiftPackageReference "JunoSlider" */;
@@ -1246,10 +1262,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 663E38052B9226D3002E0530 /* XCRemoteSwiftPackageReference "Nuke" */;
 			productName = NukeUI;
-		};
-		663E38202B9252EB002E0530 /* Gifu */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Gifu;
 		};
 		66891FF32B9A9535000C0D92 /* AsyncAnimatedImageUI */ = {
 			isa = XCSwiftPackageProductDependency;

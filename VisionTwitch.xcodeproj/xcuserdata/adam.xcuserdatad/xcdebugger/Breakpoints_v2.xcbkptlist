@@ -220,5 +220,133 @@
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "6F624A9F-69D3-4D4D-A50C-E8704FA4114E"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../Library/Developer/Xcode/DerivedData/VisionTwitch-hdobqkaqfroincdmgtoupdlgggbe/SourcePackages/checkouts/AsyncAnimatedImage/Sources/AsyncAnimatedImage/AsyncAnimatedImage.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "40"
+            endingLineNumber = "40"
+            landmarkName = "animate(withGIFURL:loopCount:preparationBlock:animationBlock:loopBlock:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "83C75BC3-48B0-4321-9497-EA41D3C26145"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../Library/Developer/Xcode/DerivedData/VisionTwitch-hdobqkaqfroincdmgtoupdlgggbe/SourcePackages/checkouts/AsyncAnimatedImage/Sources/AsyncAnimatedImage/AsyncAnimatedImage.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "46"
+            endingLineNumber = "46"
+            landmarkName = "animate(withGIFURL:loopCount:preparationBlock:animationBlock:loopBlock:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "83C75BC3-48B0-4321-9497-EA41D3C26145 - 42a828552db1ba92"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for closure #1 @Sendable () async -&gt; () in AsyncAnimatedImageUI.GIFAnimationContainer.animate(withGIFURL: Foundation.URL, loopCount: Swift.Int, preparationBlock: Swift.Optional&lt;() -&gt; ()&gt;, animationBlock: Swift.Optional&lt;() -&gt; ()&gt;, loopBlock: Swift.Optional&lt;() -&gt; ()&gt;) -&gt; ()"
+                  moduleName = "VisionTwitch"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/adam/Library/Developer/Xcode/DerivedData/VisionTwitch-hdobqkaqfroincdmgtoupdlgggbe/SourcePackages/checkouts/AsyncAnimatedImage/Sources/AsyncAnimatedImage/AsyncAnimatedImage.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "46"
+                  endingLineNumber = "46">
+               </Location>
+               <Location
+                  uuid = "83C75BC3-48B0-4321-9497-EA41D3C26145 - 4fe898eca2dd6491"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(4) suspend resume partial function for closure #1 @Sendable () async -&gt; () in AsyncAnimatedImageUI.GIFAnimationContainer.animate(withGIFURL: Foundation.URL, loopCount: Swift.Int, preparationBlock: Swift.Optional&lt;() -&gt; ()&gt;, animationBlock: Swift.Optional&lt;() -&gt; ()&gt;, loopBlock: Swift.Optional&lt;() -&gt; ()&gt;) -&gt; ()"
+                  moduleName = "VisionTwitch"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/adam/Library/Developer/Xcode/DerivedData/VisionTwitch-hdobqkaqfroincdmgtoupdlgggbe/SourcePackages/checkouts/AsyncAnimatedImage/Sources/AsyncAnimatedImage/AsyncAnimatedImage.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "46"
+                  endingLineNumber = "46">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "8D4E36C0-908A-4B3A-A238-F0510BEA9A73"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../Library/Developer/Xcode/DerivedData/VisionTwitch-hdobqkaqfroincdmgtoupdlgggbe/SourcePackages/checkouts/AsyncAnimatedImage/Sources/AsyncAnimatedImage/AsyncAnimatedImage.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "39"
+            endingLineNumber = "39"
+            landmarkName = "animate(withGIFURL:loopCount:preparationBlock:animationBlock:loopBlock:)"
+            landmarkType = "7">
+            <Actions>
+               <BreakpointActionProxy
+                  ActionExtensionID = "Xcode.BreakpointAction.Log">
+                  <ActionContent
+                     message = "Fetched URL"
+                     conveyanceType = "0">
+                  </ActionContent>
+               </BreakpointActionProxy>
+            </Actions>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A71E237A-0C02-447B-8C5F-EDC5B937743D"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "Yes"
+            filePath = "../../../Library/Developer/Xcode/DerivedData/VisionTwitch-hdobqkaqfroincdmgtoupdlgggbe/SourcePackages/checkouts/AsyncAnimatedImage/Sources/AsyncAnimatedImage/AsyncAnimatedImage.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "38"
+            endingLineNumber = "38"
+            landmarkName = "animate(withGIFURL:loopCount:preparationBlock:animationBlock:loopBlock:)"
+            landmarkType = "7">
+            <Actions>
+               <BreakpointActionProxy
+                  ActionExtensionID = "Xcode.BreakpointAction.Log">
+                  <ActionContent
+                     message = "Starting request"
+                     conveyanceType = "0">
+                  </ActionContent>
+               </BreakpointActionProxy>
+            </Actions>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "B41117B8-44FF-4F21-B01B-F3E7254C68D8"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../Library/Developer/Xcode/DerivedData/VisionTwitch-hdobqkaqfroincdmgtoupdlgggbe/SourcePackages/checkouts/AsyncAnimatedImage/Sources/AsyncAnimatedImage/AsyncAnimatedImage.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "52"
+            endingLineNumber = "52"
+            landmarkName = "GIFAnimationContainer"
+            landmarkType = "3">
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

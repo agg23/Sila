@@ -26,6 +26,7 @@ struct ChatMessage: View {
                 }
             }
         }
+        .drawingGroup()
         .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .leading)
     }
 

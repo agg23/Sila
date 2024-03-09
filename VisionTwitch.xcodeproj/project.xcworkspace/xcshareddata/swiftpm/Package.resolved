@@ -1,12 +1,12 @@
 {
   "pins" : [
     {
-      "identity" : "gifu",
+      "identity" : "asyncanimatedimage",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/agg23/Gifu",
+      "location" : "https://github.com/ericlewis/AsyncAnimatedImage.git",
       "state" : {
-        "branch" : "master",
-        "revision" : "e8090f3b9313c89833258d8edd56b48208214fcf"
+        "branch" : "main",
+        "revision" : "644f524c60ae9a1bff757ac8e31fac2921c699c7"
       }
     },
     {
