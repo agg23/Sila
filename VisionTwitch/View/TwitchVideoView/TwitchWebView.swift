@@ -91,10 +91,14 @@ struct TwitchWebView: UIViewRepresentable {
 //            document.head.appendChild(style);
 //            """, injectionTime: .atDocumentEnd, forMainFrameOnly: false)
 
-        let hideLoadingScript = WKUserScript(source: """
+        let hideLoadingAndDisclosureScript = WKUserScript(source: """
             const style = document.createElement("style");
             style.textContent = `
               .tw-loading-spinner {
+                display: none;
+              }
+
+              #channel-player-disclosures {
                 display: none;
               }
             `;
@@ -117,7 +121,7 @@ struct TwitchWebView: UIViewRepresentable {
         controller.addUserScript(injectVideoGetter)
         // TODO: It seems like hiding the Chrome is breaking the video playback somehow
 //        controller.addUserScript(hideChromeScript)
-        controller.addUserScript(hideLoadingScript)
+        controller.addUserScript(hideLoadingAndDisclosureScript)
         controller.addUserScript(disableZoomScript)
 
         let configuration = WKWebViewConfiguration()
