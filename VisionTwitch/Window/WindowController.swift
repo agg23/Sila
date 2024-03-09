@@ -10,7 +10,7 @@ import Combine
 
 class WindowController {
     class PlaybackWindowRecord {
-        var muted = false
+        var muted = true
     }
 
     static let shared = WindowController()

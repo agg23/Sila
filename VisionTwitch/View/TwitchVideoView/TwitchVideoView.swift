@@ -21,15 +21,18 @@ struct TwitchVideoView: View {
 
     @State private var preventClose = false
 
-    @State private var player = WebViewPlayer()
-
     let streamableVideo: StreamableVideo
+
+    /// Allow delaying of loading Twitch content to provide time for all other players to mute, allowing concurrent playback
+    let delayLoading: Bool
+
+    @Binding var player: WebViewPlayer
 
     var body: some View {
         ZStack {
-            TwitchWebView(player: self.player, streamableVideo: self.streamableVideo, loading: self.$loading)
+            TwitchWebView(player: self.player, streamableVideo: self.streamableVideo, loading: self.$loading, delayLoading: self.delayLoading)
                 .overlay {
-                    if self.loading {
+                    if self.loading || self.delayLoading {
                         ProgressView()
                     }
                 }
@@ -118,5 +121,7 @@ struct TwitchVideoView: View {
 }
 
 #Preview {
-    TwitchVideoView(streamableVideo: .stream(STREAM_MOCK()))
+    @State var player = WebViewPlayer()
+
+    return TwitchVideoView(streamableVideo: .stream(STREAM_MOCK()), delayLoading: false, player: $player)
 }

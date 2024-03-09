@@ -51,12 +51,14 @@ struct VideoQuality {
         self.quality = SharedPlaybackSettings.getQuality()
 
         NotificationCenter.default.addObserver(forName: .twitchMuteAll, object: nil, queue: nil) { notification in
-            self.webView?.evaluateJavaScript("""
-                let video = document.getElementsByTagName("video");
-                if (video.length > 0) {
-                    video[0].muted = true;
-                }
-            """)
+            print("Setting mute all")
+//            self.webView?.evaluateJavaScript("""
+//                let video = document.getElementsByTagName("video");
+//                if (video.length > 0) {
+//                    video[0].muted = true;
+//                }
+//            """)
+            self.setMute(true)
         }
 
         let _ = withObservationTracking {
@@ -85,8 +87,12 @@ struct VideoQuality {
     }
 
     func toggleMute() {
+        self.setMute(!self.muted)
+    }
+
+    func setMute(_ mute: Bool) {
         self.webView?.evaluateJavaScript("""
-            Twitch._player.setMuted(\(!self.muted));
+            Twitch._player.setMuted(\(mute));
         """)
     }
 
@@ -112,7 +118,8 @@ struct VideoQuality {
 
     func applyEvent(_ event: TwitchEvent) {
         // TODO: Handle currentTime
-        self.muted = event.muted
+        // Mark low enough volume as muted as well
+        self.muted = event.muted || event.volume < 0.01
         self.status = event.playback
         self.volume = event.volume
 

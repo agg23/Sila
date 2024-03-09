@@ -7,7 +7,7 @@
 
 import Twitch
 
-enum StreamableVideo {
+enum StreamableVideo: Equatable {
     case stream(Twitch.Stream)
     case video(Twitch.Video)
 

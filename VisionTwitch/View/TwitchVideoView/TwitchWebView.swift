@@ -17,11 +17,13 @@ struct TwitchWebView: UIViewRepresentable {
     let player: WebViewPlayer
 
     let loading: Binding<Bool>?
+    let delayLoading: Bool
 
-    init(player: WebViewPlayer, streamableVideo: StreamableVideo, loading: Binding<Bool>) {
+    init(player: WebViewPlayer, streamableVideo: StreamableVideo, loading: Binding<Bool>, delayLoading: Bool = false) {
         self.player = player
         self.streamableVideo = streamableVideo
         self.loading = loading
+        self.delayLoading = delayLoading
 
         let overrideScript = WKUserScript(source: """
             // Set custom window parent
@@ -151,7 +153,7 @@ struct TwitchWebView: UIViewRepresentable {
     }
 
     func makeCoordinator() -> TwitchWebViewCoordinator {
-        TwitchWebViewCoordinator(player: self.player, webView: self.webView, loading: self.loading)
+        TwitchWebViewCoordinator(player: self.player, webView: self.webView, loading: self.loading, lastVideo: self.streamableVideo, lastDelayLoading: self.delayLoading)
     }
 
     func makeUIView(context: Context) -> WKWebView {
@@ -163,6 +165,30 @@ struct TwitchWebView: UIViewRepresentable {
 
         self.webView.configuration.userContentController.add(context.coordinator, name: "twitch")
 
+        if !self.delayLoading {
+            self.loadContent(self.webView)
+        }
+
+        return self.webView
+    }
+
+    func updateUIView(_ uiView: WKWebView, context: Context) {
+        self.player.webView = uiView
+
+        guard self.streamableVideo != context.coordinator.lastVideo || self.delayLoading != context.coordinator.lastDelayLoading else {
+            // Nothing to do
+            return
+        }
+
+        context.coordinator.lastVideo = self.streamableVideo
+        context.coordinator.lastDelayLoading = self.delayLoading
+
+        if !self.delayLoading {
+            self.loadContent(uiView)
+        }
+    }
+
+    private func loadContent(_ webView: WKWebView) {
         // Also supports quality=auto&volume=0.39&muted=false
         var urlVideoSegment: String
         switch self.streamableVideo {
@@ -176,13 +202,7 @@ struct TwitchWebView: UIViewRepresentable {
         DispatchQueue.main.async {
             self.loading?.wrappedValue = true
         }
-        self.webView.load(URLRequest(url: URL(string: "https://player.twitch.tv/?\(urlVideoSegment)&parent=twitch.tv&quality=\(self.player.quality)&volume=\(self.player.volume)&controls=false&autoplay=true&muted=false&player=popout")!))
-
-        return self.webView
-    }
-
-    func updateUIView(_ uiView: WKWebView, context: Context) {
-        self.player.webView = uiView
+        webView.load(URLRequest(url: URL(string: "https://player.twitch.tv/?\(urlVideoSegment)&parent=twitch.tv&quality=\(self.player.quality)&volume=\(self.player.volume)&controls=false&autoplay=true&muted=false&player=popout")!))
     }
 }
 
@@ -194,10 +214,15 @@ class TwitchWebViewCoordinator: NSObject, WKUIDelegate, WKNavigationDelegate, WK
     var lastStatus: PlaybackStatus = .idle
     var retriedPlayCount = 0
 
-    init(player: WebViewPlayer, webView: WKWebView, loading: Binding<Bool>?){
+    var lastVideo: StreamableVideo
+    var lastDelayLoading: Bool
+
+    init(player: WebViewPlayer, webView: WKWebView, loading: Binding<Bool>?, lastVideo: StreamableVideo, lastDelayLoading: Bool){
         self.player = player
         self.webView = webView
         self.loading = loading
+        self.lastVideo = lastVideo
+        self.lastDelayLoading = lastDelayLoading
     }
 
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
