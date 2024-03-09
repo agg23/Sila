@@ -151,7 +151,9 @@ struct TwitchWebView: UIViewRepresentable {
     }
 
     func makeUIView(context: Context) -> WKWebView {
+        #if DEBUG
         self.webView.isInspectable = true
+        #endif
         self.webView.uiDelegate = context.coordinator
         self.webView.navigationDelegate = context.coordinator
 
@@ -228,6 +230,36 @@ class TwitchWebViewCoordinator: NSObject, WKUIDelegate, WKNavigationDelegate, WK
             if (buttons.length > 0) {
                 buttons[0].click()
             }
+        """)
+
+        // Click on the fullscreen mute popup
+        // Taken from https://stackoverflow.com/a/61511955
+        webView.evaluateJavaScript("""
+            const waitForElm = (selector) => {
+                return new Promise(resolve => {
+                    if (document.querySelector(selector)) {
+                        return resolve(document.querySelector(selector));
+                    }
+
+                    const observer = new MutationObserver(_mutations => {
+                        if (document.querySelector(selector)) {
+                            observer.disconnect();
+                            resolve(document.querySelector(selector));
+                        }
+                    });
+
+                    // If you get "parameter 1 is not of type 'Node'" error, see https://stackoverflow.com/a/77855838/492336
+                    observer.observe(document.body, {
+                        childList: true,
+                        subtree: true
+                    });
+                });
+            }
+
+            waitForElm(".click-to-unmute__container").then(element => {
+                console.log("Found click to unmute");
+                element.click();
+            });
         """)
 
         // TODO: Vision doesn't seem to let you AirPlay
