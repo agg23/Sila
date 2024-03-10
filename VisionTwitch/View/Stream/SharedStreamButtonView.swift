@@ -22,18 +22,16 @@ struct SharedStreamButtonView<ImageOverlay: View>: View {
     let displayUrl: String
 
     let preTitleLeft: String
-    let preTitleRight: String
 
     let title: String
     let subtitle: String
 
     @ViewBuilder let imageOverlay: (() -> ImageOverlay)?
 
-    init(source: StreamOrVideo, displayUrl: String, preTitleLeft: String, preTitleRight: String, title: String, subtitle: String, imageOverlay: @escaping () -> ImageOverlay) {
+    init(source: StreamOrVideo, displayUrl: String, preTitleLeft: String, title: String, subtitle: String, imageOverlay: @escaping () -> ImageOverlay) {
         self.source = source
         self.displayUrl = displayUrl
         self.preTitleLeft = preTitleLeft
-        self.preTitleRight = preTitleRight
         self.title = title
         self.subtitle = subtitle
         self.imageOverlay = imageOverlay
@@ -51,8 +49,6 @@ struct SharedStreamButtonView<ImageOverlay: View>: View {
             VStack(alignment: .leading) {
                 HStack {
                     Text(self.preTitleLeft)
-                    Spacer()
-                    Text(self.preTitleRight)
                 }
                 .font(.subheadline.weight(.medium))
                 .foregroundStyle(.secondary)
@@ -65,6 +61,7 @@ struct SharedStreamButtonView<ImageOverlay: View>: View {
                     .truncationMode(.tail)
                     .lineLimit(1)
             }
+            .frame(minWidth: 0, maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .leading)
         } imageOverlay: {
             self.imageOverlay?()
         }
@@ -82,11 +79,10 @@ struct SharedStreamButtonView<ImageOverlay: View>: View {
 }
 
 extension SharedStreamButtonView where ImageOverlay == EmptyView {
-    init(source: StreamOrVideo, displayUrl: String, preTitleLeft: String, preTitleRight: String, title: String, subtitle: String) {
+    init(source: StreamOrVideo, displayUrl: String, preTitleLeft: String, title: String, subtitle: String) {
         self.source = source
         self.displayUrl = displayUrl
         self.preTitleLeft = preTitleLeft
-        self.preTitleRight = preTitleRight
         self.title = title
         self.subtitle = subtitle
         self.imageOverlay = {
@@ -98,7 +94,7 @@ extension SharedStreamButtonView where ImageOverlay == EmptyView {
 
 #Preview {
     NavStack {
-        SharedStreamButtonView(source: .stream(STREAM_MOCK()), displayUrl: STREAM_MOCK().thumbnailURL, preTitleLeft: "Pretitle left", preTitleRight: "Pretitle right", title: "Title", subtitle: "Subtitle", imageOverlay: {
+        SharedStreamButtonView(source: .stream(STREAM_MOCK()), displayUrl: STREAM_MOCK().thumbnailURL, preTitleLeft: "Pretitle left", title: "Title", subtitle: "Subtitle", imageOverlay: {
             Text("This is on the image overlay")
         })
             .frame(width: 400, height: 300)

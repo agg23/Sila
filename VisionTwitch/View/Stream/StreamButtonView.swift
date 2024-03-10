@@ -10,21 +10,28 @@ import Twitch
 
 struct StreamButtonView: View {
     @Environment(Router.self) private var router
+    @Environment(StreamTimer.self) private var streamTimer
+
+    @State private var currentDate = Date.now
 
     let stream: Twitch.Stream
 
     var body: some View {
-        SharedStreamButtonView(source: .stream(self.stream), displayUrl: self.stream.thumbnailURL, preTitleLeft: self.stream.gameName, preTitleRight: self.stream.startedAt.formatted(), title: self.stream.title, subtitle: self.stream.userName) {
+        SharedStreamButtonView(source: .stream(self.stream), displayUrl: self.stream.thumbnailURL, preTitleLeft: self.stream.gameName, title: self.stream.title, subtitle: self.stream.userName) {
             HStack {
-                Image(systemName: Icon.viewerCount)
-                    .symbolRenderingMode(.palette)
-                    .foregroundStyle(.red, .white)
-                Text(self.stream.viewerCount.formatted(.number))
+                self.overlayPill {
+                    Text(self.buildRuntime())
+                }
+
+                Spacer()
+
+                self.overlayPill {
+                    Image(systemName: Icon.viewerCount)
+                        .symbolRenderingMode(.palette)
+                        .foregroundStyle(.red, .white)
+                    Text(self.stream.viewerCount.formatted(.number))
+                }
             }
-            .padding(4)
-            .background(.black.opacity(0.5))
-            .clipShape(.rect(cornerRadius: 8))
-            .padding()
         }
         .contextMenu {
             let channelButton = Button {
@@ -65,6 +72,32 @@ struct StreamButtonView: View {
                 categoryButton
             }
         }
+        .onReceive(self.streamTimer.secondTimer, perform: { date in
+            self.currentDate = date
+        })
+    }
+
+    @ViewBuilder
+    func overlayPill<Content: View>(@ViewBuilder _ content: () -> Content) -> some View {
+        HStack {
+            content()
+        }
+        .padding(4)
+        .background(.black.opacity(0.5))
+        .clipShape(.rect(cornerRadius: 8))
+        .padding()
+    }
+
+    func buildRuntime() -> String {
+        let components = Calendar.current.dateComponents([.hour, .minute, .second], from: self.stream.startedAt, to: self.currentDate)
+
+        // Create a date components formatter
+        let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = [.hour, .minute, .second]
+        formatter.unitsStyle = .positional
+
+        // Format the time interval as a string
+        return formatter.string(from: components) ?? ""
     }
 
 //    @ViewBuilder
@@ -89,4 +122,5 @@ struct StreamButtonView: View {
         StreamButtonView(stream: STREAM_MOCK())
             .frame(width: 400, height: 300)
     }
+    .environment(StreamTimer())
 }

@@ -10,6 +10,8 @@ import SwiftUI
 struct MainWindowView: View {
     @Environment(\.scenePhase) private var scene
 
+    @State private var streamTimer = StreamTimer()
+
     var body: some View {
         TabView {
             // TODO: Change icon
@@ -35,6 +37,7 @@ struct MainWindowView: View {
                 SettingsView()
             }, disableToolbar: true)
         }
+        .environment(self.streamTimer)
         .onAppear {
             WindowController.shared.mainWindowSpawned = true
         }

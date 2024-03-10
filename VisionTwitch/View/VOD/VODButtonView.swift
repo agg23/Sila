@@ -12,7 +12,7 @@ struct VODButtonView: View {
     let video: Video
 
     var body: some View {
-        SharedStreamButtonView(source: .video(self.video), displayUrl: self.video.thumbnailUrl, preTitleLeft: "", preTitleRight: "", title: self.video.title, subtitle: self.video.userName)
+        SharedStreamButtonView(source: .video(self.video), displayUrl: self.video.thumbnailUrl, preTitleLeft: "", title: self.video.title, subtitle: self.video.userName)
     }
 }
 
