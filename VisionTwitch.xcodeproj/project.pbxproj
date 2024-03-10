@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 60;
+	objectVersion = 56;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -702,7 +702,6 @@
 				66E102172B8262AC007A44D4 /* XCRemoteSwiftPackageReference "KeychainWrapper" */,
 				66364FC62B8BA499005180B8 /* XCRemoteSwiftPackageReference "JunoSlider" */,
 				663E38052B9226D3002E0530 /* XCRemoteSwiftPackageReference "Nuke" */,
-				660AFF742B93AD390003186E /* XCLocalSwiftPackageReference "../VisionPane" */,
 				6625353C2B9CF0FD00EBD081 /* XCRemoteSwiftPackageReference "AsyncAnimatedImage" */,
 			);
 			productRefGroup = 663B72F42B6DB8E60031D661 /* Products */;
@@ -1179,13 +1178,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCLocalSwiftPackageReference section */
-		660AFF742B93AD390003186E /* XCLocalSwiftPackageReference "../VisionPane" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = ../VisionPane;
-		};
-/* End XCLocalSwiftPackageReference section */
 
 /* Begin XCRemoteSwiftPackageReference section */
 		6625353C2B9CF0FD00EBD081 /* XCRemoteSwiftPackageReference "AsyncAnimatedImage" */ = {

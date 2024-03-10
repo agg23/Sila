@@ -43,7 +43,6 @@ struct ChatMessageListView: View {
                 proxy.scrollTo(self.messages.last)
             }
         }
-        .frame(width: 300)
     }
 }
 

@@ -7,8 +7,6 @@
 
 import SwiftUI
 import Twitch
-import VisionPane
-import TwitchIRC
 
 @main
 struct VisionTwitchApp: App {
@@ -30,9 +28,7 @@ struct VisionTwitchApp: App {
         .environment(\.authController, self.authController)
 
         WindowGroup(id: "stream", for: Twitch.Stream.self) { $stream in
-            PaneProvider {
-                TwitchStreamVideoView(stream: stream)
-            }
+            TwitchStreamVideoView(stream: stream)
         } defaultValue: {
             // Providing a default allows us to refocus an open window
             // TODO: Replace with actual value
@@ -43,9 +39,7 @@ struct VisionTwitchApp: App {
 
         #if VOD_ENABLED
         WindowGroup(id: "vod", for: Twitch.Video.self) { $video in
-            PaneProvider {
-                TwitchVoDVideoView(video: video)
-            }
+            TwitchVoDVideoView(video: video)
         }
         .environment(\.authController, self.authController)
         .defaultSize(CGSize(width: 1280.0, height: 720.0))

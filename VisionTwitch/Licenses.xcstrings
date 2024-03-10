@@ -88,17 +88,6 @@
           }
         }
       }
-    },
-    "VisionPane" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Copyright (c) 2024 Eric Lewis"
-          }
-        }
-      }
     }
   },
   "version" : "1.0"

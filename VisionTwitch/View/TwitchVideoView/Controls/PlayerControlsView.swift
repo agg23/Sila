@@ -18,7 +18,7 @@ struct PlayerControlsView: View {
 
     let streamableVideo: StreamableVideo
 
-    @Binding var showChat: Bool
+    @Binding var chatVisibility: Visibility
 
     let onInteraction: (() -> Void)?
     let activeChanged: ((Bool) -> Void)?
@@ -82,8 +82,14 @@ struct PlayerControlsView: View {
             .buttonStyle(.borderless)
             .buttonBorderShape(.circle)
 
-            CircleBackgroundLessButton(systemName: "message", tooltip: self.showChat ? "Hide Chat" : "Show Chat") {
-                self.showChat.toggle()
+            CircleBackgroundLessButton(systemName: "message", tooltip: self.chatVisibility == .visible ? "Hide Chat" : "Show Chat") {
+                withAnimation {
+                    if self.chatVisibility == .visible {
+                        self.chatVisibility = .hidden
+                    } else {
+                        self.chatVisibility = .visible
+                    }
+                }
                 self.onInteraction?()
             }
 
@@ -118,7 +124,7 @@ private func previewPlayer() -> WebViewPlayer {
 }
 
 #Preview {
-    PlayerControlsView(player: previewPlayer(), streamableVideo: .stream(STREAM_MOCK()), showChat: .constant(false)) {
+    PlayerControlsView(player: previewPlayer(), streamableVideo: .stream(STREAM_MOCK()), chatVisibility: .constant(.hidden)) {
 
     } activeChanged: { _ in
 
@@ -128,7 +134,7 @@ private func previewPlayer() -> WebViewPlayer {
 #Preview {
     Rectangle()
         .ornament(attachmentAnchor: .scene(.bottom)) {
-            PlayerControlsView(player: previewPlayer(), streamableVideo: .stream(STREAM_MOCK()), showChat: .constant(true)) {
+            PlayerControlsView(player: previewPlayer(), streamableVideo: .stream(STREAM_MOCK()), chatVisibility: .constant(.visible)) {
 
             } activeChanged: { _ in
 

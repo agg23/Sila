@@ -6,12 +6,11 @@
 //
 
 import SwiftUI
-import VisionPane
 
 struct ChatPaneView: View {
-    @Environment(\.dismissPane) var dismissPane
-
     let channel: String
+    let title: String?
+    let dismissPane: () -> Void
 
     var body: some View {
         NavigationStack {
@@ -26,10 +25,13 @@ struct ChatPaneView: View {
                         .help("Dismiss")
                     }
                 }
+                .navigationTitle(self.title ?? "Chat")
         }
     }
 }
 
 #Preview {
-    ChatPaneView(channel: "barbarousking")
+    ChatPaneView(channel: "barbarousking", title: "BarbarousKing") {
+        print("Dismiss")
+    }
 }

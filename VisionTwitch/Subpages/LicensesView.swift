@@ -16,7 +16,7 @@ extension LocalizedStringKey: Hashable {
 struct LicensesView: View {
     @Environment(\.openURL) private var openURL
 
-    let libraries = ["Gifu", "JunoUI", "KeychainWrapper", "Nuke", "SubviewAttachingTextView", "swift-twitch-client", "TwitchIRC", "VisionPane"]
+    let libraries = ["Gifu", "JunoUI", "KeychainWrapper", "Nuke", "SubviewAttachingTextView", "swift-twitch-client", "TwitchIRC"]
 
     var body: some View {
         ScrollView {
