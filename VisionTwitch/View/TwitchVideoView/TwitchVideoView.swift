@@ -55,17 +55,20 @@ struct TwitchVideoView: View {
                 }
             }
             .ornament(visibility: self.chatVisibility, attachmentAnchor: .scene(.trailing), contentAlignment: .leading) {
-                // TODO: Handle VoDs
-                if case .stream(let stream) = self.streamableVideo {
-                    HStack {
-                        Color.clear.frame(width: self.ornamentSpacing)
-                        ChatPaneView(channel: stream.userLogin, title: stream.userName) {
-                            withAnimation {
-                                self.chatVisibility = .hidden
+                // Make sure we don't start loading chat while offscreen
+                if self.chatVisibility != .hidden {
+                    // TODO: Handle VoDs
+                    if case .stream(let stream) = self.streamableVideo {
+                        HStack {
+                            Color.clear.frame(width: self.ornamentSpacing)
+                            ChatPaneView(channel: stream.userLogin, title: stream.userName) {
+                                withAnimation {
+                                    self.chatVisibility = .hidden
+                                }
                             }
-                        }
                             .frame(width: 400, height: geometry.size.height)
                             .glassBackgroundEffect(tint: .black.opacity(0.5))
+                        }
                     }
                 }
             }

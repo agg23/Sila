@@ -78,6 +78,7 @@ struct PlayerControlsView: View {
                 }
             } label: {
                 Image(systemName: Icon.quality)
+                    .symbolRenderingMode(.monochrome)
             }
             .buttonStyle(.borderless)
             .buttonBorderShape(.circle)
