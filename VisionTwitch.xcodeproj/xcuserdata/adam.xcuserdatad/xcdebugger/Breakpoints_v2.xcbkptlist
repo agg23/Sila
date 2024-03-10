@@ -272,5 +272,65 @@
             landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "13648545-F242-4A56-AB52-6524D6D2C40D"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "VisionTwitch/View/API/StandardScrollableDataView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "31"
+            endingLineNumber = "31"
+            landmarkName = "body"
+            landmarkType = "24">
+            <Locations>
+               <Location
+                  uuid = "13648545-F242-4A56-AB52-6524D6D2C40D - f968047dbd9e792f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for closure #1 @Sendable () async -&gt; () in closure #1 () -&gt; SwiftUI.TupleView&lt;(&#x3c4;_0_1, &lt;&lt;opaque return type of SwiftUI.View.task(priority: Swift.TaskPriority, _: @Sendable () async -&gt; ()) -&gt; some&gt;&gt;.0, Swift.Optional&lt;SwiftUI.ProgressView&lt;SwiftUI.EmptyView, SwiftUI.EmptyView&gt;&gt;)&gt; in closure #1 (&#x3c4;_0_0) -&gt; &lt;&lt;opaque return type of SwiftUI.View.refreshable(action: @Sendable () async -&gt; ()) -&gt; some&gt;&gt;.0 in VisionTwitch.StandardScrollableDataView.body.getter : some"
+                  moduleName = "VisionTwitch"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/adam/code/Swift/VisionTwitch/VisionTwitch/View/API/StandardScrollableDataView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "31"
+                  endingLineNumber = "31">
+               </Location>
+               <Location
+                  uuid = "13648545-F242-4A56-AB52-6524D6D2C40D - 4755810e0b08c7cc"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(2) await resume partial function for closure #1 @Sendable () async -&gt; () in closure #1 () -&gt; SwiftUI.TupleView&lt;(&#x3c4;_0_1, &lt;&lt;opaque return type of SwiftUI.View.task(priority: Swift.TaskPriority, _: @Sendable () async -&gt; ()) -&gt; some&gt;&gt;.0, Swift.Optional&lt;SwiftUI.ProgressView&lt;SwiftUI.EmptyView, SwiftUI.EmptyView&gt;&gt;)&gt; in closure #1 (&#x3c4;_0_0) -&gt; &lt;&lt;opaque return type of SwiftUI.View.refreshable(action: @Sendable () async -&gt; ()) -&gt; some&gt;&gt;.0 in VisionTwitch.StandardScrollableDataView.body.getter : some"
+                  moduleName = "VisionTwitch"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/adam/code/Swift/VisionTwitch/VisionTwitch/View/API/StandardScrollableDataView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "31"
+                  endingLineNumber = "31">
+               </Location>
+               <Location
+                  uuid = "13648545-F242-4A56-AB52-6524D6D2C40D - 62be5692b6e545d1"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for closure #1 @Sendable () async -&gt; () in closure #1 () -&gt; SwiftUI.TupleView&lt;(&#x3c4;_0_1, &lt;&lt;opaque return type of SwiftUI.View.task(priority: Swift.TaskPriority, _: @Sendable () async -&gt; ()) -&gt; some&gt;&gt;.0, Swift.Optional&lt;SwiftUI.ProgressView&lt;SwiftUI.EmptyView, SwiftUI.EmptyView&gt;&gt;)&gt; in closure #1 (&#x3c4;_0_0) -&gt; &lt;&lt;opaque return type of SwiftUI.View.refreshable(action: @Sendable () async -&gt; ()) -&gt; some&gt;&gt;.0 in VisionTwitch.StandardScrollableDataView.body.getter : some"
+                  moduleName = "VisionTwitch"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/adam/code/Swift/VisionTwitch/VisionTwitch/View/API/StandardScrollableDataView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "31"
+                  endingLineNumber = "31">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

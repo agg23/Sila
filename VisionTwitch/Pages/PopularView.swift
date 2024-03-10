@@ -10,16 +10,25 @@ import Twitch
 
 struct PopularView: View {
     @State private var loader = StandardDataLoader<([Twitch.Stream], String?)>()
+    @State private var existingIds = Set<String>()
 
     var body: some View {
         StandardScrollableDataView(loader: self.$loader) { api, _ in
-            return try await api.getStreams(limit: 100)
+            let streams = try await api.getStreams(limit: 100)
+
+            self.existingIds.formUnion(streams.streams.map({ $0.id }))
+
+            return streams
         } onPaginationThresholdMet: {
             print("Loading more")
             await self.loader.requestMore { data, apiAndUser in
                 let (newData, cursor) = try await apiAndUser.0.getStreams(limit: 100, after: data.1)
 
-                return (data.0 + newData, cursor)
+                // Prevent duplicates from appearing, due to the list resorting while being fetched
+                let newStreams = newData.filter({ !self.existingIds.contains($0.id) })
+                self.existingIds.formUnion(newStreams.map({ $0.id }))
+
+                return (data.0 + newStreams, cursor)
             }
         } content: { streams, _ in
             if streams.isEmpty {
