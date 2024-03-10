@@ -275,59 +275,73 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "13648545-F242-4A56-AB52-6524D6D2C40D"
+            uuid = "78EAADAD-F47F-4890-8955-2D79CDB7117C"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "VisionTwitch/View/API/StandardScrollableDataView.swift"
+            filePath = "VisionTwitch/Pages/FollowedStreamsView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "31"
-            endingLineNumber = "31"
-            landmarkName = "body"
-            landmarkType = "24">
+            startingLineNumber = "85"
+            endingLineNumber = "85"
+            landmarkName = "onPaginationThresholdMet()"
+            landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "13648545-F242-4A56-AB52-6524D6D2C40D - f968047dbd9e792f"
+                  uuid = "78EAADAD-F47F-4890-8955-2D79CDB7117C - 904ed69b272cb566"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "(1) suspend resume partial function for closure #1 @Sendable () async -&gt; () in closure #1 () -&gt; SwiftUI.TupleView&lt;(&#x3c4;_0_1, &lt;&lt;opaque return type of SwiftUI.View.task(priority: Swift.TaskPriority, _: @Sendable () async -&gt; ()) -&gt; some&gt;&gt;.0, Swift.Optional&lt;SwiftUI.ProgressView&lt;SwiftUI.EmptyView, SwiftUI.EmptyView&gt;&gt;)&gt; in closure #1 (&#x3c4;_0_0) -&gt; &lt;&lt;opaque return type of SwiftUI.View.refreshable(action: @Sendable () async -&gt; ()) -&gt; some&gt;&gt;.0 in VisionTwitch.StandardScrollableDataView.body.getter : some"
+                  symbolName = "(1) suspend resume partial function for closure #1 ((Swift.Array&lt;Twitch.Stream&gt;, Swift.Optional&lt;Swift.String&gt;), (Twitch.Helix, Swift.Optional&lt;VisionTwitch.AuthUser&gt;)) async throws -&gt; (Swift.Array&lt;Twitch.Stream&gt;, Swift.Optional&lt;Swift.String&gt;) in VisionTwitch.FollowedStreamsView.onPaginationThresholdMet() async -&gt; ()"
                   moduleName = "VisionTwitch"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/adam/code/Swift/VisionTwitch/VisionTwitch/View/API/StandardScrollableDataView.swift"
+                  urlString = "file:///Users/adam/code/Swift/VisionTwitch/VisionTwitch/Pages/FollowedStreamsView.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "31"
-                  endingLineNumber = "31">
+                  startingLineNumber = "85"
+                  endingLineNumber = "85">
                </Location>
                <Location
-                  uuid = "13648545-F242-4A56-AB52-6524D6D2C40D - 4755810e0b08c7cc"
+                  uuid = "78EAADAD-F47F-4890-8955-2D79CDB7117C - 868ed9f2e7a48979"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "(2) await resume partial function for closure #1 @Sendable () async -&gt; () in closure #1 () -&gt; SwiftUI.TupleView&lt;(&#x3c4;_0_1, &lt;&lt;opaque return type of SwiftUI.View.task(priority: Swift.TaskPriority, _: @Sendable () async -&gt; ()) -&gt; some&gt;&gt;.0, Swift.Optional&lt;SwiftUI.ProgressView&lt;SwiftUI.EmptyView, SwiftUI.EmptyView&gt;&gt;)&gt; in closure #1 (&#x3c4;_0_0) -&gt; &lt;&lt;opaque return type of SwiftUI.View.refreshable(action: @Sendable () async -&gt; ()) -&gt; some&gt;&gt;.0 in VisionTwitch.StandardScrollableDataView.body.getter : some"
+                  symbolName = "(2) await resume partial function for closure #1 ((Swift.Array&lt;Twitch.Stream&gt;, Swift.Optional&lt;Swift.String&gt;), (Twitch.Helix, Swift.Optional&lt;VisionTwitch.AuthUser&gt;)) async throws -&gt; (Swift.Array&lt;Twitch.Stream&gt;, Swift.Optional&lt;Swift.String&gt;) in VisionTwitch.FollowedStreamsView.onPaginationThresholdMet() async -&gt; ()"
                   moduleName = "VisionTwitch"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/adam/code/Swift/VisionTwitch/VisionTwitch/View/API/StandardScrollableDataView.swift"
+                  urlString = "file:///Users/adam/code/Swift/VisionTwitch/VisionTwitch/Pages/FollowedStreamsView.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "31"
-                  endingLineNumber = "31">
+                  startingLineNumber = "85"
+                  endingLineNumber = "85">
                </Location>
                <Location
-                  uuid = "13648545-F242-4A56-AB52-6524D6D2C40D - 62be5692b6e545d1"
+                  uuid = "78EAADAD-F47F-4890-8955-2D79CDB7117C - fe252e7fa115f164"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "(3) suspend resume partial function for closure #1 @Sendable () async -&gt; () in closure #1 () -&gt; SwiftUI.TupleView&lt;(&#x3c4;_0_1, &lt;&lt;opaque return type of SwiftUI.View.task(priority: Swift.TaskPriority, _: @Sendable () async -&gt; ()) -&gt; some&gt;&gt;.0, Swift.Optional&lt;SwiftUI.ProgressView&lt;SwiftUI.EmptyView, SwiftUI.EmptyView&gt;&gt;)&gt; in closure #1 (&#x3c4;_0_0) -&gt; &lt;&lt;opaque return type of SwiftUI.View.refreshable(action: @Sendable () async -&gt; ()) -&gt; some&gt;&gt;.0 in VisionTwitch.StandardScrollableDataView.body.getter : some"
+                  symbolName = "(3) suspend resume partial function for closure #1 ((Swift.Array&lt;Twitch.Stream&gt;, Swift.Optional&lt;Swift.String&gt;), (Twitch.Helix, Swift.Optional&lt;VisionTwitch.AuthUser&gt;)) async throws -&gt; (Swift.Array&lt;Twitch.Stream&gt;, Swift.Optional&lt;Swift.String&gt;) in VisionTwitch.FollowedStreamsView.onPaginationThresholdMet() async -&gt; ()"
                   moduleName = "VisionTwitch"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/adam/code/Swift/VisionTwitch/VisionTwitch/View/API/StandardScrollableDataView.swift"
+                  urlString = "file:///Users/adam/code/Swift/VisionTwitch/VisionTwitch/Pages/FollowedStreamsView.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "31"
-                  endingLineNumber = "31">
+                  startingLineNumber = "85"
+                  endingLineNumber = "85">
+               </Location>
+               <Location
+                  uuid = "78EAADAD-F47F-4890-8955-2D79CDB7117C - d2ff24dee6a5363"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(4) suspend resume partial function for closure #1 ((Swift.Array&lt;Twitch.Stream&gt;, Swift.Optional&lt;Swift.String&gt;), (Twitch.Helix, Swift.Optional&lt;VisionTwitch.AuthUser&gt;)) async throws -&gt; (Swift.Array&lt;Twitch.Stream&gt;, Swift.Optional&lt;Swift.String&gt;) in VisionTwitch.FollowedStreamsView.onPaginationThresholdMet() async -&gt; ()"
+                  moduleName = "VisionTwitch"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/adam/code/Swift/VisionTwitch/VisionTwitch/Pages/FollowedStreamsView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "85"
+                  endingLineNumber = "85">
                </Location>
             </Locations>
          </BreakpointContent>

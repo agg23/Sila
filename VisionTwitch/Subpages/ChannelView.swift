@@ -78,13 +78,8 @@ struct ChannelViewContent: View {
             .padding()
             AuthorizedStandardScrollableDataView(loader: self.$vodLoader, task: { api, _ in
                 return try await api.getVideosByUserId(self.channelUser.id)
-            }, noAuthMessage: "this channel's VoDs", noAuthSystemImage: Icon.channel) {
-                await self.vodLoader.requestMore { data, apiAndUser in
-                    let newData = try await apiAndUser.0.getVideosByUserId(self.channelUser.id, after: data.1)
-                    return (data.0 + newData.0, newData.1)
-                }
-            } content: { videos, _ in
-                VODGridView(videos: videos)
+            }, noAuthMessage: "this channel's VoDs", noAuthSystemImage: Icon.channel) { videos, _ in
+                VODGridView(videos: videos, onPaginationThresholdMet: self.onPaginationThresholdMet)
             }
             // Make profile image be pushed to the top
             Spacer()
@@ -98,6 +93,17 @@ struct ChannelViewContent: View {
     var profileImage: some View {
         LoadingAsyncImage(imageUrl: URL(string: self.channelUser.profileImageUrl), aspectRatio: 1.0)
             .frame(width: 150)
+    }
+
+    func onPaginationThresholdMet() async {
+        await self.vodLoader.requestMore { data, apiAndUser in
+            guard let originalCursor = data.1 else {
+                return data
+            }
+
+            let newData = try await apiAndUser.0.getVideosByUserId(self.channelUser.id, after: originalCursor)
+            return (data.0 + newData.0, newData.1)
+        }
     }
 }
 

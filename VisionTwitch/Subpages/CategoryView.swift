@@ -16,14 +16,8 @@ struct CategoryView: View {
     var body: some View {
         StandardScrollableDataView(loader: self.$loader) { api, _ in
             return try await self.fetchData(on: api)
-        } onPaginationThresholdMet: {
-            await self.loader.requestMore { data, apiAndUser in
-                let newData = try await self.fetchData(on: apiAndUser.0, using: data.2)
-
-                return (data.0 + newData.0, data.1, newData.2)
-            }
         } content: { streams, game, cursor in
-            StreamGridView(streams: streams)
+            StreamGridView(streams: streams, onPaginationThresholdMet: self.onPaginationThresholdMet)
                 .navigationTitle(game.name)
         }
     }
@@ -43,6 +37,18 @@ struct CategoryView: View {
             }
 
             return (streams, games[0], cursor)
+        }
+    }
+
+    func onPaginationThresholdMet() async {
+        await self.loader.requestMore { data, apiAndUser in
+            guard let originalCursor = data.2 else {
+                return data
+            }
+
+            let newData = try await self.fetchData(on: apiAndUser.0, using: originalCursor)
+
+            return (data.0 + newData.0, data.1, newData.2)
         }
     }
 }

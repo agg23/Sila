@@ -11,19 +11,28 @@ import Twitch
 struct StreamGridView: View {
     let streams: [Twitch.Stream]
 
+    let onPaginationThresholdMet: (() async -> Void)?
+
+    internal init(streams: [Twitch.Stream], onPaginationThresholdMet: (() async -> Void)? = nil) {
+        self.streams = streams
+        self.onPaginationThresholdMet = onPaginationThresholdMet
+    }
+
     var body: some View {
-        VStack {
-            LazyVGrid(columns: [
-                GridItem(),
-                GridItem(),
-                GridItem(),
-                GridItem()
-            ], content: {
-                ForEach(self.streams) { stream in
-                    StreamButtonView(stream: stream)
-                }
-            })
-        }
+        LazyVGrid(columns: [
+            GridItem(),
+            GridItem(),
+            GridItem(),
+            GridItem()
+        ], content: {
+            ForEach(self.streams) { stream in
+                StreamButtonView(stream: stream)
+            }
+
+            Color.clear.task {
+                await self.onPaginationThresholdMet?()
+            }
+        })
     }
 }
 

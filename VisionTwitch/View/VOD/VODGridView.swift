@@ -11,6 +11,13 @@ import Twitch
 struct VODGridView: View {
     let videos: [Video]
 
+    let onPaginationThresholdMet: (() async -> Void)?
+
+    internal init(videos: [Video], onPaginationThresholdMet: (() async -> Void)? = nil) {
+        self.videos = videos
+        self.onPaginationThresholdMet = onPaginationThresholdMet
+    }
+
     var body: some View {
         LazyVGrid(columns: [
             GridItem(),
@@ -20,6 +27,10 @@ struct VODGridView: View {
         ], content: {
             ForEach(self.videos, id: \.id) { video in
                 VODButtonView(video: video)
+            }
+            
+            Color.clear.task {
+                await self.onPaginationThresholdMet?()
             }
         })
     }

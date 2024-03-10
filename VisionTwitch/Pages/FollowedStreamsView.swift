@@ -40,28 +40,17 @@ struct FollowedStreamsView: View {
                 return ([], nil)
             }
             return try await api.getFollowedStreams(limit: 100)
-        }, noAuthMessage: "your followed streams", noAuthSystemImage: Icon.following) {
-            await self.liveStreamsLoader.requestMore { data, apiAndUser in
-                guard let originalCusor = data.1 else {
-                    return data
-                }
-
-                let (newData, cursor) = try await apiAndUser.0.getFollowedStreams(limit: 100, after: originalCusor)
-
-                return (data.0 + newData, cursor)
-            }
-        } content: { (streams, _) in
+        }, noAuthMessage: "your followed streams", noAuthSystemImage: Icon.following) { (streams, _) in
             if streams.isEmpty {
                 EmptyDataView(title: "No Livestreams", systemImage: Icon.following, message: "live followed streams") {
                     Task {
                         try? await self.liveStreamsLoader.refresh()
                     }
                 }
-                .background(.red)
                 // Fit it to the ScrollView
                 .containerRelativeFrame(.vertical)
             } else {
-                StreamGridView(streams: streams)
+                StreamGridView(streams: streams, onPaginationThresholdMet: self.onPaginationThresholdMet)
             }
         }
     }
@@ -88,6 +77,18 @@ struct FollowedStreamsView: View {
             } else {
                 ChannelGridView(channels: channels)
             }
+        }
+    }
+
+    func onPaginationThresholdMet() async {
+        await self.liveStreamsLoader.requestMore { data, apiAndUser in
+            guard let originalCusor = data.1 else {
+                return data
+            }
+
+            let (newData, cursor) = try await apiAndUser.0.getFollowedStreams(limit: 100, after: originalCusor)
+
+            return (data.0 + newData, cursor)
         }
     }
 }

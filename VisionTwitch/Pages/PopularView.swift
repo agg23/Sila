@@ -19,17 +19,6 @@ struct PopularView: View {
             self.existingIds.formUnion(streams.streams.map({ $0.id }))
 
             return streams
-        } onPaginationThresholdMet: {
-            print("Loading more")
-            await self.loader.requestMore { data, apiAndUser in
-                let (newData, cursor) = try await apiAndUser.0.getStreams(limit: 100, after: data.1)
-
-                // Prevent duplicates from appearing, due to the list resorting while being fetched
-                let newStreams = newData.filter({ !self.existingIds.contains($0.id) })
-                self.existingIds.formUnion(newStreams.map({ $0.id }))
-
-                return (data.0 + newStreams, cursor)
-            }
         } content: { streams, _ in
             if streams.isEmpty {
                 EmptyDataView(title: "No Livestreams", systemImage: Icon.popular, message: "livestreams") {
@@ -39,8 +28,25 @@ struct PopularView: View {
                 }
                 .containerRelativeFrame(.vertical)
             } else {
-                StreamGridView(streams: streams)
+                StreamGridView(streams: streams, onPaginationThresholdMet: self.onPaginationThresholdMet)
             }
+        }
+    }
+
+    func onPaginationThresholdMet() async {
+        print("Loading more")
+        await self.loader.requestMore { data, apiAndUser in
+            guard let originalCursor = data.1 else {
+                return data
+            }
+
+            let (newData, cursor) = try await apiAndUser.0.getStreams(limit: 100, after: originalCursor)
+
+            // Prevent duplicates from appearing, due to the list resorting while being fetched
+            let newStreams = newData.filter({ !self.existingIds.contains($0.id) })
+            self.existingIds.formUnion(newStreams.map({ $0.id }))
+
+            return (data.0 + newStreams, cursor)
         }
     }
 }
