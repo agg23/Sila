@@ -50,12 +50,14 @@ struct ChatMessage: View {
         }
 
         for emote in emotes {
-            let prefixString = string[startIndex..<string.index(string.startIndex, offsetBy: emote.startIndex)]
+            // We enforce that we can't go out of range on the string, in case Twitch gives us invalid ranges
+            // See https://github.com/twitchdev/issues/issues/104
+            let prefixString = string[startIndex..<(string.index(string.startIndex, offsetBy: emote.startIndex, limitedBy: string.endIndex) ?? startIndex)]
             chunks.append(.text(String(prefixString)))
 
             chunks.append(.image(self.emoteUrl(from: emote.id)))
 
-            startIndex = string.index(string.startIndex, offsetBy: emote.endIndex + 1)
+            startIndex = string.index(string.startIndex, offsetBy: emote.endIndex + 1, limitedBy: string.endIndex) ?? startIndex
         }
 
         if (startIndex.utf16Offset(in: string) != string.count) {
@@ -78,6 +80,8 @@ struct ChatMessage: View {
         ChatMessage(message: PrivateMessage(channel: "mistermv", chatColor: "#1E90FF", userDisplayName: "damasenpai", message: "claraqDISCO claraqDISCO claraqDISCO claraqDISCO claraqDISCO With additional text foo bar test even", emotes: "emotesv2_b01874d1da9f479aa49df41c48164233:0-10,12-22,24-34,36-46,48-58"))
         ChatMessage(message: PrivateMessage(channel: "mistermv", chatColor: "#1E90FF", userDisplayName: "damasenpai", message: "claraqDISCO claraqDISCO claraqDISCO claraqDISCO claraqDISCO With additional text foo bar test even more text what is going on", emotes: "emotesv2_b01874d1da9f479aa49df41c48164233:0-10,12-22,24-34,36-46,48-58"))
         ChatMessage(message: PrivateMessage(channel: "mistermv", chatColor: "#00FF7F", userDisplayName: "missilechion", message: "@Woodster_97 quietER catKISS", emotes: "emotesv2_275e090f79b943c1b081c436e490cdae:13-19"))
+        // TODO: This scenario is very broken because of a Twitch bug
+        ChatMessage(message: PrivateMessage(channel: "michou", chatColor: "#00FF7F", userDisplayName: "Eretrya0", message: "🇧🇷🇧🇷🇧🇷🇧🇷<3 <3 <3 <3 <3 <3 <3", emotes: "555555584:11-12,14-15,17-18,20-21,23-24,26-27"))
         Text("With additional text")
     }
     .frame(width: 300)

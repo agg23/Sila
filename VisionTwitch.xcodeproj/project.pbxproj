@@ -399,6 +399,7 @@
 			isa = PBXGroup;
 			children = (
 				66F4E42A2B812A1F008C565D /* API */,
+				663336922B75B7D40098D188 /* Extensions */,
 				66E102242B8293DE007A44D4 /* Mocks */,
 				66F4E4312B813986008C565D /* Pages */,
 				66125F4E2B83B8FD002169B5 /* Subpages */,
@@ -410,7 +411,6 @@
 				663B73022B6DB8E80031D661 /* Assets.xcassets */,
 				663B73072B6DB8E80031D661 /* Info.plist */,
 				66A5ADBA2B97E98E0025EF75 /* Licenses.xcstrings */,
-				663336922B75B7D40098D188 /* Extensions */,
 				663B73042B6DB8E80031D661 /* Preview Content */,
 			);
 			path = VisionTwitch;
