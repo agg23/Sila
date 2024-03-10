@@ -19,4 +19,12 @@ struct Icon {
     static let channel = "play.tv"
 
     static let viewerCount = "record.circle"
+
+    static let play = "play.fill"
+    static let pause = "pause.fill"
+
+    static let quality = "tv"
+    static let chat = "message"
+
+    static let refresh = "arrow.clockwise"
 }

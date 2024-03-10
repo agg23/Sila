@@ -25,7 +25,6 @@
 		66028E032B917CD200696071 /* PrivateMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66028E012B917CD200696071 /* PrivateMessage.swift */; };
 		660AFF6C2B93A9A60003186E /* ChatPaneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660AFF6B2B93A9A60003186E /* ChatPaneView.swift */; };
 		660AFF6D2B93A9A60003186E /* ChatPaneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660AFF6B2B93A9A60003186E /* ChatPaneView.swift */; };
-		660AFF762B93AD390003186E /* VisionPane in Frameworks */ = {isa = PBXBuildFile; productRef = 660AFF752B93AD390003186E /* VisionPane */; };
 		660F73A22B7446D70011FD65 /* WebViewPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660F73A12B7446D70011FD65 /* WebViewPlayer.swift */; };
 		660F73A32B7446D70011FD65 /* WebViewPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660F73A12B7446D70011FD65 /* WebViewPlayer.swift */; };
 		660F73A52B745D710011FD65 /* PlayerControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660F73A42B745D710011FD65 /* PlayerControlsView.swift */; };
@@ -277,7 +276,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				66E102192B8262AC007A44D4 /* KeychainWrapper in Frameworks */,
-				660AFF762B93AD390003186E /* VisionPane in Frameworks */,
 				6625353E2B9CF0FE00EBD081 /* AsyncAnimatedImageUI in Frameworks */,
 				663E38092B9226D3002E0530 /* NukeUI in Frameworks */,
 				66F4E4302B8132F5008C565D /* Twitch in Frameworks */,
@@ -642,7 +640,6 @@
 				66364FC72B8BA49A005180B8 /* JunoUI */,
 				663E38062B9226D3002E0530 /* Nuke */,
 				663E38082B9226D3002E0530 /* NukeUI */,
-				660AFF752B93AD390003186E /* VisionPane */,
 				66891FF32B9A9535000C0D92 /* AsyncAnimatedImageUI */,
 				6625353A2B9CE6F600EBD081 /* AsyncAnimatedImageUI */,
 				6625353D2B9CF0FE00EBD081 /* AsyncAnimatedImageUI */,
@@ -1223,10 +1220,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		660AFF752B93AD390003186E /* VisionPane */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = VisionPane;
-		};
 		6625353A2B9CE6F600EBD081 /* AsyncAnimatedImageUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = AsyncAnimatedImageUI;

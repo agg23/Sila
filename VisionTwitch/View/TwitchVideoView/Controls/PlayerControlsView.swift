@@ -27,7 +27,7 @@ struct PlayerControlsView: View {
         let qualityBinding = Binding(get: { self.player.quality }, set: { self.player.setQuality($0) })
 
         HStack {
-            CircleBackgroundLessButton(systemName: self.player.isPlaying ? "pause.fill" : "play.fill", tooltip: self.player.isPlaying ? "Pause" : "Play") {
+            CircleBackgroundLessButton(systemName: self.player.isPlaying ? Icon.pause : Icon.play, tooltip: self.player.isPlaying ? "Pause" : "Play") {
                 if self.player.isPlaying {
                     self.player.pause()
                 } else {
@@ -41,7 +41,7 @@ struct PlayerControlsView: View {
             StreamableVideoStatusControlView(player: self.player, streamableVideo: self.streamableVideo)
                 .padding(.horizontal)
 
-            CircleBackgroundLessButton(systemName: "arrow.clockwise", tooltip: "Debug reload") {
+            CircleBackgroundLessButton(systemName: Icon.refresh, tooltip: "Debug reload") {
                 self.player.reload()
                 self.onInteraction?()
             }
@@ -77,12 +77,12 @@ struct PlayerControlsView: View {
                     }
                 }
             } label: {
-                Image(systemName: "4k.tv")
+                Image(systemName: Icon.quality)
             }
             .buttonStyle(.borderless)
             .buttonBorderShape(.circle)
 
-            CircleBackgroundLessButton(systemName: "message", tooltip: self.chatVisibility == .visible ? "Hide Chat" : "Show Chat") {
+            CircleBackgroundLessButton(systemName: Icon.chat, tooltip: self.chatVisibility == .visible ? "Hide Chat" : "Show Chat") {
                 withAnimation {
                     if self.chatVisibility == .visible {
                         self.chatVisibility = .hidden

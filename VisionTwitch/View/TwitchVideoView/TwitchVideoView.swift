@@ -40,6 +40,7 @@ struct TwitchVideoView: View {
             .overlay {
                 if self.loading || self.delayLoading {
                     ProgressView()
+                        .controlSize(.large)
                 }
             }
             .onTapGesture {
