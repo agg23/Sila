@@ -97,11 +97,19 @@ struct TwitchWebView: UIViewRepresentable {
             const style = document.createElement("style");
             style.textContent = `
               .tw-loading-spinner {
-                display: none;
+                display: none !important;
               }
 
               #channel-player-disclosures {
-                display: none;
+                display: none !important;
+              }
+
+              [data-a-target="content-classification-gate-overlay"] {
+                display: none !important;
+              }
+
+              .content-overlay-gate__content {
+                display: none !important;
               }
             `;
 
