@@ -11,6 +11,13 @@ import Twitch
 struct CategoryGridView: View {
     let categories: [Twitch.Game]
 
+    let onPaginationThresholdMet: (() async -> Void)?
+
+    internal init(categories: [Game], onPaginationThresholdMet: (() async -> Void)? = nil) {
+        self.categories = categories
+        self.onPaginationThresholdMet = onPaginationThresholdMet
+    }
+
     var body: some View {
         LazyVGrid(columns: [
             GridItem(),
@@ -22,6 +29,10 @@ struct CategoryGridView: View {
         ], content: {
             ForEach(self.categories, id: \.id) { category in
                 CategoryButtonView(category: category)
+            }
+
+            Color.clear.task {
+                await self.onPaginationThresholdMet?()
             }
         })
     }

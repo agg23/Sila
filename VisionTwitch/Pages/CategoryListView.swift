@@ -9,13 +9,12 @@ import SwiftUI
 import Twitch
 
 struct CategoryListView: View {
-    @State private var loader = StandardDataLoader<[Game]>()
+    @State private var loader = StandardDataLoader<([Game], String?)>()
 
     var body: some View {
         StandardScrollableDataView(loader: self.$loader) { api, user in
-            let (categories, _) = try await api.getTopGames(limit: 100)
-            return categories
-        } content: { categories in
+            try await api.getTopGames(limit: 100)
+        } content: { categories, _ in
             if categories.isEmpty {
                 EmptyDataView(title: "No Categories", systemImage: Icon.category, message: "categories") {
                     Task {
@@ -24,8 +23,19 @@ struct CategoryListView: View {
                 }
                 .containerRelativeFrame(.vertical)
             } else {
-                CategoryGridView(categories: categories)
+                CategoryGridView(categories: categories, onPaginationThresholdMet: self.onPaginationThresholdMet)
             }
+        }
+    }
+
+    func onPaginationThresholdMet() async {
+        await self.loader.requestMore { data, apiAndUser in
+            guard let originalCursor = data.1 else {
+                return data
+            }
+
+            let newData = try await apiAndUser.0.getTopGames(limit: 100, after: originalCursor)
+            return (data.0 + newData.0, newData.1)
         }
     }
 }
