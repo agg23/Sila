@@ -12,15 +12,25 @@ struct CategoryView: View {
     @AppStorage(Setting.hideMature) var hideMature: Bool = false
 
     @State private var loader = StandardDataLoader<([Twitch.Stream], Game, String?)>()
+    @State private var existingIds = Set<String>()
 
     var category: GameWrapper
 
     var body: some View {
         StandardScrollableDataView(loader: self.$loader) { api, _ in
-            return try await self.fetchData(on: api)
+            try await self.fetchData(on: api)
         } content: { streams, game, cursor in
             MatureStreamFilterView(streams: streams) { streams in
-                StreamGridView(streams: streams, onPaginationThresholdMet: self.onPaginationThresholdMet)
+                if streams.isEmpty {
+                    EmptyDataView(title: "No Livestreams", systemImage: Icon.category, message: "livestreams") {
+                        Task {
+                            try await self.loader.refresh()
+                        }
+                    }
+                    .containerRelativeFrame(.vertical)
+                } else {
+                    StreamGridView(streams: streams, onPaginationThresholdMet: self.onPaginationThresholdMet)
+                }
             }
             .navigationTitle(game.name)
         }
@@ -30,7 +40,11 @@ struct CategoryView: View {
         switch self.category {
         case .game(let game):
             let (streams, cursor) = try await api.getStreams(gameIDs: [game.id], after: cursor)
-            return (streams, game, cursor)
+
+            let newStreams = streams.filter({ !self.existingIds.contains($0.id) })
+            self.existingIds.formUnion(newStreams.map({ $0.id }))
+
+            return (newStreams, game, cursor)
         case .id(let id):
             async let (streamsAsync, cursorAsync) = try await api.getStreams(gameIDs: [id], after: cursor)
             async let gameAsync = try await api.getGames(gameIDs: [id])
@@ -40,7 +54,10 @@ struct CategoryView: View {
                 throw HelixError.requestFailed(error: "Could not find game", status: 200, message: "")
             }
 
-            return (streams, games[0], cursor)
+            let newStreams = streams.filter({ !self.existingIds.contains($0.id) })
+            self.existingIds.formUnion(newStreams.map({ $0.id }))
+
+            return (newStreams, games[0], cursor)
         }
     }
 

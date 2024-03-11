@@ -20,15 +20,15 @@ struct PopularView: View {
 
             return (streams.streams, streams.cursor)
         } content: { streams, _ in
-            if streams.isEmpty {
-                EmptyDataView(title: "No Livestreams", systemImage: Icon.popular, message: "livestreams") {
-                    Task {
-                        try await self.loader.refresh()
+            MatureStreamFilterView(streams: streams) { streams in
+                if streams.isEmpty {
+                    EmptyDataView(title: "No Livestreams", systemImage: Icon.popular, message: "livestreams") {
+                        Task {
+                            try await self.loader.refresh()
+                        }
                     }
-                }
-                .containerRelativeFrame(.vertical)
-            } else {
-                MatureStreamFilterView(streams: streams) { streams in
+                    .containerRelativeFrame(.vertical)
+                } else {
                     StreamGridView(streams: streams, onPaginationThresholdMet: self.onPaginationThresholdMet)
                 }
             }
