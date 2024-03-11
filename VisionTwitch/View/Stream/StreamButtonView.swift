@@ -94,6 +94,7 @@ struct StreamButtonView: View {
         .background(.black.opacity(0.5))
         .clipShape(.rect(cornerRadius: 8))
         .padding(16)
+        .monospaced()
     }
 
     func buildRuntime() -> String {
