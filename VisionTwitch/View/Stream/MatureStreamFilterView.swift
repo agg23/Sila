@@ -18,10 +18,7 @@ struct MatureStreamFilterView<Content: View>: View {
 
     var body: some View {
         self.content(self.filteredStreams)
-            .onAppear {
-                self.updateFilter(hideMature: self.hideMature)
-            }
-            .onChange(of: self.hideMature) { _, newValue in
+            .onChange(of: self.hideMature, initial: true) { _, newValue in
                 self.updateFilter(hideMature: newValue)
             }
             .onChange(of: self.streams) { _, _ in

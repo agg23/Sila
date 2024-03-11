@@ -26,6 +26,8 @@ import WebKit
     var status: AuthStatus
     let requestReauthSubject: PassthroughSubject<(), Never>
 
+    private let session: URLSession
+
     init() {
         var user: AuthUser? = nil
 
@@ -38,14 +40,19 @@ import WebKit
 
         self.requestReauthSubject = PassthroughSubject()
 
+        let config = URLSessionConfiguration.default
+        config.timeoutIntervalForResource = 30.0
+
+        self.session = URLSession(configuration: config)
+
         if let oauthToken = oauthToken, let user = user {
             // We're logged in. Create authed Helix instance
             // Won't throw
-            let helix = try! Helix(authentication: .init(oAuth: oauthToken, clientID: AuthController.CLIENT_ID, userId: user.id))
+            let helix = try! Helix(authentication: .init(oAuth: oauthToken, clientID: AuthController.CLIENT_ID, userId: user.id), urlSession: self.session)
             self.status = .user(user: user, api: helix)
         } else if let publicToken = publicToken {
             // Public instance. Make sure we don't set user so we don't have permission issues
-            let helix = try! Helix(authentication: .init(oAuth: publicToken, clientID: AuthController.CLIENT_ID, userId: ""))
+            let helix = try! Helix(authentication: .init(oAuth: publicToken, clientID: AuthController.CLIENT_ID, userId: ""), urlSession: self.session)
             self.status = .publicLoggedOut(api: helix)
         } else {
             // No auth at all
@@ -60,7 +67,7 @@ import WebKit
 
     func setLoggedInCredentials(withToken token: String, authUser: AuthUser) {
         // Helix creation can not throw because we set all of the cred values
-        let helix = try! Helix(authentication: TwitchCredentials(oAuth: token, clientID: AuthController.CLIENT_ID, userId: authUser.id))
+        let helix = try! Helix(authentication: TwitchCredentials(oAuth: token, clientID: AuthController.CLIENT_ID, userId: authUser.id), urlSession: self.session)
         self.status = .user(user: authUser, api: helix)
 
         self.updateUserStore(token: token, authUser: authUser)
@@ -82,7 +89,7 @@ import WebKit
 
         if let publicToken = publicToken {
             // Public instance. Make sure we don't set user so we don't have permission issues
-            let helix = try! Helix(authentication: .init(oAuth: publicToken, clientID: AuthController.CLIENT_ID, userId: ""))
+            let helix = try! Helix(authentication: .init(oAuth: publicToken, clientID: AuthController.CLIENT_ID, userId: ""), urlSession: self.session)
             self.status = .publicLoggedOut(api: helix)
         } else {
             // No auth at all
@@ -137,7 +144,7 @@ import WebKit
         }
 
         // Public instance. Make sure we don't set user so we don't have permission issues
-        let helix = try! Helix(authentication: TwitchCredentials(oAuth: token, clientID: AuthController.CLIENT_ID, userId: ""))
+        let helix = try! Helix(authentication: TwitchCredentials(oAuth: token, clientID: AuthController.CLIENT_ID, userId: ""), urlSession: self.session)
         self.status = .publicLoggedOut(api: helix)
         self.updatePublicStore(token: token)
     }
