@@ -18,7 +18,7 @@ struct PopularView: View {
 
             self.existingIds.formUnion(streams.streams.map({ $0.id }))
 
-            return streams
+            return (streams.streams, streams.cursor)
         } content: { streams, _ in
             if streams.isEmpty {
                 EmptyDataView(title: "No Livestreams", systemImage: Icon.popular, message: "livestreams") {
@@ -28,7 +28,9 @@ struct PopularView: View {
                 }
                 .containerRelativeFrame(.vertical)
             } else {
-                StreamGridView(streams: streams, onPaginationThresholdMet: self.onPaginationThresholdMet)
+                MatureStreamFilterView(streams: streams) { streams in
+                    StreamGridView(streams: streams, onPaginationThresholdMet: self.onPaginationThresholdMet)
+                }
             }
         }
     }

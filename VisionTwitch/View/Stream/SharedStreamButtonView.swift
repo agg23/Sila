@@ -13,7 +13,7 @@ enum StreamOrVideo {
     case video(_: Video)
 }
 
-struct SharedStreamButtonView<ImageOverlay: View>: View {
+struct SharedStreamButtonView<PreTitleRight: View, ImageOverlay: View>: View {
     @Environment(Router.self) private var router
     @Environment(\.openWindow) private var openWindow
 
@@ -22,16 +22,18 @@ struct SharedStreamButtonView<ImageOverlay: View>: View {
     let displayUrl: String
 
     let preTitleLeft: String
+    @ViewBuilder let preTitleRight: () -> PreTitleRight
 
     let title: String
     let subtitle: String
 
-    @ViewBuilder let imageOverlay: (() -> ImageOverlay)?
+    @ViewBuilder let imageOverlay: () -> ImageOverlay
 
-    init(source: StreamOrVideo, displayUrl: String, preTitleLeft: String, title: String, subtitle: String, imageOverlay: @escaping () -> ImageOverlay) {
+    init(source: StreamOrVideo, displayUrl: String, preTitleLeft: String, title: String, subtitle: String, @ViewBuilder preTitleRight: @escaping () -> PreTitleRight, @ViewBuilder imageOverlay: @escaping () -> ImageOverlay) {
         self.source = source
         self.displayUrl = displayUrl
         self.preTitleLeft = preTitleLeft
+        self.preTitleRight = preTitleRight
         self.title = title
         self.subtitle = subtitle
         self.imageOverlay = imageOverlay
@@ -49,10 +51,14 @@ struct SharedStreamButtonView<ImageOverlay: View>: View {
             VStack(alignment: .leading) {
                 HStack {
                     Text(self.preTitleLeft)
+                        .font(.subheadline.weight(.medium))
+                        .foregroundStyle(.secondary)
+                        .lineLimit(1)
+
+                    Spacer()
+
+                    self.preTitleRight()
                 }
-                .font(.subheadline.weight(.medium))
-                .foregroundStyle(.secondary)
-                .lineLimit(1)
 
                 Text(self.title)
                     .font(.title3)
@@ -63,7 +69,7 @@ struct SharedStreamButtonView<ImageOverlay: View>: View {
             }
             .frame(minWidth: 0, maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .leading)
         } imageOverlay: {
-            self.imageOverlay?()
+            self.imageOverlay()
         }
     }
 
@@ -78,25 +84,29 @@ struct SharedStreamButtonView<ImageOverlay: View>: View {
 
 }
 
-extension SharedStreamButtonView where ImageOverlay == EmptyView {
+extension SharedStreamButtonView where PreTitleRight == EmptyView, ImageOverlay == EmptyView {
     init(source: StreamOrVideo, displayUrl: String, preTitleLeft: String, title: String, subtitle: String) {
         self.source = source
         self.displayUrl = displayUrl
         self.preTitleLeft = preTitleLeft
         self.title = title
         self.subtitle = subtitle
+        self.preTitleRight = {
+            EmptyView()
+        }
         self.imageOverlay = {
             EmptyView()
         }
     }
 }
 
-
 #Preview {
     NavStack {
-        SharedStreamButtonView(source: .stream(STREAM_MOCK()), displayUrl: STREAM_MOCK().thumbnailURL, preTitleLeft: "Pretitle left", title: "Title", subtitle: "Subtitle", imageOverlay: {
+        SharedStreamButtonView(source: .stream(STREAM_MOCK()), displayUrl: STREAM_MOCK().thumbnailURL, preTitleLeft: "Pretitle left", title: "Title", subtitle: "Subtitle") {
+            Text("Pretitle right")
+        } imageOverlay: {
             Text("This is on the image overlay")
-        })
-            .frame(width: 400, height: 300)
+        }
+            .frame(width: 400, height: 340)
     }
 }

@@ -18,6 +18,14 @@ struct StreamButtonView: View {
 
     var body: some View {
         SharedStreamButtonView(source: .stream(self.stream), displayUrl: self.stream.thumbnailURL, preTitleLeft: self.stream.gameName, title: self.stream.title, subtitle: self.stream.userName) {
+            if self.stream.isMature {
+                Text("Mature")
+                    .foregroundStyle(.primary)
+                    .padding(.horizontal, 2)
+                    .background(.red)
+                    .clipShape(.rect(cornerRadius: 4))
+            }
+        } imageOverlay: {
             HStack {
                 self.overlayPill {
                     Text(self.buildRuntime())
@@ -85,7 +93,7 @@ struct StreamButtonView: View {
         .padding(4)
         .background(.black.opacity(0.5))
         .clipShape(.rect(cornerRadius: 8))
-        .padding()
+        .padding(16)
     }
 
     func buildRuntime() -> String {
@@ -120,7 +128,7 @@ struct StreamButtonView: View {
 #Preview {
     NavStack {
         StreamButtonView(stream: STREAM_MOCK())
-            .frame(width: 400, height: 300)
+            .frame(width: 400, height: 340)
     }
     .environment(StreamTimer())
 }
