@@ -20,13 +20,13 @@ struct CategoryGridView: View {
 
     var body: some View {
         LazyVGrid(columns: [
-            GridItem(),
-            GridItem(),
-            GridItem(),
-            GridItem(),
-            GridItem(),
-            GridItem()
-        ], content: {
+            GridItem(spacing: 16),
+            GridItem(spacing: 16),
+            GridItem(spacing: 16),
+            GridItem(spacing: 16),
+            GridItem(spacing: 16),
+            GridItem(spacing: 16)
+        ], spacing: 16){
             ForEach(self.categories, id: \.id) { category in
                 CategoryButtonView(category: category)
             }
@@ -34,10 +34,12 @@ struct CategoryGridView: View {
             Color.clear.task {
                 await self.onPaginationThresholdMet?()
             }
-        })
+        }
     }
 }
 
 #Preview {
-    CategoryGridView(categories: CATEGORY_LIST_MOCK())
+    NavStack {
+        CategoryGridView(categories: CATEGORY_LIST_MOCK())
+    }
 }

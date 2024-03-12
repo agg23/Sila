@@ -20,11 +20,11 @@ struct StreamGridView: View {
 
     var body: some View {
         LazyVGrid(columns: [
-            GridItem(),
-            GridItem(),
-            GridItem(),
-            GridItem()
-        ], content: {
+            GridItem(spacing: 16),
+            GridItem(spacing: 16),
+            GridItem(spacing: 16),
+            GridItem(spacing: 16)
+        ], spacing: 16) {
             ForEach(self.streams) { stream in
                 StreamButtonView(stream: stream)
             }
@@ -32,7 +32,7 @@ struct StreamGridView: View {
             Color.clear.task {
                 await self.onPaginationThresholdMet?()
             }
-        })
+        }
     }
 }
 
@@ -40,4 +40,5 @@ struct StreamGridView: View {
     NavStack {
         StreamGridView(streams: STREAMS_LIST_MOCK())
     }
+    .environment(StreamTimer())
 }
