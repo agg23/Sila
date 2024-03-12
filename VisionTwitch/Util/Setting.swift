@@ -8,7 +8,8 @@
 import Foundation
 
 struct Setting {
-    static let smallBorderRadius = "smallBorderRadius"
-
     static let hideMature = "hideMature"
+
+    static let smallBorderRadius = "smallBorderRadius"
+    static let dimSurroundings = "dimSurroundings"
 }

@@ -10,6 +10,7 @@ import Twitch
 
 struct TwitchWindowView: View {
     @AppStorage(Setting.smallBorderRadius) var smallBorderRadius: Bool = false
+    @AppStorage(Setting.dimSurroundings) var dimSurroundings: Bool = false
 
     @Environment(\.scenePhase) private var scene
 
@@ -24,6 +25,7 @@ struct TwitchWindowView: View {
 
     var body: some View {
         TwitchVideoView(streamableVideo: self.streamableVideo, delayLoading: self.delayLoading, player: self.$player)
+            .preferredSurroundingsEffect(self.dimSurroundings ? .systemDark : nil)
             // Set aspect ratio and enforce uniform resizing
             .windowGeometryPreferences(minimumSize: CGSize(width: 160.0, height: 90.0), resizingRestrictions: .uniform)
             // Having the overlay hidden all of the time has the intended interaction of opening and closing
