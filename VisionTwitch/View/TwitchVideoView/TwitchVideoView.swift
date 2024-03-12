@@ -67,15 +67,7 @@ struct TwitchVideoView: View {
                 }
             }
             .onTapGesture {
-                if self.controlVisibility == .visible {
-                    clearTimer()
-                } else {
-                    resetTimer()
-                }
-
-                withAnimation {
-                    self.controlVisibility = self.controlVisibility != .visible ? .visible : .hidden
-                }
+                self.toggleVisibility()
             }
             .ornament(visibility: self.chatVisibility, attachmentAnchor: .scene(.trailing), contentAlignment: .leading) {
                 // Make sure we don't start loading chat while offscreen
@@ -104,15 +96,12 @@ struct TwitchVideoView: View {
                     } activeChanged: { isActive in
                         if isActive {
                             print("Controls are active")
-                            withAnimation {
-                                self.controlVisibility = .visible
-                            }
-                            self.clearTimer()
+                            self.forceVisibility()
                         } else {
                             self.resetTimer()
                         }
                     }
-                        .glassBackgroundEffect()
+                    .glassBackgroundEffect()
                 }
             }
             .onAppear {
@@ -132,9 +121,7 @@ struct TwitchVideoView: View {
             }
             .onChange(of: self.player.status) { oldValue, newValue in
                 if newValue == .idle {
-                    withAnimation {
-                        self.controlVisibility = .visible
-                    }
+                    self.forceVisibility()
                 } else if oldValue == .idle && newValue != .idle {
                     self.resetTimer()
                 }
@@ -152,6 +139,11 @@ struct TwitchVideoView: View {
         print("Resetting timer")
         self.controlVisibilityTimer?.invalidate()
         self.controlVisibilityTimer = Timer.scheduledTimer(withTimeInterval: self.controlsTimerDuration, repeats: false, block: { _ in
+            guard self.player.status != .idle else {
+                self.forceVisibility()
+                return
+            }
+
             withAnimation {
                 self.controlVisibility = .hidden
             }
@@ -161,6 +153,30 @@ struct TwitchVideoView: View {
     func clearTimer() {
         self.controlVisibilityTimer?.invalidate()
         self.controlVisibilityTimer = nil
+    }
+
+    func toggleVisibility() {
+        guard self.player.status != .idle else {
+            self.forceVisibility()
+            return
+        }
+
+        if self.controlVisibility == .visible {
+            self.clearTimer()
+        } else {
+            self.resetTimer()
+        }
+
+        withAnimation {
+            self.controlVisibility = self.controlVisibility != .visible ? .visible : .hidden
+        }
+    }
+
+    func forceVisibility() {
+        self.clearTimer()
+        withAnimation {
+            self.controlVisibility = .visible
+        }
     }
 }
 
