@@ -11,7 +11,7 @@ import WebKit
 
 struct TwitchVideoView: View {
     let controlsTimerDuration = 3.0
-    let ornamentSpacing = 32.0
+    let ornamentSpacing = 8.0
 
     @State private var loading = true
 

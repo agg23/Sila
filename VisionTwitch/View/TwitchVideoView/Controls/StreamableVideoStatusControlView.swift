@@ -39,10 +39,11 @@ struct StreamableVideoStatusControlView: View {
                 }
             }
         })
-        .padding()
-        .frame(width: 600, height: 100)
+        .padding(6)
+        .frame(width: 600, height: 80)
         .insetBackground()
-        .clipShape(.rect(cornerRadius: 20))
+        // 8 inner radius + 6 padding
+        .clipShape(.rect(cornerRadius: 14))
     }
 
     func createTask(requestStream: Bool = false, channelId: String) -> (Helix) async throws -> (User?, StreamableVideo?) {
@@ -105,6 +106,7 @@ struct StreamableVideoStatusDisplayView: View {
     var body: some View {
         HStack(alignment: .top) {
             LoadingAsyncImage(imageUrl: self.profileImageUrl, aspectRatio: 1.0)
+                .clipShape(.rect(cornerRadius: 8))
             VStack(alignment: .leading) {
                 Text(self.title)
                     .lineLimit(1)
@@ -123,6 +125,7 @@ struct StreamableVideoStatusDisplayView: View {
                     .symbolRenderingMode(.palette)
                     .foregroundStyle(.red, .white)
                 Text(viewerCount.formatted(.number))
+                    .padding(.trailing, 8)
             }
         }
     }

@@ -39,7 +39,7 @@ struct PlayerControlsView: View {
             .controlSize(.extraLarge)
 
             StreamableVideoStatusControlView(player: self.player, streamableVideo: self.streamableVideo)
-                .padding(.horizontal)
+                .padding(.horizontal, 4)
 
             PopupVolumeSlider(volume: self.$volume, isActive: self.$volumePreventClose)
                 .onChange(of: self.volume) { _, newValue in
@@ -95,7 +95,8 @@ struct PlayerControlsView: View {
             .buttonBorderShape(.circle)
             .buttonStyle(.borderless)
         }
-        .padding()
+        .padding(.vertical, 8)
+        .padding(.horizontal)
         .onChange(of: self.volumePreventClose) { _, newValue in
             self.activeChanged?(newValue)
         }
