@@ -17,7 +17,7 @@ struct SettingsView: View {
         VStack {
             Form {
                 Section {
-//                    Toggle("Shrink Video Corners", isOn: self.$smallBorderRadius)
+                    Toggle("Shrink Video Corners", isOn: self.$smallBorderRadius)
                     Toggle(isOn: self.$hideMature) {
                         Text("Hide Mature Streams")
                         Text("Will not hide mature streams from streamers you follow")

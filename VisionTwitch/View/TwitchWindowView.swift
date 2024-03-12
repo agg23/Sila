@@ -9,6 +9,8 @@ import SwiftUI
 import Twitch
 
 struct TwitchWindowView: View {
+    @AppStorage(Setting.smallBorderRadius) var smallBorderRadius: Bool = false
+
     @Environment(\.scenePhase) private var scene
 
     @Environment(\.openWindow) private var openWindow
@@ -27,6 +29,7 @@ struct TwitchWindowView: View {
             // Having the overlay hidden all of the time has the intended interaction of opening and closing
             // The only issue is the grabber is not constantly visible while the video is paused
             .persistentSystemOverlays(.hidden)
+            .glassBackgroundEffect(in: RoundedRectangle(cornerRadius: self.smallBorderRadius ? 24.0 : 56.0))
             .onChange(of: self.scene) { oldValue, newValue in
                 switch newValue {
                 case .active:

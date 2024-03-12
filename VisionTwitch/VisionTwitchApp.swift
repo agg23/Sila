@@ -36,6 +36,7 @@ struct VisionTwitchApp: App {
         }
         .environment(\.authController, self.authController)
         .defaultSize(CGSize(width: 1280.0, height: 720.0))
+        .windowStyle(.plain)
 
         #if VOD_ENABLED
         WindowGroup(id: "vod", for: Twitch.Video.self) { $video in
