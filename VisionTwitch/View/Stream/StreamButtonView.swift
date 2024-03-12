@@ -9,6 +9,8 @@ import SwiftUI
 import Twitch
 
 struct StreamButtonView: View {
+    @AppStorage(Setting.disableIncrementingStreamDuration) var disableIncrementingStreamDuration: Bool = false
+
     @Environment(Router.self) private var router
     @Environment(StreamTimer.self) private var streamTimer
 
@@ -81,6 +83,10 @@ struct StreamButtonView: View {
             }
         }
         .onReceive(self.streamTimer.secondTimer, perform: { date in
+            guard !self.disableIncrementingStreamDuration else {
+                return
+            }
+
             self.currentDate = date
         })
     }

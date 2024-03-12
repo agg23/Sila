@@ -11,6 +11,7 @@ struct SettingsView: View {
     @Environment(Router.self) private var router
 
     @AppStorage(Setting.hideMature) var hideMature: Bool = false
+    @AppStorage(Setting.disableIncrementingStreamDuration) var disableIncrementingStreamDuration: Bool = false
 
     @AppStorage(Setting.smallBorderRadius) var smallBorderRadius: Bool = false
     @AppStorage(Setting.dimSurroundings) var dimSurroundings: Bool = false
@@ -22,6 +23,10 @@ struct SettingsView: View {
                     Toggle(isOn: self.$hideMature) {
                         Text("Hide Mature Streams")
                         Text("Will not hide mature streams from streamers you follow")
+                    }
+                    Toggle(isOn: self.$disableIncrementingStreamDuration) {
+                        Text("Disable Updating Stream Durations")
+                        Text("Minimizes motion by displaying a static duration for a live stream")
                     }
                 }
 

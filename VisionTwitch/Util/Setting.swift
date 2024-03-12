@@ -8,8 +8,11 @@
 import Foundation
 
 struct Setting {
+    // Navigation
     static let hideMature = "hideMature"
+    static let disableIncrementingStreamDuration = "disableIncrementingStreamDuration"
 
+    // Playback
     static let smallBorderRadius = "smallBorderRadius"
     static let dimSurroundings = "dimSurroundings"
 }
