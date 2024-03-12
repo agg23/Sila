@@ -41,11 +41,6 @@ struct PlayerControlsView: View {
             StreamableVideoStatusControlView(player: self.player, streamableVideo: self.streamableVideo)
                 .padding(.horizontal)
 
-            CircleBackgroundLessButton(systemName: Icon.refresh, tooltip: "Debug reload") {
-                self.player.reload()
-                self.onInteraction?()
-            }
-
             PopupVolumeSlider(volume: self.$volume, isActive: self.$volumePreventClose)
                 .onChange(of: self.volume) { _, newValue in
                     // Local volume has changed, either via UI slider, or by new client volume value

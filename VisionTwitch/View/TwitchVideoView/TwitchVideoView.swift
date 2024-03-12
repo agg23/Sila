@@ -15,7 +15,7 @@ struct TwitchVideoView: View {
 
     @State private var loading = true
 
-    @State private var controlVisibility = Visibility.hidden
+    @State private var controlVisibility = Visibility.visible
     @State private var controlVisibilityTimer: Timer?
     @State private var chatVisibility = Visibility.hidden
 
@@ -38,9 +38,32 @@ struct TwitchVideoView: View {
     func content(_ geometry: GeometryProxy) -> some View {
         TwitchWebView(player: self.player, streamableVideo: self.streamableVideo, loading: self.$loading, delayLoading: self.delayLoading)
             .overlay {
-                if self.loading || self.delayLoading {
-                    ProgressView()
+                ZStack {
+                    Color.clear
+
+                    if self.loading || self.delayLoading {
+                        ProgressView()
+                            .controlSize(.large)
+                    }
+                }
+                .overlay(alignment: .topTrailing) {
+                    if self.controlVisibility == .visible {
+                        Button {
+                            self.player.reload()
+                            self.onControlInteraction()
+                        } label: {
+                            Label {
+                                Text("Reload")
+                            } icon: {
+                                Image(systemName: Icon.refresh)
+                            }
+                        }
+                        .help("Reload")
+                        .labelStyle(.iconOnly)
+                        .buttonBorderShape(.circle)
                         .controlSize(.large)
+                        .padding([.trailing, .top], 40)
+                    }
                 }
             }
             .onTapGesture {
@@ -77,10 +100,7 @@ struct TwitchVideoView: View {
                     // Add spacing between main window and PlayerControlsView to allow for the window resizer
                     Color.clear.frame(height: self.ornamentSpacing)
                     PlayerControlsView(player: self.player, streamableVideo: self.streamableVideo, chatVisibility: self.$chatVisibility) {
-                        withAnimation {
-                            self.controlVisibility = .visible
-                        }
-                        self.resetTimer()
+                        self.onControlInteraction()
                     } activeChanged: { isActive in
                         if isActive {
                             print("Controls are active")
@@ -119,6 +139,13 @@ struct TwitchVideoView: View {
                     self.resetTimer()
                 }
             }
+    }
+
+    func onControlInteraction() {
+        withAnimation {
+            self.controlVisibility = .visible
+        }
+        self.resetTimer()
     }
 
     func resetTimer() {
