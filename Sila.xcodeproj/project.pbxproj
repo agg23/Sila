@@ -35,9 +35,7 @@
 		66364FBA2B8ABB9C005180B8 /* APIErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66364FB92B8ABB9C005180B8 /* APIErrorView.swift */; };
 		66364FBD2B8AF629005180B8 /* CircleBackgroundLessButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66364FBC2B8AF629005180B8 /* CircleBackgroundLessButton.swift */; };
 		66364FC82B8BA49A005180B8 /* JunoUI in Frameworks */ = {isa = PBXBuildFile; productRef = 66364FC72B8BA49A005180B8 /* JunoUI */; };
-		663B72F92B6DB8E60031D661 /* RealityKitContent in Frameworks */ = {isa = PBXBuildFile; productRef = 663B72F82B6DB8E60031D661 /* RealityKitContent */; };
 		663B72FB2B6DB8E60031D661 /* SilaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663B72FA2B6DB8E60031D661 /* SilaApp.swift */; };
-		663B73012B6DB8E60031D661 /* ImageBasedLighting.skybox in Resources */ = {isa = PBXBuildFile; fileRef = 663B73002B6DB8E60031D661 /* ImageBasedLighting.skybox */; };
 		663B73032B6DB8E80031D661 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 663B73022B6DB8E80031D661 /* Assets.xcassets */; };
 		663B73062B6DB8E80031D661 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 663B73052B6DB8E80031D661 /* Preview Assets.xcassets */; };
 		663B73232B6DB9A30031D661 /* TwitchVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663B73222B6DB9A30031D661 /* TwitchVideoView.swift */; };
@@ -129,9 +127,7 @@
 		66364FB92B8ABB9C005180B8 /* APIErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIErrorView.swift; sourceTree = "<group>"; };
 		66364FBC2B8AF629005180B8 /* CircleBackgroundLessButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleBackgroundLessButton.swift; sourceTree = "<group>"; };
 		663B72F32B6DB8E60031D661 /* Sila.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sila.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		663B72F72B6DB8E60031D661 /* RealityKitContent */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = RealityKitContent; sourceTree = "<group>"; };
 		663B72FA2B6DB8E60031D661 /* SilaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SilaApp.swift; sourceTree = "<group>"; };
-		663B73002B6DB8E60031D661 /* ImageBasedLighting.skybox */ = {isa = PBXFileReference; lastKnownFileType = file.skybox; path = ImageBasedLighting.skybox; sourceTree = "<group>"; };
 		663B73022B6DB8E80031D661 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		663B73052B6DB8E80031D661 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		663B73072B6DB8E80031D661 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -200,7 +196,6 @@
 				6625353E2B9CF0FE00EBD081 /* AsyncAnimatedImageUI in Frameworks */,
 				663E38092B9226D3002E0530 /* NukeUI in Frameworks */,
 				66F4E4302B8132F5008C565D /* Twitch in Frameworks */,
-				663B72F92B6DB8E60031D661 /* RealityKitContent in Frameworks */,
 				66891FF42B9A9535000C0D92 /* AsyncAnimatedImageUI in Frameworks */,
 				663E38072B9226D3002E0530 /* Nuke in Frameworks */,
 				6625353B2B9CE6F600EBD081 /* AsyncAnimatedImageUI in Frameworks */,
@@ -290,7 +285,6 @@
 			children = (
 				663B72F52B6DB8E60031D661 /* Sila */,
 				662C4FE92B856F7100A84C7A /* Keys.xcconfig */,
-				663B72F62B6DB8E60031D661 /* Packages */,
 				663B72F42B6DB8E60031D661 /* Products */,
 				663B732F2B6E06860031D661 /* Frameworks */,
 			);
@@ -316,21 +310,12 @@
 				660BC1F42B9BB5B10043750C /* Window */,
 				66F4E4222B811B51008C565D /* View */,
 				663B72FA2B6DB8E60031D661 /* SilaApp.swift */,
-				663B73002B6DB8E60031D661 /* ImageBasedLighting.skybox */,
 				663B73022B6DB8E80031D661 /* Assets.xcassets */,
 				663B73072B6DB8E80031D661 /* Info.plist */,
 				66A5ADBA2B97E98E0025EF75 /* Licenses.xcstrings */,
 				663B73042B6DB8E80031D661 /* Preview Content */,
 			);
 			path = Sila;
-			sourceTree = "<group>";
-		};
-		663B72F62B6DB8E60031D661 /* Packages */ = {
-			isa = PBXGroup;
-			children = (
-				663B72F72B6DB8E60031D661 /* RealityKitContent */,
-			);
-			path = Packages;
 			sourceTree = "<group>";
 		};
 		663B73042B6DB8E80031D661 /* Preview Content */ = {
@@ -529,7 +514,6 @@
 			);
 			name = Sila;
 			packageProductDependencies = (
-				663B72F82B6DB8E60031D661 /* RealityKitContent */,
 				66F4E42F2B8132F5008C565D /* Twitch */,
 				66E102182B8262AC007A44D4 /* KeychainWrapper */,
 				66364FC72B8BA49A005180B8 /* JunoUI */,
@@ -590,7 +574,6 @@
 			files = (
 				663B73032B6DB8E80031D661 /* Assets.xcassets in Resources */,
 				663B73062B6DB8E80031D661 /* Preview Assets.xcassets in Resources */,
-				663B73012B6DB8E60031D661 /* ImageBasedLighting.skybox in Resources */,
 				66A5ADBB2B97E98E0025EF75 /* Licenses.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -944,10 +927,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 66364FC62B8BA499005180B8 /* XCRemoteSwiftPackageReference "JunoSlider" */;
 			productName = JunoUI;
-		};
-		663B72F82B6DB8E60031D661 /* RealityKitContent */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = RealityKitContent;
 		};
 		663E38062B9226D3002E0530 /* Nuke */ = {
 			isa = XCSwiftPackageProductDependency;
