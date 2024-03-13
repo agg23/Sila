@@ -11,8 +11,6 @@ import Twitch
 enum Route: Hashable {
     case category(game: GameWrapper)
     case channel(user: UserWrapper)
-
-    case settingsLicenses
 }
 
 enum GameWrapper {

@@ -16,7 +16,9 @@ extension LocalizedStringKey: Hashable {
 struct LicensesView: View {
     @Environment(\.openURL) private var openURL
 
-    let libraries = ["Gifu", "JunoUI", "KeychainWrapper", "Nuke", "SubviewAttachingTextView", "swift-twitch-client", "TwitchIRC"]
+    let width = 700.0
+
+    let libraries = ["AsyncAnimatedImage", "JunoUI", "KeychainWrapper", "Nuke", "swift-twitch-client", "TwitchIRC"]
 
     var body: some View {
         ScrollView {
@@ -24,9 +26,9 @@ struct LicensesView: View {
                 Text("Project is available under MIT license")
 
                 Button {
-                    openURL(URL(string: "https://github.com/agg23/VisionTwitch")!)
+                    openURL(URL(string: "https://github.com/agg23/Sila")!)
                 } label: {
-                    Text("https://github.com/agg23/VisionTwitch")
+                    Text("https://github.com/agg23/Sila")
                         .tint(.white)
                 }
 
@@ -34,7 +36,7 @@ struct LicensesView: View {
                     .padding(.vertical)
 
                 Text("All upstream projects are MIT licensed, with the following respective copyrights. The MIT license text is produced at the bottom for your convience.")
-                    .frame(width: 700)
+                    .frame(width: self.width)
 
                 GroupBox {
                     Grid(alignment: .leading) {
@@ -53,7 +55,7 @@ struct LicensesView: View {
                         }
                     }
                 }
-                .frame(width: 700)
+                .frame(width: self.width)
                 .padding(.vertical)
 
                 Text("MIT License")
@@ -61,7 +63,7 @@ struct LicensesView: View {
                     .padding(.bottom)
 
                 Text("MIT", tableName: "Licenses")
-                    .frame(width: 700)
+                    .frame(width: self.width)
             }
             .padding(.vertical)
         }

@@ -43,8 +43,6 @@ struct TabPage<Content: View>: View {
                             .toolbar {
                                 defaultToolbar()
                             }
-                    case .settingsLicenses:
-                        LicensesView()
                     }
                 })
         }

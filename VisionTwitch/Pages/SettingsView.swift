@@ -34,11 +34,15 @@ struct SettingsView: View {
                     Toggle("Shrink Video Corners", isOn: self.$smallBorderRadius)
                     Toggle("Dim Surroundings", isOn: self.$dimSurroundings)
                 }
-            }
-            Button {
-                self.router.path.append(.settingsLicenses)
-            } label: {
-                Label("Licenses", systemImage: "newspaper")
+
+                Section {
+                    NavigationLink {
+                        LicensesView()
+                    } label: {
+                        Label("Licenses", systemImage: "newspaper")
+                            .foregroundStyle(.primary)
+                    }
+                }
             }
         }
     }
