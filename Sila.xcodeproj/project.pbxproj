@@ -8,174 +8,97 @@
 
 /* Begin PBXBuildFile section */
 		6600E0852B8BB384003B2270 /* Stream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6600E0842B8BB384003B2270 /* Stream.swift */; };
-		6600E0862B8BB384003B2270 /* Stream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6600E0842B8BB384003B2270 /* Stream.swift */; };
 		6600E0892B8BB5E8003B2270 /* StreamableVideoStatusControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6600E0882B8BB5E8003B2270 /* StreamableVideoStatusControlView.swift */; };
-		6600E08A2B8BB5E8003B2270 /* StreamableVideoStatusControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6600E0882B8BB5E8003B2270 /* StreamableVideoStatusControlView.swift */; };
 		6600E08C2B8BBBCB003B2270 /* DarkBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6600E08B2B8BBBCB003B2270 /* DarkBackgroundView.swift */; };
-		6600E08D2B8BBBCB003B2270 /* DarkBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6600E08B2B8BBBCB003B2270 /* DarkBackgroundView.swift */; };
 		6600E0902B8BC0FD003B2270 /* InsetBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6600E08F2B8BC0FD003B2270 /* InsetBackground.swift */; };
-		6600E0912B8BC0FD003B2270 /* InsetBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6600E08F2B8BC0FD003B2270 /* InsetBackground.swift */; };
 		66028DF92B91798C00696071 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66028DF82B91798C00696071 /* ChatView.swift */; };
-		66028DFA2B91798C00696071 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66028DF82B91798C00696071 /* ChatView.swift */; };
 		66028DFF2B917AD800696071 /* PrivateMessageMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66028DFE2B917AD800696071 /* PrivateMessageMock.swift */; };
-		66028E002B917AD800696071 /* PrivateMessageMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66028DFE2B917AD800696071 /* PrivateMessageMock.swift */; };
 		66028E022B917CD200696071 /* PrivateMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66028E012B917CD200696071 /* PrivateMessage.swift */; };
-		66028E032B917CD200696071 /* PrivateMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66028E012B917CD200696071 /* PrivateMessage.swift */; };
 		660AFF6C2B93A9A60003186E /* ChatPaneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660AFF6B2B93A9A60003186E /* ChatPaneView.swift */; };
-		660AFF6D2B93A9A60003186E /* ChatPaneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660AFF6B2B93A9A60003186E /* ChatPaneView.swift */; };
 		660F73A22B7446D70011FD65 /* WebViewPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660F73A12B7446D70011FD65 /* WebViewPlayer.swift */; };
-		660F73A32B7446D70011FD65 /* WebViewPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660F73A12B7446D70011FD65 /* WebViewPlayer.swift */; };
 		660F73A52B745D710011FD65 /* PlayerControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660F73A42B745D710011FD65 /* PlayerControlsView.swift */; };
-		660F73A62B745D710011FD65 /* PlayerControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660F73A42B745D710011FD65 /* PlayerControlsView.swift */; };
 		66125F502B83B913002169B5 /* CategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66125F4F2B83B913002169B5 /* CategoryView.swift */; };
-		66125F512B83B913002169B5 /* CategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66125F4F2B83B913002169B5 /* CategoryView.swift */; };
 		66125F532B83C003002169B5 /* ScrollGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66125F522B83C003002169B5 /* ScrollGridView.swift */; };
-		66125F542B83C003002169B5 /* ScrollGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66125F522B83C003002169B5 /* ScrollGridView.swift */; };
 		66125F562B83C88E002169B5 /* TabPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66125F552B83C88E002169B5 /* TabPage.swift */; };
-		66125F572B83C88E002169B5 /* TabPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66125F552B83C88E002169B5 /* TabPage.swift */; };
 		66125F592B83CE4E002169B5 /* DefaultToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66125F582B83CE4E002169B5 /* DefaultToolbar.swift */; };
-		66125F5A2B83CE4E002169B5 /* DefaultToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66125F582B83CE4E002169B5 /* DefaultToolbar.swift */; };
 		66125F5C2B83D9EC002169B5 /* PickerTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66125F5B2B83D9EC002169B5 /* PickerTabView.swift */; };
-		66125F5D2B83D9EC002169B5 /* PickerTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66125F5B2B83D9EC002169B5 /* PickerTabView.swift */; };
 		66125F5F2B83EF38002169B5 /* View+HighlightableButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66125F5E2B83EF38002169B5 /* View+HighlightableButton.swift */; };
-		66125F602B83EF38002169B5 /* View+HighlightableButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66125F5E2B83EF38002169B5 /* View+HighlightableButton.swift */; };
 		66125F632B8425A7002169B5 /* ChannelGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66125F622B8425A7002169B5 /* ChannelGridView.swift */; };
-		66125F642B8425A7002169B5 /* ChannelGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66125F622B8425A7002169B5 /* ChannelGridView.swift */; };
 		66125F662B84260D002169B5 /* UserMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66125F652B84260D002169B5 /* UserMock.swift */; };
-		66125F672B84260D002169B5 /* UserMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66125F652B84260D002169B5 /* UserMock.swift */; };
 		66125F692B84279A002169B5 /* ChannelButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66125F682B84279A002169B5 /* ChannelButtonView.swift */; };
-		66125F6A2B84279A002169B5 /* ChannelButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66125F682B84279A002169B5 /* ChannelButtonView.swift */; };
 		66125F6F2B842F82002169B5 /* ChannelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66125F6E2B842F82002169B5 /* ChannelView.swift */; };
-		66125F702B842F82002169B5 /* ChannelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66125F6E2B842F82002169B5 /* ChannelView.swift */; };
 		6614CD4D2B94FDA400A3EE17 /* SharedPlaybackSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6614CD4C2B94FDA400A3EE17 /* SharedPlaybackSettings.swift */; };
-		6614CD4E2B94FDA400A3EE17 /* SharedPlaybackSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6614CD4C2B94FDA400A3EE17 /* SharedPlaybackSettings.swift */; };
 		6625353B2B9CE6F600EBD081 /* AsyncAnimatedImageUI in Frameworks */ = {isa = PBXBuildFile; productRef = 6625353A2B9CE6F600EBD081 /* AsyncAnimatedImageUI */; };
 		6625353E2B9CF0FE00EBD081 /* AsyncAnimatedImageUI in Frameworks */ = {isa = PBXBuildFile; productRef = 6625353D2B9CF0FE00EBD081 /* AsyncAnimatedImageUI */; };
 		662535402B9E01D000EBD081 /* ChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6625353F2B9E01D000EBD081 /* ChatModel.swift */; };
-		662535412B9E01D000EBD081 /* ChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6625353F2B9E01D000EBD081 /* ChatModel.swift */; };
 		663336942B75B7EA0098D188 /* View+WindowGeometryPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663336932B75B7EA0098D188 /* View+WindowGeometryPreferences.swift */; };
-		663336952B75B7EA0098D188 /* View+WindowGeometryPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663336932B75B7EA0098D188 /* View+WindowGeometryPreferences.swift */; };
 		66364FBA2B8ABB9C005180B8 /* APIErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66364FB92B8ABB9C005180B8 /* APIErrorView.swift */; };
-		66364FBB2B8ABB9C005180B8 /* APIErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66364FB92B8ABB9C005180B8 /* APIErrorView.swift */; };
 		66364FBD2B8AF629005180B8 /* CircleBackgroundLessButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66364FBC2B8AF629005180B8 /* CircleBackgroundLessButton.swift */; };
-		66364FBE2B8AF629005180B8 /* CircleBackgroundLessButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66364FBC2B8AF629005180B8 /* CircleBackgroundLessButton.swift */; };
 		66364FC82B8BA49A005180B8 /* JunoUI in Frameworks */ = {isa = PBXBuildFile; productRef = 66364FC72B8BA49A005180B8 /* JunoUI */; };
 		663B72F92B6DB8E60031D661 /* RealityKitContent in Frameworks */ = {isa = PBXBuildFile; productRef = 663B72F82B6DB8E60031D661 /* RealityKitContent */; };
-		663B72FB2B6DB8E60031D661 /* VisionTwitchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663B72FA2B6DB8E60031D661 /* VisionTwitchApp.swift */; };
+		663B72FB2B6DB8E60031D661 /* SilaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663B72FA2B6DB8E60031D661 /* SilaApp.swift */; };
 		663B73012B6DB8E60031D661 /* ImageBasedLighting.skybox in Resources */ = {isa = PBXBuildFile; fileRef = 663B73002B6DB8E60031D661 /* ImageBasedLighting.skybox */; };
 		663B73032B6DB8E80031D661 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 663B73022B6DB8E80031D661 /* Assets.xcassets */; };
 		663B73062B6DB8E80031D661 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 663B73052B6DB8E80031D661 /* Preview Assets.xcassets */; };
-		663B73142B6DB9410031D661 /* VisionTwitchiOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663B73132B6DB9410031D661 /* VisionTwitchiOSApp.swift */; };
-		663B73162B6DB9410031D661 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663B73152B6DB9410031D661 /* ContentView.swift */; };
-		663B73182B6DB9430031D661 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 663B73172B6DB9430031D661 /* Assets.xcassets */; };
-		663B731B2B6DB9430031D661 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 663B731A2B6DB9430031D661 /* Preview Assets.xcassets */; };
 		663B73232B6DB9A30031D661 /* TwitchVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663B73222B6DB9A30031D661 /* TwitchVideoView.swift */; };
-		663B73242B6DB9A30031D661 /* TwitchVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663B73222B6DB9A30031D661 /* TwitchVideoView.swift */; };
 		663B73272B6DBA8E0031D661 /* TwitchWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663B73262B6DBA8E0031D661 /* TwitchWebView.swift */; };
-		663B73282B6DBA8E0031D661 /* TwitchWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663B73262B6DBA8E0031D661 /* TwitchWebView.swift */; };
 		663E38072B9226D3002E0530 /* Nuke in Frameworks */ = {isa = PBXBuildFile; productRef = 663E38062B9226D3002E0530 /* Nuke */; };
 		663E38092B9226D3002E0530 /* NukeUI in Frameworks */ = {isa = PBXBuildFile; productRef = 663E38082B9226D3002E0530 /* NukeUI */; };
 		666E97E92B8D7085008EE950 /* EmptyDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 666E97E82B8D7085008EE950 /* EmptyDataView.swift */; };
-		666E97EA2B8D7085008EE950 /* EmptyDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 666E97E82B8D7085008EE950 /* EmptyDataView.swift */; };
 		6672D37C2B8C3F7B00E9D0E9 /* NeedsLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6672D37B2B8C3F7B00E9D0E9 /* NeedsLoginView.swift */; };
 		66891FF42B9A9535000C0D92 /* AsyncAnimatedImageUI in Frameworks */ = {isa = PBXBuildFile; productRef = 66891FF32B9A9535000C0D92 /* AsyncAnimatedImageUI */; };
 		66891FF62B9A9590000C0D92 /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66891FF52B9A9590000C0D92 /* ChatMessage.swift */; };
 		66891FF82B9A9E72000C0D92 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66891FF72B9A9E72000C0D92 /* Color.swift */; };
-		66891FF92B9A9E72000C0D92 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66891FF72B9A9E72000C0D92 /* Color.swift */; };
 		66891FFB2B9AA058000C0D92 /* View+BackgroundTint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66891FFA2B9AA058000C0D92 /* View+BackgroundTint.swift */; };
-		66891FFC2B9AA058000C0D92 /* View+BackgroundTint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66891FFA2B9AA058000C0D92 /* View+BackgroundTint.swift */; };
 		66A5ADB52B96DA160025EF75 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A5ADB42B96DA160025EF75 /* SettingsView.swift */; };
-		66A5ADB62B96DA160025EF75 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A5ADB42B96DA160025EF75 /* SettingsView.swift */; };
 		66A5ADB82B96DAA20025EF75 /* LicensesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A5ADB72B96DAA20025EF75 /* LicensesView.swift */; };
-		66A5ADB92B96DAA20025EF75 /* LicensesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A5ADB72B96DAA20025EF75 /* LicensesView.swift */; };
 		66A5ADBB2B97E98E0025EF75 /* Licenses.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 66A5ADBA2B97E98E0025EF75 /* Licenses.xcstrings */; };
-		66A5ADBC2B97E98E0025EF75 /* Licenses.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 66A5ADBA2B97E98E0025EF75 /* Licenses.xcstrings */; };
 		66A5ADBE2B9933730025EF75 /* WindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A5ADBD2B9933730025EF75 /* WindowController.swift */; };
-		66A5ADBF2B9933730025EF75 /* WindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A5ADBD2B9933730025EF75 /* WindowController.swift */; };
 		66A5ADC12B9949C40025EF75 /* EmptyContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A5ADC02B9949C40025EF75 /* EmptyContentView.swift */; };
-		66A5ADC22B9949C40025EF75 /* EmptyContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A5ADC02B9949C40025EF75 /* EmptyContentView.swift */; };
 		66B5DD852B9FCBCC0054121D /* MatureStreamFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B5DD832B9FCBCC0054121D /* MatureStreamFilterView.swift */; };
 		66B5DD862B9FCBCC0054121D /* StreamTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B5DD842B9FCBCC0054121D /* StreamTimer.swift */; };
 		66B5DD882B9FCC150054121D /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B5DD872B9FCC150054121D /* Setting.swift */; };
 		66C96BDB2B8EB1C00016A91B /* VODGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C96BDA2B8EB1C00016A91B /* VODGridView.swift */; };
-		66C96BDC2B8EB1C00016A91B /* VODGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C96BDA2B8EB1C00016A91B /* VODGridView.swift */; };
 		66C96BDE2B8EC2D10016A91B /* VideoMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C96BDD2B8EC2D10016A91B /* VideoMock.swift */; };
-		66C96BDF2B8EC2D10016A91B /* VideoMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C96BDD2B8EC2D10016A91B /* VideoMock.swift */; };
 		66C96BE12B8EC4510016A91B /* VODButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C96BE02B8EC4510016A91B /* VODButtonView.swift */; };
-		66C96BE22B8EC4510016A91B /* VODButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C96BE02B8EC4510016A91B /* VODButtonView.swift */; };
 		66C96BE42B8ECB660016A91B /* SharedStreamButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C96BE32B8ECB660016A91B /* SharedStreamButtonView.swift */; };
-		66C96BE52B8ECB660016A91B /* SharedStreamButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C96BE32B8ECB660016A91B /* SharedStreamButtonView.swift */; };
 		66C96BE72B8ECD5D0016A91B /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C96BE62B8ECD5D0016A91B /* Video.swift */; };
-		66C96BE82B8ECD5D0016A91B /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C96BE62B8ECD5D0016A91B /* Video.swift */; };
 		66C96BED2B900E7F0016A91B /* StreamableVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C96BEC2B900E7F0016A91B /* StreamableVideo.swift */; };
-		66C96BEE2B900E7F0016A91B /* StreamableVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C96BEC2B900E7F0016A91B /* StreamableVideo.swift */; };
 		66DF455D2B8BA645006C1D99 /* PopupVolumeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DF455C2B8BA645006C1D99 /* PopupVolumeSlider.swift */; };
-		66DF455E2B8BA645006C1D99 /* PopupVolumeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DF455C2B8BA645006C1D99 /* PopupVolumeSlider.swift */; };
 		66E102122B82515A007A44D4 /* TagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E102112B82515A007A44D4 /* TagView.swift */; };
-		66E102132B82515A007A44D4 /* TagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E102112B82515A007A44D4 /* TagView.swift */; };
 		66E102192B8262AC007A44D4 /* KeychainWrapper in Frameworks */ = {isa = PBXBuildFile; productRef = 66E102182B8262AC007A44D4 /* KeychainWrapper */; };
 		66E1021B2B8272E3007A44D4 /* Auth+Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E1021A2B8272E3007A44D4 /* Auth+Notification.swift */; };
-		66E1021C2B8272E3007A44D4 /* Auth+Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E1021A2B8272E3007A44D4 /* Auth+Notification.swift */; };
 		66E1021E2B8273B0007A44D4 /* TwitchWindowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E1021D2B8273B0007A44D4 /* TwitchWindowView.swift */; };
-		66E1021F2B8273B0007A44D4 /* TwitchWindowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E1021D2B8273B0007A44D4 /* TwitchWindowView.swift */; };
 		66E102222B829349007A44D4 /* StreamButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E102212B829349007A44D4 /* StreamButtonView.swift */; };
-		66E102232B829349007A44D4 /* StreamButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E102212B829349007A44D4 /* StreamButtonView.swift */; };
 		66E102262B8293EB007A44D4 /* StreamMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E102252B8293EB007A44D4 /* StreamMock.swift */; };
-		66E102272B8293EB007A44D4 /* StreamMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E102252B8293EB007A44D4 /* StreamMock.swift */; };
 		66E102292B82988A007A44D4 /* PopularView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E102282B82988A007A44D4 /* PopularView.swift */; };
-		66E1022A2B82988A007A44D4 /* PopularView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E102282B82988A007A44D4 /* PopularView.swift */; };
 		66E1022C2B82A592007A44D4 /* StreamGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E1022B2B82A592007A44D4 /* StreamGridView.swift */; };
-		66E1022D2B82A592007A44D4 /* StreamGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E1022B2B82A592007A44D4 /* StreamGridView.swift */; };
 		66E102322B82D317007A44D4 /* CategoryListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E102312B82D317007A44D4 /* CategoryListView.swift */; };
-		66E102332B82D317007A44D4 /* CategoryListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E102312B82D317007A44D4 /* CategoryListView.swift */; };
 		66E102352B82D788007A44D4 /* CategoryMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E102342B82D788007A44D4 /* CategoryMock.swift */; };
-		66E102362B82D788007A44D4 /* CategoryMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E102342B82D788007A44D4 /* CategoryMock.swift */; };
 		66E1023C2B82D85B007A44D4 /* CategoryGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E1023B2B82D85B007A44D4 /* CategoryGridView.swift */; };
-		66E1023D2B82D85B007A44D4 /* CategoryGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E1023B2B82D85B007A44D4 /* CategoryGridView.swift */; };
 		66E1023F2B82D8AF007A44D4 /* CategoryButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E1023E2B82D8AF007A44D4 /* CategoryButtonView.swift */; };
-		66E102402B82D8AF007A44D4 /* CategoryButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E1023E2B82D8AF007A44D4 /* CategoryButtonView.swift */; };
 		66E102422B82D94E007A44D4 /* AsyncImageButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E102412B82D94D007A44D4 /* AsyncImageButtonView.swift */; };
-		66E102432B82D94E007A44D4 /* AsyncImageButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E102412B82D94D007A44D4 /* AsyncImageButtonView.swift */; };
 		66E102462B82E3E8007A44D4 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E102452B82E3E8007A44D4 /* Router.swift */; };
-		66E102472B82E3E8007A44D4 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E102452B82E3E8007A44D4 /* Router.swift */; };
 		66E102492B82E496007A44D4 /* NavStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E102482B82E496007A44D4 /* NavStack.swift */; };
-		66E1024A2B82E496007A44D4 /* NavStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E102482B82E496007A44D4 /* NavStack.swift */; };
 		66E8859F2B86C646004B4B8D /* DataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E8859E2B86C646004B4B8D /* DataLoader.swift */; };
-		66E885A02B86C646004B4B8D /* DataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E8859E2B86C646004B4B8D /* DataLoader.swift */; };
 		66E885A22B86D95C004B4B8D /* AuthStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E885A12B86D95C004B4B8D /* AuthStatus.swift */; };
-		66E885A32B86D95C004B4B8D /* AuthStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E885A12B86D95C004B4B8D /* AuthStatus.swift */; };
 		66E885A52B86DFE2004B4B8D /* AuthController+EnvironmentValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E885A42B86DFE2004B4B8D /* AuthController+EnvironmentValues.swift */; };
-		66E885A62B86DFE2004B4B8D /* AuthController+EnvironmentValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E885A42B86DFE2004B4B8D /* AuthController+EnvironmentValues.swift */; };
 		66E885A82B8821D9004B4B8D /* StandardScrollableDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E885A72B8821D9004B4B8D /* StandardScrollableDataView.swift */; };
-		66E885A92B8821D9004B4B8D /* StandardScrollableDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E885A72B8821D9004B4B8D /* StandardScrollableDataView.swift */; };
 		66F4E40F2B7D8FD3008C565D /* Twitch+Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E40E2B7D8FD3008C565D /* Twitch+Notification.swift */; };
-		66F4E4102B7D8FD3008C565D /* Twitch+Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E40E2B7D8FD3008C565D /* Twitch+Notification.swift */; };
 		66F4E4162B80292F008C565D /* OAuthWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E4152B80292F008C565D /* OAuthWebView.swift */; };
-		66F4E4172B80292F008C565D /* OAuthWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E4152B80292F008C565D /* OAuthWebView.swift */; };
 		66F4E41D2B811788008C565D /* AuthBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E41C2B811788008C565D /* AuthBadgeView.swift */; };
-		66F4E41E2B811788008C565D /* AuthBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E41C2B811788008C565D /* AuthBadgeView.swift */; };
 		66F4E4202B8118E9008C565D /* MainWindowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E41F2B8118E9008C565D /* MainWindowView.swift */; };
 		66F4E4252B811B6C008C565D /* CloseButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E4242B811B6C008C565D /* CloseButtonView.swift */; };
-		66F4E4262B811B6C008C565D /* CloseButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E4242B811B6C008C565D /* CloseButtonView.swift */; };
 		66F4E4282B812932008C565D /* OAuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E4272B812932008C565D /* OAuthView.swift */; };
-		66F4E4292B812932008C565D /* OAuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E4272B812932008C565D /* OAuthView.swift */; };
 		66F4E42C2B812A32008C565D /* AuthController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E42B2B812A32008C565D /* AuthController.swift */; };
-		66F4E42D2B812A32008C565D /* AuthController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E42B2B812A32008C565D /* AuthController.swift */; };
 		66F4E4302B8132F5008C565D /* Twitch in Frameworks */ = {isa = PBXBuildFile; productRef = 66F4E42F2B8132F5008C565D /* Twitch */; };
 		66F4E4342B813A1F008C565D /* FollowedStreamsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E4332B813A1F008C565D /* FollowedStreamsView.swift */; };
-		66F4E4352B813A1F008C565D /* FollowedStreamsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E4332B813A1F008C565D /* FollowedStreamsView.swift */; };
 		66F4E43D2B818499008C565D /* DataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E43C2B818499008C565D /* DataView.swift */; };
-		66F4E43E2B818499008C565D /* DataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E43C2B818499008C565D /* DataView.swift */; };
 		66F8D1902B88581D008C4F7C /* Icon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F8D18F2B88581D008C4F7C /* Icon.swift */; };
-		66F8D1912B88581D008C4F7C /* Icon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F8D18F2B88581D008C4F7C /* Icon.swift */; };
 		66F8D1932B894253008C4F7C /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F8D1922B894253008C4F7C /* Route.swift */; };
-		66F8D1942B894253008C4F7C /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F8D1922B894253008C4F7C /* Route.swift */; };
 		66F8D1962B898141008C4F7C /* LoadingAsyncImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F8D1952B898141008C4F7C /* LoadingAsyncImage.swift */; };
-		66F8D1972B898141008C4F7C /* LoadingAsyncImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F8D1952B898141008C4F7C /* LoadingAsyncImage.swift */; };
 		66F8D1992B89A051008C4F7C /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F8D1982B89A051008C4F7C /* SearchView.swift */; };
-		66F8D19A2B89A051008C4F7C /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F8D1982B89A051008C4F7C /* SearchView.swift */; };
 		66F8D1A02B8A8F4B008C4F7C /* ChannelMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F8D19F2B8A8F4B008C4F7C /* ChannelMock.swift */; };
-		66F8D1A12B8A8F4B008C4F7C /* ChannelMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F8D19F2B8A8F4B008C4F7C /* ChannelMock.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -205,18 +128,13 @@
 		663336932B75B7EA0098D188 /* View+WindowGeometryPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+WindowGeometryPreferences.swift"; sourceTree = "<group>"; };
 		66364FB92B8ABB9C005180B8 /* APIErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIErrorView.swift; sourceTree = "<group>"; };
 		66364FBC2B8AF629005180B8 /* CircleBackgroundLessButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleBackgroundLessButton.swift; sourceTree = "<group>"; };
-		663B72F32B6DB8E60031D661 /* VisionTwitch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VisionTwitch.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		663B72F32B6DB8E60031D661 /* Sila.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sila.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		663B72F72B6DB8E60031D661 /* RealityKitContent */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = RealityKitContent; sourceTree = "<group>"; };
-		663B72FA2B6DB8E60031D661 /* VisionTwitchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionTwitchApp.swift; sourceTree = "<group>"; };
+		663B72FA2B6DB8E60031D661 /* SilaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SilaApp.swift; sourceTree = "<group>"; };
 		663B73002B6DB8E60031D661 /* ImageBasedLighting.skybox */ = {isa = PBXFileReference; lastKnownFileType = file.skybox; path = ImageBasedLighting.skybox; sourceTree = "<group>"; };
 		663B73022B6DB8E80031D661 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		663B73052B6DB8E80031D661 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		663B73072B6DB8E80031D661 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		663B73112B6DB9410031D661 /* VisionTwitchiOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VisionTwitchiOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		663B73132B6DB9410031D661 /* VisionTwitchiOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionTwitchiOSApp.swift; sourceTree = "<group>"; };
-		663B73152B6DB9410031D661 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		663B73172B6DB9430031D661 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		663B731A2B6DB9430031D661 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		663B73222B6DB9A30031D661 /* TwitchVideoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitchVideoView.swift; sourceTree = "<group>"; };
 		663B73262B6DBA8E0031D661 /* TwitchWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitchWebView.swift; sourceTree = "<group>"; };
 		666E97E82B8D7085008EE950 /* EmptyDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyDataView.swift; sourceTree = "<group>"; };
@@ -226,7 +144,7 @@
 		66891FFA2B9AA058000C0D92 /* View+BackgroundTint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+BackgroundTint.swift"; sourceTree = "<group>"; };
 		66A5ADB42B96DA160025EF75 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		66A5ADB72B96DAA20025EF75 /* LicensesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicensesView.swift; sourceTree = "<group>"; };
-		66A5ADBA2B97E98E0025EF75 /* Licenses.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = Licenses.xcstrings; path = VisionTwitch/Licenses.xcstrings; sourceTree = SOURCE_ROOT; };
+		66A5ADBA2B97E98E0025EF75 /* Licenses.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = Licenses.xcstrings; path = Sila/Licenses.xcstrings; sourceTree = SOURCE_ROOT; };
 		66A5ADBD2B9933730025EF75 /* WindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowController.swift; sourceTree = "<group>"; };
 		66A5ADC02B9949C40025EF75 /* EmptyContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyContentView.swift; sourceTree = "<group>"; };
 		66B5DD832B9FCBCC0054121D /* MatureStreamFilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatureStreamFilterView.swift; sourceTree = "<group>"; };
@@ -287,13 +205,6 @@
 				663E38072B9226D3002E0530 /* Nuke in Frameworks */,
 				6625353B2B9CE6F600EBD081 /* AsyncAnimatedImageUI in Frameworks */,
 				66364FC82B8BA49A005180B8 /* JunoUI in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		663B730E2B6DB9410031D661 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -377,10 +288,9 @@
 		663B72EA2B6DB8E60031D661 = {
 			isa = PBXGroup;
 			children = (
-				663B72F52B6DB8E60031D661 /* VisionTwitch */,
+				663B72F52B6DB8E60031D661 /* Sila */,
 				662C4FE92B856F7100A84C7A /* Keys.xcconfig */,
 				663B72F62B6DB8E60031D661 /* Packages */,
-				663B73122B6DB9410031D661 /* VisionTwitchiOS */,
 				663B72F42B6DB8E60031D661 /* Products */,
 				663B732F2B6E06860031D661 /* Frameworks */,
 			);
@@ -389,13 +299,12 @@
 		663B72F42B6DB8E60031D661 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				663B72F32B6DB8E60031D661 /* VisionTwitch.app */,
-				663B73112B6DB9410031D661 /* VisionTwitchiOS.app */,
+				663B72F32B6DB8E60031D661 /* Sila.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		663B72F52B6DB8E60031D661 /* VisionTwitch */ = {
+		663B72F52B6DB8E60031D661 /* Sila */ = {
 			isa = PBXGroup;
 			children = (
 				66F4E42A2B812A1F008C565D /* API */,
@@ -406,14 +315,14 @@
 				66F8D18E2B88580D008C4F7C /* Util */,
 				660BC1F42B9BB5B10043750C /* Window */,
 				66F4E4222B811B51008C565D /* View */,
-				663B72FA2B6DB8E60031D661 /* VisionTwitchApp.swift */,
+				663B72FA2B6DB8E60031D661 /* SilaApp.swift */,
 				663B73002B6DB8E60031D661 /* ImageBasedLighting.skybox */,
 				663B73022B6DB8E80031D661 /* Assets.xcassets */,
 				663B73072B6DB8E80031D661 /* Info.plist */,
 				66A5ADBA2B97E98E0025EF75 /* Licenses.xcstrings */,
 				663B73042B6DB8E80031D661 /* Preview Content */,
 			);
-			path = VisionTwitch;
+			path = Sila;
 			sourceTree = "<group>";
 		};
 		663B72F62B6DB8E60031D661 /* Packages */ = {
@@ -428,25 +337,6 @@
 			isa = PBXGroup;
 			children = (
 				663B73052B6DB8E80031D661 /* Preview Assets.xcassets */,
-			);
-			path = "Preview Content";
-			sourceTree = "<group>";
-		};
-		663B73122B6DB9410031D661 /* VisionTwitchiOS */ = {
-			isa = PBXGroup;
-			children = (
-				663B73132B6DB9410031D661 /* VisionTwitchiOSApp.swift */,
-				663B73152B6DB9410031D661 /* ContentView.swift */,
-				663B73172B6DB9430031D661 /* Assets.xcassets */,
-				663B73192B6DB9430031D661 /* Preview Content */,
-			);
-			path = VisionTwitchiOS;
-			sourceTree = "<group>";
-		};
-		663B73192B6DB9430031D661 /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-				663B731A2B6DB9430031D661 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
 			sourceTree = "<group>";
@@ -625,9 +515,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		663B72F22B6DB8E60031D661 /* VisionTwitch */ = {
+		663B72F22B6DB8E60031D661 /* Sila */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 663B730A2B6DB8E80031D661 /* Build configuration list for PBXNativeTarget "VisionTwitch" */;
+			buildConfigurationList = 663B730A2B6DB8E80031D661 /* Build configuration list for PBXNativeTarget "Sila" */;
 			buildPhases = (
 				663B72EF2B6DB8E60031D661 /* Sources */,
 				663B72F02B6DB8E60031D661 /* Frameworks */,
@@ -637,7 +527,7 @@
 			);
 			dependencies = (
 			);
-			name = VisionTwitch;
+			name = Sila;
 			packageProductDependencies = (
 				663B72F82B6DB8E60031D661 /* RealityKitContent */,
 				66F4E42F2B8132F5008C565D /* Twitch */,
@@ -649,27 +539,8 @@
 				6625353A2B9CE6F600EBD081 /* AsyncAnimatedImageUI */,
 				6625353D2B9CF0FE00EBD081 /* AsyncAnimatedImageUI */,
 			);
-			productName = VisionTwitch;
-			productReference = 663B72F32B6DB8E60031D661 /* VisionTwitch.app */;
-			productType = "com.apple.product-type.application";
-		};
-		663B73102B6DB9410031D661 /* VisionTwitchiOS */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 663B731C2B6DB9430031D661 /* Build configuration list for PBXNativeTarget "VisionTwitchiOS" */;
-			buildPhases = (
-				663B730D2B6DB9410031D661 /* Sources */,
-				663B730E2B6DB9410031D661 /* Frameworks */,
-				663B730F2B6DB9410031D661 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = VisionTwitchiOS;
-			packageProductDependencies = (
-			);
-			productName = VisionTwitchiOS;
-			productReference = 663B73112B6DB9410031D661 /* VisionTwitchiOS.app */;
+			productName = Sila;
+			productReference = 663B72F32B6DB8E60031D661 /* Sila.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -685,12 +556,9 @@
 					663B72F22B6DB8E60031D661 = {
 						CreatedOnToolsVersion = 15.2;
 					};
-					663B73102B6DB9410031D661 = {
-						CreatedOnToolsVersion = 15.2;
-					};
 				};
 			};
-			buildConfigurationList = 663B72EE2B6DB8E60031D661 /* Build configuration list for PBXProject "VisionTwitch" */;
+			buildConfigurationList = 663B72EE2B6DB8E60031D661 /* Build configuration list for PBXProject "Sila" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -710,8 +578,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				663B72F22B6DB8E60031D661 /* VisionTwitch */,
-				663B73102B6DB9410031D661 /* VisionTwitchiOS */,
+				663B72F22B6DB8E60031D661 /* Sila */,
 			);
 		};
 /* End PBXProject section */
@@ -725,16 +592,6 @@
 				663B73062B6DB8E80031D661 /* Preview Assets.xcassets in Resources */,
 				663B73012B6DB8E60031D661 /* ImageBasedLighting.skybox in Resources */,
 				66A5ADBB2B97E98E0025EF75 /* Licenses.xcstrings in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		663B730F2B6DB9410031D661 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				66A5ADBC2B97E98E0025EF75 /* Licenses.xcstrings in Resources */,
-				663B731B2B6DB9430031D661 /* Preview Assets.xcassets in Resources */,
-				663B73182B6DB9430031D661 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -798,7 +655,7 @@
 				66DF455D2B8BA645006C1D99 /* PopupVolumeSlider.swift in Sources */,
 				663B73232B6DB9A30031D661 /* TwitchVideoView.swift in Sources */,
 				66E1023C2B82D85B007A44D4 /* CategoryGridView.swift in Sources */,
-				663B72FB2B6DB8E60031D661 /* VisionTwitchApp.swift in Sources */,
+				663B72FB2B6DB8E60031D661 /* SilaApp.swift in Sources */,
 				660AFF6C2B93A9A60003186E /* ChatPaneView.swift in Sources */,
 				66F4E40F2B7D8FD3008C565D /* Twitch+Notification.swift in Sources */,
 				66E1021E2B8273B0007A44D4 /* TwitchWindowView.swift in Sources */,
@@ -824,87 +681,6 @@
 				66E8859F2B86C646004B4B8D /* DataLoader.swift in Sources */,
 				66E885A82B8821D9004B4B8D /* StandardScrollableDataView.swift in Sources */,
 				66125F662B84260D002169B5 /* UserMock.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		663B730D2B6DB9410031D661 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				66E1021F2B8273B0007A44D4 /* TwitchWindowView.swift in Sources */,
-				66E885A32B86D95C004B4B8D /* AuthStatus.swift in Sources */,
-				66A5ADC22B9949C40025EF75 /* EmptyContentView.swift in Sources */,
-				66F8D1912B88581D008C4F7C /* Icon.swift in Sources */,
-				6600E0912B8BC0FD003B2270 /* InsetBackground.swift in Sources */,
-				66891FFC2B9AA058000C0D92 /* View+BackgroundTint.swift in Sources */,
-				660AFF6D2B93A9A60003186E /* ChatPaneView.swift in Sources */,
-				663B73162B6DB9410031D661 /* ContentView.swift in Sources */,
-				66E1024A2B82E496007A44D4 /* NavStack.swift in Sources */,
-				66125F702B842F82002169B5 /* ChannelView.swift in Sources */,
-				66E102332B82D317007A44D4 /* CategoryListView.swift in Sources */,
-				66125F642B8425A7002169B5 /* ChannelGridView.swift in Sources */,
-				66E885A62B86DFE2004B4B8D /* AuthController+EnvironmentValues.swift in Sources */,
-				66028E002B917AD800696071 /* PrivateMessageMock.swift in Sources */,
-				666E97EA2B8D7085008EE950 /* EmptyDataView.swift in Sources */,
-				66A5ADBF2B9933730025EF75 /* WindowController.swift in Sources */,
-				663B73282B6DBA8E0031D661 /* TwitchWebView.swift in Sources */,
-				66125F6A2B84279A002169B5 /* ChannelButtonView.swift in Sources */,
-				663B73142B6DB9410031D661 /* VisionTwitchiOSApp.swift in Sources */,
-				66E102272B8293EB007A44D4 /* StreamMock.swift in Sources */,
-				66125F602B83EF38002169B5 /* View+HighlightableButton.swift in Sources */,
-				6614CD4E2B94FDA400A3EE17 /* SharedPlaybackSettings.swift in Sources */,
-				663336952B75B7EA0098D188 /* View+WindowGeometryPreferences.swift in Sources */,
-				660F73A32B7446D70011FD65 /* WebViewPlayer.swift in Sources */,
-				66125F572B83C88E002169B5 /* TabPage.swift in Sources */,
-				66E102402B82D8AF007A44D4 /* CategoryButtonView.swift in Sources */,
-				66E1021C2B8272E3007A44D4 /* Auth+Notification.swift in Sources */,
-				66C96BDC2B8EB1C00016A91B /* VODGridView.swift in Sources */,
-				6600E08A2B8BB5E8003B2270 /* StreamableVideoStatusControlView.swift in Sources */,
-				66F8D1A12B8A8F4B008C4F7C /* ChannelMock.swift in Sources */,
-				66E102472B82E3E8007A44D4 /* Router.swift in Sources */,
-				66A5ADB92B96DAA20025EF75 /* LicensesView.swift in Sources */,
-				66E885A02B86C646004B4B8D /* DataLoader.swift in Sources */,
-				66C96BE52B8ECB660016A91B /* SharedStreamButtonView.swift in Sources */,
-				663B73242B6DB9A30031D661 /* TwitchVideoView.swift in Sources */,
-				66F4E4262B811B6C008C565D /* CloseButtonView.swift in Sources */,
-				66E885A92B8821D9004B4B8D /* StandardScrollableDataView.swift in Sources */,
-				66F4E42D2B812A32008C565D /* AuthController.swift in Sources */,
-				66028DFA2B91798C00696071 /* ChatView.swift in Sources */,
-				66125F672B84260D002169B5 /* UserMock.swift in Sources */,
-				66E1022A2B82988A007A44D4 /* PopularView.swift in Sources */,
-				66E102232B829349007A44D4 /* StreamButtonView.swift in Sources */,
-				660F73A62B745D710011FD65 /* PlayerControlsView.swift in Sources */,
-				66E102132B82515A007A44D4 /* TagView.swift in Sources */,
-				66028E032B917CD200696071 /* PrivateMessage.swift in Sources */,
-				66F4E4102B7D8FD3008C565D /* Twitch+Notification.swift in Sources */,
-				66F4E4352B813A1F008C565D /* FollowedStreamsView.swift in Sources */,
-				66C96BEE2B900E7F0016A91B /* StreamableVideo.swift in Sources */,
-				66891FF92B9A9E72000C0D92 /* Color.swift in Sources */,
-				66125F542B83C003002169B5 /* ScrollGridView.swift in Sources */,
-				66C96BE82B8ECD5D0016A91B /* Video.swift in Sources */,
-				66DF455E2B8BA645006C1D99 /* PopupVolumeSlider.swift in Sources */,
-				66F8D1972B898141008C4F7C /* LoadingAsyncImage.swift in Sources */,
-				66F4E4172B80292F008C565D /* OAuthWebView.swift in Sources */,
-				66C96BDF2B8EC2D10016A91B /* VideoMock.swift in Sources */,
-				66E102432B82D94E007A44D4 /* AsyncImageButtonView.swift in Sources */,
-				66F4E43E2B818499008C565D /* DataView.swift in Sources */,
-				66364FBB2B8ABB9C005180B8 /* APIErrorView.swift in Sources */,
-				66F8D19A2B89A051008C4F7C /* SearchView.swift in Sources */,
-				66A5ADB62B96DA160025EF75 /* SettingsView.swift in Sources */,
-				66E1022D2B82A592007A44D4 /* StreamGridView.swift in Sources */,
-				6600E0862B8BB384003B2270 /* Stream.swift in Sources */,
-				6600E08D2B8BBBCB003B2270 /* DarkBackgroundView.swift in Sources */,
-				66E1023D2B82D85B007A44D4 /* CategoryGridView.swift in Sources */,
-				662535412B9E01D000EBD081 /* ChatModel.swift in Sources */,
-				66E102362B82D788007A44D4 /* CategoryMock.swift in Sources */,
-				66F4E41E2B811788008C565D /* AuthBadgeView.swift in Sources */,
-				66F8D1942B894253008C4F7C /* Route.swift in Sources */,
-				66125F512B83B913002169B5 /* CategoryView.swift in Sources */,
-				66C96BE22B8EC4510016A91B /* VODButtonView.swift in Sources */,
-				66F4E4292B812932008C565D /* OAuthView.swift in Sources */,
-				66364FBE2B8AF629005180B8 /* CircleBackgroundLessButton.swift in Sources */,
-				66125F5D2B83D9EC002169B5 /* PickerTabView.swift in Sources */,
-				66125F5A2B83CE4E002169B5 /* DefaultToolbar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1040,7 +816,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"VisionTwitch/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Sila/Preview Content\"";
 				DEVELOPMENT_TEAM = 58JLRGUCJQ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1050,7 +826,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = im.agg.VisionTwitch;
+				PRODUCT_BUNDLE_IDENTIFIER = im.agg.Sila;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "xros xrsimulator";
@@ -1068,7 +844,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"VisionTwitch/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Sila/Preview Content\"";
 				DEVELOPMENT_TEAM = 58JLRGUCJQ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1078,7 +854,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = im.agg.VisionTwitch;
+				PRODUCT_BUNDLE_IDENTIFIER = im.agg.Sila;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "xros xrsimulator";
@@ -1088,72 +864,10 @@
 			};
 			name = Release;
 		};
-		663B731D2B6DB9430031D661 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"VisionTwitchiOS/Preview Content\"";
-				DEVELOPMENT_TEAM = 58JLRGUCJQ;
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = im.agg.VisionTwitchiOS;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		663B731E2B6DB9430031D661 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"VisionTwitchiOS/Preview Content\"";
-				DEVELOPMENT_TEAM = 58JLRGUCJQ;
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = im.agg.VisionTwitchiOS;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		663B72EE2B6DB8E60031D661 /* Build configuration list for PBXProject "VisionTwitch" */ = {
+		663B72EE2B6DB8E60031D661 /* Build configuration list for PBXProject "Sila" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				663B73082B6DB8E80031D661 /* Debug */,
@@ -1162,20 +876,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		663B730A2B6DB8E80031D661 /* Build configuration list for PBXNativeTarget "VisionTwitch" */ = {
+		663B730A2B6DB8E80031D661 /* Build configuration list for PBXNativeTarget "Sila" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				663B730B2B6DB8E80031D661 /* Debug */,
 				663B730C2B6DB8E80031D661 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		663B731C2B6DB9430031D661 /* Build configuration list for PBXNativeTarget "VisionTwitchiOS" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				663B731D2B6DB9430031D661 /* Debug */,
-				663B731E2B6DB9430031D661 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

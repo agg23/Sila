@@ -1,5 +1,5 @@
 //
-//  VisionTwitchApp.swift
+//  SilaApp.swift
 //  VisionTwitch
 //
 //  Created by Adam Gastineau on 2/2/24.
@@ -9,7 +9,7 @@ import SwiftUI
 import Twitch
 
 @main
-struct VisionTwitchApp: App {
+struct SilaAppApp: App {
     @Environment(\.openWindow) private var openWindow
 
     @State var authController = AuthController()

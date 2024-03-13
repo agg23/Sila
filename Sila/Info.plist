@@ -2,15 +2,15 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>API_SECRET</key>
-	<string>$(API_SECRET)</string>
 	<key>API_CLIENT_ID</key>
 	<string>$(API_CLIENT_ID)</string>
+	<key>API_SECRET</key>
+	<string>$(API_SECRET)</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
-		<key>NSAllowsArbitraryLoadsForMedia</key>
-		<true/>
 		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+		<key>NSAllowsArbitraryLoadsForMedia</key>
 		<true/>
 		<key>NSAllowsLocalNetworking</key>
 		<true/>

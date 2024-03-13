@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "663B73102B6DB9410031D661"
-               BuildableName = "VisionTwitchiOS.app"
-               BlueprintName = "VisionTwitchiOS"
-               ReferencedContainer = "container:VisionTwitch.xcodeproj">
+               BuildableName = "SilaiOS.app"
+               BlueprintName = "SilaiOS"
+               ReferencedContainer = "container:Sila.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -44,9 +44,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "663B73102B6DB9410031D661"
-            BuildableName = "VisionTwitchiOS.app"
-            BlueprintName = "VisionTwitchiOS"
-            ReferencedContainer = "container:VisionTwitch.xcodeproj">
+            BuildableName = "SilaiOS.app"
+            BlueprintName = "SilaiOS"
+            ReferencedContainer = "container:Sila.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -61,9 +61,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "663B73102B6DB9410031D661"
-            BuildableName = "VisionTwitchiOS.app"
-            BlueprintName = "VisionTwitchiOS"
-            ReferencedContainer = "container:VisionTwitch.xcodeproj">
+            BuildableName = "SilaiOS.app"
+            BlueprintName = "SilaiOS"
+            ReferencedContainer = "container:Sila.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
