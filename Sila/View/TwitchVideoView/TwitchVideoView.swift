@@ -15,7 +15,7 @@ struct TwitchVideoView: View {
 
     @State private var loading = true
 
-    @State private var controlVisibility = Visibility.visible
+    @Binding var controlVisibility: Visibility
     @State private var controlVisibilityTimer: Timer?
     @State private var chatVisibility = Visibility.hidden
 
@@ -183,5 +183,5 @@ struct TwitchVideoView: View {
 #Preview {
     @State var player = WebViewPlayer()
 
-    return TwitchVideoView(streamableVideo: .stream(STREAM_MOCK()), delayLoading: false, player: $player)
+    return TwitchVideoView(controlVisibility: .constant(.hidden), streamableVideo: .stream(STREAM_MOCK()), delayLoading: false, player: $player)
 }

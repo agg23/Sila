@@ -12,38 +12,35 @@ struct TwitchWindowView: View {
     @AppStorage(Setting.smallBorderRadius) var smallBorderRadius: Bool = false
     @AppStorage(Setting.dimSurroundings) var dimSurroundings: Bool = false
 
+    @State private var controlVisibility = Visibility.visible
+
+    let streamableVideo: StreamableVideo
+
+    var body: some View {
+        TwitchContentView(controlVisibility: self.$controlVisibility, streamableVideo: self.streamableVideo)
+            .preferredSurroundingsEffect(self.dimSurroundings ? .systemDark : nil)
+            // Controlling with the ornament overlay keeps the grabber completely in sync
+            .persistentSystemOverlays(self.controlVisibility)
+            .glassBackgroundEffect(in: RoundedRectangle(cornerRadius: self.smallBorderRadius ? 24.0 : 56.0))
+    }
+}
+
+struct TwitchContentView: View {
     @Environment(\.scenePhase) private var scene
     @Environment(\.dismissWindow) private var dismissWindow
 
     @State private var player = WebViewPlayer()
 
     @State private var delayLoading = !WindowController.shared.checkAllMuted()
+    @Binding var controlVisibility: Visibility
 
     let streamableVideo: StreamableVideo
 
     var body: some View {
-        TwitchVideoView(streamableVideo: self.streamableVideo, delayLoading: self.delayLoading, player: self.$player)
-            .preferredSurroundingsEffect(self.dimSurroundings ? .systemDark : nil)
+        TwitchVideoView(controlVisibility: self.$controlVisibility, streamableVideo: self.streamableVideo, delayLoading: self.delayLoading, player: self.$player)
             // Set aspect ratio and enforce uniform resizing
+            // This is on an inner view to prevent breaking .persistentSystemOverlays() modification
             .windowGeometryPreferences(minimumSize: CGSize(width: 160.0, height: 90.0), resizingRestrictions: .uniform)
-            // Having the overlay hidden all of the time has the intended interaction of opening and closing
-            // The only issue is the grabber is not constantly visible while the video is paused
-            .persistentSystemOverlays(.hidden)
-            .glassBackgroundEffect(in: RoundedRectangle(cornerRadius: self.smallBorderRadius ? 24.0 : 56.0))
-//            .onChange(of: self.scene) { oldValue, newValue in
-//                switch newValue {
-//                case .active:
-//                    WindowController.shared.refPlaybackWindow(with: self.streamableVideo.id())
-//                    NotificationCenter.default.post(name: .twitchMuteAll, object: nil, userInfo: nil)
-//                case .inactive, .background:
-//                    if WindowController.shared.derefPlaybackWindow(with: self.streamableVideo.id()) && !WindowController.shared.mainWindowSpawned {
-//                        // Closed window, reopen main
-//                        openWindow(value: "main")
-//                    }
-//                @unknown default:
-//                    break
-//                }
-//            }
             .onChange(of: self.player.muted, { _, newValue in
                 WindowController.shared.setPlaybackMuted(with: self.streamableVideo.id(), muted: newValue)
             })
