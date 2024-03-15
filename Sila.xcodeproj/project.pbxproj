@@ -82,6 +82,9 @@
 		66E885A22B86D95C004B4B8D /* AuthStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E885A12B86D95C004B4B8D /* AuthStatus.swift */; };
 		66E885A52B86DFE2004B4B8D /* AuthController+EnvironmentValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E885A42B86DFE2004B4B8D /* AuthController+EnvironmentValues.swift */; };
 		66E885A82B8821D9004B4B8D /* StandardScrollableDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E885A72B8821D9004B4B8D /* StandardScrollableDataView.swift */; };
+		66F105A32BA4B28E006B7ADE /* Lifecycle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F105A22BA4B28E006B7ADE /* Lifecycle.swift */; };
+		66F105A52BA4B3DF006B7ADE /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F105A42BA4B3DF006B7ADE /* Task.swift */; };
+		66F105A72BA4B83A006B7ADE /* WindowTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F105A62BA4B83A006B7ADE /* WindowTracker.swift */; };
 		66F4E40F2B7D8FD3008C565D /* Twitch+Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E40E2B7D8FD3008C565D /* Twitch+Notification.swift */; };
 		66F4E4162B80292F008C565D /* OAuthWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E4152B80292F008C565D /* OAuthWebView.swift */; };
 		66F4E41D2B811788008C565D /* AuthBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E41C2B811788008C565D /* AuthBadgeView.swift */; };
@@ -171,6 +174,9 @@
 		66E885A12B86D95C004B4B8D /* AuthStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthStatus.swift; sourceTree = "<group>"; };
 		66E885A42B86DFE2004B4B8D /* AuthController+EnvironmentValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthController+EnvironmentValues.swift"; sourceTree = "<group>"; };
 		66E885A72B8821D9004B4B8D /* StandardScrollableDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandardScrollableDataView.swift; sourceTree = "<group>"; };
+		66F105A22BA4B28E006B7ADE /* Lifecycle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lifecycle.swift; sourceTree = "<group>"; };
+		66F105A42BA4B3DF006B7ADE /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
+		66F105A62BA4B83A006B7ADE /* WindowTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowTracker.swift; sourceTree = "<group>"; };
 		66F4E40E2B7D8FD3008C565D /* Twitch+Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Twitch+Notification.swift"; sourceTree = "<group>"; };
 		66F4E4152B80292F008C565D /* OAuthWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuthWebView.swift; sourceTree = "<group>"; };
 		66F4E41C2B811788008C565D /* AuthBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthBadgeView.swift; sourceTree = "<group>"; };
@@ -230,6 +236,8 @@
 			isa = PBXGroup;
 			children = (
 				6600E08F2B8BC0FD003B2270 /* InsetBackground.swift */,
+				66F105A22BA4B28E006B7ADE /* Lifecycle.swift */,
+				66F105A62BA4B83A006B7ADE /* WindowTracker.swift */,
 			);
 			path = ViewModifiers;
 			sourceTree = "<group>";
@@ -493,6 +501,7 @@
 				66891FF72B9A9E72000C0D92 /* Color.swift */,
 				66F8D18F2B88581D008C4F7C /* Icon.swift */,
 				66B5DD872B9FCC150054121D /* Setting.swift */,
+				66F105A42BA4B3DF006B7ADE /* Task.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -610,6 +619,7 @@
 				66891FF62B9A9590000C0D92 /* ChatMessage.swift in Sources */,
 				66125F632B8425A7002169B5 /* ChannelGridView.swift in Sources */,
 				66E1023F2B82D8AF007A44D4 /* CategoryButtonView.swift in Sources */,
+				66F105A52BA4B3DF006B7ADE /* Task.swift in Sources */,
 				66364FBD2B8AF629005180B8 /* CircleBackgroundLessButton.swift in Sources */,
 				662535402B9E01D000EBD081 /* ChatModel.swift in Sources */,
 				66F4E4342B813A1F008C565D /* FollowedStreamsView.swift in Sources */,
@@ -640,9 +650,11 @@
 				66E1023C2B82D85B007A44D4 /* CategoryGridView.swift in Sources */,
 				663B72FB2B6DB8E60031D661 /* SilaApp.swift in Sources */,
 				660AFF6C2B93A9A60003186E /* ChatPaneView.swift in Sources */,
+				66F105A72BA4B83A006B7ADE /* WindowTracker.swift in Sources */,
 				66F4E40F2B7D8FD3008C565D /* Twitch+Notification.swift in Sources */,
 				66E1021E2B8273B0007A44D4 /* TwitchWindowView.swift in Sources */,
 				66E102222B829349007A44D4 /* StreamButtonView.swift in Sources */,
+				66F105A32BA4B28E006B7ADE /* Lifecycle.swift in Sources */,
 				66C96BED2B900E7F0016A91B /* StreamableVideo.swift in Sources */,
 				66F4E4282B812932008C565D /* OAuthView.swift in Sources */,
 				66E102292B82988A007A44D4 /* PopularView.swift in Sources */,

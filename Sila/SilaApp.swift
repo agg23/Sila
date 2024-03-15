@@ -10,15 +10,14 @@ import Twitch
 
 @main
 struct SilaAppApp: App {
-    @Environment(\.openWindow) private var openWindow
-
     @State var authController = AuthController()
 
     var body: some Scene {
         WindowGroup(for: String.self) { main in
             MainWindowView()
-            // This is the default window size of the launching animation
-            .frame(width: 1280.0, height: 720.0)
+                .mainWindow()
+                // This is the default window size of the launching animation
+                .frame(width: 1280.0, height: 720.0)
         } defaultValue: {
             // Set default value so there's a shared ID we can use to reuse the window
             // TODO: This doesn't work for some reason
@@ -29,6 +28,7 @@ struct SilaAppApp: App {
 
         WindowGroup(id: "stream", for: Twitch.Stream.self) { $stream in
             TwitchStreamVideoView(stream: stream)
+                .playbackWindow(for: stream)
         } defaultValue: {
             // Providing a default allows us to refocus an open window
             // TODO: Replace with actual value

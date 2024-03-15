@@ -13,8 +13,6 @@ struct TwitchWindowView: View {
     @AppStorage(Setting.dimSurroundings) var dimSurroundings: Bool = false
 
     @Environment(\.scenePhase) private var scene
-
-    @Environment(\.openWindow) private var openWindow
     @Environment(\.dismissWindow) private var dismissWindow
 
     @State private var player = WebViewPlayer()
@@ -32,20 +30,20 @@ struct TwitchWindowView: View {
             // The only issue is the grabber is not constantly visible while the video is paused
             .persistentSystemOverlays(.hidden)
             .glassBackgroundEffect(in: RoundedRectangle(cornerRadius: self.smallBorderRadius ? 24.0 : 56.0))
-            .onChange(of: self.scene) { oldValue, newValue in
-                switch newValue {
-                case .active:
-                    WindowController.shared.refPlaybackWindow(with: self.streamableVideo.id())
-                    NotificationCenter.default.post(name: .twitchMuteAll, object: nil, userInfo: nil)
-                case .inactive, .background:
-                    if WindowController.shared.derefPlaybackWindow(with: self.streamableVideo.id()) && !WindowController.shared.mainWindowSpawned {
-                        // Closed window, reopen main
-                        openWindow(value: "main")
-                    }
-                @unknown default:
-                    break
-                }
-            }
+//            .onChange(of: self.scene) { oldValue, newValue in
+//                switch newValue {
+//                case .active:
+//                    WindowController.shared.refPlaybackWindow(with: self.streamableVideo.id())
+//                    NotificationCenter.default.post(name: .twitchMuteAll, object: nil, userInfo: nil)
+//                case .inactive, .background:
+//                    if WindowController.shared.derefPlaybackWindow(with: self.streamableVideo.id()) && !WindowController.shared.mainWindowSpawned {
+//                        // Closed window, reopen main
+//                        openWindow(value: "main")
+//                    }
+//                @unknown default:
+//                    break
+//                }
+//            }
             .onChange(of: self.player.muted, { _, newValue in
                 WindowController.shared.setPlaybackMuted(with: self.streamableVideo.id(), muted: newValue)
             })

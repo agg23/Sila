@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import Twitch
 
 class WindowController {
     class PlaybackWindowRecord {
@@ -21,20 +22,30 @@ class WindowController {
     var mainWindowSpawned = false
 
     private var playbackWindows: [String: PlaybackWindowRecord] = [:]
+    /// Track all opened windows so we can forcibly close then when the main window opens
+    private(set) var previouslyOpenedWindows = Set<Twitch.Stream>()
+
+    var spawnedPlaybackCount: Int {
+        get {
+            self.playbackWindows.count
+        }
+    }
+
+    /// Tracks the last opened playback window ID so it can be killed in some scenarios of launching the app from SpringBoard
+    var lastPlaybackWindowsId: String?
 
     private init() {}
 
     /// Count the number of active playback windows, so we know when to spawn the main window
-    func refPlaybackWindow(with id: String) {
-        self.playbackWindows[id] = PlaybackWindowRecord()
+    func refPlaybackWindow(with stream: Twitch.Stream) {
+        self.playbackWindows[stream.id] = PlaybackWindowRecord()
+        self.previouslyOpenedWindows.insert(stream)
     }
 
     /// Dereference this active playback window, so we know when to spawn the main window
     /// Returns true if there are no registered windows
-    func derefPlaybackWindow(with id: String) -> Bool {
+    func derefPlaybackWindow(with id: String) {
         self.playbackWindows.removeValue(forKey: id)
-
-        return self.playbackWindows.isEmpty
     }
 
     /// Set an active playback window's mute status

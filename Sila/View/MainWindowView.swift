@@ -38,14 +38,6 @@ struct MainWindowView: View {
             }, disableToolbar: true)
         }
         .environment(self.streamTimer)
-        .onAppear {
-            WindowController.shared.mainWindowSpawned = true
-        }
-        .onChange(of: self.scene) { oldValue, newValue in
-            if newValue == .background {
-                WindowController.shared.mainWindowSpawned = false
-            }
-        }
     }
 }
 
