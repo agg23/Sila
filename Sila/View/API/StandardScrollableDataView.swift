@@ -24,7 +24,12 @@ struct StandardScrollableDataView<T, Content: View>: View {
             }
             .refreshable(action: { try? await self.loader.wrappedValue.refresh(minDurationSecs: 1) })
         }) { _ in
-            ProgressView()
+            // Vertically center loading spinner with NavigationStack safe area
+            ZStack {
+                Color.clear
+                ProgressView()
+            }
+            .ignoresSafeArea()
         } error: { (_: HelixError?) in
             APIErrorView(loader: self.loader)
         }

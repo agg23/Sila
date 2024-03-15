@@ -30,7 +30,12 @@ struct ChannelView: View {
         } content: { user in
             ChannelViewContent(channelUser: user)
         } loading: { _ in
-            ProgressView()
+            // Vertically center loading spinner with NavigationStack safe area
+            ZStack {
+                Color.clear
+                ProgressView()
+            }
+            .ignoresSafeArea()
         } error: { (_: HelixError?) in
             APIErrorView(loader: self.$loader)
         }
