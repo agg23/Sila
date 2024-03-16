@@ -10,12 +10,14 @@ import AsyncAnimatedImageUI
 import TwitchIRC
 
 struct ChatMessage: View {
+    @State private var cachedColors = CachedColors()
+
     let message: PrivateMessage
 
     var body: some View {
         Group {
             Text(self.message.displayName)
-                .foregroundStyle(Color(UIColor.hexStringToUIColor(hex: self.message.color))) + Text(": ") +
+                .foregroundStyle(Color(self.cachedColors.get(hexColor: self.message.color))) + Text(": ") +
             self.buildChunks(from: self.message).reduce(Text("")) { existingText, chunk in
                 switch chunk {
                 case .text(let string):
@@ -28,6 +30,21 @@ struct ChatMessage: View {
         }
         .drawingGroup()
         .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .leading)
+    }
+
+    @Observable class CachedColors {
+        @ObservationIgnored private var colors: [String: UIColor] = [:]
+
+        func get(hexColor string: String) -> UIColor {
+            if let color = self.colors[string] {
+                return color
+            }
+
+            let newColor = UIColor.hexStringToUIColor(hex: string)
+            self.colors[string] = newColor
+
+            return newColor
+        }
     }
 
     enum AnimatedMessageChunk {
