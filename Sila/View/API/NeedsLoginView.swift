@@ -14,7 +14,7 @@ struct NeedsLoginView: View {
     let systemImage: String
 
     var body: some View {
-        EmptyContentView(title: "Unauthorized", systemImage: self.systemImage, description: "To view \(self.noAuthMessage)", buttonTitle: "Log In", buttonSystemImage: "person") {
+        EmptyContentView(title: "Please Log In", systemImage: self.systemImage, description: "To view \(self.noAuthMessage)", buttonTitle: "Log In", buttonSystemImage: "person", ignoreSafeArea: true) {
             self.authController.requestLoginReauthWithUI()
         }
     }

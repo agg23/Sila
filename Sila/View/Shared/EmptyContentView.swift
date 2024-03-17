@@ -14,9 +14,36 @@ struct EmptyContentView: View {
 
     let buttonTitle: String
     let buttonSystemImage: String
+
+    let ignoreSafeArea: Bool
+
     let action: (() -> Void)?
 
+    internal init(title: String, systemImage: String, description: String, buttonTitle: String, buttonSystemImage: String, ignoreSafeArea: Bool = false, action: (() -> Void)? = nil) {
+        self.title = title
+        self.systemImage = systemImage
+        self.description = description
+        self.buttonTitle = buttonTitle
+        self.buttonSystemImage = buttonSystemImage
+        self.ignoreSafeArea = ignoreSafeArea
+        self.action = action
+    }
+
     var body: some View {
+        if self.ignoreSafeArea {
+            // Vertically center content with NavigationStack safe area
+            ZStack {
+                Color.clear
+                self.content
+            }
+            .ignoresSafeArea()
+        } else {
+            self.content
+        }
+    }
+
+    @ViewBuilder
+    var content: some View {
         VStack {
             ContentUnavailableView(self.title, systemImage: self.systemImage, description: Text(self.description))
             if let action = self.action {

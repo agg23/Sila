@@ -14,7 +14,7 @@ struct EmptyDataView: View {
     let reload: (() -> Void)?
 
     var body: some View {
-        EmptyContentView(title: self.title, systemImage: self.systemImage, description: "Could not find any \(self.message).", buttonTitle: "Reload", buttonSystemImage: "arrow.clockwise", action: self.reload)
+        EmptyContentView(title: self.title, systemImage: self.systemImage, description: "Could not find any \(self.message).", buttonTitle: "Reload", buttonSystemImage: "arrow.clockwise", ignoreSafeArea: true, action: self.reload)
     }
 }
 
