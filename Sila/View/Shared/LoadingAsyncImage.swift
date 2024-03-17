@@ -20,10 +20,10 @@ struct LoadingAsyncImage: View {
             } else if state.error != nil {
                 // TODO: Show error
             } else {
-                ZStack {
-                    Color.clear
-                    ProgressView()
-                }
+                Color.clear
+                    .overlay {
+                        ProgressView()
+                    }
             }
         }
         .aspectRatio(self.aspectRatio, contentMode: .fit)
