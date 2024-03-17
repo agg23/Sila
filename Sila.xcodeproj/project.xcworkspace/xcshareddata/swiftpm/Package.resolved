@@ -1,14 +1,6 @@
 {
+  "originHash" : "fcc3e35f152f6bba46dd7d0e7ea820ef3c2d1f360d22adfaf3edab80e68bea72",
   "pins" : [
-    {
-      "identity" : "asyncanimatedimage",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/ericlewis/AsyncAnimatedImage.git",
-      "state" : {
-        "branch" : "main",
-        "revision" : "644f524c60ae9a1bff757ac8e31fac2921c699c7"
-      }
-    },
     {
       "identity" : "junoslider",
       "kind" : "remoteSourceControl",
@@ -145,5 +137,5 @@
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }

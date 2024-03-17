@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -29,7 +29,6 @@
 		66125F6F2B842F82002169B5 /* ChannelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66125F6E2B842F82002169B5 /* ChannelView.swift */; };
 		6614CD4D2B94FDA400A3EE17 /* SharedPlaybackSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6614CD4C2B94FDA400A3EE17 /* SharedPlaybackSettings.swift */; };
 		6625353B2B9CE6F600EBD081 /* AsyncAnimatedImageUI in Frameworks */ = {isa = PBXBuildFile; productRef = 6625353A2B9CE6F600EBD081 /* AsyncAnimatedImageUI */; };
-		6625353E2B9CF0FE00EBD081 /* AsyncAnimatedImageUI in Frameworks */ = {isa = PBXBuildFile; productRef = 6625353D2B9CF0FE00EBD081 /* AsyncAnimatedImageUI */; };
 		662535402B9E01D000EBD081 /* ChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6625353F2B9E01D000EBD081 /* ChatModel.swift */; };
 		663336942B75B7EA0098D188 /* View+WindowGeometryPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663336932B75B7EA0098D188 /* View+WindowGeometryPreferences.swift */; };
 		66364FBA2B8ABB9C005180B8 /* APIErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66364FB92B8ABB9C005180B8 /* APIErrorView.swift */; };
@@ -48,6 +47,8 @@
 		66891FF62B9A9590000C0D92 /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66891FF52B9A9590000C0D92 /* ChatMessage.swift */; };
 		66891FF82B9A9E72000C0D92 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66891FF72B9A9E72000C0D92 /* Color.swift */; };
 		66891FFB2B9AA058000C0D92 /* View+BackgroundTint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66891FFA2B9AA058000C0D92 /* View+BackgroundTint.swift */; };
+		6690EBA02BA6667B0093B18C /* ChatMessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6690EB9F2BA6667B0093B18C /* ChatMessageModel.swift */; };
+		6690EBA22BA667250093B18C /* CachedColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6690EBA12BA667250093B18C /* CachedColors.swift */; };
 		66A5ADB52B96DA160025EF75 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A5ADB42B96DA160025EF75 /* SettingsView.swift */; };
 		66A5ADB82B96DAA20025EF75 /* LicensesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A5ADB72B96DAA20025EF75 /* LicensesView.swift */; };
 		66A5ADBB2B97E98E0025EF75 /* Licenses.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 66A5ADBA2B97E98E0025EF75 /* Licenses.xcstrings */; };
@@ -85,6 +86,9 @@
 		66F105A32BA4B28E006B7ADE /* Lifecycle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F105A22BA4B28E006B7ADE /* Lifecycle.swift */; };
 		66F105A52BA4B3DF006B7ADE /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F105A42BA4B3DF006B7ADE /* Task.swift */; };
 		66F105A72BA4B83A006B7ADE /* WindowTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F105A62BA4B83A006B7ADE /* WindowTracker.swift */; };
+		66F105AA2BA5E733006B7ADE /* AsyncAnimatedImageUI in Frameworks */ = {isa = PBXBuildFile; productRef = 66F105A92BA5E733006B7ADE /* AsyncAnimatedImageUI */; };
+		66F105AD2BA5EDA3006B7ADE /* AsyncAnimatedImageUI in Frameworks */ = {isa = PBXBuildFile; productRef = 66F105AC2BA5EDA3006B7ADE /* AsyncAnimatedImageUI */; };
+		66F105B02BA5EE51006B7ADE /* AsyncAnimatedImageUI in Frameworks */ = {isa = PBXBuildFile; productRef = 66F105AF2BA5EE51006B7ADE /* AsyncAnimatedImageUI */; };
 		66F4E40F2B7D8FD3008C565D /* Twitch+Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E40E2B7D8FD3008C565D /* Twitch+Notification.swift */; };
 		66F4E4162B80292F008C565D /* OAuthWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E4152B80292F008C565D /* OAuthWebView.swift */; };
 		66F4E41D2B811788008C565D /* AuthBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E41C2B811788008C565D /* AuthBadgeView.swift */; };
@@ -141,6 +145,8 @@
 		66891FF52B9A9590000C0D92 /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
 		66891FF72B9A9E72000C0D92 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		66891FFA2B9AA058000C0D92 /* View+BackgroundTint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+BackgroundTint.swift"; sourceTree = "<group>"; };
+		6690EB9F2BA6667B0093B18C /* ChatMessageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessageModel.swift; sourceTree = "<group>"; };
+		6690EBA12BA667250093B18C /* CachedColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CachedColors.swift; sourceTree = "<group>"; };
 		66A5ADB42B96DA160025EF75 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		66A5ADB72B96DAA20025EF75 /* LicensesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicensesView.swift; sourceTree = "<group>"; };
 		66A5ADBA2B97E98E0025EF75 /* Licenses.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = Licenses.xcstrings; path = Sila/Licenses.xcstrings; sourceTree = SOURCE_ROOT; };
@@ -199,12 +205,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				66E102192B8262AC007A44D4 /* KeychainWrapper in Frameworks */,
-				6625353E2B9CF0FE00EBD081 /* AsyncAnimatedImageUI in Frameworks */,
 				663E38092B9226D3002E0530 /* NukeUI in Frameworks */,
+				66F105B02BA5EE51006B7ADE /* AsyncAnimatedImageUI in Frameworks */,
 				66F4E4302B8132F5008C565D /* Twitch in Frameworks */,
 				66891FF42B9A9535000C0D92 /* AsyncAnimatedImageUI in Frameworks */,
 				663E38072B9226D3002E0530 /* Nuke in Frameworks */,
 				6625353B2B9CE6F600EBD081 /* AsyncAnimatedImageUI in Frameworks */,
+				66F105AA2BA5E733006B7ADE /* AsyncAnimatedImageUI in Frameworks */,
+				66F105AD2BA5EDA3006B7ADE /* AsyncAnimatedImageUI in Frameworks */,
 				66364FC82B8BA49A005180B8 /* JunoUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -280,8 +288,8 @@
 		66364FC22B8B9A97005180B8 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
+				6690EB9E2BA6666B0093B18C /* Model */,
 				66891FF52B9A9590000C0D92 /* ChatMessage.swift */,
-				6625353F2B9E01D000EBD081 /* ChatModel.swift */,
 				660AFF6B2B93A9A60003186E /* ChatPaneView.swift */,
 				66028DF82B91798C00696071 /* ChatView.swift */,
 			);
@@ -353,6 +361,16 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		6690EB9E2BA6666B0093B18C /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				6690EBA12BA667250093B18C /* CachedColors.swift */,
+				6625353F2B9E01D000EBD081 /* ChatModel.swift */,
+				6690EB9F2BA6667B0093B18C /* ChatMessageModel.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		66C96BD92B8EB1AB0016A91B /* VOD */ = {
@@ -530,7 +548,9 @@
 				663E38082B9226D3002E0530 /* NukeUI */,
 				66891FF32B9A9535000C0D92 /* AsyncAnimatedImageUI */,
 				6625353A2B9CE6F600EBD081 /* AsyncAnimatedImageUI */,
-				6625353D2B9CF0FE00EBD081 /* AsyncAnimatedImageUI */,
+				66F105A92BA5E733006B7ADE /* AsyncAnimatedImageUI */,
+				66F105AC2BA5EDA3006B7ADE /* AsyncAnimatedImageUI */,
+				66F105AF2BA5EE51006B7ADE /* AsyncAnimatedImageUI */,
 			);
 			productName = Sila;
 			productReference = 663B72F32B6DB8E60031D661 /* Sila.app */;
@@ -565,7 +585,7 @@
 				66E102172B8262AC007A44D4 /* XCRemoteSwiftPackageReference "KeychainWrapper" */,
 				66364FC62B8BA499005180B8 /* XCRemoteSwiftPackageReference "JunoSlider" */,
 				663E38052B9226D3002E0530 /* XCRemoteSwiftPackageReference "Nuke" */,
-				6625353C2B9CF0FD00EBD081 /* XCRemoteSwiftPackageReference "AsyncAnimatedImage" */,
+				66F105AE2BA5EE51006B7ADE /* XCLocalSwiftPackageReference "../AsyncAnimatedImage" */,
 			);
 			productRefGroup = 663B72F42B6DB8E60031D661 /* Products */;
 			projectDirPath = "";
@@ -652,6 +672,7 @@
 				660AFF6C2B93A9A60003186E /* ChatPaneView.swift in Sources */,
 				66F105A72BA4B83A006B7ADE /* WindowTracker.swift in Sources */,
 				66F4E40F2B7D8FD3008C565D /* Twitch+Notification.swift in Sources */,
+				6690EBA22BA667250093B18C /* CachedColors.swift in Sources */,
 				66E1021E2B8273B0007A44D4 /* TwitchWindowView.swift in Sources */,
 				66E102222B829349007A44D4 /* StreamButtonView.swift in Sources */,
 				66F105A32BA4B28E006B7ADE /* Lifecycle.swift in Sources */,
@@ -676,6 +697,7 @@
 				66E8859F2B86C646004B4B8D /* DataLoader.swift in Sources */,
 				66E885A82B8821D9004B4B8D /* StandardScrollableDataView.swift in Sources */,
 				66125F662B84260D002169B5 /* UserMock.swift in Sources */,
+				6690EBA02BA6667B0093B18C /* ChatMessageModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -886,15 +908,14 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCRemoteSwiftPackageReference section */
-		6625353C2B9CF0FD00EBD081 /* XCRemoteSwiftPackageReference "AsyncAnimatedImage" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/ericlewis/AsyncAnimatedImage.git";
-			requirement = {
-				branch = main;
-				kind = branch;
-			};
+/* Begin XCLocalSwiftPackageReference section */
+		66F105AE2BA5EE51006B7ADE /* XCLocalSwiftPackageReference "../AsyncAnimatedImage" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../AsyncAnimatedImage;
 		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCRemoteSwiftPackageReference section */
 		66364FC62B8BA499005180B8 /* XCRemoteSwiftPackageReference "JunoSlider" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/christianselig/JunoSlider.git";
@@ -934,11 +955,6 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = AsyncAnimatedImageUI;
 		};
-		6625353D2B9CF0FE00EBD081 /* AsyncAnimatedImageUI */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 6625353C2B9CF0FD00EBD081 /* XCRemoteSwiftPackageReference "AsyncAnimatedImage" */;
-			productName = AsyncAnimatedImageUI;
-		};
 		66364FC72B8BA49A005180B8 /* JunoUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 66364FC62B8BA499005180B8 /* XCRemoteSwiftPackageReference "JunoSlider" */;
@@ -962,6 +978,18 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 66E102172B8262AC007A44D4 /* XCRemoteSwiftPackageReference "KeychainWrapper" */;
 			productName = KeychainWrapper;
+		};
+		66F105A92BA5E733006B7ADE /* AsyncAnimatedImageUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AsyncAnimatedImageUI;
+		};
+		66F105AC2BA5EDA3006B7ADE /* AsyncAnimatedImageUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AsyncAnimatedImageUI;
+		};
+		66F105AF2BA5EE51006B7ADE /* AsyncAnimatedImageUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AsyncAnimatedImageUI;
 		};
 		66F4E42F2B8132F5008C565D /* Twitch */ = {
 			isa = XCSwiftPackageProductDependency;

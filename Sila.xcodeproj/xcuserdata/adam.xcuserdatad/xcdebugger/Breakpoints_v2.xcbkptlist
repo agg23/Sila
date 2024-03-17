@@ -66,36 +66,6 @@
             endingLineNumber = "109"
             landmarkName = "layoutAttachedSubviews()"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "F966686F-6036-45C6-8CAC-C3A648F61AB5 - aa068ac19f945d7"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "SubviewAttachingTextView.SubviewAttachingTextViewBehavior.layoutAttachedSubviews() -&gt; ()"
-                  moduleName = "VisionTwitch"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/adam/Library/Developer/Xcode/DerivedData/VisionTwitch-hdobqkaqfroincdmgtoupdlgggbe/SourcePackages/checkouts/SubviewAttachingTextView/SubviewAttachingTextView/SubviewAttachingTextViewBehavior.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "109"
-                  endingLineNumber = "109">
-               </Location>
-               <Location
-                  uuid = "F966686F-6036-45C6-8CAC-C3A648F61AB5 - aa068ac19f945d7"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "SubviewAttachingTextView.SubviewAttachingTextViewBehavior.layoutAttachedSubviews() -&gt; ()"
-                  moduleName = "VisionTwitch"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/adam/Library/Developer/Xcode/DerivedData/VisionTwitch-hdobqkaqfroincdmgtoupdlgggbe/SourcePackages/checkouts/SubviewAttachingTextView/SubviewAttachingTextView/SubviewAttachingTextViewBehavior.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "109"
-                  endingLineNumber = "109">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -160,36 +130,6 @@
             endingLineNumber = "46"
             landmarkName = "animate(withGIFURL:loopCount:preparationBlock:animationBlock:loopBlock:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "83C75BC3-48B0-4321-9497-EA41D3C26145 - 42a828552db1ba92"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(3) suspend resume partial function for closure #1 @Sendable () async -&gt; () in AsyncAnimatedImageUI.GIFAnimationContainer.animate(withGIFURL: Foundation.URL, loopCount: Swift.Int, preparationBlock: Swift.Optional&lt;() -&gt; ()&gt;, animationBlock: Swift.Optional&lt;() -&gt; ()&gt;, loopBlock: Swift.Optional&lt;() -&gt; ()&gt;) -&gt; ()"
-                  moduleName = "VisionTwitch"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/adam/Library/Developer/Xcode/DerivedData/VisionTwitch-hdobqkaqfroincdmgtoupdlgggbe/SourcePackages/checkouts/AsyncAnimatedImage/Sources/AsyncAnimatedImage/AsyncAnimatedImage.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "46"
-                  endingLineNumber = "46">
-               </Location>
-               <Location
-                  uuid = "83C75BC3-48B0-4321-9497-EA41D3C26145 - 4fe898eca2dd6491"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(4) suspend resume partial function for closure #1 @Sendable () async -&gt; () in AsyncAnimatedImageUI.GIFAnimationContainer.animate(withGIFURL: Foundation.URL, loopCount: Swift.Int, preparationBlock: Swift.Optional&lt;() -&gt; ()&gt;, animationBlock: Swift.Optional&lt;() -&gt; ()&gt;, loopBlock: Swift.Optional&lt;() -&gt; ()&gt;) -&gt; ()"
-                  moduleName = "VisionTwitch"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/adam/Library/Developer/Xcode/DerivedData/VisionTwitch-hdobqkaqfroincdmgtoupdlgggbe/SourcePackages/checkouts/AsyncAnimatedImage/Sources/AsyncAnimatedImage/AsyncAnimatedImage.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "46"
-                  endingLineNumber = "46">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
