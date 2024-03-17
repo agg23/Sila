@@ -13,7 +13,7 @@ struct PopularView: View {
     @State private var existingIds = Set<String>()
 
     var body: some View {
-        StandardScrollableDataView(loader: self.$loader) { api, _ in
+        StandardDataView(loader: self.$loader) { api, _ in
             let streams = try await api.getStreams(limit: 100)
 
             self.existingIds.formUnion(streams.streams.map({ $0.id }))
@@ -27,9 +27,10 @@ struct PopularView: View {
                             try await self.loader.refresh()
                         }
                     }
-                    .containerRelativeFrame(.vertical)
                 } else {
-                    StreamGridView(streams: streams, onPaginationThresholdMet: self.onPaginationThresholdMet)
+                    RefreshableScrollGridView(loader: self.loader) {
+                        StreamGridView(streams: streams, onPaginationThresholdMet: self.onPaginationThresholdMet)
+                    }
                 }
             }
         }

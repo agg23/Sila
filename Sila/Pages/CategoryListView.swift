@@ -13,7 +13,7 @@ struct CategoryListView: View {
     @State private var existingIds = Set<String>()
 
     var body: some View {
-        StandardScrollableDataView(loader: self.$loader) { api, user in
+        StandardDataView(loader: self.$loader) { api, user in
             let (streams, cursor) = try await api.getTopGames(limit: 100)
 
             self.existingIds = Set(streams.map({ $0.id }))
@@ -26,9 +26,10 @@ struct CategoryListView: View {
                         try await self.loader.refresh()
                     }
                 }
-                .containerRelativeFrame(.vertical)
             } else {
-                CategoryGridView(categories: categories, onPaginationThresholdMet: self.onPaginationThresholdMet)
+                RefreshableScrollGridView(loader: self.loader) {
+                    CategoryGridView(categories: categories, onPaginationThresholdMet: self.onPaginationThresholdMet)
+                }
             }
         }
     }

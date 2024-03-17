@@ -49,6 +49,7 @@
 		66891FFB2B9AA058000C0D92 /* View+BackgroundTint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66891FFA2B9AA058000C0D92 /* View+BackgroundTint.swift */; };
 		6690EBA02BA6667B0093B18C /* ChatMessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6690EB9F2BA6667B0093B18C /* ChatMessageModel.swift */; };
 		6690EBA22BA667250093B18C /* CachedColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6690EBA12BA667250093B18C /* CachedColors.swift */; };
+		6690EBA82BA78C810093B18C /* RefreshableScrollGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6690EBA72BA78C810093B18C /* RefreshableScrollGridView.swift */; };
 		66A5ADB52B96DA160025EF75 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A5ADB42B96DA160025EF75 /* SettingsView.swift */; };
 		66A5ADB82B96DAA20025EF75 /* LicensesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A5ADB72B96DAA20025EF75 /* LicensesView.swift */; };
 		66A5ADBB2B97E98E0025EF75 /* Licenses.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 66A5ADBA2B97E98E0025EF75 /* Licenses.xcstrings */; };
@@ -82,7 +83,7 @@
 		66E8859F2B86C646004B4B8D /* DataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E8859E2B86C646004B4B8D /* DataLoader.swift */; };
 		66E885A22B86D95C004B4B8D /* AuthStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E885A12B86D95C004B4B8D /* AuthStatus.swift */; };
 		66E885A52B86DFE2004B4B8D /* AuthController+EnvironmentValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E885A42B86DFE2004B4B8D /* AuthController+EnvironmentValues.swift */; };
-		66E885A82B8821D9004B4B8D /* StandardScrollableDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E885A72B8821D9004B4B8D /* StandardScrollableDataView.swift */; };
+		66E885A82B8821D9004B4B8D /* StandardDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E885A72B8821D9004B4B8D /* StandardDataView.swift */; };
 		66F105A32BA4B28E006B7ADE /* Lifecycle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F105A22BA4B28E006B7ADE /* Lifecycle.swift */; };
 		66F105A52BA4B3DF006B7ADE /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F105A42BA4B3DF006B7ADE /* Task.swift */; };
 		66F105A72BA4B83A006B7ADE /* WindowTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F105A62BA4B83A006B7ADE /* WindowTracker.swift */; };
@@ -147,6 +148,7 @@
 		66891FFA2B9AA058000C0D92 /* View+BackgroundTint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+BackgroundTint.swift"; sourceTree = "<group>"; };
 		6690EB9F2BA6667B0093B18C /* ChatMessageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessageModel.swift; sourceTree = "<group>"; };
 		6690EBA12BA667250093B18C /* CachedColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CachedColors.swift; sourceTree = "<group>"; };
+		6690EBA72BA78C810093B18C /* RefreshableScrollGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshableScrollGridView.swift; sourceTree = "<group>"; };
 		66A5ADB42B96DA160025EF75 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		66A5ADB72B96DAA20025EF75 /* LicensesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicensesView.swift; sourceTree = "<group>"; };
 		66A5ADBA2B97E98E0025EF75 /* Licenses.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = Licenses.xcstrings; path = Sila/Licenses.xcstrings; sourceTree = SOURCE_ROOT; };
@@ -179,7 +181,7 @@
 		66E8859E2B86C646004B4B8D /* DataLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataLoader.swift; sourceTree = "<group>"; };
 		66E885A12B86D95C004B4B8D /* AuthStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthStatus.swift; sourceTree = "<group>"; };
 		66E885A42B86DFE2004B4B8D /* AuthController+EnvironmentValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthController+EnvironmentValues.swift"; sourceTree = "<group>"; };
-		66E885A72B8821D9004B4B8D /* StandardScrollableDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandardScrollableDataView.swift; sourceTree = "<group>"; };
+		66E885A72B8821D9004B4B8D /* StandardDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandardDataView.swift; sourceTree = "<group>"; };
 		66F105A22BA4B28E006B7ADE /* Lifecycle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lifecycle.swift; sourceTree = "<group>"; };
 		66F105A42BA4B3DF006B7ADE /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 		66F105A62BA4B83A006B7ADE /* WindowTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowTracker.swift; sourceTree = "<group>"; };
@@ -443,7 +445,7 @@
 				66F4E41C2B811788008C565D /* AuthBadgeView.swift */,
 				66F4E43C2B818499008C565D /* DataView.swift */,
 				6672D37B2B8C3F7B00E9D0E9 /* NeedsLoginView.swift */,
-				66E885A72B8821D9004B4B8D /* StandardScrollableDataView.swift */,
+				66E885A72B8821D9004B4B8D /* StandardDataView.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -479,6 +481,7 @@
 				666E97E82B8D7085008EE950 /* EmptyDataView.swift */,
 				66F8D1952B898141008C4F7C /* LoadingAsyncImage.swift */,
 				66125F5B2B83D9EC002169B5 /* PickerTabView.swift */,
+				6690EBA72BA78C810093B18C /* RefreshableScrollGridView.swift */,
 				66125F522B83C003002169B5 /* ScrollGridView.swift */,
 				66125F552B83C88E002169B5 /* TabPage.swift */,
 				66E102112B82515A007A44D4 /* TagView.swift */,
@@ -652,6 +655,7 @@
 				66E1022C2B82A592007A44D4 /* StreamGridView.swift in Sources */,
 				66C96BE12B8EC4510016A91B /* VODButtonView.swift in Sources */,
 				66E102352B82D788007A44D4 /* CategoryMock.swift in Sources */,
+				6690EBA82BA78C810093B18C /* RefreshableScrollGridView.swift in Sources */,
 				666E97E92B8D7085008EE950 /* EmptyDataView.swift in Sources */,
 				66C96BDE2B8EC2D10016A91B /* VideoMock.swift in Sources */,
 				66125F692B84279A002169B5 /* ChannelButtonView.swift in Sources */,
@@ -695,7 +699,7 @@
 				66125F5F2B83EF38002169B5 /* View+HighlightableButton.swift in Sources */,
 				6672D37C2B8C3F7B00E9D0E9 /* NeedsLoginView.swift in Sources */,
 				66E8859F2B86C646004B4B8D /* DataLoader.swift in Sources */,
-				66E885A82B8821D9004B4B8D /* StandardScrollableDataView.swift in Sources */,
+				66E885A82B8821D9004B4B8D /* StandardDataView.swift in Sources */,
 				66125F662B84260D002169B5 /* UserMock.swift in Sources */,
 				6690EBA02BA6667B0093B18C /* ChatMessageModel.swift in Sources */,
 			);

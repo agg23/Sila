@@ -33,7 +33,7 @@ struct FollowedStreamsView: View {
 
     @ViewBuilder
     var liveStreams: some View {
-        AuthorizedStandardScrollableDataView(loader: self.$liveStreamsLoader, task: { api, user in
+        AuthroizedStandardDataView(loader: self.$liveStreamsLoader, task: { api, user in
             print("Request live")
             guard user != nil else {
                 // If we have no user, we're unauthenticated and this is a buffered task
@@ -47,10 +47,10 @@ struct FollowedStreamsView: View {
                         try? await self.liveStreamsLoader.refresh()
                     }
                 }
-                // Fit it to the ScrollView
-                .containerRelativeFrame(.vertical)
             } else {
-                StreamGridView(streams: streams, onPaginationThresholdMet: self.onPaginationThresholdMet)
+                RefreshableScrollGridView(loader: self.liveStreamsLoader) {
+                    StreamGridView(streams: streams, onPaginationThresholdMet: self.onPaginationThresholdMet)
+                }
             }
         }
     }
@@ -58,7 +58,7 @@ struct FollowedStreamsView: View {
     @ViewBuilder
     var channels: some View {
         // TODO: Does not support pagination, but I believe will fetch all 100 channels (probably all anyone has)
-        AuthorizedStandardScrollableDataView(loader: self.$channelsLoader, task: { api, user in
+        AuthroizedStandardDataView(loader: self.$channelsLoader, task: { api, user in
             let (_, channels, _) = try await api.getFollowedChannels(limit: 100)
 
             let broadcasterIds = channels.map({$0.broadcasterId})
@@ -72,10 +72,10 @@ struct FollowedStreamsView: View {
                         try? await self.channelsLoader.refresh()
                     }
                 }
-                // Fit it to the ScrollView
-                .containerRelativeFrame(.vertical)
             } else {
-                ChannelGridView(channels: channels)
+                RefreshableScrollGridView(loader: self.channelsLoader) {
+                    ChannelGridView(channels: channels)
+                }
             }
         }
     }

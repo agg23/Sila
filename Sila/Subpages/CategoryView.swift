@@ -17,7 +17,7 @@ struct CategoryView: View {
     var category: GameWrapper
 
     var body: some View {
-        StandardScrollableDataView(loader: self.$loader) { api, _ in
+        StandardDataView(loader: self.$loader) { api, _ in
             try await self.fetchData(on: api)
         } content: { streams, game, cursor in
             MatureStreamFilterView(streams: streams) { streams in
@@ -27,9 +27,10 @@ struct CategoryView: View {
                             try await self.loader.refresh()
                         }
                     }
-                    .containerRelativeFrame(.vertical)
                 } else {
-                    StreamGridView(streams: streams, onPaginationThresholdMet: self.onPaginationThresholdMet)
+                    RefreshableScrollGridView(loader: self.loader) {
+                        StreamGridView(streams: streams, onPaginationThresholdMet: self.onPaginationThresholdMet)
+                    }
                 }
             }
             .navigationTitle(game.name)

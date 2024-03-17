@@ -81,10 +81,12 @@ struct ChannelViewContent: View {
                 Spacer()
             }
             .padding()
-            AuthorizedStandardScrollableDataView(loader: self.$vodLoader, task: { api, _ in
+            AuthroizedStandardDataView(loader: self.$vodLoader, task: { api, _ in
                 return try await api.getVideosByUserId(self.channelUser.id)
             }, noAuthMessage: "this channel's VoDs", noAuthSystemImage: Icon.channel) { videos, _ in
-                VODGridView(videos: videos, onPaginationThresholdMet: self.onPaginationThresholdMet)
+                RefreshableScrollGridView(loader: self.vodLoader) {
+                    VODGridView(videos: videos, onPaginationThresholdMet: self.onPaginationThresholdMet)
+                }
             }
             // Make profile image be pushed to the top
             Spacer()
