@@ -45,6 +45,10 @@ struct DataView<T, E: Error, Content: View, Loading: View, ErrorView: View>: Vie
                                 if status == 401 || status == 403 {
                                     self.authController.requestReauth()
                                 }
+                            case .requestFailed(error: _, status: let status, message: _):
+                                if status == 401 || status == 403 {
+                                    self.authController.requestReauth()
+                                }
                             default:
                                 break
                             }
