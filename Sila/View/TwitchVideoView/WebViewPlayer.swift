@@ -52,12 +52,6 @@ struct VideoQuality {
 
         NotificationCenter.default.addObserver(forName: .twitchMuteAll, object: nil, queue: nil) { notification in
             print("Setting mute all")
-//            self.webView?.evaluateJavaScript("""
-//                let video = document.getElementsByTagName("video");
-//                if (video.length > 0) {
-//                    video[0].muted = true;
-//                }
-//            """)
             self.setMute(true)
         }
 

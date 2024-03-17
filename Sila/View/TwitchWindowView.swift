@@ -32,6 +32,7 @@ struct TwitchContentView: View {
     @State private var player = WebViewPlayer()
 
     @State private var delayLoading = !WindowController.shared.checkAllMuted()
+    @State private var delayTimer: Timer?
     @Binding var controlVisibility: Visibility
 
     let streamableVideo: StreamableVideo
@@ -41,6 +42,16 @@ struct TwitchContentView: View {
             // Set aspect ratio and enforce uniform resizing
             // This is on an inner view to prevent breaking .persistentSystemOverlays() modification
             .windowGeometryPreferences(minimumSize: CGSize(width: 160.0, height: 90.0), resizingRestrictions: .uniform)
+            .onAppear {
+                if self.delayLoading {
+                    self.delayTimer?.invalidate()
+                    self.delayTimer = Timer.scheduledTimer(withTimeInterval: 2, repeats: false, block: { _ in
+                        // If time has passed and we didn't allow loading, something probably went wrong
+                        // Make sure we don't freeze here
+                        self.delayLoading = false
+                    })
+                }
+            }
             .onChange(of: self.player.muted, { _, newValue in
                 WindowController.shared.setPlaybackMuted(with: self.streamableVideo.id(), muted: newValue)
             })
