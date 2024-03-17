@@ -20,7 +20,33 @@ struct OAuthWebView: UIViewRepresentable {
     let completed: (_ status: OAuthStatus) -> Void
 
     init(completed: @escaping (_ status: OAuthStatus) -> Void) {
-        self.webView = WKWebView()
+        // Hide Twitch sign up and "Trouble logging in" links
+        // Twitch sign up is problematic for App Store review, and doesn't make much
+        // sense in the app, as the user cannot follow new channels
+        // "Trouble logging in" doesn't work because it links out, so we also hide it
+        let hideSignUpAndTroubleLoggingIn = WKUserScript(source: """
+            const style = document.createElement("style");
+            style.textContent = `
+              li:nth-child(2) {
+                display: none !important;
+              }
+
+              a[href="https://www.twitch.tv/user/account-recovery"] {
+                display: none !important;
+              }
+            `;
+
+            document.head.appendChild(style);
+            """, injectionTime: .atDocumentEnd, forMainFrameOnly: false)
+
+        let controller = WKUserContentController()
+        controller.addUserScript(hideSignUpAndTroubleLoggingIn)
+
+        let configuration = WKWebViewConfiguration()
+        configuration.userContentController = controller
+
+        self.webView = WKWebView(frame: .zero, configuration: configuration)
+
         self.completed = completed
     }
 

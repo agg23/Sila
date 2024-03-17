@@ -13,18 +13,17 @@ struct OAuthView: View {
     @Environment(\.authController) private var authController
 
     var body: some View {
-        VStack(spacing: 0) {
-            HStack(content: {
-                CloseButtonView {
-                    self.authController.logOut()
-                    dismiss()
-                }
-                // Offset to prevent button from being cut off from rounded corners
-                .padding(.leading, 32)
-                Spacer()
-            })
-            .padding(.vertical, 12)
+        NavigationStack {
             OAuthWebView(completed: self.receiveOAuthStatus)
+                .ignoresSafeArea()
+                .toolbar {
+                    ToolbarItem(placement: .cancellationAction) {
+                        CloseButtonView {
+                            self.authController.logOut()
+                            dismiss()
+                        }
+                    }
+                }
         }
         .frame(width: 800, height: 600)
     }
