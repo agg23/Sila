@@ -7,6 +7,7 @@
 
 import AppIntents
 
+// TODO: Unused
 struct ChannelEntity: AppEntity {
     static var defaultQuery = ChannelQuery()
 

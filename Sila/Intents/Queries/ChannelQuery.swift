@@ -8,6 +8,7 @@
 import AppIntents
 import Twitch
 
+// TODO: Unused
 struct ChannelQuery: EntityStringQuery {
     @Dependency private var authController: AuthController
 

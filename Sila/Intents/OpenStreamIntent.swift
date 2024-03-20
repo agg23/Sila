@@ -13,30 +13,29 @@ struct OpenStreamIntent: AppIntent {
 
     static var title: LocalizedStringResource = "Open Stream"
 
+    static var openAppWhenRun: Bool = false
+    static var isDiscoverable: Bool = true
+
     @Parameter(
         title: "Channel",
         description: "The channel to open",
         requestValueDialog: IntentDialog("What channel do you wish to view?")
     )
-    var channel: ChannelEntity
-
-    static var openAppWhenRun: Bool = true
-    static var isDiscoverable: Bool = true
+    var channel: String
 
     @MainActor
-    func perform() async throws -> some IntentResult {
+    func perform() async throws -> some IntentResult & OpensIntent {
         let api = try AuthShortcut.getAPI(self.authController)
 
-        let (streams, _) = try await api.getStreams(userLogins: [self.channel.loginName])
+        let (streams, _) = try await api.getStreams(userLogins: [self.channel])
 
         guard streams.count > 0 else {
-            throw IntentError.message("Channel \(self.channel.displayName) is not live.")
+            throw IntentError.message("Channel \"\(self.channel)\" is not live.")
         }
 
         let stream = streams[0]
         self.router.push(window: .stream(stream))
 
-        return .result()
+        return .result(opensIntent: OpenApp())
     }
-
 }
