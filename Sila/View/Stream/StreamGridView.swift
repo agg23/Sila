@@ -37,7 +37,7 @@ struct StreamGridView: View {
 }
 
 #Preview {
-    NavStack {
+    PreviewNavStack {
         StreamGridView(streams: STREAMS_LIST_MOCK())
     }
     .environment(StreamTimer())

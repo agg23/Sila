@@ -133,7 +133,7 @@ struct StreamButtonView: View {
 }
 
 #Preview {
-    NavStack {
+    PreviewNavStack {
         StreamButtonView(stream: STREAM_MOCK())
             .frame(width: 400, height: 340)
     }

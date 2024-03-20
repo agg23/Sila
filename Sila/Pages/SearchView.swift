@@ -118,7 +118,7 @@ struct SearchCategoryButton: View {
 }
 
 #Preview {
-    NavStack {
+    PreviewNavStack {
         SearchListView(channels: CHANNEL_LIST_MOCK(), categories: CATEGORY_LIST_MOCK().prefix(20).map({ game in
             Category(game: game)
         }))

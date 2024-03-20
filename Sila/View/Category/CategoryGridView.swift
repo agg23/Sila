@@ -39,7 +39,7 @@ struct CategoryGridView: View {
 }
 
 #Preview {
-    NavStack {
+    PreviewNavStack {
         CategoryGridView(categories: CATEGORY_LIST_MOCK())
     }
 }

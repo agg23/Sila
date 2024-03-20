@@ -2,6 +2,19 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>INAlternativeAppNames</key>
+	<array>
+		<dict>
+			<key>INAlternativeAppName</key>
+			<string>Twitch</string>
+		</dict>
+		<dict>
+			<key>INAlternativeAppNamePronunciationHint</key>
+			<string>Sigh la</string>
+			<key>INAlternativeAppName</key>
+			<string>Sila</string>
+		</dict>
+	</array>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>API_CLIENT_ID</key>

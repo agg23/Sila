@@ -11,7 +11,7 @@ import Twitch
 import KeychainWrapper
 import WebKit
 
-@Observable class AuthController {
+@Observable final class AuthController: Sendable {
     // Embedding a secret into the client is insecure, but Twitch requires auth to access public APIs
     // and I don't want to set up a HTTP service to embed the secret into requests (especially given
     // this is OSS).

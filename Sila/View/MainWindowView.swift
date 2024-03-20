@@ -8,7 +8,10 @@
 import SwiftUI
 
 struct MainWindowView: View {
+    @Environment(\.openWindow) private var openWindow
     @Environment(\.scenePhase) private var scene
+
+    @Environment(Router.self) private var router
 
     @State private var streamTimer = StreamTimer()
 
@@ -38,6 +41,21 @@ struct MainWindowView: View {
             }, disableToolbar: true)
         }
         .environment(self.streamTimer)
+        // Located at root of main window, as each of the tabs can be rendered at the same time
+        .onChange(of: self.router.bufferedWindowOpen, initial: true, { _, newValue in
+            guard let window = newValue else {
+                return
+            }
+
+            self.router.bufferedWindowOpen = nil
+
+            switch window {
+            case .stream(let stream):
+                openWindow(id: "stream", value: stream)
+            case .vod(let video):
+                openWindow(id: "vod", value: video)
+            }
+        })
     }
 }
 

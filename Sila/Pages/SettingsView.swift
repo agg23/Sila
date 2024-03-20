@@ -49,7 +49,7 @@ struct SettingsView: View {
 }
 
 #Preview {
-    NavStack {
+    PreviewNavStack {
         SettingsView()
     }
 }

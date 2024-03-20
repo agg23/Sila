@@ -13,6 +13,11 @@ enum Route: Hashable {
     case channel(user: UserWrapper)
 }
 
+enum ExternalWindow: Equatable {
+    case stream(_ stream: Twitch.Stream)
+    case vod(_ video: Twitch.Video)
+}
+
 enum GameWrapper {
     case game(_ game: Game)
     case id(_ id: String)

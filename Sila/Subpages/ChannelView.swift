@@ -115,7 +115,7 @@ struct ChannelViewContent: View {
 }
 
 #Preview {
-    NavStack {
+    PreviewNavStack {
         ChannelViewContent(channelUser: USER_MOCK())
             .navigationTitle(USER_MOCK().displayName)
     }

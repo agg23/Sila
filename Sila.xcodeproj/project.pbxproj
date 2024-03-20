@@ -41,6 +41,12 @@
 		663B73272B6DBA8E0031D661 /* TwitchWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663B73262B6DBA8E0031D661 /* TwitchWebView.swift */; };
 		663E38072B9226D3002E0530 /* Nuke in Frameworks */ = {isa = PBXBuildFile; productRef = 663E38062B9226D3002E0530 /* Nuke */; };
 		663E38092B9226D3002E0530 /* NukeUI in Frameworks */ = {isa = PBXBuildFile; productRef = 663E38082B9226D3002E0530 /* NukeUI */; };
+		6645AFE02BA87C890096BC03 /* OpenStreamIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6645AFDF2BA87C890096BC03 /* OpenStreamIntent.swift */; };
+		6645AFE32BA90AD70096BC03 /* ChannelEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6645AFE22BA90AD70096BC03 /* ChannelEntity.swift */; };
+		6645AFE62BA90C140096BC03 /* ChannelQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6645AFE52BA90C140096BC03 /* ChannelQuery.swift */; };
+		6645AFE82BA910DC0096BC03 /* IntentError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6645AFE72BA910DC0096BC03 /* IntentError.swift */; };
+		6645AFEA2BA9153D0096BC03 /* Shortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6645AFE92BA9153D0096BC03 /* Shortcuts.swift */; };
+		6645AFED2BAA532C0096BC03 /* AuthShortcut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6645AFEC2BAA532C0096BC03 /* AuthShortcut.swift */; };
 		666E97E92B8D7085008EE950 /* EmptyDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 666E97E82B8D7085008EE950 /* EmptyDataView.swift */; };
 		6672D37C2B8C3F7B00E9D0E9 /* NeedsLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6672D37B2B8C3F7B00E9D0E9 /* NeedsLoginView.swift */; };
 		66891FF42B9A9535000C0D92 /* AsyncAnimatedImageUI in Frameworks */ = {isa = PBXBuildFile; productRef = 66891FF32B9A9535000C0D92 /* AsyncAnimatedImageUI */; };
@@ -141,6 +147,12 @@
 		663B73072B6DB8E80031D661 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		663B73222B6DB9A30031D661 /* TwitchVideoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitchVideoView.swift; sourceTree = "<group>"; };
 		663B73262B6DBA8E0031D661 /* TwitchWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitchWebView.swift; sourceTree = "<group>"; };
+		6645AFDF2BA87C890096BC03 /* OpenStreamIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenStreamIntent.swift; sourceTree = "<group>"; };
+		6645AFE22BA90AD70096BC03 /* ChannelEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelEntity.swift; sourceTree = "<group>"; };
+		6645AFE52BA90C140096BC03 /* ChannelQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelQuery.swift; sourceTree = "<group>"; };
+		6645AFE72BA910DC0096BC03 /* IntentError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentError.swift; sourceTree = "<group>"; };
+		6645AFE92BA9153D0096BC03 /* Shortcuts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shortcuts.swift; sourceTree = "<group>"; };
+		6645AFEC2BAA532C0096BC03 /* AuthShortcut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthShortcut.swift; sourceTree = "<group>"; };
 		666E97E82B8D7085008EE950 /* EmptyDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyDataView.swift; sourceTree = "<group>"; };
 		6672D37B2B8C3F7B00E9D0E9 /* NeedsLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NeedsLoginView.swift; sourceTree = "<group>"; };
 		66891FF52B9A9590000C0D92 /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
@@ -321,6 +333,7 @@
 			children = (
 				66F4E42A2B812A1F008C565D /* API */,
 				663336922B75B7D40098D188 /* Extensions */,
+				6645AFDE2BA87C6F0096BC03 /* Intents */,
 				66E102242B8293DE007A44D4 /* Mocks */,
 				66F4E4312B813986008C565D /* Pages */,
 				66125F4E2B83B8FD002169B5 /* Subpages */,
@@ -363,6 +376,43 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		6645AFDE2BA87C6F0096BC03 /* Intents */ = {
+			isa = PBXGroup;
+			children = (
+				6645AFE12BA90AAD0096BC03 /* Entities */,
+				6645AFE42BA90C080096BC03 /* Queries */,
+				6645AFEB2BAA53160096BC03 /* Util */,
+				6645AFE72BA910DC0096BC03 /* IntentError.swift */,
+				6645AFDF2BA87C890096BC03 /* OpenStreamIntent.swift */,
+				6645AFE92BA9153D0096BC03 /* Shortcuts.swift */,
+			);
+			path = Intents;
+			sourceTree = "<group>";
+		};
+		6645AFE12BA90AAD0096BC03 /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				6645AFE22BA90AD70096BC03 /* ChannelEntity.swift */,
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
+		6645AFE42BA90C080096BC03 /* Queries */ = {
+			isa = PBXGroup;
+			children = (
+				6645AFE52BA90C140096BC03 /* ChannelQuery.swift */,
+			);
+			path = Queries;
+			sourceTree = "<group>";
+		};
+		6645AFEB2BAA53160096BC03 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				6645AFEC2BAA532C0096BC03 /* AuthShortcut.swift */,
+			);
+			path = Util;
 			sourceTree = "<group>";
 		};
 		6690EB9E2BA6666B0093B18C /* Model */ = {
@@ -619,6 +669,7 @@
 			files = (
 				66364FBA2B8ABB9C005180B8 /* APIErrorView.swift in Sources */,
 				663336942B75B7EA0098D188 /* View+WindowGeometryPreferences.swift in Sources */,
+				6645AFE32BA90AD70096BC03 /* ChannelEntity.swift in Sources */,
 				6600E08C2B8BBBCB003B2270 /* DarkBackgroundView.swift in Sources */,
 				66B5DD862B9FCBCC0054121D /* StreamTimer.swift in Sources */,
 				66E102422B82D94E007A44D4 /* AsyncImageButtonView.swift in Sources */,
@@ -662,7 +713,9 @@
 				66125F532B83C003002169B5 /* ScrollGridView.swift in Sources */,
 				66E102262B8293EB007A44D4 /* StreamMock.swift in Sources */,
 				66A5ADB82B96DAA20025EF75 /* LicensesView.swift in Sources */,
+				6645AFE02BA87C890096BC03 /* OpenStreamIntent.swift in Sources */,
 				660F73A22B7446D70011FD65 /* WebViewPlayer.swift in Sources */,
+				6645AFED2BAA532C0096BC03 /* AuthShortcut.swift in Sources */,
 				6600E0852B8BB384003B2270 /* Stream.swift in Sources */,
 				6614CD4D2B94FDA400A3EE17 /* SharedPlaybackSettings.swift in Sources */,
 				66E102122B82515A007A44D4 /* TagView.swift in Sources */,
@@ -675,6 +728,7 @@
 				663B72FB2B6DB8E60031D661 /* SilaApp.swift in Sources */,
 				660AFF6C2B93A9A60003186E /* ChatPaneView.swift in Sources */,
 				66F105A72BA4B83A006B7ADE /* WindowTracker.swift in Sources */,
+				6645AFE62BA90C140096BC03 /* ChannelQuery.swift in Sources */,
 				66F4E40F2B7D8FD3008C565D /* Twitch+Notification.swift in Sources */,
 				6690EBA22BA667250093B18C /* CachedColors.swift in Sources */,
 				66E1021E2B8273B0007A44D4 /* TwitchWindowView.swift in Sources */,
@@ -687,6 +741,7 @@
 				66F8D1902B88581D008C4F7C /* Icon.swift in Sources */,
 				66E102322B82D317007A44D4 /* CategoryListView.swift in Sources */,
 				66E1021B2B8272E3007A44D4 /* Auth+Notification.swift in Sources */,
+				6645AFE82BA910DC0096BC03 /* IntentError.swift in Sources */,
 				66A5ADBE2B9933730025EF75 /* WindowController.swift in Sources */,
 				66B5DD852B9FCBCC0054121D /* MatureStreamFilterView.swift in Sources */,
 				66125F502B83B913002169B5 /* CategoryView.swift in Sources */,
@@ -702,6 +757,7 @@
 				66E885A82B8821D9004B4B8D /* StandardDataView.swift in Sources */,
 				66125F662B84260D002169B5 /* UserMock.swift in Sources */,
 				6690EBA02BA6667B0093B18C /* ChatMessageModel.swift in Sources */,
+				6645AFEA2BA9153D0096BC03 /* Shortcuts.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
