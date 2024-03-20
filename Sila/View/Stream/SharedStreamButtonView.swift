@@ -13,7 +13,7 @@ enum StreamOrVideo {
     case video(_: Video)
 }
 
-struct SharedStreamButtonView<PreTitleRight: View, ImageOverlay: View>: View {
+struct SharedStreamButtonView<PreTitleRight: View, ImageOverlay: View, ContextMenu: View>: View {
     @Environment(Router.self) private var router
     @Environment(\.openWindow) private var openWindow
 
@@ -28,8 +28,9 @@ struct SharedStreamButtonView<PreTitleRight: View, ImageOverlay: View>: View {
     let subtitle: String
 
     @ViewBuilder let imageOverlay: () -> ImageOverlay
+    @ViewBuilder let contextMenu: () -> ContextMenu
 
-    init(source: StreamOrVideo, displayUrl: String, preTitleLeft: String, title: String, subtitle: String, @ViewBuilder preTitleRight: @escaping () -> PreTitleRight, @ViewBuilder imageOverlay: @escaping () -> ImageOverlay) {
+    init(source: StreamOrVideo, displayUrl: String, preTitleLeft: String, title: String, subtitle: String, @ViewBuilder preTitleRight: @escaping () -> PreTitleRight, @ViewBuilder imageOverlay: @escaping () -> ImageOverlay, @ViewBuilder contextMenu: @escaping () -> ContextMenu) {
         self.source = source
         self.displayUrl = displayUrl
         self.preTitleLeft = preTitleLeft
@@ -37,6 +38,7 @@ struct SharedStreamButtonView<PreTitleRight: View, ImageOverlay: View>: View {
         self.title = title
         self.subtitle = subtitle
         self.imageOverlay = imageOverlay
+        self.contextMenu = contextMenu
     }
 
     var body: some View {
@@ -70,6 +72,8 @@ struct SharedStreamButtonView<PreTitleRight: View, ImageOverlay: View>: View {
             .frame(minWidth: 0, maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .leading)
         } imageOverlay: {
             self.imageOverlay()
+        } contextMenu: {
+            self.contextMenu()
         }
     }
 
@@ -84,7 +88,7 @@ struct SharedStreamButtonView<PreTitleRight: View, ImageOverlay: View>: View {
 
 }
 
-extension SharedStreamButtonView where PreTitleRight == EmptyView, ImageOverlay == EmptyView {
+extension SharedStreamButtonView where PreTitleRight == EmptyView, ImageOverlay == EmptyView, ContextMenu == EmptyView {
     init(source: StreamOrVideo, displayUrl: String, preTitleLeft: String, title: String, subtitle: String) {
         self.source = source
         self.displayUrl = displayUrl
@@ -97,6 +101,9 @@ extension SharedStreamButtonView where PreTitleRight == EmptyView, ImageOverlay 
         self.imageOverlay = {
             EmptyView()
         }
+        self.contextMenu = {
+            EmptyView()
+        }
     }
 }
 
@@ -106,6 +113,8 @@ extension SharedStreamButtonView where PreTitleRight == EmptyView, ImageOverlay 
             Text("Pretitle right")
         } imageOverlay: {
             Text("This is on the image overlay")
+        } contextMenu: {
+            
         }
             .frame(width: 400, height: 340)
     }

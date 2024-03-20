@@ -7,21 +7,25 @@
 
 import SwiftUI
 
-struct AsyncImageButtonView<Content: View, ImageOverlay: View>: View {
+struct AsyncImageButtonView<Content: View, ImageOverlay: View, ContextMenu: View>: View {
+    private let cornerRadius = 20.0
+
     let imageUrl: URL?
     let aspectRatio: CGFloat
 
     let action: () -> Void
     @ViewBuilder let content: () -> Content
     @ViewBuilder let imageOverlay: (() -> ImageOverlay)?
+    @ViewBuilder let contextMenu: (() -> ContextMenu)?
     let overlayAlignment: Alignment?
 
-    init(imageUrl: URL? = nil, aspectRatio: CGFloat, overlayAlignment: Alignment? = nil, action: @escaping () -> Void, content: @escaping () -> Content, imageOverlay: @escaping () -> ImageOverlay) {
+    init(imageUrl: URL? = nil, aspectRatio: CGFloat, overlayAlignment: Alignment? = nil, action: @escaping () -> Void, content: @escaping () -> Content, imageOverlay: @escaping () -> ImageOverlay, contextMenu: @escaping () -> ContextMenu) {
         self.imageUrl = imageUrl
         self.aspectRatio = aspectRatio
         self.action = action
         self.content = content
         self.imageOverlay = imageOverlay
+        self.contextMenu = contextMenu
         self.overlayAlignment = overlayAlignment
     }
 
@@ -40,20 +44,42 @@ struct AsyncImageButtonView<Content: View, ImageOverlay: View>: View {
                 .padding(.bottom, 8)
             }
             .background(.tertiary)
-            .hoverEffect()
-            .cornerRadius(20)
+            // Without this (matching the corner radius), the context menu corners will not match
+            .contentShape(.contextMenuPreview, RoundedRectangle(cornerRadius: self.cornerRadius))
+            .cornerRadius(self.cornerRadius)
+            .contextMenu {
+                self.contextMenu?()
+            }
         }
         .buttonStyle(.plain)
+        .buttonBorderShape(.roundedRectangle(radius: self.cornerRadius))
     }
 }
 
 extension AsyncImageButtonView where ImageOverlay == EmptyView {
+    init(imageUrl: URL? = nil, aspectRatio: CGFloat, action: @escaping () -> Void, content: @escaping () -> Content, contextMenu: @escaping () -> ContextMenu) {
+        self.imageUrl = imageUrl
+        self.aspectRatio = aspectRatio
+        self.action = action
+        self.content = content
+        self.imageOverlay = {
+            EmptyView()
+        }
+        self.contextMenu = contextMenu
+        self.overlayAlignment = nil
+    }
+}
+
+extension AsyncImageButtonView where ImageOverlay == EmptyView, ContextMenu == EmptyView {
     init(imageUrl: URL? = nil, aspectRatio: CGFloat, action: @escaping () -> Void, content: @escaping () -> Content) {
         self.imageUrl = imageUrl
         self.aspectRatio = aspectRatio
         self.action = action
         self.content = content
         self.imageOverlay = {
+            EmptyView()
+        }
+        self.contextMenu = {
             EmptyView()
         }
         self.overlayAlignment = nil

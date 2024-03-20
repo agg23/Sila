@@ -42,8 +42,7 @@ struct StreamButtonView: View {
                     Text(self.stream.viewerCount.formatted(.number))
                 }
             }
-        }
-        .contextMenu {
+        } contextMenu: {
             let channelButton = Button {
                 self.router.path.append(Route.channel(user: .id(stream.userId)))
             } label: {
