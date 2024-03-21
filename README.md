@@ -1,6 +1,6 @@
 # Sila for Twitch
 
-<img src="https://github.com/agg23/Sila/blob/master/Icon.svg" width="512px">
+<img src="https://github.com/agg23/Sila/blob/master/Icon.svg" width="384px">
 
 Sila is a native Twitch client designed for Apple Vision Pro. Bypass the official Twitch websites with it's annoying touch targets and tiny UI and experience Twitch in a more enjoyable manner.
 
@@ -21,8 +21,7 @@ No Twitch account is required for use, but if you chose to use it, your existing
 ## Screenshots
 
 ![Video](https://github.com/agg23/Sila/blob/assets/screenshots/Video.jpg) ![Chat](https://github.com/agg23/Sila/blob/assets/screenshots/Chat.jpg)
-
-![Popular](https://github.com/agg23/Sila/blob/assets/screenshots/Popular.jpg) ![Mixed View](https://github.com/agg23/Sila/blob/assets/screenshots/Mixed View.jpg)
+![Popular](https://github.com/agg23/Sila/blob/assets/screenshots/Popular.jpg) ![Mixed View](https://github.com/agg23/Sila/blob/assets/screenshots/Mixed%20View.jpg)
 
 ## FAQ
 
