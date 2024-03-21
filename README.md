@@ -4,8 +4,7 @@
 
 Sila is a native Twitch client designed for Apple Vision Pro. Bypass the official Twitch websites with it's annoying touch targets and tiny UI and experience Twitch in a more enjoyable manner.
 
-// TODO: TestFlight URL
-It is not available on the App Store, but you can [download it from TestFlight](). If you really enjoy the app, or just want to help me pay for my dev account subscription, you can donate [here on Github](https://github.com/sponsors/agg23/).
+It is not available on the App Store, but you can [download it from TestFlight](https://testflight.apple.com/join/tvPhZZ8w). If you really enjoy the app, or just want to help me pay for my dev account subscription, you can donate [here on Github](https://github.com/sponsors/agg23/).
 
 ## Features
 
@@ -28,6 +27,12 @@ No Twitch account is required for use, but if you chose to use it, your existing
 ### Why is Sila not available in the App Store?
 
 After several frustrating rounds of submissions to the App Store, it seems like Apple is not going to approve the app for some reason. Among other issues, App Review stated that Sila was "too similar to the website", and does not warrant being an app. I obviously think this is ridiculous, and it's very disappointing that I can't properly share Sila with people.
+
+In the meantime, you can get it via TestFlight at: https://testflight.apple.com/join/tvPhZZ8w
+
+### Why "Sila"
+
+[Sila is the Inuit word for breath or spirit](https://en.wikipedia.org/wiki/Silap_Inua), which matches well with the ghost mascot I imagined for the icon. I searched through a bunch of names relating to ghost and Twitch and cloud, including in non-English languages, and Sila was the best one I found. After using it for a while, I think it fits quite well.
 
 ### Why use a `WKWebView`? Why not a native `AVPlayer`?
 
