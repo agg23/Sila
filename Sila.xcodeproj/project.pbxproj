@@ -53,6 +53,7 @@
 		6666F3512BAA72B8009D5A29 /* StreamWrapperEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6666F3502BAA72B8009D5A29 /* StreamWrapperEntity.swift */; };
 		6666F3532BAA7335009D5A29 /* StreamWrapperQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6666F3522BAA7335009D5A29 /* StreamWrapperQuery.swift */; };
 		6666F3552BAA75E8009D5A29 /* CategoryStreams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6666F3542BAA75E8009D5A29 /* CategoryStreams.swift */; };
+		6666F35B2BACF2CB009D5A29 /* AsyncAnimatedImageUI in Frameworks */ = {isa = PBXBuildFile; productRef = 6666F35A2BACF2CB009D5A29 /* AsyncAnimatedImageUI */; };
 		666E97E92B8D7085008EE950 /* EmptyDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 666E97E82B8D7085008EE950 /* EmptyDataView.swift */; };
 		6672D37C2B8C3F7B00E9D0E9 /* NeedsLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6672D37B2B8C3F7B00E9D0E9 /* NeedsLoginView.swift */; };
 		66891FF42B9A9535000C0D92 /* AsyncAnimatedImageUI in Frameworks */ = {isa = PBXBuildFile; productRef = 66891FF32B9A9535000C0D92 /* AsyncAnimatedImageUI */; };
@@ -240,6 +241,7 @@
 				663E38072B9226D3002E0530 /* Nuke in Frameworks */,
 				6625353B2B9CE6F600EBD081 /* AsyncAnimatedImageUI in Frameworks */,
 				66F105AA2BA5E733006B7ADE /* AsyncAnimatedImageUI in Frameworks */,
+				6666F35B2BACF2CB009D5A29 /* AsyncAnimatedImageUI in Frameworks */,
 				66F105AD2BA5EDA3006B7ADE /* AsyncAnimatedImageUI in Frameworks */,
 				66364FC82B8BA49A005180B8 /* JunoUI in Frameworks */,
 			);
@@ -625,6 +627,7 @@
 				66F105A92BA5E733006B7ADE /* AsyncAnimatedImageUI */,
 				66F105AC2BA5EDA3006B7ADE /* AsyncAnimatedImageUI */,
 				66F105AF2BA5EE51006B7ADE /* AsyncAnimatedImageUI */,
+				6666F35A2BACF2CB009D5A29 /* AsyncAnimatedImageUI */,
 			);
 			productName = Sila;
 			productReference = 663B72F32B6DB8E60031D661 /* Sila.app */;
@@ -659,7 +662,7 @@
 				66E102172B8262AC007A44D4 /* XCRemoteSwiftPackageReference "KeychainWrapper" */,
 				66364FC62B8BA499005180B8 /* XCRemoteSwiftPackageReference "JunoSlider" */,
 				663E38052B9226D3002E0530 /* XCRemoteSwiftPackageReference "Nuke" */,
-				66F105AE2BA5EE51006B7ADE /* XCLocalSwiftPackageReference "../AsyncAnimatedImage" */,
+				6666F3592BACF2CB009D5A29 /* XCRemoteSwiftPackageReference "AsyncAnimatedImage" */,
 			);
 			productRefGroup = 663B72F42B6DB8E60031D661 /* Products */;
 			projectDirPath = "";
@@ -996,13 +999,6 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCLocalSwiftPackageReference section */
-		66F105AE2BA5EE51006B7ADE /* XCLocalSwiftPackageReference "../AsyncAnimatedImage" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = ../AsyncAnimatedImage;
-		};
-/* End XCLocalSwiftPackageReference section */
-
 /* Begin XCRemoteSwiftPackageReference section */
 		66364FC62B8BA499005180B8 /* XCRemoteSwiftPackageReference "JunoSlider" */ = {
 			isa = XCRemoteSwiftPackageReference;
@@ -1018,6 +1014,14 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 12.4.0;
+			};
+		};
+		6666F3592BACF2CB009D5A29 /* XCRemoteSwiftPackageReference "AsyncAnimatedImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/agg23/AsyncAnimatedImage.git";
+			requirement = {
+				branch = main;
+				kind = branch;
 			};
 		};
 		66E102172B8262AC007A44D4 /* XCRemoteSwiftPackageReference "KeychainWrapper" */ = {
@@ -1057,6 +1061,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 663E38052B9226D3002E0530 /* XCRemoteSwiftPackageReference "Nuke" */;
 			productName = NukeUI;
+		};
+		6666F35A2BACF2CB009D5A29 /* AsyncAnimatedImageUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6666F3592BACF2CB009D5A29 /* XCRemoteSwiftPackageReference "AsyncAnimatedImage" */;
+			productName = AsyncAnimatedImageUI;
 		};
 		66891FF32B9A9535000C0D92 /* AsyncAnimatedImageUI */ = {
 			isa = XCSwiftPackageProductDependency;

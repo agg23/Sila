@@ -1,6 +1,15 @@
 {
-  "originHash" : "fcc3e35f152f6bba46dd7d0e7ea820ef3c2d1f360d22adfaf3edab80e68bea72",
+  "originHash" : "2438abe2ae8e6e9078e5a24569b804ac07aa4c8e1946b07b05e177b81a72b1ce",
   "pins" : [
+    {
+      "identity" : "asyncanimatedimage",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/agg23/AsyncAnimatedImage.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "a77e412451229fecc312bd9cbbab579d185ec04b"
+      }
+    },
     {
       "identity" : "junoslider",
       "kind" : "remoteSourceControl",
