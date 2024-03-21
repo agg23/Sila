@@ -35,6 +35,7 @@ struct CategoryView: View {
             }
             .navigationTitle(game.name)
         }
+        .navigationTitlePlaceholder()
     }
 
     func fetchData(on api: Helix, using cursor: String? = nil) async throws -> ([Twitch.Stream], Game, String?) {
