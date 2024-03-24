@@ -27,7 +27,7 @@ struct WindowTrackerViewModifier: ViewModifier {
                     WindowController.shared.mainWindowSpawned = true
                     for id in WindowController.shared.previouslyOpenedWindows {
                         // If we are spawning the main window, that means there should be no players
-                        // Thanks to a bug (as of 1.1), there may be phantom windows hanging around
+                        // Thanks to a bug (as of 1.1.1), there may be phantom windows hanging around
                         // Kill any possible window
                         dismissWindow(id: "stream", value: id)
                     }
@@ -44,7 +44,7 @@ struct WindowTrackerViewModifier: ViewModifier {
 
                     if WindowController.shared.spawnedPlaybackCount < 1 && !WindowController.shared.mainWindowSpawned {
                         // Spawn main window
-                        openWindow(value: "main")
+                        openWindow(value: "main" as String?)
                     }
                 }
             }

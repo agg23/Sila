@@ -28,8 +28,9 @@ struct SilaAppApp: App {
     }
 
     var body: some Scene {
-        WindowGroup(for: String.self) { main in
-            MainWindowView()
+        WindowGroup(for: String?.self) { $id in
+            // This `nil` ID is used to bypass a bug. See inside of `MainWindowView`
+            MainWindowView(id: id)
                 .mainWindow()
                 // This is the default window size of the launching animation
                 .frame(width: 1280.0, height: 720.0)

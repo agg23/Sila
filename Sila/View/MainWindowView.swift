@@ -6,18 +6,23 @@
 //
 
 import SwiftUI
+import Twitch
 
 struct MainWindowView: View {
     @Environment(\.openWindow) private var openWindow
+    @Environment(\.dismissWindow) private var dismissWindow
     @Environment(\.scenePhase) private var scene
 
     @Environment(Router.self) private var router
 
     @State private var streamTimer = StreamTimer()
 
+    /// Hack to prevent crash when saved stream windows are opened after reboot with a `nil` id
+    /// Present in 1.1.1
+    let id: String?
+
     var body: some View {
         TabView {
-            // TODO: Change icon
             TabPage(title: "Following", systemImage: Icon.following) {
                 FollowedStreamsView()
             }
@@ -30,17 +35,21 @@ struct MainWindowView: View {
                 CategoryListView()
             }
 
-            #if VOD_ENABLED
             TabPage(title: "Search", systemImage: Icon.search) {
                 SearchView()
             }
-            #endif
 
             TabPage(title: "Settings", systemImage: Icon.settings, content: {
                 SettingsView()
             }, disableToolbar: true)
         }
         .environment(self.streamTimer)
+        .onAppear {
+            if self.id == nil {
+                // This window shouldn't exist
+                dismissWindow()
+            }
+        }
         // Located at root of main window, as each of the tabs can be rendered at the same time
         .onChange(of: self.router.bufferedWindowOpen, initial: true, { _, newValue in
             guard let window = newValue else {
@@ -60,5 +69,5 @@ struct MainWindowView: View {
 }
 
 #Preview {
-    MainWindowView()
+    MainWindowView(id: "main")
 }
