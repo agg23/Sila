@@ -80,7 +80,7 @@ struct SearchChannelButton: View {
 
     var body: some View {
         Button {
-            self.router.path.append(.channel(user: .id(self.channel.id)))
+            self.router.pushToActiveTab(route: .channel(user: .id(self.channel.id)))
         } label: {
             GeometryReader { geometry in
                 HStack {
@@ -102,7 +102,7 @@ struct SearchCategoryButton: View {
 
     var body: some View {
         Button {
-            self.router.path.append(.category(game: .id(self.category.id)))
+            self.router.pushToActiveTab(route: .category(game: .id(self.category.id)))
         } label: {
             GeometryReader { geometry in
                 HStack {

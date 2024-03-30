@@ -22,24 +22,24 @@ struct MainWindowView: View {
     let id: String?
 
     var body: some View {
-        TabView {
-            TabPage(title: "Following", systemImage: Icon.following) {
+        TabView(selection: self.router.tabBinding) {
+            TabPage(title: "Following", systemImage: Icon.following, tab: .following) {
                 FollowedStreamsView()
             }
 
-            TabPage(title: "Popular", systemImage: Icon.popular) {
+            TabPage(title: "Popular", systemImage: Icon.popular, tab: .popular) {
                 PopularView()
             }
 
-            TabPage(title: "Categories", systemImage: Icon.category) {
+            TabPage(title: "Categories", systemImage: Icon.category, tab: .categories) {
                 CategoryListView()
             }
 
-            TabPage(title: "Search", systemImage: Icon.search) {
-                SearchView()
-            }
+//            TabPage(title: "Search", systemImage: Icon.search) {
+//                SearchView()
+//            }
 
-            TabPage(title: "Settings", systemImage: Icon.settings, content: {
+            TabPage(title: "Settings", systemImage: Icon.settings, tab: .settings, content: {
                 SettingsView()
             }, disableToolbar: true)
         }

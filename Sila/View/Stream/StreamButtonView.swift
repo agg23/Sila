@@ -44,13 +44,13 @@ struct StreamButtonView: View {
             }
         } contextMenu: {
             let channelButton = Button {
-                self.router.path.append(Route.channel(user: .id(stream.userId)))
+                self.router.pushToActiveTab(route: .channel(user: .id(stream.userId)))
             } label: {
                 Label("View Channel", systemImage: Icon.channel)
             }
 
             let categoryButton = Button {
-                self.router.path.append(Route.category(game: .id(stream.gameID)))
+                self.router.pushToActiveTab(route: .category(game: .id(stream.gameID)))
             } label: {
                 Label("More in this Category", systemImage: Icon.category)
             }
@@ -69,7 +69,7 @@ struct StreamButtonView: View {
             }
             #endif
 
-            if let last = self.router.path.last {
+            if let last = self.router.pathForActiveTab().last {
                 switch last {
                 case .category:
                     // We're in a category view, we're already looking at this category

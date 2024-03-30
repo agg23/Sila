@@ -55,7 +55,7 @@ struct PopularView: View {
 }
 
 #Preview {
-    TabPage(title: "Popular", systemImage: "star") {
+    TabPage(title: "Popular", systemImage: "star", tab: .popular) {
         ScrollGridView {
             StreamGridView(streams: STREAMS_LIST_MOCK())
         }
@@ -63,7 +63,7 @@ struct PopularView: View {
 }
 
 #Preview {
-    TabPage(title: "Popular", systemImage: "star") {
+    TabPage(title: "Popular", systemImage: "star", tab: .popular) {
         ScrollGridView {
             EmptyDataView(title: "No Livestreams", systemImage: Icon.popular, message: "any livestreams") {
 
