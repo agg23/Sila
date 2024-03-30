@@ -22,6 +22,25 @@ No Twitch account is required for use, but if you chose to use it, your existing
 ![Video](https://github.com/agg23/Sila/blob/assets/screenshots/Video.jpg) ![Chat](https://github.com/agg23/Sila/blob/assets/screenshots/Chat.jpg)
 ![Popular](https://github.com/agg23/Sila/blob/assets/screenshots/Popular.jpg) ![Mixed View](https://github.com/agg23/Sila/blob/assets/screenshots/Mixed%20View.jpg)
 
+## Automation
+
+Sila supports several automation mechanisms: Shortcuts and deeplinking.
+
+The included Shortcuts are:
+
+- Open Stream - Opens a live video window for the specified channel, if the channel exists and is live
+- Live Following Channels - Returns a list of live channels followed by your account
+- Most Popular Streams - Returns a list of the most popular streams on Twitch
+- Streams in Category - Returns a list of the most popular streams in a given category
+
+Deeplinking uses the `sila://` URL scheme. Supported routes are:
+
+- `sila://watch?stream=[streamerName]` - Opens a live video window for the specified channel, if the channel exists and is live
+- `sila://following` - Opens the Following tab
+- `sila://popular` - Opens the Popular tab
+- `sila://categories` - Opens the Categories tab
+- `sila://category?id=[categoryID]` - Opens the specified category, in the Categories tab, if the category exists
+
 ## FAQ
 
 ### Why is Sila not available in the App Store?

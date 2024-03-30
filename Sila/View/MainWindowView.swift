@@ -13,6 +13,8 @@ struct MainWindowView: View {
     @Environment(\.dismissWindow) private var dismissWindow
     @Environment(\.scenePhase) private var scene
 
+    @Environment(\.authController) private var authController
+
     @Environment(Router.self) private var router
 
     @State private var streamTimer = StreamTimer()
@@ -65,6 +67,65 @@ struct MainWindowView: View {
                 openWindow(id: "vod", value: video)
             }
         })
+        .onOpenURL { url in
+            guard let host = url.host else {
+                print("Malformed deeplink \(url)")
+                return
+            }
+
+            var queryDict: [String: String] = [:]
+
+            let queryItems = URLComponents(url: url, resolvingAgainstBaseURL: true)?.queryItems ?? []
+            queryItems.forEach { queryDict.updateValue($0.value?.lowercased() ?? "", forKey: $0.name.lowercased()) }
+
+            switch host {
+            case "watch":
+                if let stream = queryDict["stream"] {
+                    // Launch stream
+                    self.open(stream: stream)
+                    return
+                }
+                // TODO: Handle VoDs
+            case "following":
+                self.router.tab = .following
+                return
+            case "popular":
+                self.router.tab = .popular
+                return
+            case "categories":
+                self.router.tab = .categories
+                return
+            case "category":
+                if let id = queryDict["id"] {
+                    // Open particular category
+                    self.router.tab = .categories
+                    self.router.pushToActiveTab(route: .category(game: .id(id)))
+                    return
+                }
+            default:
+                print("Unknown deeplink \(url)")
+            }
+
+            print("Improperly handled deeplink \(url)")
+        }
+    }
+
+    func open(stream channel: String) {
+        Task {
+            let api = try AuthShortcut.getAPI(self.authController)
+
+            let (streams, _) = try await api.getStreams(userLogins: [channel])
+
+            guard streams.count > 0 else {
+                print("Channel \"\(channel)\" is not live.")
+                return
+            }
+
+            let stream = streams[0]
+            DispatchQueue.main.async {
+                openWindow(id: "stream", value: stream)
+            }
+        }
     }
 }
 
