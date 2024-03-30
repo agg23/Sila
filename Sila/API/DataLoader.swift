@@ -135,7 +135,10 @@ typealias StandardDataLoader<T> = DataLoader<T, (Helix, AuthUser?), AuthStatus>
 
     private func refreshDeferredData(preventLoadingState: Bool = false) async throws -> Status<T> {
         guard let task = self.task, let dataAugment = self.dataAugment else {
-            fatalError("Incorrectly set up DataLoader")
+            // This occurs in a race against the render `loadIfNecessary` call
+            // Ignore the request if this occurs
+            // fatalError("Incorrectly set up DataLoader")
+            return self.status
         }
 
         do {
