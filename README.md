@@ -41,6 +41,20 @@ Deeplinking uses the `sila://` URL scheme. Supported routes are:
 - `sila://categories` - Opens the Categories tab
 - `sila://category?id=[categoryID]` - Opens the specified category, in the Categories tab, if the category exists
 
+## Building
+
+Sila is straightforward to build, with everything being self-contained to Xcode and SPM. The only things that should be required of you as a developer is changing the signing team (as is typical for iOS) and adding secrets to `Keys.xcconfig`:
+
+1. Create `Keys.xcconfig` in the root directory of the repo, alongside `Sila.xcodeproj`.
+2. Add the following content:
+
+```
+API_CLIENT_ID = "[insert id here]"
+API_SECRET = "[insert secret here]"
+```
+
+You must obtain these keys from the Twitch developer portal, with your own registered application: https://dev.twitch.tv/console/apps. You must create a "Confidential" client with `http://localhost` as your OAuth redirect URL. We choose "Confidential" here as Twitch does not allow unauthorized clients to access certain key APIs unless it comes from a "Confidential" client. So while it's wrong to ship a private key with the application, we have no choice.
+
 ## FAQ
 
 ### Why is Sila not available in the App Store?
