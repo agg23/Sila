@@ -4,7 +4,7 @@
 
 Sila is a native Twitch client designed for Apple Vision Pro. Bypass the official Twitch websites with it's annoying touch targets and tiny UI and experience Twitch in a more enjoyable manner.
 
-It is not available on the App Store, but you can [download it from TestFlight](https://testflight.apple.com/join/tvPhZZ8w). If you really enjoy the app, or just want to help me pay for my dev account subscription, you can donate [here on Github](https://github.com/sponsors/agg23/).
+You can download it from the App Store at https://apps.apple.com/us/app/sila-for-twitch/id6479336617. If you really enjoy the app, or just want to help me pay for my dev account subscription, you can donate [here on Github](https://github.com/sponsors/agg23/).
 
 ## Features
 
@@ -56,12 +56,6 @@ API_SECRET = "[insert secret here]"
 You must obtain these keys from the Twitch developer portal, with your own registered application: https://dev.twitch.tv/console/apps. You must create a "Confidential" client with `http://localhost` as your OAuth redirect URL. We choose "Confidential" here as Twitch does not allow unauthorized clients to access certain key APIs unless it comes from a "Confidential" client. So while it's wrong to ship a private key with the application, we have no choice.
 
 ## FAQ
-
-### Why is Sila not available in the App Store?
-
-After several frustrating rounds of submissions to the App Store, it seems like Apple is not going to approve the app for some reason. Among other issues, App Review stated that Sila was "too similar to the website", and does not warrant being an app. I obviously think this is ridiculous, and it's very disappointing that I can't properly share Sila with people.
-
-In the meantime, you can get it via TestFlight at: https://testflight.apple.com/join/tvPhZZ8w
 
 ### Why "Sila"
 
