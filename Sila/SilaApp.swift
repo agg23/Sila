@@ -32,8 +32,7 @@ struct SilaAppApp: App {
             // This `nil` ID is used to bypass a bug. See inside of `MainWindowView`
             MainWindowView(id: id)
                 .mainWindow()
-                // This is the default window size of the launching animation
-                .frame(width: 1280.0, height: 720.0)
+                .frame(minWidth: defaultWindowSize.width, minHeight: defaultWindowSize.height)
                 // For some reason we crash if we put this environment on the window
                 .environment(self.router)
         } defaultValue: {
@@ -41,6 +40,8 @@ struct SilaAppApp: App {
             // TODO: This doesn't work for some reason
             return "main"
         }
+        // This is the default window size of the launching animation
+        .defaultSize(defaultWindowSize)
         .windowResizability(.contentSize)
         .environment(\.authController, self.authController)
 
@@ -53,7 +54,7 @@ struct SilaAppApp: App {
             STREAM_MOCK()
         }
         .environment(\.authController, self.authController)
-        .defaultSize(CGSize(width: 1280.0, height: 720.0))
+        .defaultSize(defaultWindowSize)
         .windowStyle(.plain)
 
         #if VOD_ENABLED
@@ -61,7 +62,9 @@ struct SilaAppApp: App {
             TwitchVoDVideoView(video: video)
         }
         .environment(\.authController, self.authController)
-        .defaultSize(CGSize(width: 1280.0, height: 720.0))
+        .defaultSize(defaultWindowSize)
         #endif
     }
+    
+    private let defaultWindowSize = CGSize(width: 1280.0, height: 720.0)
 }
