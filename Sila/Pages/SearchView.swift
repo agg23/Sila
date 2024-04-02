@@ -11,7 +11,7 @@ import Twitch
 struct SearchView: View {
     @State private var loader = StandardDataLoader<([Twitch.Category], [Channel])>()
     @State private var requestTask: Task<(), Error>?
-    @State private var text = ""
+    @State private var query = ""
 
     @State private var channelsExpanded = true
     @State private var categoriesExpanded = true
@@ -21,11 +21,11 @@ struct SearchView: View {
             // Dummy response. All data comes from onChange via the search text
             ([], [])
         } content: { categories, channels in
-            SearchListView(channels: channels, categories: categories)
+            SearchListView(channels: channels, categories: categories, query: self.query)
         }
         // TODO: Maybe follow how Christian made a search bar https://christianselig.com/2024/03/recreating-visionos-search-bar/
-        .searchable(text: self.$text, placement: .navigationBarDrawer)
-        .onChange(of: self.text) { _, newValue in
+        .searchable(text: self.$query, placement: .navigationBarDrawer)
+        .onChange(of: self.query) { _, newValue in
             self.requestTask?.cancel()
 
             self.requestTask = Task {
@@ -34,8 +34,8 @@ struct SearchView: View {
                         return ([], [])
                     }
 
-                    async let (categories, _) = try await apiAndUser.0.searchCategories(for: self.text, limit: 18)
-                    async let (channels, _) = try await apiAndUser.0.searchChannels(for: self.text, liveOnly: true, limit: 18)
+                    async let (categories, _) = try await apiAndUser.0.searchCategories(for: self.query, limit: 18)
+                    async let (channels, _) = try await apiAndUser.0.searchChannels(for: self.query, liveOnly: true, limit: 18)
                     return try await (categories, channels)
                 }
             }
@@ -50,11 +50,18 @@ struct SearchListView: View {
 
     let channels: [Channel]
     let categories: [Twitch.Category]
+    let query: String
 
     var body: some View {
+        let noQueryView = EmptyContentView(title: "Enter a search query", systemImage: Icon.search, description: "Enter a search query to find live channels or categories.", buttonTitle: "", buttonSystemImage: "", ignoreSafeArea: false, action: nil)
+
         OrnamentPickerTabView(leftTitle: "Live Channels", leftView: {
             if self.channels.isEmpty {
-                EmptyContentView(title: "No matching channels", systemImage: Icon.channel, description: "Adjust your search query for matching channels.", buttonTitle: "", buttonSystemImage: "", ignoreSafeArea: false, action: nil)
+                if self.query.isEmpty {
+                    noQueryView
+                } else {
+                    EmptyContentView(title: "No matching channels", systemImage: Icon.channel, description: "Adjust your search query for matching channels.", buttonTitle: "", buttonSystemImage: "", ignoreSafeArea: false, action: nil)
+                }
             } else {
                 SearchGrid(items: self.channels) { channel in
                     SearchButton(title: channel.name, subtitle: channel.gameName, squareImage: {
@@ -83,7 +90,11 @@ struct SearchListView: View {
             }
         }, rightTitle: "Categories") {
             if self.categories.isEmpty {
-                EmptyContentView(title: "No matching categories", systemImage: Icon.category, description: "Adjust your search query for matching categories.", buttonTitle: "", buttonSystemImage: "", ignoreSafeArea: false, action: nil)
+                if self.query.isEmpty {
+                    noQueryView
+                } else {
+                    EmptyContentView(title: "No matching categories", systemImage: Icon.category, description: "Adjust your search query for matching categories.", buttonTitle: "", buttonSystemImage: "", ignoreSafeArea: false, action: nil)
+                }
             } else {
                 SearchGrid(items: self.categories) { category in
                     SearchButton(title: category.name, subtitle: nil, squareImage: {
@@ -162,7 +173,7 @@ private struct SearchButton<ContentImage: View>: View {
     PreviewNavStack {
         SearchListView(channels: CHANNEL_LIST_MOCK().prefix(20).map({ $0 }), categories: CATEGORY_LIST_MOCK().prefix(20).map({ game in
             Category(game: game)
-        }))
+        }), query: "test")
     }
 }
 
@@ -170,7 +181,7 @@ private struct SearchButton<ContentImage: View>: View {
     PreviewNavStack {
         SearchListView(channels: CHANNEL_LIST_MOCK().prefix(10).map({ $0 }), categories: CATEGORY_LIST_MOCK().prefix(10).map({ game in
             Category(game: game)
-        }))
+        }), query: "test")
     }
 }
 
@@ -178,7 +189,7 @@ private struct SearchButton<ContentImage: View>: View {
     PreviewNavStack {
         SearchListView(channels: CHANNEL_LIST_MOCK().prefix(1).map({ $0 }), categories: CATEGORY_LIST_MOCK().prefix(1).map({ game in
             Category(game: game)
-        }))
+        }), query: "test")
     }
 }
 
