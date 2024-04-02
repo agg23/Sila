@@ -7,14 +7,14 @@
 
 import SwiftUI
 
-struct PickerTabView<LeftContent: View, RightContent: View>: View {
+struct OrnamentPickerTabView<LeftContent: View, RightContent: View>: View {
     @State private var leftActive = true
 
     let leftTitle: String
-    let leftView: () -> LeftContent
+    @ViewBuilder var leftView: () -> LeftContent
 
     let rightTitle: String
-    let rightView: () -> RightContent
+    @ViewBuilder var rightView: () -> RightContent
 
     var body: some View {
         TabView(selection: $leftActive) {
@@ -65,7 +65,7 @@ private struct Ornament: View {
 }
 
 #Preview {
-    PickerTabView(leftTitle: "Left", leftView: {
+    OrnamentPickerTabView(leftTitle: "Left", leftView: {
         Text("This is left")
     }, rightTitle: "Right", rightView: {
         Text("This is right")

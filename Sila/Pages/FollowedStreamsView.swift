@@ -18,7 +18,7 @@ struct FollowedStreamsView: View {
         // If statement to hide the picker when not authorized
         if self.authController.isAuthorized() {
             #if VOD_ENABLED
-            PickerTabView(leftTitle: "Live", leftView: {
+            OrnamentPickerTabView(leftTitle: "Live", leftView: {
                 self.liveStreams
             }, rightTitle: "All Channels") {
                 self.channels

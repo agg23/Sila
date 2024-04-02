@@ -20,6 +20,5 @@ struct RefreshableScrollGridView<T, Content: View>: View {
             }
         }
         .refreshable(action: { try? await self.loader.refresh(minDurationSecs: 1) })
-
     }
 }

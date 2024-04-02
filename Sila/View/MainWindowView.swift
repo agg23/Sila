@@ -37,9 +37,9 @@ struct MainWindowView: View {
                 CategoryListView()
             }
 
-//            TabPage(title: "Search", systemImage: Icon.search) {
-//                SearchView()
-//            }
+            TabPage(title: "Search", systemImage: Icon.search, tab: .search) {
+                SearchView()
+            }
 
             TabPage(title: "Settings", systemImage: Icon.settings, tab: .settings, content: {
                 SettingsView()

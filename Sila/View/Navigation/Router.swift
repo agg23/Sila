@@ -11,6 +11,7 @@ enum SelectedTab {
     case following
     case popular
     case categories
+    case search
     case settings
 }
 

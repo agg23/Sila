@@ -9,118 +9,186 @@ import SwiftUI
 import Twitch
 
 struct SearchView: View {
-    @Environment(\.authController) private var authController
-
-//    @State private var loader = DataLoader<([Twitch.Category], [Channel]), String>()
+    @State private var loader = StandardDataLoader<([Twitch.Category], [Channel])>()
+    @State private var requestTask: Task<(), Error>?
     @State private var text = ""
 
     @State private var channelsExpanded = true
     @State private var categoriesExpanded = true
 
     var body: some View {
-//        Group {
-//            switch self.$loader.wrappedValue.get(task: {
-//                guard let api = self.authController.status.api(), !self.text.isEmpty else {
-//                    return ([], [])
-//                }
-//
-//                async let (categories, _) = try await api.searchCategories(for: self.text)
-//                async let (channels, _) = try await api.searchChannels(for: self.text)
-//                return try await (categories, channels)
-//            }, onChange: self.text) {
-//            case .idle:
-//                self.emptyState
-//            case .loading:
-//                ProgressView()
-//            case .finished(let (categories, channels)):
-//                if categories.isEmpty && channels.isEmpty {
-//                    self.emptyState
-//                } else {
-//                    SearchListView(channels: channels, categories: categories)
-//                }
-//            case .error:
-//                APIErrorView(loader: self.$loader)
-//            }
-//        }
-//        .searchable(text: self.$text, placement: .navigationBarDrawer)
-        Text("Broken")
-    }
+        StandardDataView(loader: self.$loader) { api, _ in
+            // Dummy response. All data comes from onChange via the search text
+            ([], [])
+        } content: { categories, channels in
+            SearchListView(channels: channels, categories: categories)
+        }
+        // TODO: Maybe follow how Christian made a search bar https://christianselig.com/2024/03/recreating-visionos-search-bar/
+        .searchable(text: self.$text, placement: .navigationBarDrawer)
+        .onChange(of: self.text) { _, newValue in
+            self.requestTask?.cancel()
 
-    @ViewBuilder
-    var emptyState: some View {
-        Text("Search for channels and categories")
+            self.requestTask = Task {
+                await self.loader.requestMore { data, apiAndUser in
+                    guard !newValue.isEmpty else {
+                        return ([], [])
+                    }
+
+                    async let (categories, _) = try await apiAndUser.0.searchCategories(for: self.text, limit: 18)
+                    async let (channels, _) = try await apiAndUser.0.searchChannels(for: self.text, liveOnly: true, limit: 18)
+                    return try await (categories, channels)
+                }
+            }
+        }
     }
 }
 
 struct SearchListView: View {
+    @Environment(\.openWindow) private var openWindow
+    @Environment(Router.self) private var router
+    @Environment(\.authController) private var authController
+
     let channels: [Channel]
     let categories: [Twitch.Category]
 
     var body: some View {
-        List {
-            Section("Channels") {
-                ForEach(self.channels) { channel in
-                    SearchChannelButton(channel: channel)
+        OrnamentPickerTabView(leftTitle: "Live Channels", leftView: {
+            if self.channels.isEmpty {
+                EmptyContentView(title: "No matching channels", systemImage: Icon.channel, description: "Adjust your search query for matching channels.", buttonTitle: "", buttonSystemImage: "", ignoreSafeArea: false, action: nil)
+            } else {
+                SearchGrid(items: self.channels) { channel in
+                    SearchButton(title: channel.name, subtitle: channel.gameName, squareImage: {
+                        LoadingAsyncImage(imageUrl: URL(string: channel.profilePictureURL), aspectRatio: 1.0)
+                            .clipShape(.rect(cornerRadius: 8))
+                    }) {
+                        Task {
+                            // TODO: This can obviously fail. Ideally we can launch the stream window with just a channel login
+                            // similar to how category/channel routes work
+                            guard let api = self.authController.status.api() else {
+                                return
+                            }
+
+                            let (streams, _) = try await api.getStreams(userLogins: [channel.login])
+
+                            guard let stream = streams.first else {
+                                return
+                            }
+
+                            openWindow(id: "stream", value: stream)
+                        }
+                    }
                 }
+                // Padding applied inside TabView so panning gesture between pages doesn't show items butting up next to each other
+                .padding(16)
             }
-            Section("Categories") {
-                ForEach(self.categories) { category in
-                    SearchCategoryButton(category: category)
+        }, rightTitle: "Categories") {
+            if self.categories.isEmpty {
+                EmptyContentView(title: "No matching categories", systemImage: Icon.category, description: "Adjust your search query for matching categories.", buttonTitle: "", buttonSystemImage: "", ignoreSafeArea: false, action: nil)
+            } else {
+                SearchGrid(items: self.categories) { category in
+                    SearchButton(title: category.name, subtitle: nil, squareImage: {
+                            ZStack {
+                                LoadingAsyncImage(imageUrl: URL(string: category.boxArtUrl), aspectRatio: 0.75)
+                                    .clipShape(.rect(cornerRadius: 8))
+
+                                // Background rectangle to horizontally center the image in the same footprint as the square channel avatars
+                                Color.clear
+                                    .aspectRatio(1.0, contentMode: .fit)
+                            }
+                    }) {
+                        self.router.pushToActiveTab(route: .category(game: .id(category.id)))
+                    }
                 }
+                // Padding applied inside TabView so panning gesture between pages doesn't show items butting up next to each other
+                .padding(16)
             }
         }
-        .listStyle(.plain)
     }
 }
 
-struct SearchChannelButton: View {
-    @Environment(Router.self) private var router
-
-    let channel: Channel
+private struct SearchGrid<T: Identifiable, Content: View>: View {
+    let items: [T]
+    @ViewBuilder let content: (_: T) -> Content
 
     var body: some View {
-        Button {
-            self.router.pushToActiveTab(route: .channel(user: .id(self.channel.id)))
-        } label: {
-            GeometryReader { geometry in
-                HStack {
-                    LoadingAsyncImage(imageUrl: URL(string: self.channel.profilePictureURL), aspectRatio: 1.0)
-                        .frame(width: geometry.size.height)
-                        .padding(.trailing, 8)
-                    Text(self.channel.name)
-                    Spacer()
-                }
+        VStack {
+            LazyVGrid(columns: [GridItem(), GridItem(), GridItem()]) {
+                ForEach(self.items) { self.content($0) }
             }
+
+            Spacer()
         }
     }
 }
 
-struct SearchCategoryButton: View {
-    @Environment(Router.self) private var router
+private struct SearchButton<ContentImage: View>: View {
+    let title: String
+    let subtitle: String?
 
-    let category: Twitch.Category
+    @ViewBuilder let squareImage: () -> ContentImage
+
+    let action: () -> Void
 
     var body: some View {
         Button {
-            self.router.pushToActiveTab(route: .category(game: .id(self.category.id)))
+            self.action()
         } label: {
-            GeometryReader { geometry in
-                HStack {
-                    LoadingAsyncImage(imageUrl: URL(string: self.category.boxArtUrl), aspectRatio: 0.75)
-                        .frame(width: geometry.size.height)
-                        .padding(.trailing, 8)
-                    Text(self.category.name)
-                    Spacer()
+            HStack {
+                self.squareImage()
+                    .padding(.trailing, 8)
+                VStack(alignment: .leading) {
+                    Text(self.title)
+                    
+                    if let subtitle = self.subtitle {
+                        Text(subtitle)
+                            .foregroundColor(.secondary)
+                    }
                 }
+
+                Spacer()
             }
+            .padding(6)
+            .background(.tertiary)
+            .cornerRadius(14)
         }
+        .frame(height: 80)
+        .buttonStyle(.plain)
+        // 8 inner radius + 6 padding
+        .buttonBorderShape(.roundedRectangle(radius: 14))
     }
 }
 
 #Preview {
     PreviewNavStack {
-        SearchListView(channels: CHANNEL_LIST_MOCK(), categories: CATEGORY_LIST_MOCK().prefix(20).map({ game in
+        SearchListView(channels: CHANNEL_LIST_MOCK().prefix(20).map({ $0 }), categories: CATEGORY_LIST_MOCK().prefix(20).map({ game in
             Category(game: game)
         }))
+    }
+}
+
+#Preview {
+    PreviewNavStack {
+        SearchListView(channels: CHANNEL_LIST_MOCK().prefix(10).map({ $0 }), categories: CATEGORY_LIST_MOCK().prefix(10).map({ game in
+            Category(game: game)
+        }))
+    }
+}
+
+#Preview {
+    PreviewNavStack {
+        SearchListView(channels: CHANNEL_LIST_MOCK().prefix(1).map({ $0 }), categories: CATEGORY_LIST_MOCK().prefix(1).map({ game in
+            Category(game: game)
+        }))
+    }
+}
+
+#Preview {
+    let channel = CHANNEL_LIST_MOCK()[1]
+
+    return SearchButton(title: channel.name, subtitle: channel.gameName, squareImage: {
+        LoadingAsyncImage(imageUrl: URL(string: channel.profilePictureURL), aspectRatio: 1.0)
+            .clipShape(.rect(cornerRadius: 8))
+    }) {
+
     }
 }
