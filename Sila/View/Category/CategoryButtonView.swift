@@ -23,6 +23,7 @@ struct CategoryButtonView: View {
                     .lineLimit(1, reservesSpace: true)
             }
         }
+        .help(category.name)
     }
 
     func buildImageUrl(using category: Twitch.Game) -> URL? {
