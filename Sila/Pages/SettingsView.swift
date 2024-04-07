@@ -10,6 +10,7 @@ import SwiftUI
 struct SettingsView: View {
     @Environment(Router.self) private var router
 
+    @AppStorage(Setting.filterLanguage) var filterLanguage: String = "en"
     @AppStorage(Setting.hideMature) var hideMature: Bool = false
     @AppStorage(Setting.disableIncrementingStreamDuration) var disableIncrementingStreamDuration: Bool = false
 
@@ -20,6 +21,7 @@ struct SettingsView: View {
         VStack {
             Form {
                 Section("Navigation") {
+                    LanguageFilterPickerView(language: self.$filterLanguage, title: "Filter Language")
                     Toggle(isOn: self.$hideMature) {
                         Text("Hide Mature Streams")
                         Text("Will not hide mature streams from streamers you follow")

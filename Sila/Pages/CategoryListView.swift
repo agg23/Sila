@@ -32,6 +32,10 @@ struct CategoryListView: View {
                 }
             }
         }
+//        .toolbar {
+//            // Toolbar is disabled for Category pages
+//            defaultToolbar()
+//        }
     }
 
     func onPaginationThresholdMet() async {

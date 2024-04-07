@@ -27,23 +27,32 @@ struct MainWindowView: View {
         TabView(selection: self.router.tabBinding) {
             TabPage(title: "Following", systemImage: Icon.following, tab: .following) {
                 FollowedStreamsView()
+                    .toolbar {
+                        defaultToolbar()
+                    }
             }
 
-            TabPage(title: "Popular", systemImage: Icon.popular, tab: .popular) {
+            TabPage(title: "Popular", systemImage: Icon.popular, tab: .popular, content: {
                 PopularView()
-            }
+            })
 
-            TabPage(title: "Categories", systemImage: Icon.category, tab: .categories) {
+            TabPage(title: "Categories", systemImage: Icon.category, tab: .categories, content: {
                 CategoryListView()
-            }
+            })
 
             TabPage(title: "Search", systemImage: Icon.search, tab: .search) {
                 SearchView()
+                    .toolbar {
+                        defaultToolbar()
+                    }
             }
 
             TabPage(title: "Settings", systemImage: Icon.settings, tab: .settings, content: {
                 SettingsView()
-            }, disableToolbar: true)
+                    .toolbar {
+                        defaultToolbar()
+                    }
+            })
         }
         .environment(self.streamTimer)
         .onAppear {

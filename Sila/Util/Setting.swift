@@ -9,6 +9,7 @@ import Foundation
 
 struct Setting {
     // Navigation
+    static let filterLanguage = "filterLanguage"
     static let hideMature = "hideMature"
     static let disableIncrementingStreamDuration = "disableIncrementingStreamDuration"
 

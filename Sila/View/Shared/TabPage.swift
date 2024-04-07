@@ -13,33 +13,14 @@ struct TabPage<Content: View>: View {
     let tab: SelectedTab
     let content: () -> Content
 
-    let disableToolbar: Bool
-
-    init(title: String, systemImage: String, tab: SelectedTab, @ViewBuilder content: @escaping () -> Content, disableToolbar: Bool = false) {
-        self.title = title
-        self.systemImage = systemImage
-        self.tab = tab
-        self.content = content
-
-        self.disableToolbar = disableToolbar
-    }
-
     var body: some View {
         NavStack(tab: self.tab) {
             self.content()
-                .toolbar {
-                    if !self.disableToolbar {
-                        defaultToolbar()
-                    }
-                }
                 .navigationTitle(self.title)
                 .navigationDestination(for: Route.self, destination: { route in
                     switch route {
                     case .category(game: let gameWrapper):
                         CategoryView(category: gameWrapper)
-                            .toolbar {
-                                defaultToolbar()
-                            }
                     case .channel(user: let userWrapper):
                         ChannelView(channel: userWrapper)
                             .toolbar {
