@@ -57,7 +57,7 @@ You must obtain these keys from the Twitch developer portal, with your own regis
 
 **Important Notice: Registration Bug in Twitch Developer Console**
 
-We've identified an intermittent issue during the application registration process in the Twitch Developer Console where attempts to register your application will fail silently. This typically occurs if the chosen name for your application is either restricted or has already been taken by another user. For instance, the name `Sila for Twitch` was problematic, whereas `MyKeyForSila` was successful. 
+We've identified an intermittent issue during the application registration process in the Twitch Developer Console where attempts to register your application will fail silently. This typically occurs if the chosen name for your application is either restricted or has already been taken by another user. Your key cannot have spaces as if it does, it will silently fail. For instance, the name `Sila for Twitch` was problematic, whereas `MyKeyForSila` was successful. 
 
 If you encounter a failure at the `Create` screen, we recommend trying alternative application names. Persist with different names until the registration succeeds.
 
