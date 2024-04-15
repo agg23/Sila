@@ -50,7 +50,7 @@ private func buildChunks(from message: PrivateMessage) -> ([AnimatedMessageChunk
     let string = message.message
 
     var chunks: [AnimatedMessageChunk] = []
-    var emoteURLs: [URL] = []
+    var emoteUrls: [URL] = []
 
     var startIndex = String.Index(utf16Offset: 0, in: string)
 
@@ -64,24 +64,66 @@ private func buildChunks(from message: PrivateMessage) -> ([AnimatedMessageChunk
     for emote in emotes {
         // We enforce that we can't go out of range on the string, in case Twitch gives us invalid ranges
         // See https://github.com/twitchdev/issues/issues/104
-        let prefixString = string[startIndex..<(string.index(string.startIndex, offsetBy: emote.startIndex, limitedBy: string.endIndex) ?? startIndex)]
-        chunks.append(.text(String(prefixString)))
+        let emoteStartIndex = string.index(string.startIndex, offsetBy: emote.startIndex, limitedBy: string.endIndex) ?? startIndex
 
-        let url = emoteUrl(from: emote.id)
-        chunks.append(.image(url))
-        emoteURLs.append(url)
+        let url = twitchEmoteUrl(from: emote.id)
 
-        startIndex = string.index(string.startIndex, offsetBy: emote.endIndex + 1, limitedBy: string.endIndex) ?? startIndex
+        extractEmoteSection(string: string, startIndex: startIndex, emoteStartIndex: emoteStartIndex, emoteUrl: url, chunks: &chunks, emoteUrls: &emoteUrls)
+        startIndex = string.index(string.startIndex, offsetBy: emote.endIndex + 1, limitedBy: string.endIndex) ?? string.endIndex
     }
 
+    // Final segment
     if (startIndex.utf16Offset(in: string) != string.count) {
         let prefixString = string[startIndex..<string.endIndex]
         chunks.append(.text(String(prefixString)))
     }
 
-    return (chunks, emoteURLs)
+    chunks = chunks.flatMap { chunk in
+        if case .text(let string) = chunk {
+            // String chunk
+            let splitString = string.split(separator: /\s+/)
+
+            var innerChunks: [AnimatedMessageChunk] = []
+            var startIndex = String.Index(utf16Offset: 0, in: string)
+
+            for substring in splitString {
+                if let emote = EmoteController.shared.globalEmotes[substring.lowercased()] {
+                    // Get previous chunk
+                    extractEmoteSection(string: string, startIndex: startIndex, emoteStartIndex: substring.startIndex, emoteUrl: emote.imageUrl, chunks: &innerChunks, emoteUrls: &emoteUrls)
+
+                    startIndex = substring.endIndex
+                }
+            }
+
+            if !innerChunks.isEmpty {
+                // Replace this chunk with innerChunks
+                // Final segment
+                if (startIndex.utf16Offset(in: string) != string.count) {
+                    let prefixString = string[startIndex..<string.endIndex]
+                    innerChunks.append(.text(String(prefixString)))
+                }
+
+                return innerChunks
+            }
+        }
+
+        return [chunk]
+    }
+
+    return (chunks, emoteUrls)
 }
 
-private func emoteUrl(from id: String) -> URL {
+private func extractEmoteSection(string: String, startIndex: String.Index, emoteStartIndex: String.Index, emoteUrl: URL, chunks: inout [AnimatedMessageChunk], emoteUrls: inout [URL]) {
+    let prefixString = string[startIndex..<emoteStartIndex]
+
+    if prefixString.count > 0 {
+        chunks.append(.text(String(prefixString)))
+    }
+
+    chunks.append(.image(emoteUrl))
+    emoteUrls.append(emoteUrl)
+}
+
+private func twitchEmoteUrl(from id: String) -> URL {
     URL(string: "https://static-cdn.jtvnw.net/emoticons/v2/\(id)/default/dark/1.0")!
 }

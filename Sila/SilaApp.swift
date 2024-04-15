@@ -25,6 +25,10 @@ struct SilaAppApp: App {
         AppDependencyManager.shared.add(dependency: router)
 
         Shortcuts.updateAppShortcutParameters()
+
+        Task {
+            await EmoteController.shared.fetchGlobalEmotes()
+        }
     }
 
     var body: some Scene {

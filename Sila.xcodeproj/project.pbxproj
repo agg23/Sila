@@ -74,6 +74,9 @@
 		66B5DD852B9FCBCC0054121D /* MatureStreamFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B5DD832B9FCBCC0054121D /* MatureStreamFilterView.swift */; };
 		66B5DD862B9FCBCC0054121D /* StreamTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B5DD842B9FCBCC0054121D /* StreamTimer.swift */; };
 		66B5DD882B9FCC150054121D /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B5DD872B9FCC150054121D /* Setting.swift */; };
+		66C4BC332BCD97F000AA8732 /* SevenTVModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C4BC322BCD97F000AA8732 /* SevenTVModels.swift */; };
+		66C4BC382BCD9C1400AA8732 /* Emote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C4BC372BCD9C1400AA8732 /* Emote.swift */; };
+		66C4BC3A2BCD9C9200AA8732 /* EmoteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C4BC392BCD9C9200AA8732 /* EmoteController.swift */; };
 		66C96BDB2B8EB1C00016A91B /* VODGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C96BDA2B8EB1C00016A91B /* VODGridView.swift */; };
 		66C96BDE2B8EC2D10016A91B /* VideoMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C96BDD2B8EC2D10016A91B /* VideoMock.swift */; };
 		66C96BE12B8EC4510016A91B /* VODButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C96BE02B8EC4510016A91B /* VODButtonView.swift */; };
@@ -189,6 +192,9 @@
 		66B5DD832B9FCBCC0054121D /* MatureStreamFilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatureStreamFilterView.swift; sourceTree = "<group>"; };
 		66B5DD842B9FCBCC0054121D /* StreamTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamTimer.swift; sourceTree = "<group>"; };
 		66B5DD872B9FCC150054121D /* Setting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
+		66C4BC322BCD97F000AA8732 /* SevenTVModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SevenTVModels.swift; sourceTree = "<group>"; };
+		66C4BC372BCD9C1400AA8732 /* Emote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Emote.swift; sourceTree = "<group>"; };
+		66C4BC392BCD9C9200AA8732 /* EmoteController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmoteController.swift; sourceTree = "<group>"; };
 		66C96BDA2B8EB1C00016A91B /* VODGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VODGridView.swift; sourceTree = "<group>"; };
 		66C96BDD2B8EC2D10016A91B /* VideoMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoMock.swift; sourceTree = "<group>"; };
 		66C96BE02B8EC4510016A91B /* VODButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VODButtonView.swift; sourceTree = "<group>"; };
@@ -454,6 +460,24 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		66C4BC312BCD97E500AA8732 /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				66C4BC342BCD99FE00AA8732 /* Models */,
+				66C4BC392BCD9C9200AA8732 /* EmoteController.swift */,
+			);
+			path = Chat;
+			sourceTree = "<group>";
+		};
+		66C4BC342BCD99FE00AA8732 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				66C4BC372BCD9C1400AA8732 /* Emote.swift */,
+				66C4BC322BCD97F000AA8732 /* SevenTVModels.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		66C96BD92B8EB1AB0016A91B /* VOD */ = {
 			isa = PBXGroup;
 			children = (
@@ -575,6 +599,7 @@
 		66F4E42A2B812A1F008C565D /* API */ = {
 			isa = PBXGroup;
 			children = (
+				66C4BC312BCD97E500AA8732 /* Chat */,
 				6600E0832B8BB352003B2270 /* Overrides */,
 				66F4E42B2B812A32008C565D /* AuthController.swift */,
 				66E885A42B86DFE2004B4B8D /* AuthController+EnvironmentValues.swift */,
@@ -739,12 +764,14 @@
 				66F8D1932B894253008C4F7C /* Route.swift in Sources */,
 				66A5ADC12B9949C40025EF75 /* EmptyContentView.swift in Sources */,
 				66E1022C2B82A592007A44D4 /* StreamGridView.swift in Sources */,
+				66C4BC382BCD9C1400AA8732 /* Emote.swift in Sources */,
 				66C96BE12B8EC4510016A91B /* VODButtonView.swift in Sources */,
 				66E102352B82D788007A44D4 /* CategoryMock.swift in Sources */,
 				6690EBA82BA78C810093B18C /* RefreshableScrollGridView.swift in Sources */,
 				666E97E92B8D7085008EE950 /* EmptyDataView.swift in Sources */,
 				66C96BDE2B8EC2D10016A91B /* VideoMock.swift in Sources */,
 				66125F692B84279A002169B5 /* ChannelButtonView.swift in Sources */,
+				66C4BC3A2BCD9C9200AA8732 /* EmoteController.swift in Sources */,
 				66125F532B83C003002169B5 /* ScrollGridView.swift in Sources */,
 				66E102262B8293EB007A44D4 /* StreamMock.swift in Sources */,
 				66A5ADB82B96DAA20025EF75 /* LicensesView.swift in Sources */,
@@ -789,6 +816,7 @@
 				66125F502B83B913002169B5 /* CategoryView.swift in Sources */,
 				66F8D1992B89A051008C4F7C /* SearchView.swift in Sources */,
 				66028DFF2B917AD800696071 /* PrivateMessageMock.swift in Sources */,
+				66C4BC332BCD97F000AA8732 /* SevenTVModels.swift in Sources */,
 				66C96BDB2B8EB1C00016A91B /* VODGridView.swift in Sources */,
 				66F4E4162B80292F008C565D /* OAuthWebView.swift in Sources */,
 				6690EBA42BA73C2B0093B18C /* Language.swift in Sources */,
