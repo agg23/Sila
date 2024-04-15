@@ -55,6 +55,12 @@ API_SECRET = "[insert secret here]"
 
 You must obtain these keys from the Twitch developer portal, with your own registered application: https://dev.twitch.tv/console/apps. You must create a "Confidential" client with `http://localhost` as your OAuth redirect URL. We choose "Confidential" here as Twitch does not allow unauthorized clients to access certain key APIs unless it comes from a "Confidential" client. So while it's wrong to ship a private key with the application, we have no choice.
 
+**Important Notice: Registration Bug in Twitch Developer Console**
+
+We've identified an intermittent issue during the application registration process in the Twitch Developer Console where attempts to register your application will fail silently. This typically occurs if the chosen name for your application is either restricted or has already been taken by another user. Your key cannot have spaces as if it does, it will silently fail. For instance, the name `Sila for Twitch` was problematic, whereas `MyKeyForSila` was successful. 
+
+If you encounter a failure at the `Create` screen, we recommend trying alternative application names. Persist with different names until the registration succeeds.
+
 ## FAQ
 
 ### Why "Sila"
