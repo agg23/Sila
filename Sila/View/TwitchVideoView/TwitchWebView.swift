@@ -260,45 +260,61 @@ class TwitchWebViewCoordinator: NSObject, WKUIDelegate, WKNavigationDelegate, WK
             });
         """)
 
-        // Bypass content restriction screen
-        webView.evaluateJavaScript("""
-            const gate = document.getElementById("channel-player-gate")
-            const buttons = gate?.getElementsByTagName("button")
+        // Run after a delay to make sure they complete
+        Timer.scheduledTimer(withTimeInterval: 0.1, repeats: false) { _ in
+            // Bypass content restriction screen
+            webView.evaluateJavaScript("""
+                const gate = document.getElementById("channel-player-gate");
+                const buttons = gate?.getElementsByTagName("button");
 
-            if (buttons.length > 0) {
-                buttons[0].click()
+                if (buttons?.length > 0) {
+                    console.log("Bypassing content restriction");
+                    buttons[0].click();
+                }
+
+                // Return
+                buttons?.length > 0
+            """) { didBypassRestriction, _ in
+                guard let didBypassRestriction = didBypassRestriction as? Bool else {
+                    return
+                }
+
+                if didBypassRestriction {
+                    print("Bypassed content restriction")
+                }
             }
-        """)
 
-        // Click on the fullscreen mute popup
-        // Taken from https://stackoverflow.com/a/61511955
-        webView.evaluateJavaScript("""
-            const waitForElm = (selector) => {
-                return new Promise(resolve => {
-                    if (document.querySelector(selector)) {
-                        return resolve(document.querySelector(selector));
-                    }
-
-                    const observer = new MutationObserver(_mutations => {
+            // Click on the fullscreen mute popup
+            // Taken from https://stackoverflow.com/a/61511955
+            webView.evaluateJavaScript("""
+                const waitForElm = (selector) => {
+                    return new Promise(resolve => {
                         if (document.querySelector(selector)) {
-                            observer.disconnect();
-                            resolve(document.querySelector(selector));
+                            return resolve(document.querySelector(selector));
                         }
-                    });
 
-                    // If you get "parameter 1 is not of type 'Node'" error, see https://stackoverflow.com/a/77855838/492336
-                    observer.observe(document.body, {
-                        childList: true,
-                        subtree: true
+                        const observer = new MutationObserver(_mutations => {
+                            if (document.querySelector(selector)) {
+                                observer.disconnect();
+                                resolve(document.querySelector(selector));
+                            }
+                        });
+
+                        // If you get "parameter 1 is not of type 'Node'" error, see https://stackoverflow.com/a/77855838/492336
+                        observer.observe(document.body, {
+                            childList: true,
+                            subtree: true
+                        });
                     });
+                }
+
+                waitForElm(".click-to-unmute__container").then(element => {
+                    console.log("Found click to unmute");
+                    element.click();
                 });
-            }
+            """)
 
-            waitForElm(".click-to-unmute__container").then(element => {
-                console.log("Found click to unmute");
-                element.click();
-            });
-        """)
+        }
 
         // TODO: Vision doesn't seem to let you AirPlay
 //        webView.evaluateJavaScript("""
