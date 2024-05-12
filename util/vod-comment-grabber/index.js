@@ -6,8 +6,9 @@ import {
   clientIntegrity,
   clientSessionId,
   clientVersion,
+  startCursor,
   xDeviceId,
-} from "./keys";
+} from "./keys.js";
 
 const videoId = "2143415927";
 
@@ -16,7 +17,7 @@ const parseComment = (comment) => {
   const commentContent = comment["node"];
 
   const displayName = commentContent["commenter"]["displayName"];
-  const color = commentContent["userColor"];
+  const color = commentContent["message"]["userColor"];
   const contentOffsetSeconds = commentContent["contentOffsetSeconds"];
 
   const messages = commentContent["message"]["fragments"];

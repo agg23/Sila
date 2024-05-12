@@ -58,7 +58,7 @@ import TwitchIRC
     }
 
     @MainActor
-    private func appendChatMessage(_ message: PrivateMessage) {
+    func appendChatMessage(_ message: PrivateMessage) {
         var deleted = false
 
         if self.messages.count >= ChatModel.MESSAGE_LIMIT {

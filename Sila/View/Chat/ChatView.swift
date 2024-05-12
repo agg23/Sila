@@ -15,21 +15,46 @@ struct ChatView: View {
     @State private var chatModel = ChatModel()
 
     @State private var toggle = true
+    @State private var timer: Timer?
 
     let channel: String
 
     var body: some View {
         VStack {
             ChatListView(messages: self.chatModel.messages, resetScrollPublisher: self.chatModel.resetScrollSubject.eraseToAnyPublisher())
-                .task(id: self.toggle) {
-                    guard self.toggle else {
-                        return
-                    }
+//                .task(id: self.toggle) {
+//                    guard self.toggle else {
+//                        return
+//                    }
+//
+//                    print("Connecting to chat")
+//
+//                    await self.chatModel.connect(to: self.channel)
+//                }
+                .task {
+                    DebugChat.shared.loadAndParseMessages(url: URL(fileURLWithPath: "/Users/adam/code/Swift/VisionTwitch/util/vod-comment-grabber/comments.json"))
 
-                    print("Connecting to chat")
-
-                    await self.chatModel.connect(to: self.channel)
+                    fireDebugTimer(index: 0)
                 }
+        }
+    }
+
+    func fireDebugTimer(index: Int) {
+        let messages = DebugChat.shared.messages
+        var newIndex = index
+
+        if newIndex >= messages.count {
+            newIndex = 0
+        }
+
+        let message = messages[newIndex]
+
+        Task {
+            await self.chatModel.appendChatMessage(message)
+        }
+
+        self.timer = Timer.scheduledTimer(withTimeInterval: 0.2, repeats: false) { _ in
+            self.fireDebugTimer(index: newIndex + 1)
         }
     }
 }

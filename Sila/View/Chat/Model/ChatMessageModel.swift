@@ -70,6 +70,8 @@ private func buildChunks(from message: PrivateMessage) -> ([AnimatedMessageChunk
 
         extractEmoteSection(string: string, startIndex: startIndex, emoteStartIndex: emoteStartIndex, emoteUrl: url, chunks: &chunks, emoteUrls: &emoteUrls)
         startIndex = string.index(string.startIndex, offsetBy: emote.endIndex + 1, limitedBy: string.endIndex) ?? string.endIndex
+
+        print("Logging Twitch \(emote.name)")
     }
 
     // Final segment
@@ -87,7 +89,7 @@ private func buildChunks(from message: PrivateMessage) -> ([AnimatedMessageChunk
             var startIndex = String.Index(utf16Offset: 0, in: string)
 
             for substring in splitString {
-                if let emote = EmoteController.shared.globalEmotes[substring.lowercased()] {
+                if let emote = EmoteController.shared.getEmote(named: substring.lowercased()) {
                     // Get previous chunk
                     extractEmoteSection(string: string, startIndex: startIndex, emoteStartIndex: substring.startIndex, emoteUrl: emote.imageUrl, chunks: &innerChunks, emoteUrls: &emoteUrls)
 
