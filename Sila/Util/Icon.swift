@@ -22,6 +22,9 @@ struct Icon {
 
     static let play = "play.fill"
     static let pause = "pause.fill"
+    
+    static let mute = "speaker.slash.fill"
+    static let volume = "speaker.wave.2.fill"
 
     static let quality = "tv"
     static let chat = "message"

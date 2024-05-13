@@ -20,6 +20,8 @@ struct TwitchVideoView: View {
     @State private var chatVisibility = Visibility.hidden
 
     @State private var preventClose = false
+    
+    @State private var previousVolume: Double = 1.0
 
     let streamableVideo: StreamableVideo
 
@@ -48,21 +50,49 @@ struct TwitchVideoView: View {
                 }
                 .overlay(alignment: .topTrailing) {
                     if self.controlVisibility == .visible {
-                        Button {
-                            self.player.reload()
-                            self.onControlInteraction()
-                        } label: {
-                            Label {
-                                Text("Reload")
-                            } icon: {
-                                Image(systemName: Icon.refresh)
+                        @State var isMuted = self.player.volume == 0
+                        
+                        VStack {
+                            Button {
+                                self.player.reload()
+                                self.onControlInteraction()
+                            } label: {
+                                Label {
+                                    Text("Reload")
+                                } icon: {
+                                    Image(systemName: Icon.refresh)
+                                }
                             }
+                            .help("Reload")
+                            .labelStyle(.iconOnly)
+                            .buttonBorderShape(.circle)
+                            .controlSize(.large)
+                            .padding([.trailing, .top], 40)
+                            
+                            Button {
+                                if isMuted {
+                                    self.player.setVolume(previousVolume)
+                                    isMuted = false
+                                } else {
+                                    previousVolume = self.player.volume
+                                    self.player.setVolume(0)
+                                    isMuted = true
+                                }
+                                self.onControlInteraction()
+                            } label: {
+                                Label {
+                                    Text(isMuted ? "Unmute" : "Mute")
+                                } icon: {
+                                    Image(systemName: isMuted ? Icon.mute : Icon.volume)
+                                }
+                            }
+                            .help(isMuted ? "Unmute" : "Mute")
+                            .labelStyle(.iconOnly)
+                            .buttonBorderShape(.circle)
+                            .controlSize(.large)
+                            .padding(.trailing, 40)
+                            .padding(.top, 20)
                         }
-                        .help("Reload")
-                        .labelStyle(.iconOnly)
-                        .buttonBorderShape(.circle)
-                        .controlSize(.large)
-                        .padding([.trailing, .top], 40)
                     }
                 }
             }
