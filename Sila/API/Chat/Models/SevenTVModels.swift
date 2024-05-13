@@ -7,7 +7,30 @@
 
 import Foundation
 
+struct SevenTVUser: Codable {
+//    let id: String
+//    let platform: String
+//
+//    let username: String
+//    let display_name: String
+//    let linked_at: Int
+//    let emote_capacity: Int
+//    let emote_set_id: ?
+    let emoteSet: SevenTVEmoteSet
+
+    enum CodingKeys: String, CodingKey {
+        case emoteSet = "emote_set"
+    }
+}
+
 struct SevenTVGlobalEmotes: Codable {
+    let emotes: [SevenTVEmote]
+}
+
+struct SevenTVEmoteSet: Codable {
+    let id: String
+    let name: String
+
     let emotes: [SevenTVEmote]
 }
 

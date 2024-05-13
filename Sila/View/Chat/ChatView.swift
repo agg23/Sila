@@ -22,20 +22,20 @@ struct ChatView: View {
     var body: some View {
         VStack {
             ChatListView(messages: self.chatModel.messages, resetScrollPublisher: self.chatModel.resetScrollSubject.eraseToAnyPublisher())
-//                .task(id: self.toggle) {
-//                    guard self.toggle else {
-//                        return
-//                    }
-//
-//                    print("Connecting to chat")
-//
-//                    await self.chatModel.connect(to: self.channel)
-//                }
-                .task {
-                    DebugChat.shared.loadAndParseMessages(url: URL(fileURLWithPath: "/Users/adam/code/Swift/VisionTwitch/util/vod-comment-grabber/comments.json"))
+                .task(id: self.toggle) {
+                    guard self.toggle else {
+                        return
+                    }
 
-                    fireDebugTimer(index: 0)
+                    print("Connecting to chat")
+
+                    await self.chatModel.connect(to: self.channel)
                 }
+//                .task {
+//                    DebugChat.shared.loadAndParseMessages(url: URL(fileURLWithPath: "/Users/adam/code/Swift/VisionTwitch/util/vod-comment-grabber/comments.json"))
+//
+//                    fireDebugTimer(index: 0)
+//                }
         }
     }
 
