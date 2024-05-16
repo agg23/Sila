@@ -28,7 +28,6 @@
 		66125F692B84279A002169B5 /* ChannelButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66125F682B84279A002169B5 /* ChannelButtonView.swift */; };
 		66125F6F2B842F82002169B5 /* ChannelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66125F6E2B842F82002169B5 /* ChannelView.swift */; };
 		6614CD4D2B94FDA400A3EE17 /* SharedPlaybackSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6614CD4C2B94FDA400A3EE17 /* SharedPlaybackSettings.swift */; };
-		6625353B2B9CE6F600EBD081 /* AsyncAnimatedImageUI in Frameworks */ = {isa = PBXBuildFile; productRef = 6625353A2B9CE6F600EBD081 /* AsyncAnimatedImageUI */; };
 		662535402B9E01D000EBD081 /* ChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6625353F2B9E01D000EBD081 /* ChatModel.swift */; };
 		663336942B75B7EA0098D188 /* View+WindowGeometryPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663336932B75B7EA0098D188 /* View+WindowGeometryPreferences.swift */; };
 		66364FBA2B8ABB9C005180B8 /* APIErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66364FB92B8ABB9C005180B8 /* APIErrorView.swift */; };
@@ -53,11 +52,9 @@
 		6666F3512BAA72B8009D5A29 /* StreamWrapperEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6666F3502BAA72B8009D5A29 /* StreamWrapperEntity.swift */; };
 		6666F3532BAA7335009D5A29 /* StreamWrapperQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6666F3522BAA7335009D5A29 /* StreamWrapperQuery.swift */; };
 		6666F3552BAA75E8009D5A29 /* CategoryStreams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6666F3542BAA75E8009D5A29 /* CategoryStreams.swift */; };
-		6666F35B2BACF2CB009D5A29 /* AsyncAnimatedImageUI in Frameworks */ = {isa = PBXBuildFile; productRef = 6666F35A2BACF2CB009D5A29 /* AsyncAnimatedImageUI */; };
 		666E97E92B8D7085008EE950 /* EmptyDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 666E97E82B8D7085008EE950 /* EmptyDataView.swift */; };
 		6672D37C2B8C3F7B00E9D0E9 /* NeedsLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6672D37B2B8C3F7B00E9D0E9 /* NeedsLoginView.swift */; };
 		6677BF702BC2160000C71CC5 /* LanguagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6677BF6F2BC2160000C71CC5 /* LanguagePickerView.swift */; };
-		66891FF42B9A9535000C0D92 /* AsyncAnimatedImageUI in Frameworks */ = {isa = PBXBuildFile; productRef = 66891FF32B9A9535000C0D92 /* AsyncAnimatedImageUI */; };
 		66891FF62B9A9590000C0D92 /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66891FF52B9A9590000C0D92 /* ChatMessage.swift */; };
 		66891FF82B9A9E72000C0D92 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66891FF72B9A9E72000C0D92 /* Color.swift */; };
 		66891FFB2B9AA058000C0D92 /* View+BackgroundTint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66891FFA2B9AA058000C0D92 /* View+BackgroundTint.swift */; };
@@ -84,6 +81,8 @@
 		66C96BE72B8ECD5D0016A91B /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C96BE62B8ECD5D0016A91B /* Video.swift */; };
 		66C96BED2B900E7F0016A91B /* StreamableVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C96BEC2B900E7F0016A91B /* StreamableVideo.swift */; };
 		66D11B522BF140C300DDD159 /* DebugChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D11B512BF140C300DDD159 /* DebugChat.swift */; };
+		66D11B582BF2DE3800DDD159 /* AsyncAnimatedImageUI in Frameworks */ = {isa = PBXBuildFile; productRef = 66D11B572BF2DE3800DDD159 /* AsyncAnimatedImageUI */; };
+		66D11B5E2BF5835000DDD159 /* AsyncAnimatedImageUI in Frameworks */ = {isa = PBXBuildFile; productRef = 66D11B5D2BF5835000DDD159 /* AsyncAnimatedImageUI */; };
 		66DF455D2B8BA645006C1D99 /* PopupVolumeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DF455C2B8BA645006C1D99 /* PopupVolumeSlider.swift */; };
 		66E102122B82515A007A44D4 /* TagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E102112B82515A007A44D4 /* TagView.swift */; };
 		66E102192B8262AC007A44D4 /* KeychainWrapper in Frameworks */ = {isa = PBXBuildFile; productRef = 66E102182B8262AC007A44D4 /* KeychainWrapper */; };
@@ -107,9 +106,6 @@
 		66F105A32BA4B28E006B7ADE /* Lifecycle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F105A22BA4B28E006B7ADE /* Lifecycle.swift */; };
 		66F105A52BA4B3DF006B7ADE /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F105A42BA4B3DF006B7ADE /* Task.swift */; };
 		66F105A72BA4B83A006B7ADE /* WindowTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F105A62BA4B83A006B7ADE /* WindowTracker.swift */; };
-		66F105AA2BA5E733006B7ADE /* AsyncAnimatedImageUI in Frameworks */ = {isa = PBXBuildFile; productRef = 66F105A92BA5E733006B7ADE /* AsyncAnimatedImageUI */; };
-		66F105AD2BA5EDA3006B7ADE /* AsyncAnimatedImageUI in Frameworks */ = {isa = PBXBuildFile; productRef = 66F105AC2BA5EDA3006B7ADE /* AsyncAnimatedImageUI */; };
-		66F105B02BA5EE51006B7ADE /* AsyncAnimatedImageUI in Frameworks */ = {isa = PBXBuildFile; productRef = 66F105AF2BA5EE51006B7ADE /* AsyncAnimatedImageUI */; };
 		66F4E40F2B7D8FD3008C565D /* Twitch+Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E40E2B7D8FD3008C565D /* Twitch+Notification.swift */; };
 		66F4E4162B80292F008C565D /* OAuthWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E4152B80292F008C565D /* OAuthWebView.swift */; };
 		66F4E41D2B811788008C565D /* AuthBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E41C2B811788008C565D /* AuthBadgeView.swift */; };
@@ -249,15 +245,11 @@
 			files = (
 				66E102192B8262AC007A44D4 /* KeychainWrapper in Frameworks */,
 				663E38092B9226D3002E0530 /* NukeUI in Frameworks */,
-				66F105B02BA5EE51006B7ADE /* AsyncAnimatedImageUI in Frameworks */,
 				66F4E4302B8132F5008C565D /* Twitch in Frameworks */,
-				66891FF42B9A9535000C0D92 /* AsyncAnimatedImageUI in Frameworks */,
 				663E38072B9226D3002E0530 /* Nuke in Frameworks */,
-				6625353B2B9CE6F600EBD081 /* AsyncAnimatedImageUI in Frameworks */,
-				66F105AA2BA5E733006B7ADE /* AsyncAnimatedImageUI in Frameworks */,
-				6666F35B2BACF2CB009D5A29 /* AsyncAnimatedImageUI in Frameworks */,
-				66F105AD2BA5EDA3006B7ADE /* AsyncAnimatedImageUI in Frameworks */,
+				66D11B582BF2DE3800DDD159 /* AsyncAnimatedImageUI in Frameworks */,
 				66364FC82B8BA49A005180B8 /* JunoUI in Frameworks */,
+				66D11B5E2BF5835000DDD159 /* AsyncAnimatedImageUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -659,12 +651,8 @@
 				66364FC72B8BA49A005180B8 /* JunoUI */,
 				663E38062B9226D3002E0530 /* Nuke */,
 				663E38082B9226D3002E0530 /* NukeUI */,
-				66891FF32B9A9535000C0D92 /* AsyncAnimatedImageUI */,
-				6625353A2B9CE6F600EBD081 /* AsyncAnimatedImageUI */,
-				66F105A92BA5E733006B7ADE /* AsyncAnimatedImageUI */,
-				66F105AC2BA5EDA3006B7ADE /* AsyncAnimatedImageUI */,
-				66F105AF2BA5EE51006B7ADE /* AsyncAnimatedImageUI */,
-				6666F35A2BACF2CB009D5A29 /* AsyncAnimatedImageUI */,
+				66D11B572BF2DE3800DDD159 /* AsyncAnimatedImageUI */,
+				66D11B5D2BF5835000DDD159 /* AsyncAnimatedImageUI */,
 			);
 			productName = Sila;
 			productReference = 663B72F32B6DB8E60031D661 /* Sila.app */;
@@ -699,7 +687,7 @@
 				66E102172B8262AC007A44D4 /* XCRemoteSwiftPackageReference "KeychainWrapper" */,
 				66364FC62B8BA499005180B8 /* XCRemoteSwiftPackageReference "JunoSlider" */,
 				663E38052B9226D3002E0530 /* XCRemoteSwiftPackageReference "Nuke" */,
-				6666F3592BACF2CB009D5A29 /* XCRemoteSwiftPackageReference "AsyncAnimatedImage" */,
+				66D11B5C2BF5835000DDD159 /* XCRemoteSwiftPackageReference "AsyncAnimatedImage" */,
 			);
 			productRefGroup = 663B72F42B6DB8E60031D661 /* Products */;
 			projectDirPath = "";
@@ -1060,7 +1048,7 @@
 				minimumVersion = 12.4.0;
 			};
 		};
-		6666F3592BACF2CB009D5A29 /* XCRemoteSwiftPackageReference "AsyncAnimatedImage" */ = {
+		66D11B5C2BF5835000DDD159 /* XCRemoteSwiftPackageReference "AsyncAnimatedImage" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/agg23/AsyncAnimatedImage.git";
 			requirement = {
@@ -1087,10 +1075,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		6625353A2B9CE6F600EBD081 /* AsyncAnimatedImageUI */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = AsyncAnimatedImageUI;
-		};
 		66364FC72B8BA49A005180B8 /* JunoUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 66364FC62B8BA499005180B8 /* XCRemoteSwiftPackageReference "JunoSlider" */;
@@ -1106,31 +1090,19 @@
 			package = 663E38052B9226D3002E0530 /* XCRemoteSwiftPackageReference "Nuke" */;
 			productName = NukeUI;
 		};
-		6666F35A2BACF2CB009D5A29 /* AsyncAnimatedImageUI */ = {
+		66D11B572BF2DE3800DDD159 /* AsyncAnimatedImageUI */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 6666F3592BACF2CB009D5A29 /* XCRemoteSwiftPackageReference "AsyncAnimatedImage" */;
 			productName = AsyncAnimatedImageUI;
 		};
-		66891FF32B9A9535000C0D92 /* AsyncAnimatedImageUI */ = {
+		66D11B5D2BF5835000DDD159 /* AsyncAnimatedImageUI */ = {
 			isa = XCSwiftPackageProductDependency;
+			package = 66D11B5C2BF5835000DDD159 /* XCRemoteSwiftPackageReference "AsyncAnimatedImage" */;
 			productName = AsyncAnimatedImageUI;
 		};
 		66E102182B8262AC007A44D4 /* KeychainWrapper */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 66E102172B8262AC007A44D4 /* XCRemoteSwiftPackageReference "KeychainWrapper" */;
 			productName = KeychainWrapper;
-		};
-		66F105A92BA5E733006B7ADE /* AsyncAnimatedImageUI */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = AsyncAnimatedImageUI;
-		};
-		66F105AC2BA5EDA3006B7ADE /* AsyncAnimatedImageUI */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = AsyncAnimatedImageUI;
-		};
-		66F105AF2BA5EE51006B7ADE /* AsyncAnimatedImageUI */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = AsyncAnimatedImageUI;
 		};
 		66F4E42F2B8132F5008C565D /* Twitch */ = {
 			isa = XCSwiftPackageProductDependency;

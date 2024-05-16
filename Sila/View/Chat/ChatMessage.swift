@@ -11,9 +11,23 @@ import TwitchIRC
 
 struct ChatMessage: View {
     let message: ChatMessageModel
+    let cachedColors: CachedColors
 
     var body: some View {
-        self.message.view
+        Group {
+            Text(self.message.message.displayName)
+                .foregroundStyle(Color(self.cachedColors.get(hexColor: self.message.message.color))) +
+            Text(": ") +
+            self.message.chunks.reduce(Text("")) { existingText, chunk in
+                switch chunk {
+                case .text(let string):
+                    return existingText + Text(string)
+                case .image(let url):
+                    return existingText + Text("\(AsyncAnimatedImage(url: url))")
+                        .baselineOffset(-8.5)
+                }
+            }
+        }
         .drawingGroup()
         .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .leading)
         .onAppear {
@@ -23,39 +37,19 @@ struct ChatMessage: View {
             AnimatedImageCache.shared.onDisappear(for: self.message.emoteURLs)
         }
     }
-
-    @Observable class CachedColors {
-        @ObservationIgnored private var colors: [String: UIColor] = [:]
-
-        func get(hexColor string: String) -> UIColor {
-            if let color = self.colors[string] {
-                return color
-            }
-
-            let newColor = UIColor.hexStringToUIColor(hex: string)
-            self.colors[string] = newColor
-
-            return newColor
-        }
-    }
-
-    enum AnimatedMessageChunk {
-        case text(String)
-        case image(URL)
-    }
 }
 
 #Preview {
     VStack(alignment: .leading) {
-        ChatMessage(message: ChatMessageModel(message: PrivateMessage(channel: "mistermv", chatColor: "#1E90FF", userDisplayName: "damasenpai", message: "claraqDISCO claraqDISCO claraqDISCO claraqDISCO claraqDISCO With additional", emotes: "emotesv2_b01874d1da9f479aa49df41c48164233:0-10,12-22,24-34,36-46,48-58"), cachedColors: CachedColors()))
-        ChatMessage(message: ChatMessageModel(message: PrivateMessage(channel: "mistermv", chatColor: "#1E90FF", userDisplayName: "damasenpai", message: "claraqDISCO claraqDISCO claraqDISCO claraqDISCO claraqDISCO With additional text foo bar", emotes: "emotesv2_b01874d1da9f479aa49df41c48164233:0-10,12-22,24-34,36-46,48-58"), cachedColors: CachedColors()))
-        ChatMessage(message: ChatMessageModel(message: PrivateMessage(channel: "mistermv", chatColor: "#1E90FF", userDisplayName: "damasenpai", message: "claraqDISCO claraqDISCO claraqDISCO claraqDISCO claraqDISCO With additional text foo bar test even", emotes: "emotesv2_b01874d1da9f479aa49df41c48164233:0-10,12-22,24-34,36-46,48-58"), cachedColors: CachedColors()))
-        ChatMessage(message: ChatMessageModel(message: PrivateMessage(channel: "mistermv", chatColor: "#1E90FF", userDisplayName: "damasenpai", message: "claraqDISCO claraqDISCO claraqDISCO claraqDISCO claraqDISCO With additional text foo bar test even more text what is going on", emotes: "emotesv2_b01874d1da9f479aa49df41c48164233:0-10,12-22,24-34,36-46,48-58"), cachedColors: CachedColors()))
-        ChatMessage(message: ChatMessageModel(message: PrivateMessage(channel: "mistermv", chatColor: "#00FF7F", userDisplayName: "missilechion", message: "@Woodster_97 quietER catKISS", emotes: "emotesv2_275e090f79b943c1b081c436e490cdae:13-19"), cachedColors: CachedColors()))
-        ChatMessage(message: ChatMessageModel(message: PrivateMessage(channel: "mistermv", chatColor: "#00FF7F", userDisplayName: "missilechion", message: "@Woodster_97 quietER catKISS peepoHappy", emotes: "emotesv2_275e090f79b943c1b081c436e490cdae:13-19"), cachedColors: CachedColors()))
-        ChatMessage(message: ChatMessageModel(message: PrivateMessage(channel: "mistermv", chatColor: "#00FF7F", userDisplayName: "missilechion", message: "@Woodster_97 quietER peepoHappy catKISS", emotes: "emotesv2_275e090f79b943c1b081c436e490cdae:13-19"), cachedColors: CachedColors()))
+        ChatMessage(message: ChatMessageModel(message: PrivateMessage(channel: "mistermv", chatColor: "#1E90FF", userDisplayName: "damasenpai", message: "claraqDISCO claraqDISCO claraqDISCO claraqDISCO claraqDISCO With additional", emotes: "emotesv2_b01874d1da9f479aa49df41c48164233:0-10,12-22,24-34,36-46,48-58")), cachedColors: CachedColors())
+        ChatMessage(message: ChatMessageModel(message: PrivateMessage(channel: "mistermv", chatColor: "#1E90FF", userDisplayName: "damasenpai", message: "claraqDISCO claraqDISCO claraqDISCO claraqDISCO claraqDISCO With additional text foo bar", emotes: "emotesv2_b01874d1da9f479aa49df41c48164233:0-10,12-22,24-34,36-46,48-58")), cachedColors: CachedColors())
+        ChatMessage(message: ChatMessageModel(message: PrivateMessage(channel: "mistermv", chatColor: "#1E90FF", userDisplayName: "damasenpai", message: "claraqDISCO claraqDISCO claraqDISCO claraqDISCO claraqDISCO With additional text foo bar test even", emotes: "emotesv2_b01874d1da9f479aa49df41c48164233:0-10,12-22,24-34,36-46,48-58")), cachedColors: CachedColors())
+        ChatMessage(message: ChatMessageModel(message: PrivateMessage(channel: "mistermv", chatColor: "#1E90FF", userDisplayName: "damasenpai", message: "claraqDISCO claraqDISCO claraqDISCO claraqDISCO claraqDISCO With additional text foo bar test even more text what is going on", emotes: "emotesv2_b01874d1da9f479aa49df41c48164233:0-10,12-22,24-34,36-46,48-58")), cachedColors: CachedColors())
+        ChatMessage(message: ChatMessageModel(message: PrivateMessage(channel: "mistermv", chatColor: "#00FF7F", userDisplayName: "missilechion", message: "@Woodster_97 quietER catKISS", emotes: "emotesv2_275e090f79b943c1b081c436e490cdae:13-19")), cachedColors: CachedColors())
+        ChatMessage(message: ChatMessageModel(message: PrivateMessage(channel: "mistermv", chatColor: "#00FF7F", userDisplayName: "missilechion", message: "@Woodster_97 quietER catKISS peepoHappy", emotes: "emotesv2_275e090f79b943c1b081c436e490cdae:13-19")), cachedColors: CachedColors())
+        ChatMessage(message: ChatMessageModel(message: PrivateMessage(channel: "mistermv", chatColor: "#00FF7F", userDisplayName: "missilechion", message: "@Woodster_97 quietER peepoHappy catKISS", emotes: "emotesv2_275e090f79b943c1b081c436e490cdae:13-19")), cachedColors: CachedColors())
         // TODO: This scenario is very broken because of a Twitch bug
-        ChatMessage(message: ChatMessageModel(message: PrivateMessage(channel: "michou", chatColor: "#00FF7F", userDisplayName: "Eretrya0", message: "🇧🇷🇧🇷🇧🇷🇧🇷<3 <3 <3 <3 <3 <3 <3", emotes: "555555584:11-12,14-15,17-18,20-21,23-24,26-27"), cachedColors: CachedColors()))
+        ChatMessage(message: ChatMessageModel(message: PrivateMessage(channel: "michou", chatColor: "#00FF7F", userDisplayName: "Eretrya0", message: "🇧🇷🇧🇷🇧🇷🇧🇷<3 <3 <3 <3 <3 <3 <3", emotes: "555555584:11-12,14-15,17-18,20-21,23-24,26-27")), cachedColors: CachedColors())
         Text("With additional text")
     }
     .frame(width: 300)

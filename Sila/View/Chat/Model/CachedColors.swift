@@ -7,8 +7,8 @@
 
 import UIKit
 
-class CachedColors {
-    private var colors: [String: UIColor] = [:]
+@Observable class CachedColors {
+    @ObservationIgnored private var colors: [String: UIColor] = [:]
 
     func get(hexColor string: String) -> UIColor {
         if let color = self.colors[string] {
