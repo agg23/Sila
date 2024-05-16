@@ -40,6 +40,12 @@ struct ChatMessage: View {
 }
 
 #Preview {
+    struct PreviewWrapper: View {
+        @State var render = false
+
+        var body: some View {
+            Group {
+                if render {
     VStack(alignment: .leading) {
         ChatMessage(message: ChatMessageModel(message: PrivateMessage(channel: "mistermv", chatColor: "#1E90FF", userDisplayName: "damasenpai", message: "claraqDISCO claraqDISCO claraqDISCO claraqDISCO claraqDISCO With additional", emotes: "emotesv2_b01874d1da9f479aa49df41c48164233:0-10,12-22,24-34,36-46,48-58")), cachedColors: CachedColors())
         ChatMessage(message: ChatMessageModel(message: PrivateMessage(channel: "mistermv", chatColor: "#1E90FF", userDisplayName: "damasenpai", message: "claraqDISCO claraqDISCO claraqDISCO claraqDISCO claraqDISCO With additional text foo bar", emotes: "emotesv2_b01874d1da9f479aa49df41c48164233:0-10,12-22,24-34,36-46,48-58")), cachedColors: CachedColors())
@@ -50,8 +56,25 @@ struct ChatMessage: View {
         ChatMessage(message: ChatMessageModel(message: PrivateMessage(channel: "mistermv", chatColor: "#00FF7F", userDisplayName: "missilechion", message: "@Woodster_97 quietER peepoHappy catKISS", emotes: "emotesv2_275e090f79b943c1b081c436e490cdae:13-19")), cachedColors: CachedColors())
         // TODO: This scenario is very broken because of a Twitch bug
         ChatMessage(message: ChatMessageModel(message: PrivateMessage(channel: "michou", chatColor: "#00FF7F", userDisplayName: "Eretrya0", message: "🇧🇷🇧🇷🇧🇷🇧🇷<3 <3 <3 <3 <3 <3 <3", emotes: "555555584:11-12,14-15,17-18,20-21,23-24,26-27")), cachedColors: CachedColors())
+        ChatMessage(message: ChatMessageModel(message: PrivateMessage(channel: "michou", chatColor: "#00FF7F", userDisplayName: "Eretrya0", message: "This message has 7TV emotes Clap")), cachedColors: CachedColors())
         Text("With additional text")
     }
     .frame(width: 300)
     .glassBackgroundEffect(in: .rect(cornerRadius: 50), tint: .black.opacity(0.5))
+                } else {
+                    ProgressView()
+                }
+            }
+            .task {
+                // MoonMoon
+                await EmoteController.shared.fetchUserEmotes(for: "121059319")
+
+                print("Finished fetch")
+
+                render = true
+            }
+        }
+    }
+
+    return PreviewWrapper()
 }

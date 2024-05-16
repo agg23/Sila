@@ -76,15 +76,13 @@ class EmoteController {
     }
 
     private func decodeSevenTV(emote: SevenTVEmote, output: inout [String: Emote]) {
-        if let file = emote.data.host.files.first(where: { file in
-            file.format == "AVIF" && file.name.starts(with: "1x")
-        }) {
-            guard let url = URL(string: "https:\(emote.data.host.url)/\(file.name)") else {
-                print("Could not create URL for 7TV emote \(file.name)")
-                return
-            }
-
-            output[emote.name.lowercased()] = Emote(name: emote.name, imageUrl: url)
+        // We ignore the file names provided by the API and just always check for a 1x scale, in _GIF_ form. The API
+        // does not advertise GIFs, but we can't readily display animated AVIF or WEBP, and the GIFs appear to exist
+        guard let url = URL(string: "https:\(emote.data.host.url)/1x.gif") else {
+            print("Could not create URL for 7TV emote \(emote.name)")
+            return
         }
+
+        output[emote.name.lowercased()] = Emote(name: emote.name, imageUrl: url)
     }
 }
