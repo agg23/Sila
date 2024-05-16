@@ -78,7 +78,7 @@ private func buildChunks(from message: PrivateMessage) -> ([AnimatedMessageChunk
             var startIndex = String.Index(utf16Offset: 0, in: string)
 
             for substring in splitString {
-                if let emote = EmoteController.shared.getEmote(named: substring.lowercased()) {
+                if let emote = EmoteController.shared.getEmote(named: String(substring)) {
                     // Get previous chunk
                     extractEmoteSection(string: string, startIndex: startIndex, emoteStartIndex: substring.startIndex, emoteUrl: emote.imageUrl, chunks: &innerChunks, emoteUrls: &emoteUrls)
 

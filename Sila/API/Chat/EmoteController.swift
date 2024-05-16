@@ -83,6 +83,6 @@ class EmoteController {
             return
         }
 
-        output[emote.name.lowercased()] = Emote(name: emote.name, imageUrl: url)
+        output[emote.name] = Emote(name: emote.name, imageUrl: url)
     }
 }
