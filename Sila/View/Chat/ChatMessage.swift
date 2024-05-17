@@ -57,6 +57,7 @@ struct ChatMessage: View {
                         // TODO: This scenario is very broken because of a Twitch bug
                         ChatMessage(message: ChatMessageModel(message: PrivateMessage(channel: "michou", chatColor: "#00FF7F", userDisplayName: "Eretrya0", message: "🇧🇷🇧🇷🇧🇷🇧🇷<3 <3 <3 <3 <3 <3 <3", emotes: "555555584:11-12,14-15,17-18,20-21,23-24,26-27")), cachedColors: CachedColors())
                         ChatMessage(message: ChatMessageModel(message: PrivateMessage(channel: "michou", chatColor: "#00FF7F", userDisplayName: "Eretrya0", message: "This message has 7TV emotes clap Clap Yoda YODA")), cachedColors: CachedColors())
+                        ChatMessage(message: ChatMessageModel(message: PrivateMessage(channel: "michou", chatColor: "#00FF7F", userDisplayName: "Eretrya0", message: "This message has BTTV emotes gaben GabeN")), cachedColors: CachedColors())
                         Text("With additional text")
                     }
                     .frame(width: 300)
