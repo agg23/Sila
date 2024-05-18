@@ -85,6 +85,7 @@
 		66D11B672BF5B51000DDD159 /* AsyncAnimatedImageUI in Frameworks */ = {isa = PBXBuildFile; productRef = 66D11B662BF5B51000DDD159 /* AsyncAnimatedImageUI */; };
 		66D11B692BF8165B00DDD159 /* BetterTTVModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D11B682BF8165B00DDD159 /* BetterTTVModels.swift */; };
 		66D11B6C2BF81FF200DDD159 /* AsyncAnimatedImageUI in Frameworks */ = {isa = PBXBuildFile; productRef = 66D11B6B2BF81FF200DDD159 /* AsyncAnimatedImageUI */; };
+		66D11B6E2BF8F2C000DDD159 /* FrankerFaceZModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D11B6D2BF8F2C000DDD159 /* FrankerFaceZModels.swift */; };
 		66DF455D2B8BA645006C1D99 /* PopupVolumeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DF455C2B8BA645006C1D99 /* PopupVolumeSlider.swift */; };
 		66E102122B82515A007A44D4 /* TagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E102112B82515A007A44D4 /* TagView.swift */; };
 		66E102192B8262AC007A44D4 /* KeychainWrapper in Frameworks */ = {isa = PBXBuildFile; productRef = 66E102182B8262AC007A44D4 /* KeychainWrapper */; };
@@ -202,6 +203,7 @@
 		66C96BEC2B900E7F0016A91B /* StreamableVideo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamableVideo.swift; sourceTree = "<group>"; };
 		66D11B512BF140C300DDD159 /* DebugChat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugChat.swift; sourceTree = "<group>"; };
 		66D11B682BF8165B00DDD159 /* BetterTTVModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetterTTVModels.swift; sourceTree = "<group>"; };
+		66D11B6D2BF8F2C000DDD159 /* FrankerFaceZModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrankerFaceZModels.swift; sourceTree = "<group>"; };
 		66DF455C2B8BA645006C1D99 /* PopupVolumeSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupVolumeSlider.swift; sourceTree = "<group>"; };
 		66E102112B82515A007A44D4 /* TagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagView.swift; sourceTree = "<group>"; };
 		66E1021A2B8272E3007A44D4 /* Auth+Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Auth+Notification.swift"; sourceTree = "<group>"; };
@@ -473,6 +475,7 @@
 			children = (
 				66D11B682BF8165B00DDD159 /* BetterTTVModels.swift */,
 				66C4BC372BCD9C1400AA8732 /* Emote.swift */,
+				66D11B6D2BF8F2C000DDD159 /* FrankerFaceZModels.swift */,
 				66C4BC322BCD97F000AA8732 /* SevenTVModels.swift */,
 			);
 			path = Models;
@@ -828,6 +831,7 @@
 				66125F662B84260D002169B5 /* UserMock.swift in Sources */,
 				6690EBA02BA6667B0093B18C /* ChatMessageModel.swift in Sources */,
 				6645AFEA2BA9153D0096BC03 /* Shortcuts.swift in Sources */,
+				66D11B6E2BF8F2C000DDD159 /* FrankerFaceZModels.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

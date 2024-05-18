@@ -36,8 +36,9 @@ class EmoteController {
 
         async let sevenTV: Void = self.fetchSevenTVGlobalEmotes()
         async let betterTTV: Void = self.fetchBetterTTVGlobalEmotes()
+        async let frankerFaceZ: Void = self.fetchFrankerFaceZGlobalEmotes()
 
-        let _ = await (sevenTV, betterTTV)
+        let _ = await (sevenTV, betterTTV, frankerFaceZ)
     }
 
     func fetchUserEmotes(for id: String) async {
@@ -45,8 +46,9 @@ class EmoteController {
 
         async let sevenTV: Void = self.fetchSevenTVUserEmotes(for: id)
         async let betterTTV: Void = self.fetchBetterTTVUserEmotes(for: id)
+        async let frankerFaceZ: Void = self.fetchFrankerFaceZUserEmotes(for: id)
 
-        let _ = await (sevenTV, betterTTV)
+        let _ = await (sevenTV, betterTTV, frankerFaceZ)
     }
 
     private func add(emote: Emote, output: inout [String: Emote]) {
@@ -67,6 +69,7 @@ class EmoteController {
             let (data, _) = try await URLSession.shared.data(from: URL(string: "https://7tv.io/v3/emote-sets/global")!)
 
             guard let sevenTVEmotes = try? JSONDecoder().decode(SevenTVGlobalEmotes.self, from: data) else {
+                print("7TV global request failed")
                 return
             }
 
@@ -83,6 +86,7 @@ class EmoteController {
             let (data, _) = try await URLSession.shared.data(from: URL(string: "https://7tv.io/v3/users/twitch/\(id)")!)
 
             guard let sevenTVUser = try? JSONDecoder().decode(SevenTVUser.self, from: data) else {
+                print("7TV user request failed")
                 return
             }
 
@@ -112,6 +116,7 @@ class EmoteController {
             let (data, _) = try await URLSession.shared.data(from: URL(string: "https://api.betterttv.net/3/cached/emotes/global")!)
 
             guard let betterTTVEmotes = try? JSONDecoder().decode([BetterTTVEmote].self, from: data) else {
+                print("BetterTTV global request failed")
                 return
             }
 
@@ -128,6 +133,7 @@ class EmoteController {
             let (data, _) = try await URLSession.shared.data(from: URL(string: "https://api.betterttv.net/3/cached/users/twitch/\(id)")!)
 
             guard let betterTTVEmoteSet = try? JSONDecoder().decode(BetterTTVEmoteSet.self, from: data) else {
+                print("BetterTTV user request failed")
                 return
             }
 
@@ -148,5 +154,70 @@ class EmoteController {
         }
 
         self.add(emote: Emote(name: emote.code, imageUrl: url, source: .betterTTV), output: &output)
+    }
+
+    // MARK: - FrankerFaceZ
+
+    private func fetchFrankerFaceZGlobalEmotes() async {
+        do {
+            let (data, _) = try await URLSession.shared.data(from: URL(string: "https://api.frankerfacez.com/v1/set/global")!)
+
+            guard let frankerFaceZGlobalEmotes = try? JSONDecoder().decode(FrankerFaceZGlobalEmotes.self, from: data) else {
+                print("FrankerFaceZ global request failed")
+                return
+            }
+
+            for setId in frankerFaceZGlobalEmotes.defaultSets {
+                if let set = frankerFaceZGlobalEmotes.sets[String(setId)] {
+                    for emote in set.emoticons {
+                        self.decodeFrankerFaceZ(emote: emote, output: &self.globalEmotes)
+                    }
+                }
+            }
+        } catch {
+            print("FrankerFaceZ global request failed")
+        }
+    }
+
+    private func fetchFrankerFaceZUserEmotes(for id: String) async {
+        do {
+            let (data, _) = try await URLSession.shared.data(from: URL(string: "https://api.frankerfacez.com/v1/room/id/\(id)")!)
+
+            do {
+                let _ = try JSONDecoder().decode(FrankerFaceZRooms.self, from: data)
+            } catch {
+                print(error)
+            }
+
+            guard let frankerFaceZRooms = try? JSONDecoder().decode(FrankerFaceZRooms.self, from: data),
+                  let set = frankerFaceZRooms.sets[String(frankerFaceZRooms.room.set)] else {
+                print("FrankerFaceZ user request failed")
+                return
+            }
+
+            for emote in set.emoticons {
+                self.decodeFrankerFaceZ(emote: emote, output: &self.userEmotes)
+            }
+        } catch {
+            print("FrankerFaceZ user request failed")
+        }
+    }
+
+    private func decodeFrankerFaceZ(emote: FrankerFaceZEmote, output: inout [String: Emote]) {
+        if let animatedUrlString = emote.animated?["1"],
+           let animatedUrl = URL(string: "\(animatedUrlString).gif") {
+            // This is an animated emote. We append .gif to force GIFs
+            self.add(emote: Emote(name: emote.name, imageUrl: animatedUrl, source: .frankerFaceZ), output: &output)
+
+            return
+        }
+
+        guard let urlString = emote.urls["1"],
+              let url = URL(string: urlString) else {
+            print("Could not create URL for FrankerFaceZ emote \(emote.name)")
+            return
+        }
+
+        self.add(emote: Emote(name: emote.name, imageUrl: url, source: .frankerFaceZ), output: &output)
     }
 }

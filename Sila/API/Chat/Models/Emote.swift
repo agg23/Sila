@@ -20,6 +20,7 @@ struct Emote {
 }
 
 enum EmoteSource: Int {
-    case sevenTV = 1
-    case betterTTV = 0
+    case sevenTV = 2
+    case betterTTV = 1
+    case frankerFaceZ = 0
 }
