@@ -11,26 +11,15 @@ import TwitchIRC
 
 class ChatMessageModel {
     let message: PrivateMessage
-    let view: Text
     let emoteURLs: [URL]
+    let chunks: [AnimatedMessageChunk]
 
-    init(message: PrivateMessage, cachedColors: CachedColors) {
+    init(message: PrivateMessage) {
         self.message = message
 
         let (chunks, emoteURLs) = buildChunks(from: self.message)
 
-        self.view = Text(self.message.displayName)
-            .foregroundStyle(Color(cachedColors.get(hexColor: self.message.color))) +
-            Text(": ") +
-            chunks.reduce(Text("")) { existingText, chunk in
-                switch chunk {
-                case .text(let string):
-                    return existingText + Text(string)
-                case .image(let url):
-                    return existingText + Text("\(AsyncAnimatedImage(url: url))")
-                        .baselineOffset(-8.5)
-                }
-            }
+        self.chunks = chunks
         self.emoteURLs = emoteURLs
     }
 }
@@ -41,7 +30,7 @@ extension ChatMessageModel: Equatable {
     }
 }
 
-private enum AnimatedMessageChunk {
+enum AnimatedMessageChunk {
     case text(String)
     case image(URL)
 }
@@ -89,7 +78,7 @@ private func buildChunks(from message: PrivateMessage) -> ([AnimatedMessageChunk
             var startIndex = String.Index(utf16Offset: 0, in: string)
 
             for substring in splitString {
-                if let emote = EmoteController.shared.getEmote(named: substring.lowercased()) {
+                if let emote = EmoteController.shared.getEmote(named: String(substring)) {
                     // Get previous chunk
                     extractEmoteSection(string: string, startIndex: startIndex, emoteStartIndex: substring.startIndex, emoteUrl: emote.imageUrl, chunks: &innerChunks, emoteUrls: &emoteUrls)
 

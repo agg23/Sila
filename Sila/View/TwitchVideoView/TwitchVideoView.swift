@@ -134,7 +134,7 @@ struct TwitchVideoView: View {
                     .glassBackgroundEffect()
                 }
             }
-            .onAppear {
+            .task {
                 let channel: String
                 let channelId: String
                 switch self.streamableVideo {
@@ -148,6 +148,8 @@ struct TwitchVideoView: View {
 
                 self.player.channelId = channelId
                 self.player.channel = channel
+
+                await EmoteController.shared.fetchUserEmotes(for: channelId)
             }
             .onChange(of: self.player.status) { oldValue, newValue in
                 if newValue == .idle {

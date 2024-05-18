@@ -31,15 +31,17 @@ struct StreamButtonView: View {
             HStack {
                 self.overlayPill {
                     Text(self.buildRuntime())
+                        .lineLimit(1)
                 }
 
-                Spacer()
+                Spacer(minLength: /*@START_MENU_TOKEN@*/0/*@END_MENU_TOKEN@*/)
 
                 self.overlayPill {
                     Image(systemName: Icon.viewerCount)
                         .symbolRenderingMode(.palette)
                         .foregroundStyle(.red, .white)
                     Text(self.stream.viewerCount.formatted(.number))
+                        .lineLimit(1)
                 }
             }
         } contextMenu: {
@@ -96,7 +98,7 @@ struct StreamButtonView: View {
         HStack {
             content()
         }
-        .padding(4)
+        .padding(5)
         .background(.black.opacity(0.5))
         .clipShape(.rect(cornerRadius: 8))
         .padding(16)

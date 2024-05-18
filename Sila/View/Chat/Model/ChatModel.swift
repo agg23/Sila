@@ -18,7 +18,7 @@ import TwitchIRC
 
     @ObservationIgnored private let chatClient = ChatClient(.anonymous)
     @ObservationIgnored let resetScrollSubject = PassthroughSubject<(), Never>()
-    @ObservationIgnored private let cachedColors = CachedColors()
+    @ObservationIgnored let cachedColors = CachedColors()
     var messages: [ChatMessageModel] = []
 
     func connect(to channel: String) async {
@@ -67,7 +67,7 @@ import TwitchIRC
             deleted = true
         }
 
-        self.messages.append(ChatMessageModel(message: message, cachedColors: self.cachedColors))
+        self.messages.append(ChatMessageModel(message: message))
 
         if deleted {
             self.resetScrollSubject.send(())

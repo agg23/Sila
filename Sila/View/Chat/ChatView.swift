@@ -21,21 +21,26 @@ struct ChatView: View {
 
     var body: some View {
         VStack {
-            ChatListView(messages: self.chatModel.messages, resetScrollPublisher: self.chatModel.resetScrollSubject.eraseToAnyPublisher())
-//                .task(id: self.toggle) {
-//                    guard self.toggle else {
-//                        return
-//                    }
-//
-//                    print("Connecting to chat")
-//
-//                    await self.chatModel.connect(to: self.channel)
-//                }
-                .task {
-                    DebugChat.shared.loadAndParseMessages(url: URL(fileURLWithPath: "/Users/adam/code/Swift/VisionTwitch/util/vod-comment-grabber/comments.json"))
+            ChatListView(messages: self.chatModel.messages, cachedColors: self.chatModel.cachedColors, resetScrollPublisher: self.chatModel.resetScrollSubject.eraseToAnyPublisher())
+                .task(id: self.toggle) {
+                    guard self.toggle else {
+                        return
+                    }
 
-                    fireDebugTimer(index: 0)
+                    print("Connecting to chat")
+
+                    await self.chatModel.connect(to: self.channel)
                 }
+//                .task {
+//                    DebugChat.shared.loadAndParseMessages(url: URL(fileURLWithPath: "/Users/adam/code/Swift/VisionTwitch/util/vod-comment-grabber/comments.json"))
+//
+////                    for i in 0..<100 {
+////                        let message = DebugChat.shared.messages[i]
+////                        self.chatModel.appendChatMessage(message)
+////                    }
+//
+//                    fireDebugTimer(index: 0)
+//                }
         }
     }
 
@@ -68,10 +73,12 @@ struct ChatListView: View {
     @State private var scrollAtBottom = true
 
     let messages: [ChatMessageModel]
+    let cachedColors: CachedColors
     let resetScrollPublisher: AnyPublisher<(), Never>
 
-    init(messages: [ChatMessageModel], resetScrollPublisher: AnyPublisher<(), Never> = Empty().eraseToAnyPublisher()) {
+    init(messages: [ChatMessageModel], cachedColors: CachedColors, resetScrollPublisher: AnyPublisher<(), Never> = Empty().eraseToAnyPublisher()) {
         self.messages = messages
+        self.cachedColors = cachedColors
         self.resetScrollPublisher = resetScrollPublisher
     }
 
@@ -79,7 +86,7 @@ struct ChatListView: View {
         ScrollViewReader { proxy in
             List {
                 ForEach(self.messages, id: \.message.id) { message in
-                    ChatMessage(message: message)
+                    ChatMessage(message: message, cachedColors: self.cachedColors)
                         // Explicit ID for ScrollViewReader.scrollTo
                         .id(message.message)
                         .listRowInsets(ChatListView.rowInset)
@@ -144,7 +151,7 @@ struct ChatListView: View {
 }
 
 #Preview {
-    ChatListView(messages: PRIVATEMESSAGE_LIST_MOCK().map({ ChatMessageModel(message: $0, cachedColors: CachedColors()) }))
+    ChatListView(messages: PRIVATEMESSAGE_LIST_MOCK().map({ ChatMessageModel(message: $0) }), cachedColors: CachedColors())
         .frame(width: 400)
 }
 
