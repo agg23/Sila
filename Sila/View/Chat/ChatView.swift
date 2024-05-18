@@ -92,7 +92,6 @@ struct ChatListView: View {
                         .listRowInsets(ChatListView.rowInset)
                         .listRowSeparator(.hidden)
                         .padding(.vertical, 2)
-                        .padding(.horizontal)
                 }
 
                 Color.clear
@@ -153,5 +152,6 @@ struct ChatListView: View {
 #Preview {
     ChatListView(messages: PRIVATEMESSAGE_LIST_MOCK().map({ ChatMessageModel(message: $0) }), cachedColors: CachedColors())
         .frame(width: 400)
+        .glassBackgroundEffect()
 }
 
