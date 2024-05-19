@@ -21,7 +21,7 @@ import TwitchIRC
     @ObservationIgnored let cachedColors = CachedColors()
     var messages: [ChatMessageModel] = []
 
-    func connect(to channel: String) async {
+    func connect(to channel: String, for userId: String) async {
         await withTaskCancellationHandler {
             do {
                 let stream = try await self.chatClient.connect()
@@ -38,7 +38,7 @@ import TwitchIRC
 
                     switch message {
                     case .privateMessage(let message):
-                        await self.appendChatMessage(message)
+                        await self.appendChatMessage(message, userId: userId)
                     default:
                         break
                     }
@@ -58,7 +58,7 @@ import TwitchIRC
     }
 
     @MainActor
-    func appendChatMessage(_ message: PrivateMessage) {
+    func appendChatMessage(_ message: PrivateMessage, userId: String) {
         var deleted = false
 
         if self.messages.count >= ChatModel.MESSAGE_LIMIT {
@@ -67,7 +67,7 @@ import TwitchIRC
             deleted = true
         }
 
-        self.messages.append(ChatMessageModel(message: message))
+        self.messages.append(ChatMessageModel(message: message, userId: userId))
 
         if deleted {
             self.resetScrollSubject.send(())

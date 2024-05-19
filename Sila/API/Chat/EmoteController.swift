@@ -12,15 +12,19 @@ class EmoteController {
     static let shared = EmoteController()
 
     var globalEmotes: [String: Emote] = [:]
-    var userEmotes: [String: Emote] = [:]
+    var userToEmotes: [String: [String: Emote]] = [:]
 
-    func getEmote(named: String) -> Emote? {
+    func getEmote(named: String, for userId: String) -> Emote? {
         if let emote = self.globalEmotes[named] {
             print("Logging global \(emote)")
             return emote
         }
 
-        let emote = self.userEmotes[named]
+        guard let userEmotes = self.userToEmotes[userId] else {
+            return nil
+        }
+
+        let emote = userEmotes[named]
         
         if let emote = emote {
             print("Logging \(emote)")
@@ -41,12 +45,12 @@ class EmoteController {
         let _ = await (sevenTV, betterTTV, frankerFaceZ)
     }
 
-    func fetchUserEmotes(for id: String) async {
-        self.userEmotes = [:]
+    func fetchUserEmotes(for userId: String) async {
+        self.userToEmotes[userId] = [:]
 
-        async let sevenTV: Void = self.fetchSevenTVUserEmotes(for: id)
-        async let betterTTV: Void = self.fetchBetterTTVUserEmotes(for: id)
-        async let frankerFaceZ: Void = self.fetchFrankerFaceZUserEmotes(for: id)
+        async let sevenTV: Void = self.fetchSevenTVUserEmotes(for: userId)
+        async let betterTTV: Void = self.fetchBetterTTVUserEmotes(for: userId)
+        async let frankerFaceZ: Void = self.fetchFrankerFaceZUserEmotes(for: userId)
 
         let _ = await (sevenTV, betterTTV, frankerFaceZ)
     }
@@ -82,6 +86,10 @@ class EmoteController {
     }
 
     private func fetchSevenTVUserEmotes(for id: String) async {
+        guard var userEmotes = self.userToEmotes[id] else {
+            return
+        }
+
         do {
             let (data, _) = try await URLSession.shared.data(from: URL(string: "https://7tv.io/v3/users/twitch/\(id)")!)
 
@@ -91,8 +99,10 @@ class EmoteController {
             }
 
             for emote in sevenTVUser.emoteSet.emotes {
-                self.decodeSevenTV(emote: emote, output: &self.userEmotes)
+                self.decodeSevenTV(emote: emote, output: &userEmotes)
             }
+
+            self.userToEmotes[id] = userEmotes
         } catch {
             print("7TV user request failed")
         }
@@ -129,6 +139,10 @@ class EmoteController {
     }
 
     private func fetchBetterTTVUserEmotes(for id: String) async {
+        guard var userEmotes = self.userToEmotes[id] else {
+            return
+        }
+
         do {
             let (data, _) = try await URLSession.shared.data(from: URL(string: "https://api.betterttv.net/3/cached/users/twitch/\(id)")!)
 
@@ -138,8 +152,10 @@ class EmoteController {
             }
 
             for emote in betterTTVEmoteSet.channelEmotes + betterTTVEmoteSet.sharedEmotes {
-                self.decodeBetterTTV(emote: emote, output: &self.userEmotes)
+                self.decodeBetterTTV(emote: emote, output: &userEmotes)
             }
+
+            self.userToEmotes[id] = userEmotes
         } catch {
             print("BetterTTV user request failed")
         }
@@ -180,6 +196,10 @@ class EmoteController {
     }
 
     private func fetchFrankerFaceZUserEmotes(for id: String) async {
+        guard var userEmotes = self.userToEmotes[id] else {
+            return
+        }
+
         do {
             let (data, _) = try await URLSession.shared.data(from: URL(string: "https://api.frankerfacez.com/v1/room/id/\(id)")!)
 
@@ -196,8 +216,10 @@ class EmoteController {
             }
 
             for emote in set.emoticons {
-                self.decodeFrankerFaceZ(emote: emote, output: &self.userEmotes)
+                self.decodeFrankerFaceZ(emote: emote, output: &userEmotes)
             }
+
+            self.userToEmotes[id] = userEmotes
         } catch {
             print("FrankerFaceZ user request failed")
         }
