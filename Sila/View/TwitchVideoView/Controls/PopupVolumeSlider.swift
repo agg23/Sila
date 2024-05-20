@@ -9,8 +9,9 @@ import SwiftUI
 import JunoUI
 
 struct PopupVolumeSlider: View {
-    @State private var isPresented = false
+    @State private var isPresented = true
     @State private var buttonSize = CGSize.zero
+    @State private var previousVolume: CGFloat
 
     @State private var interactionTimer: Timer?
 
@@ -20,15 +21,15 @@ struct PopupVolumeSlider: View {
     init(volume: Binding<CGFloat>, isActive: Binding<Bool>? = nil) {
         self.volume = volume
         self.isActive = isActive
+        self.previousVolume = volume.wrappedValue
     }
 
-    let systemName = "speaker.wave.3.fill"
+    let unmutedSystemName = "speaker.wave.3.fill"
+    let mutedSystemName = "speaker.slash.fill"
 
     var body: some View {
         VStack {
-            CircleBackgroundLessButton(systemName: self.systemName, variableValue: self.volume.wrappedValue, tooltip: "Volume") {
-                self.isPresented = true
-                self.resetTimer()
+            CircleBackgroundLessButton(systemName: self.unmutedSystemName, variableValue: self.volume.wrappedValue, tooltip: "Volume") {
             }
             .background {
                 GeometryReader { geometry in
@@ -47,18 +48,26 @@ struct PopupVolumeSlider: View {
                             if editingChanged {
                                 self.interactionTimer?.invalidate()
                                 self.interactionTimer = nil
-                            } else {
-                                self.resetTimer()
                             }
                         }
                         .frame(width: 150)
                     }
                     // A bug in JunoSlider prevents it from having a dynamic width
                     .frame(width: self.isPresented ? 150 : 0)
-                    CircleBackgroundLessButton(systemName: self.systemName, variableValue: self.volume.wrappedValue, tooltip: "Volume") {
-                        self.isPresented = false
+                    CircleBackgroundLessButton(
+                        systemName: self.volume.wrappedValue > 0 ?  self.unmutedSystemName : self.mutedSystemName,
+                        variableValue: self.volume.wrappedValue,
+                        tooltip: "Volume") {
                         self.interactionTimer?.invalidate()
                         self.interactionTimer = nil
+                        
+                        if self.volume.wrappedValue > 0 {
+                            self.previousVolume = self.volume.wrappedValue
+                            self.volume.wrappedValue = 0
+                        } else {
+                            self.volume.wrappedValue = self.previousVolume
+                        }
+                        
                     }
                     .frame(width: self.buttonSize.width)
                 }
@@ -68,19 +77,9 @@ struct PopupVolumeSlider: View {
                 .opacity(self.isPresented ? 1.0 : 0.0)
                 .animation(.easeInOut(duration: 0.2), value: self.isPresented)
             }
-            .onChange(of: self.volume.wrappedValue) { _, _ in
-                self.resetTimer()
-            }
         }
         .onChange(of: self.isPresented, { _, newValue in
             self.isActive?.wrappedValue = newValue
-        })
-    }
-
-    func resetTimer() {
-        self.interactionTimer?.invalidate()
-        self.interactionTimer = Timer.scheduledTimer(withTimeInterval: 3, repeats: false, block: { _ in
-            self.isPresented = false
         })
     }
 }

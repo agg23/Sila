@@ -21,7 +21,8 @@ struct TwitchVideoView: View {
 
     @State private var preventClose = false
     
-    @State private var previousVolume: Double = 1.0
+    @State private var volume: CGFloat = 0.5
+    @State private var volumePreventClose = true
 
     let streamableVideo: StreamableVideo
 
@@ -48,7 +49,7 @@ struct TwitchVideoView: View {
                             .controlSize(.large)
                     }
                 }
-                .overlay(alignment: .topTrailing) {
+                .overlay(alignment: .topLeading) {
                     if self.controlVisibility == .visible {
                         @State var isMuted = self.player.volume == 0
                         
@@ -67,32 +68,34 @@ struct TwitchVideoView: View {
                             .labelStyle(.iconOnly)
                             .buttonBorderShape(.circle)
                             .controlSize(.large)
-                            .padding([.trailing, .top], 40)
-                            
-                            Button {
-                                if isMuted {
-                                    self.player.setVolume(previousVolume)
-                                    isMuted = false
-                                } else {
-                                    previousVolume = self.player.volume
-                                    self.player.setVolume(0)
-                                    isMuted = true
+                            .padding([.leading, .top], 40)
+                        }
+                    }
+                }
+                .overlay(alignment: .topTrailing) {
+                    if self.controlVisibility == .visible {
+                        PopupVolumeSlider(volume: self.$volume, isActive: self.$volumePreventClose)
+                            .onChange(of: self.volume) { _, newValue in
+                                // Local volume has changed, either via UI slider, or by new client volume value
+                                self.player.setVolume(newValue)
+                                self.resetTimer()
+                            }
+                            .onChange(of: self.player.volume) { _, newValue in
+                                // We've received a new set volume value from the client
+                                // Only update local volume if we do not have the volume slider up (as they may be out of sync)
+                                guard !self.volumePreventClose else {
+                                    return
                                 }
-                                self.onControlInteraction()
-                            } label: {
-                                Label {
-                                    Text(isMuted ? "Unmute" : "Mute")
-                                } icon: {
-                                    Image(systemName: isMuted ? Icon.mute : Icon.volume)
+
+                                self.volume = newValue
+                                self.resetTimer()
+                            }
+                            .onChange(of: self.player.muted) { _, newValue in
+                                if (newValue) {
+                                    self.volume = 0
                                 }
                             }
-                            .help(isMuted ? "Unmute" : "Mute")
-                            .labelStyle(.iconOnly)
-                            .buttonBorderShape(.circle)
-                            .controlSize(.large)
-                            .padding(.trailing, 40)
-                            .padding(.top, 20)
-                        }
+                            .padding([.trailing, .top], 40)
                     }
                 }
             }
