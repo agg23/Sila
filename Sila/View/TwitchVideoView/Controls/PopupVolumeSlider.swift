@@ -24,12 +24,9 @@ struct PopupVolumeSlider: View {
         self.previousVolume = volume.wrappedValue
     }
 
-    let unmutedSystemName = "speaker.wave.3.fill"
-    let mutedSystemName = "speaker.slash.fill"
-
     var body: some View {
         VStack {
-            CircleBackgroundLessButton(systemName: self.unmutedSystemName, variableValue: self.volume.wrappedValue, tooltip: "Volume") {
+            CircleBackgroundLessButton(systemName: Icon.volume, variableValue: self.volume.wrappedValue, tooltip: "Volume") {
             }
             .background {
                 GeometryReader { geometry in
@@ -55,9 +52,9 @@ struct PopupVolumeSlider: View {
                     // A bug in JunoSlider prevents it from having a dynamic width
                     .frame(width: self.isPresented ? 150 : 0)
                     CircleBackgroundLessButton(
-                        systemName: self.volume.wrappedValue > 0 ?  self.unmutedSystemName : self.mutedSystemName,
+                        systemName: self.volume.wrappedValue > 0 ?  Icon.volume : Icon.mute,
                         variableValue: self.volume.wrappedValue,
-                        tooltip: "Volume") {
+                        tooltip: self.volume.wrappedValue > 0 ? "Mute" : "Unmute") {
                         self.interactionTimer?.invalidate()
                         self.interactionTimer = nil
                         
