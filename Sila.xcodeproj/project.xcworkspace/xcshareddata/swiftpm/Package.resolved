@@ -1,5 +1,5 @@
 {
-  "originHash" : "2438abe2ae8e6e9078e5a24569b804ac07aa4c8e1946b07b05e177b81a72b1ce",
+  "originHash" : "76505e54f47069101b13f0dcb67987bd19328a588f8ee17031622a1afacb1234",
   "pins" : [
     {
       "identity" : "asyncanimatedimage",
@@ -7,7 +7,7 @@
       "location" : "https://github.com/agg23/AsyncAnimatedImage.git",
       "state" : {
         "branch" : "main",
-        "revision" : "a77e412451229fecc312bd9cbbab579d185ec04b"
+        "revision" : "119cedf4a967bccc72f570f7d0b128f66116cea0"
       }
     },
     {
