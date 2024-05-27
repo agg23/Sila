@@ -109,7 +109,7 @@ struct TwitchVideoView: View {
                     if case .stream(let stream) = self.streamableVideo {
                         HStack {
                             Color.clear.frame(width: self.ornamentSpacing)
-                            ChatPaneView(channel: stream.userLogin, title: stream.userName) {
+                            ChatPaneView(channel: stream.userLogin, userId: stream.userId, title: stream.userName) {
                                 withAnimation {
                                     self.chatVisibility = .hidden
                                 }

@@ -18,6 +18,7 @@ struct ChatView: View {
     @State private var timer: Timer?
 
     let channel: String
+    let userId: String
 
     var body: some View {
         VStack {
@@ -29,9 +30,12 @@ struct ChatView: View {
 
                     print("Connecting to chat")
 
-                    await self.chatModel.connect(to: self.channel)
+                    await self.chatModel.connect(to: self.channel, for: self.userId)
                 }
 //                .task {
+//                    // MoonMoon
+//                    await EmoteController.shared.fetchUserEmotes(for: "121059319")
+//
 //                    DebugChat.shared.loadAndParseMessages(url: URL(fileURLWithPath: "/Users/adam/code/Swift/VisionTwitch/util/vod-comment-grabber/comments.json"))
 //
 ////                    for i in 0..<100 {
@@ -55,7 +59,7 @@ struct ChatView: View {
         let message = messages[newIndex]
 
         Task {
-            await self.chatModel.appendChatMessage(message)
+            await self.chatModel.appendChatMessage(message, userId: "121059319")
         }
 
         self.timer = Timer.scheduledTimer(withTimeInterval: 0.2, repeats: false) { _ in
@@ -92,7 +96,6 @@ struct ChatListView: View {
                         .listRowInsets(ChatListView.rowInset)
                         .listRowSeparator(.hidden)
                         .padding(.vertical, 2)
-                        .padding(.horizontal)
                 }
 
                 Color.clear
@@ -151,7 +154,9 @@ struct ChatListView: View {
 }
 
 #Preview {
-    ChatListView(messages: PRIVATEMESSAGE_LIST_MOCK().map({ ChatMessageModel(message: $0) }), cachedColors: CachedColors())
+    // MoonMoon
+    ChatListView(messages: PRIVATEMESSAGE_LIST_MOCK().map({ ChatMessageModel(message: $0, userId: "121059319") }), cachedColors: CachedColors())
         .frame(width: 400)
+        .glassBackgroundEffect()
 }
 

@@ -14,10 +14,10 @@ class ChatMessageModel {
     let emoteURLs: [URL]
     let chunks: [AnimatedMessageChunk]
 
-    init(message: PrivateMessage) {
+    init(message: PrivateMessage, userId: String) {
         self.message = message
 
-        let (chunks, emoteURLs) = buildChunks(from: self.message)
+        let (chunks, emoteURLs) = buildChunks(from: self.message, userId: userId)
 
         self.chunks = chunks
         self.emoteURLs = emoteURLs
@@ -35,7 +35,7 @@ enum AnimatedMessageChunk {
     case image(URL)
 }
 
-private func buildChunks(from message: PrivateMessage) -> ([AnimatedMessageChunk], [URL]) {
+private func buildChunks(from message: PrivateMessage, userId: String) -> ([AnimatedMessageChunk], [URL]) {
     let string = message.message
 
     var chunks: [AnimatedMessageChunk] = []
@@ -78,7 +78,7 @@ private func buildChunks(from message: PrivateMessage) -> ([AnimatedMessageChunk
             var startIndex = String.Index(utf16Offset: 0, in: string)
 
             for substring in splitString {
-                if let emote = EmoteController.shared.getEmote(named: String(substring)) {
+                if let emote = EmoteController.shared.getEmote(named: String(substring), for: userId) {
                     // Get previous chunk
                     extractEmoteSection(string: string, startIndex: startIndex, emoteStartIndex: substring.startIndex, emoteUrl: emote.imageUrl, chunks: &innerChunks, emoteUrls: &emoteUrls)
 

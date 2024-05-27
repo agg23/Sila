@@ -58,7 +58,7 @@ struct StreamButtonView: View {
             }
 
             #if VOD_ENABLED
-            if let last = self.router.path.last {
+            if let last = self.router.pathForActiveTab().last {
                 switch last {
                 case .channel:
                     // We're in a channel view, we're already looking at this channel
