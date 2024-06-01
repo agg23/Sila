@@ -21,6 +21,10 @@ struct TwitchVideoView: View {
 
     @State private var preventClose = false
 
+    // Maintain a local volume value, which we update based on user input and the client
+    // This must be located here, as locating in the overlay wipes the state
+    @State private var volume: CGFloat = 0.5
+
     let streamableVideo: StreamableVideo
 
     /// Allow delaying of loading Twitch content to provide time for all other players to mute, allowing concurrent playback
@@ -38,32 +42,22 @@ struct TwitchVideoView: View {
     func content(_ geometry: GeometryProxy) -> some View {
         TwitchWebView(player: self.player, streamableVideo: self.streamableVideo, loading: self.$loading, delayLoading: self.delayLoading)
             .overlay {
-                ZStack {
-                    Color.clear
-
-                    if self.loading || self.delayLoading {
-                        ProgressView()
-                            .controlSize(.large)
-                    }
-                }
-                .overlay(alignment: .topTrailing) {
-                    if self.controlVisibility == .visible {
-                        Button {
-                            self.player.reload()
-                            self.onControlInteraction()
-                        } label: {
-                            Label {
-                                Text("Reload")
-                            } icon: {
-                                Image(systemName: Icon.refresh)
-                            }
-                        }
-                        .help("Reload")
-                        .labelStyle(.iconOnly)
-                        .buttonBorderShape(.circle)
+                if self.loading || self.delayLoading {
+                    ProgressView()
                         .controlSize(.large)
-                        .padding([.trailing, .top], 40)
+                }
+            }
+            .overlay(alignment: .topTrailing) {
+                if self.controlVisibility == .visible {
+                    PlayerOverlayControlsView(player: self.$player, volume: self.$volume, onInteraction: self.onControlInteraction) { isActive in
+                        if isActive {
+                            print("Controls are active")
+                            self.forceVisibility()
+                        } else {
+                            self.resetTimer()
+                        }
                     }
+                    .padding([.horizontal, .top], 40)
                 }
             }
             .onTapGesture {
