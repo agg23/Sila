@@ -7,12 +7,18 @@
 
 import Foundation
 
-struct Emote {
+class Emote {
     let name: String
 
     let imageUrl: URL
 
     let source: EmoteSource
+
+    init(name: String, imageUrl: URL, source: EmoteSource) {
+        self.name = name
+        self.imageUrl = imageUrl
+        self.source = source
+    }
 
     func isHigherPriority(than source: EmoteSource) -> Bool {
         self.source.rawValue > source.rawValue

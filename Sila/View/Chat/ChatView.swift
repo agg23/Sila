@@ -20,6 +20,9 @@ struct ChatView: View {
     let channel: String
     let userId: String
 
+    // Forsen
+    let DEBUG_USER_ID = "22484632"
+
     var body: some View {
         VStack {
             ChatListView(messages: self.chatModel.messages, cachedColors: self.chatModel.cachedColors, resetScrollPublisher: self.chatModel.resetScrollSubject.eraseToAnyPublisher())
@@ -33,8 +36,7 @@ struct ChatView: View {
                     await self.chatModel.connect(to: self.channel, for: self.userId)
                 }
 //                .task {
-//                    // MoonMoon
-//                    await EmoteController.shared.fetchUserEmotes(for: "121059319")
+//                    await EmoteController.shared.fetchUserEmotes(for: DEBUG_USER_ID)
 //
 //                    DebugChat.shared.loadAndParseMessages(url: URL(fileURLWithPath: "/Users/adam/code/Swift/VisionTwitch/util/vod-comment-grabber/comments.json"))
 //
@@ -59,7 +61,7 @@ struct ChatView: View {
         let message = messages[newIndex]
 
         Task {
-            await self.chatModel.appendChatMessage(message, userId: "121059319")
+            self.chatModel.appendChatMessage(message, userId: DEBUG_USER_ID)
         }
 
         self.timer = Timer.scheduledTimer(withTimeInterval: 0.2, repeats: false) { _ in

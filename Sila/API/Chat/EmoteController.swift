@@ -11,11 +11,17 @@ import Network
 class EmoteController {
     static let shared = EmoteController()
 
-    var globalEmotes: [String: Emote] = [:]
-    var userToEmotes: [String: [String: Emote]] = [:]
+    /// String: Emote
+    var globalEmotes: NSMutableDictionary = [:]
+    /// Inner dictionary is String: Emote
+    var userToEmotes: [String: NSMutableDictionary] = [:]
 
     func getEmote(named: String, for userId: String) -> Emote? {
-        if let emote = self.globalEmotes[named] {
+        if named == "monkaOMEGA" {
+            print("hi")
+        }
+
+        if let emote = self.globalEmotes[named] as? Emote {
             print("Logging global \(emote)")
             return emote
         }
@@ -24,8 +30,8 @@ class EmoteController {
             return nil
         }
 
-        let emote = userEmotes[named]
-        
+        let emote = userEmotes[named] as? Emote
+
         if let emote = emote {
             print("Logging \(emote)")
         }
@@ -34,7 +40,7 @@ class EmoteController {
     }
 
     func fetchGlobalEmotes() async {
-        if !self.globalEmotes.isEmpty {
+        if self.globalEmotes.count > 0 {
             return
         }
 
@@ -55,8 +61,8 @@ class EmoteController {
         let _ = await (sevenTV, betterTTV, frankerFaceZ)
     }
 
-    private func add(emote: Emote, output: inout [String: Emote]) {
-        if let existingEmote = output[emote.name],
+    private func add(emote: Emote, output: NSMutableDictionary) {
+        if let existingEmote = output[emote.name] as? Emote,
            !emote.isHigherPriority(than: existingEmote.source) {
             // There's an existing emote, but it's higher priority than our current one
             // Do nothing
@@ -78,7 +84,7 @@ class EmoteController {
             }
 
             for emote in sevenTVEmotes.emotes {
-                self.decodeSevenTV(emote: emote, output: &self.globalEmotes)
+                self.decodeSevenTV(emote: emote, output: self.globalEmotes)
             }
         } catch {
             print("7TV global request failed")
@@ -99,7 +105,7 @@ class EmoteController {
             }
 
             for emote in sevenTVUser.emoteSet.emotes {
-                self.decodeSevenTV(emote: emote, output: &userEmotes)
+                self.decodeSevenTV(emote: emote, output: userEmotes)
             }
 
             self.userToEmotes[id] = userEmotes
@@ -108,7 +114,7 @@ class EmoteController {
         }
     }
 
-    private func decodeSevenTV(emote: SevenTVEmote, output: inout [String: Emote]) {
+    private func decodeSevenTV(emote: SevenTVEmote, output: NSMutableDictionary) {
         // We ignore the file names provided by the API and just always check for a 1x scale, in _GIF_ form. The API
         // does not advertise GIFs, but we can't readily display animated AVIF or WEBP, and the GIFs appear to exist
         guard let url = URL(string: "https:\(emote.data.host.url)/1x.gif") else {
@@ -116,7 +122,7 @@ class EmoteController {
             return
         }
 
-        self.add(emote: Emote(name: emote.name, imageUrl: url, source: .sevenTV), output: &output)
+        self.add(emote: Emote(name: emote.name, imageUrl: url, source: .sevenTV), output: output)
     }
 
     // MARK: - BetterTTV
@@ -131,7 +137,7 @@ class EmoteController {
             }
 
             for emote in betterTTVEmotes {
-                self.decodeBetterTTV(emote: emote, output: &self.globalEmotes)
+                self.decodeBetterTTV(emote: emote, output: self.globalEmotes)
             }
         } catch {
             print("BetterTTV global request failed")
@@ -152,7 +158,7 @@ class EmoteController {
             }
 
             for emote in betterTTVEmoteSet.channelEmotes + betterTTVEmoteSet.sharedEmotes {
-                self.decodeBetterTTV(emote: emote, output: &userEmotes)
+                self.decodeBetterTTV(emote: emote, output: userEmotes)
             }
 
             self.userToEmotes[id] = userEmotes
@@ -161,7 +167,7 @@ class EmoteController {
         }
     }
 
-    private func decodeBetterTTV(emote: BetterTTVEmote, output: inout [String: Emote]) {
+    private func decodeBetterTTV(emote: BetterTTVEmote, output: NSMutableDictionary) {
         // We ignore the file names provided by the API and just always check for a 1x scale, in _GIF_ form. The API
         // does not advertise GIFs, but we can't readily display animated AVIF or WEBP, and the GIFs appear to exist
         guard let url = URL(string: "https://cdn.betterttv.net/emote/\(emote.id)/1x") else {
@@ -169,7 +175,7 @@ class EmoteController {
             return
         }
 
-        self.add(emote: Emote(name: emote.code, imageUrl: url, source: .betterTTV), output: &output)
+        self.add(emote: Emote(name: emote.code, imageUrl: url, source: .betterTTV), output: output)
     }
 
     // MARK: - FrankerFaceZ
@@ -186,7 +192,7 @@ class EmoteController {
             for setId in frankerFaceZGlobalEmotes.defaultSets {
                 if let set = frankerFaceZGlobalEmotes.sets[String(setId)] {
                     for emote in set.emoticons {
-                        self.decodeFrankerFaceZ(emote: emote, output: &self.globalEmotes)
+                        self.decodeFrankerFaceZ(emote: emote, output: self.globalEmotes)
                     }
                 }
             }
@@ -216,7 +222,7 @@ class EmoteController {
             }
 
             for emote in set.emoticons {
-                self.decodeFrankerFaceZ(emote: emote, output: &userEmotes)
+                self.decodeFrankerFaceZ(emote: emote, output: userEmotes)
             }
 
             self.userToEmotes[id] = userEmotes
@@ -225,11 +231,11 @@ class EmoteController {
         }
     }
 
-    private func decodeFrankerFaceZ(emote: FrankerFaceZEmote, output: inout [String: Emote]) {
+    private func decodeFrankerFaceZ(emote: FrankerFaceZEmote, output: NSMutableDictionary) {
         if let animatedUrlString = emote.animated?["1"],
            let animatedUrl = URL(string: "\(animatedUrlString).gif") {
             // This is an animated emote. We append .gif to force GIFs
-            self.add(emote: Emote(name: emote.name, imageUrl: animatedUrl, source: .frankerFaceZ), output: &output)
+            self.add(emote: Emote(name: emote.name, imageUrl: animatedUrl, source: .frankerFaceZ), output: output)
 
             return
         }
@@ -240,6 +246,6 @@ class EmoteController {
             return
         }
 
-        self.add(emote: Emote(name: emote.name, imageUrl: url, source: .frankerFaceZ), output: &output)
+        self.add(emote: Emote(name: emote.name, imageUrl: url, source: .frankerFaceZ), output: output)
     }
 }
