@@ -18,12 +18,10 @@ struct ChannelGridView: View {
         })
 
         LazyVGrid(columns: [
-            GridItem(),
-            GridItem(),
-            GridItem(),
-            GridItem(),
-            GridItem(),
-            GridItem()
+            GridItem(
+                .adaptive(minimum: 150, maximum: 200),
+                spacing: 16
+            )
         ], content: {
             ForEach(sortedChannels, id: \.id) { user in
                 ChannelButtonView(channel: user)

@@ -20,10 +20,10 @@ struct VODGridView: View {
 
     var body: some View {
         LazyVGrid(columns: [
-            GridItem(),
-            GridItem(),
-            GridItem(),
-            GridItem()
+            GridItem(
+                .adaptive(minimum: 250, maximum: 350),
+                spacing: 16
+            )
         ], content: {
             ForEach(self.videos, id: \.id) { video in
                 VODButtonView(video: video)

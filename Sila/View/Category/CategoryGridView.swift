@@ -20,12 +20,10 @@ struct CategoryGridView: View {
 
     var body: some View {
         LazyVGrid(columns: [
-            GridItem(spacing: 16),
-            GridItem(spacing: 16),
-            GridItem(spacing: 16),
-            GridItem(spacing: 16),
-            GridItem(spacing: 16),
-            GridItem(spacing: 16)
+            GridItem(
+                .adaptive(minimum: 150, maximum: 200),
+                spacing: 16
+            )
         ], spacing: 16){
             ForEach(self.categories, id: \.id) { category in
                 CategoryButtonView(category: category)
