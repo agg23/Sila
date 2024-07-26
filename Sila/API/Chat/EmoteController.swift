@@ -17,10 +17,6 @@ class EmoteController {
     var userToEmotes: [String: NSMutableDictionary] = [:]
 
     func getEmote(named: String, for userId: String) -> Emote? {
-        if named == "monkaOMEGA" {
-            print("hi")
-        }
-
         if let emote = self.globalEmotes[named] as? Emote {
             print("Logging global \(emote)")
             return emote
@@ -92,7 +88,7 @@ class EmoteController {
     }
 
     private func fetchSevenTVUserEmotes(for id: String) async {
-        guard var userEmotes = self.userToEmotes[id] else {
+        guard let userEmotes = self.userToEmotes[id] else {
             return
         }
 
@@ -107,8 +103,6 @@ class EmoteController {
             for emote in sevenTVUser.emoteSet.emotes {
                 self.decodeSevenTV(emote: emote, output: userEmotes)
             }
-
-            self.userToEmotes[id] = userEmotes
         } catch {
             print("7TV user request failed")
         }
@@ -145,7 +139,7 @@ class EmoteController {
     }
 
     private func fetchBetterTTVUserEmotes(for id: String) async {
-        guard var userEmotes = self.userToEmotes[id] else {
+        guard let userEmotes = self.userToEmotes[id] else {
             return
         }
 
@@ -160,8 +154,6 @@ class EmoteController {
             for emote in betterTTVEmoteSet.channelEmotes + betterTTVEmoteSet.sharedEmotes {
                 self.decodeBetterTTV(emote: emote, output: userEmotes)
             }
-
-            self.userToEmotes[id] = userEmotes
         } catch {
             print("BetterTTV user request failed")
         }
@@ -202,7 +194,7 @@ class EmoteController {
     }
 
     private func fetchFrankerFaceZUserEmotes(for id: String) async {
-        guard var userEmotes = self.userToEmotes[id] else {
+        guard let userEmotes = self.userToEmotes[id] else {
             return
         }
 
@@ -224,8 +216,6 @@ class EmoteController {
             for emote in set.emoticons {
                 self.decodeFrankerFaceZ(emote: emote, output: userEmotes)
             }
-
-            self.userToEmotes[id] = userEmotes
         } catch {
             print("FrankerFaceZ user request failed")
         }

@@ -61,7 +61,7 @@ struct ChatView: View {
         let message = messages[newIndex]
 
         Task {
-            self.chatModel.appendChatMessage(message, userId: DEBUG_USER_ID)
+            await self.chatModel.appendChatMessage(message, userId: DEBUG_USER_ID)
         }
 
         self.timer = Timer.scheduledTimer(withTimeInterval: 0.2, repeats: false) { _ in
