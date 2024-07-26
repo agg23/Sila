@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct PlayerOverlayControlsView: View {
+    @AppStorage(Setting.dimSurroundings) var dimSurroundings: Bool = false
+
     @State private var volumePreventClose = false
 
     @Binding var player: WebViewPlayer
@@ -32,6 +34,24 @@ struct PlayerOverlayControlsView: View {
             .labelStyle(.iconOnly)
             .buttonBorderShape(.circle)
             .controlSize(.large)
+
+            let dimLabel = "\(self.dimSurroundings ? "Undim" : "Dim") Surroundings"
+
+            Button {
+                self.dimSurroundings.toggle()
+                self.onInteraction()
+            } label: {
+                Label {
+                    Text(dimLabel)
+                } icon: {
+                    Image(systemName: Icon.dimming)
+                }
+            }
+            .help(dimLabel)
+            .labelStyle(.iconOnly)
+            .buttonBorderShape(.circle)
+            .controlSize(.large)
+            .padding(.leading)
 
             Spacer()
 
