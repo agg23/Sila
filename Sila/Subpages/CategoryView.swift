@@ -30,7 +30,8 @@ struct CategoryView: View {
                 }
             }
         }
-        .navigationTitlePlaceholder()
+        // TODO: Readd when .navigationTitle is fixed
+//        .navigationTitlePlaceholder()
     }
 
     func fetchData(on api: Helix, overwriting: Bool, language: String, using cursor: String? = nil) async throws -> ([Twitch.Stream], Game, String?) {
@@ -116,7 +117,7 @@ private struct CategoryViewContent: View {
 
             defaultToolbar()
         }
-        .navigationTitle(game.name)
+        .largeNavigationTitle(self.game.name)
     }
 }
 

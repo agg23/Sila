@@ -16,7 +16,14 @@ struct TabPage<Content: View>: View {
     var body: some View {
         NavStack(tab: self.tab) {
             self.content()
-                .navigationTitle(self.title)
+//                .navigationTitle(self.title)
+                // navigationTitle is very small on visionOS 2.0. Insert our own title instead
+                .toolbar {
+                    ToolbarItem(placement: .topBarLeading) {
+                        Text(self.title)
+                            .font(.largeTitle)
+                    }
+                }
                 .navigationDestination(for: Route.self, destination: { route in
                     switch route {
                     case .category(game: let gameWrapper):

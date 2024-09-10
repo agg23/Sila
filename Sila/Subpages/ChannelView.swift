@@ -91,7 +91,7 @@ struct ChannelViewContent: View {
             // Make profile image be pushed to the top
             Spacer()
         }
-        .navigationTitle(self.channelUser.displayName)
+        .largeNavigationTitle(self.channelUser.displayName)
         .toolbar {
             ShareLink(item: URL(string: "https://twitch.tv/\(self.channelUser.login)")!)
         }

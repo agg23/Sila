@@ -67,7 +67,7 @@ struct LicensesView: View {
             }
             .padding(.vertical)
         }
-        .navigationTitle("Licenses")
+        .largeNavigationTitle("Licenses")
     }
 }
 

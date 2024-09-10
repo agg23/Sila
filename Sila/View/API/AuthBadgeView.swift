@@ -27,6 +27,8 @@ struct AuthBadgeView: View {
                 }
             }
         }
+        // Force rounded icon on vision 2.0+
+        .menuStyle(.borderlessButton)
         .onReceive(self.authController.requestReauthSubject) { _ in
             // We need to reauth
             self.showOauth = true
