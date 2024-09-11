@@ -18,7 +18,7 @@ class EmoteController {
 
     func getEmote(named: String, for userId: String) -> Emote? {
         if let emote = self.globalEmotes[named] as? Emote {
-            print("Logging global \(emote)")
+            print("Logging global \(emote.source) \(emote.name)")
             return emote
         }
 
@@ -29,7 +29,7 @@ class EmoteController {
         let emote = userEmotes[named] as? Emote
 
         if let emote = emote {
-            print("Logging \(emote)")
+            print("Logging \(emote.source) \(emote.name)")
         }
 
         return emote
@@ -79,19 +79,13 @@ class EmoteController {
                 return
             }
 
-            for emote in sevenTVEmotes.emotes {
-                self.decodeSevenTV(emote: emote, output: self.globalEmotes)
-            }
+            await self.decodeSevenTV(for: nil, emotes: sevenTVEmotes.emotes)
         } catch {
             print("7TV global request failed")
         }
     }
 
     private func fetchSevenTVUserEmotes(for id: String) async {
-        guard let userEmotes = self.userToEmotes[id] else {
-            return
-        }
-
         do {
             let (data, _) = try await URLSession.shared.data(from: URL(string: "https://7tv.io/v3/users/twitch/\(id)")!)
 
@@ -100,23 +94,28 @@ class EmoteController {
                 return
             }
 
-            for emote in sevenTVUser.emoteSet.emotes {
-                self.decodeSevenTV(emote: emote, output: userEmotes)
-            }
+            await self.decodeSevenTV(for: id, emotes: sevenTVUser.emoteSet.emotes)
         } catch {
             print("7TV user request failed")
         }
     }
 
-    private func decodeSevenTV(emote: SevenTVEmote, output: NSMutableDictionary) {
-        // We ignore the file names provided by the API and just always check for a 1x scale, in _GIF_ form. The API
-        // does not advertise GIFs, but we can't readily display animated AVIF or WEBP, and the GIFs appear to exist
-        guard let url = URL(string: "https:\(emote.data.host.url)/1x.gif") else {
-            print("Could not create URL for 7TV emote \(emote.name)")
+    @MainActor
+    private func decodeSevenTV(for id: String?, emotes: [SevenTVEmote]) {
+        guard let output = self.emoteWrapper(for: id) else {
             return
         }
 
-        self.add(emote: Emote(name: emote.name, imageUrl: url, source: .sevenTV), output: output)
+        for emote in emotes {
+            // We ignore the file names provided by the API and just always check for a 1x scale, in _GIF_ form. The API
+            // does not advertise GIFs, but we can't readily display animated AVIF or WEBP, and the GIFs appear to exist
+            guard let url = URL(string: "https:\(emote.data.host.url)/1x.gif") else {
+                print("Could not create URL for 7TV emote \(emote.name)")
+                return
+            }
+
+            self.add(emote: Emote(name: emote.name, imageUrl: url, source: .sevenTV), output: output)
+        }
     }
 
     // MARK: - BetterTTV
@@ -130,19 +129,13 @@ class EmoteController {
                 return
             }
 
-            for emote in betterTTVEmotes {
-                self.decodeBetterTTV(emote: emote, output: self.globalEmotes)
-            }
+            await self.decodeBetterTTV(for: nil, emotes: betterTTVEmotes)
         } catch {
             print("BetterTTV global request failed")
         }
     }
 
     private func fetchBetterTTVUserEmotes(for id: String) async {
-        guard let userEmotes = self.userToEmotes[id] else {
-            return
-        }
-
         do {
             let (data, _) = try await URLSession.shared.data(from: URL(string: "https://api.betterttv.net/3/cached/users/twitch/\(id)")!)
 
@@ -151,23 +144,28 @@ class EmoteController {
                 return
             }
 
-            for emote in betterTTVEmoteSet.channelEmotes + betterTTVEmoteSet.sharedEmotes {
-                self.decodeBetterTTV(emote: emote, output: userEmotes)
-            }
+            await self.decodeBetterTTV(for: id, emotes: betterTTVEmoteSet.channelEmotes + betterTTVEmoteSet.sharedEmotes)
         } catch {
             print("BetterTTV user request failed")
         }
     }
 
-    private func decodeBetterTTV(emote: BetterTTVEmote, output: NSMutableDictionary) {
-        // We ignore the file names provided by the API and just always check for a 1x scale, in _GIF_ form. The API
-        // does not advertise GIFs, but we can't readily display animated AVIF or WEBP, and the GIFs appear to exist
-        guard let url = URL(string: "https://cdn.betterttv.net/emote/\(emote.id)/1x") else {
-            print("Could not create URL for BetterTTV emote \(emote.code)")
+    @MainActor
+    private func decodeBetterTTV(for id: String?, emotes: [BetterTTVEmote]) {
+        guard let output = self.emoteWrapper(for: id) else {
             return
         }
 
-        self.add(emote: Emote(name: emote.code, imageUrl: url, source: .betterTTV), output: output)
+        for emote in emotes {
+            // We ignore the file names provided by the API and just always check for a 1x scale, in _GIF_ form. The API
+            // does not advertise GIFs, but we can't readily display animated AVIF or WEBP, and the GIFs appear to exist
+            guard let url = URL(string: "https://cdn.betterttv.net/emote/\(emote.id)/1x") else {
+                print("Could not create URL for BetterTTV emote \(emote.code)")
+                return
+            }
+
+            self.add(emote: Emote(name: emote.code, imageUrl: url, source: .betterTTV), output: output)
+        }
     }
 
     // MARK: - FrankerFaceZ
@@ -183,9 +181,7 @@ class EmoteController {
 
             for setId in frankerFaceZGlobalEmotes.defaultSets {
                 if let set = frankerFaceZGlobalEmotes.sets[String(setId)] {
-                    for emote in set.emoticons {
-                        self.decodeFrankerFaceZ(emote: emote, output: self.globalEmotes)
-                    }
+                    await self.decodeFrankerFaceZ(for: nil, set: set)
                 }
             }
         } catch {
@@ -194,10 +190,6 @@ class EmoteController {
     }
 
     private func fetchFrankerFaceZUserEmotes(for id: String) async {
-        guard let userEmotes = self.userToEmotes[id] else {
-            return
-        }
-
         do {
             let (data, _) = try await URLSession.shared.data(from: URL(string: "https://api.frankerfacez.com/v1/room/id/\(id)")!)
 
@@ -213,29 +205,42 @@ class EmoteController {
                 return
             }
 
-            for emote in set.emoticons {
-                self.decodeFrankerFaceZ(emote: emote, output: userEmotes)
-            }
+            await self.decodeFrankerFaceZ(for: id, set: set)
         } catch {
             print("FrankerFaceZ user request failed")
         }
     }
 
-    private func decodeFrankerFaceZ(emote: FrankerFaceZEmote, output: NSMutableDictionary) {
-        if let animatedUrlString = emote.animated?["1"],
-           let animatedUrl = URL(string: "\(animatedUrlString).gif") {
-            // This is an animated emote. We append .gif to force GIFs
-            self.add(emote: Emote(name: emote.name, imageUrl: animatedUrl, source: .frankerFaceZ), output: output)
-
+    @MainActor
+    private func decodeFrankerFaceZ(for id: String?, set: FrankerFaceZEmoteSet) {
+        guard let output = self.emoteWrapper(for: id) else {
             return
         }
 
-        guard let urlString = emote.urls["1"],
-              let url = URL(string: urlString) else {
-            print("Could not create URL for FrankerFaceZ emote \(emote.name)")
-            return
-        }
+        for emote in set.emoticons {
+            if let animatedUrlString = emote.animated?["1"],
+               let animatedUrl = URL(string: "\(animatedUrlString).gif") {
+                // This is an animated emote. We append .gif to force GIFs
+                self.add(emote: Emote(name: emote.name, imageUrl: animatedUrl, source: .frankerFaceZ), output: output)
 
-        self.add(emote: Emote(name: emote.name, imageUrl: url, source: .frankerFaceZ), output: output)
+                return
+            }
+
+            guard let urlString = emote.urls["1"],
+                  let url = URL(string: urlString) else {
+                print("Could not create URL for FrankerFaceZ emote \(emote.name)")
+                return
+            }
+
+            self.add(emote: Emote(name: emote.name, imageUrl: url, source: .frankerFaceZ), output: output)
+        }
+    }
+
+    private func emoteWrapper(for id: String?) -> NSMutableDictionary? {
+        if let id = id {
+            return self.userToEmotes[id]
+        } else {
+            return self.globalEmotes
+        }
     }
 }
