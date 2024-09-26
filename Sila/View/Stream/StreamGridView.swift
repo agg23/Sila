@@ -20,10 +20,10 @@ struct StreamGridView: View {
 
     var body: some View {
         LazyVGrid(columns: [
-            GridItem(spacing: 16),
-            GridItem(spacing: 16),
-            GridItem(spacing: 16),
-            GridItem(spacing: 16)
+            GridItem(
+                .adaptive(minimum: 250, maximum: 350),
+                spacing: 16
+            )
         ], spacing: 16) {
             ForEach(self.streams) { stream in
                 StreamButtonView(stream: stream)
