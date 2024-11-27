@@ -46,7 +46,7 @@ struct SearchView: View {
 struct SearchListView: View {
     @Environment(\.openWindow) private var openWindow
     @Environment(Router.self) private var router
-    @Environment(\.authController) private var authController
+    @Environment(AuthController.self) private var authController
 
     let channels: [Channel]
     let categories: [Twitch.Category]

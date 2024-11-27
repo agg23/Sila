@@ -9,7 +9,7 @@ import SwiftUI
 import Twitch
 
 struct DataView<T, E: Error, Content: View, Loading: View, ErrorView: View>: View {
-    @Environment(\.authController) private var authController
+    @Environment(AuthController.self) private var authController
 
     let loader: Binding<StandardDataLoader<T>>
     let task: (_: Helix, _: AuthUser?) async throws -> T

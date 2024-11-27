@@ -9,7 +9,7 @@ import SwiftUI
 import Twitch
 
 struct FollowedStreamsView: View {
-    @Environment(\.authController) private var authController
+    @Environment(AuthController.self) private var authController
 
     @State private var liveStreamsLoader = StandardDataLoader<([Twitch.Stream], String?)>()
     @State private var channelsLoader = StandardDataLoader<[Twitch.User]>()

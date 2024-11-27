@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct NeedsLoginView: View {
-    @Environment(\.authController) private var authController
+    @Environment(AuthController.self) private var authController
 
     let noAuthMessage: String
     let systemImage: String

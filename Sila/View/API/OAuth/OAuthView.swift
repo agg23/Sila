@@ -10,7 +10,7 @@ import Twitch
 
 struct OAuthView: View {
     @Environment(\.dismiss) private var dismiss
-    @Environment(\.authController) private var authController
+    @Environment(AuthController.self) private var authController
 
     var body: some View {
         NavigationStack {

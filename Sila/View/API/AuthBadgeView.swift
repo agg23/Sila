@@ -9,7 +9,7 @@ import SwiftUI
 import Combine
 
 struct AuthBadgeView: View {
-    @Environment(\.authController) private var authController
+    @Environment(AuthController.self) private var authController
 
     @State var showOauth = false
 

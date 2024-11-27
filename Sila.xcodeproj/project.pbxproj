@@ -105,7 +105,6 @@
 		66E102492B82E496007A44D4 /* NavStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E102482B82E496007A44D4 /* NavStack.swift */; };
 		66E8859F2B86C646004B4B8D /* DataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E8859E2B86C646004B4B8D /* DataLoader.swift */; };
 		66E885A22B86D95C004B4B8D /* AuthStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E885A12B86D95C004B4B8D /* AuthStatus.swift */; };
-		66E885A52B86DFE2004B4B8D /* AuthController+EnvironmentValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E885A42B86DFE2004B4B8D /* AuthController+EnvironmentValues.swift */; };
 		66E885A82B8821D9004B4B8D /* StandardDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E885A72B8821D9004B4B8D /* StandardDataView.swift */; };
 		66F105A32BA4B28E006B7ADE /* Lifecycle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F105A22BA4B28E006B7ADE /* Lifecycle.swift */; };
 		66F105A52BA4B3DF006B7ADE /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F105A42BA4B3DF006B7ADE /* Task.swift */; };
@@ -223,7 +222,6 @@
 		66E102482B82E496007A44D4 /* NavStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavStack.swift; sourceTree = "<group>"; };
 		66E8859E2B86C646004B4B8D /* DataLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataLoader.swift; sourceTree = "<group>"; };
 		66E885A12B86D95C004B4B8D /* AuthStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthStatus.swift; sourceTree = "<group>"; };
-		66E885A42B86DFE2004B4B8D /* AuthController+EnvironmentValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthController+EnvironmentValues.swift"; sourceTree = "<group>"; };
 		66E885A72B8821D9004B4B8D /* StandardDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandardDataView.swift; sourceTree = "<group>"; };
 		66F105A22BA4B28E006B7ADE /* Lifecycle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lifecycle.swift; sourceTree = "<group>"; };
 		66F105A42BA4B3DF006B7ADE /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
@@ -608,7 +606,6 @@
 				66C4BC312BCD97E500AA8732 /* Chat */,
 				6600E0832B8BB352003B2270 /* Overrides */,
 				66F4E42B2B812A32008C565D /* AuthController.swift */,
-				66E885A42B86DFE2004B4B8D /* AuthController+EnvironmentValues.swift */,
 				66E885A12B86D95C004B4B8D /* AuthStatus.swift */,
 				66E1021A2B8272E3007A44D4 /* Auth+Notification.swift */,
 				66E8859E2B86C646004B4B8D /* DataLoader.swift */,
@@ -748,7 +745,6 @@
 				66F4E4252B811B6C008C565D /* CloseButtonView.swift in Sources */,
 				66E102492B82E496007A44D4 /* NavStack.swift in Sources */,
 				66125F592B83CE4E002169B5 /* DefaultToolbar.swift in Sources */,
-				66E885A52B86DFE2004B4B8D /* AuthController+EnvironmentValues.swift in Sources */,
 				66E885A22B86D95C004B4B8D /* AuthStatus.swift in Sources */,
 				66125F562B83C88E002169B5 /* TabPage.swift in Sources */,
 				66F4E42C2B812A32008C565D /* AuthController.swift in Sources */,

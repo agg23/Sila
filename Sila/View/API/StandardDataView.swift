@@ -31,7 +31,7 @@ struct StandardDataView<T, Content: View>: View {
 }
 
 struct AuthroizedStandardDataView<T, Content: View>: View {
-    @Environment(\.authController) private var authController
+    @Environment(AuthController.self) private var authController
 
     let loader: Binding<StandardDataLoader<T>>
     let task: (_: Helix, _: AuthUser?) async throws -> T

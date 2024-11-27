@@ -13,7 +13,7 @@ struct MainWindowView: View {
     @Environment(\.dismissWindow) private var dismissWindow
     @Environment(\.scenePhase) private var scene
 
-    @Environment(\.authController) private var authController
+    @Environment(AuthController.self) private var authController
 
     @Environment(Router.self) private var router
 
