@@ -9,35 +9,31 @@ import SwiftUI
 import Twitch
 
 struct ChannelView: View {
-    @State private var loader = StandardDataLoader<User>()
+    @State private var loader = StandardDataLoader<(User, Twitch.Stream?)>()
 
     let channel: UserWrapper
 
     var body: some View {
-        DataView(loader: self.$loader) { api, _ in
+        StandardDataView(loader: self.$loader) { api, _ in
             switch self.channel {
             case .user(let user):
-                return user
+                let (streams, _) = try await api.getStreams(userIDs: [user.id])
+
+                return (user, streams.first)
             case .id(let id):
-                let users = try await api.getUsers(userIDs: [id])
+                async let usersTask = api.getUsers(userIDs: [id])
+                async let (streamsTask, _) = api.getStreams(userIDs: [id])
+
+                let (users, streams) = try await (usersTask, streamsTask)
 
                 guard users.count > 0 else {
                     throw HelixError.requestFailed(error: "Could not fetch user", status: 200, message: "")
                 }
 
-                return users[0]
+                return (users[0], streams.first)
             }
-        } content: { user in
-            ChannelViewContent(channelUser: user)
-        } loading: { _ in
-            // Vertically center loading spinner with NavigationStack safe area
-            ZStack {
-                Color.clear
-                ProgressView()
-            }
-            .ignoresSafeArea()
-        } error: { (_: HelixError?) in
-            APIErrorView(loader: self.$loader)
+        } content: { (user, stream) in
+            ChannelViewContent(channelUser: user, stream: stream)
         }
     }
 }
@@ -49,6 +45,7 @@ struct ChannelViewContent: View {
     @State private var vodLoader = StandardDataLoader<([Video], String?)>()
 
     let channelUser: User
+    let stream: Twitch.Stream?
 
     var body: some View {
         VStack {
@@ -59,23 +56,14 @@ struct ChannelViewContent: View {
                         .font(.title)
                         .lineLimit(1, reservesSpace: true)
 
-                    DataView(loader: self.$userLoader) { api, _ in
-                        let (streams, _) = try await api.getStreams(userIDs: [self.channelUser.id])
-                        return streams
-                    } content: { streams in
-                        if let stream = streams.first {
-                            Button {
-                                openWindow(id: "stream", value: stream)
-                            } label: {
-                                Text("Watch Now")
-                            }
-                        } else {
-                            Text("Offline")
+                    if let stream = self.stream {
+                        Button {
+                            openWindow(id: "stream", value: stream)
+                        } label: {
+                            Text("Watch Now")
                         }
-                    } loading: { _ in
-                        ProgressView()
-                    } error: { (_: HelixError?) in
-                        EmptyView()
+                    } else {
+                        Text("Offline")
                     }
                 }
                 Spacer()
@@ -116,7 +104,7 @@ struct ChannelViewContent: View {
 
 #Preview {
     PreviewNavStack {
-        ChannelViewContent(channelUser: USER_MOCK())
+        ChannelViewContent(channelUser: USER_MOCK(), stream: nil)
             .navigationTitle(USER_MOCK().displayName)
     }
 }
