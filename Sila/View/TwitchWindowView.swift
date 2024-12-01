@@ -51,6 +51,12 @@ struct TwitchContentView: View {
                         self.delayLoading = false
                     })
                 }
+
+                if case .video(_) = self.streamableVideo {
+                    self.player.setIsVideo(true)
+                } else {
+                    self.player.setIsVideo(false)
+                }
             }
             .onChange(of: self.player.muted, { _, newValue in
                 WindowController.shared.setPlaybackMuted(with: self.streamableVideo.id(), muted: newValue)

@@ -146,7 +146,7 @@ struct TwitchWebView: UIViewRepresentable {
         // Disable selection of anything in WebView
         configuration.preferences.isTextInteractionEnabled = false
 
-        // Enable Airplay support (doesn't work)s
+        // Enable Airplay support (doesn't work)
         configuration.allowsAirPlayForMediaPlayback = true
 
         self.webView = WKWebView(frame: .zero, configuration: configuration)
@@ -210,7 +210,9 @@ struct TwitchWebView: UIViewRepresentable {
         DispatchQueue.main.async {
             self.loading?.wrappedValue = true
         }
-        webView.load(URLRequest(url: URL(string: "https://player.twitch.tv/?\(urlVideoSegment)&parent=twitch.tv&quality=\(self.player.quality)&volume=\(self.player.volume)&controls=false&autoplay=true&muted=false&player=popout")!))
+
+        let url = "https://player.twitch.tv/?\(urlVideoSegment)&parent=twitch.tv&quality=\(self.player.quality)&volume=\(self.player.volume)&controls=false&autoplay=true&muted=false&player=popout"
+        webView.load(URLRequest(url: URL(string: url)!))
     }
 }
 

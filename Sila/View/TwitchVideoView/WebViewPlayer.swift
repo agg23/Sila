@@ -34,6 +34,9 @@ struct VideoQuality {
 }
 
 @Observable class WebViewPlayer {
+    // Track video (VoD) status for quality hack (see below)
+    var isVideo: Bool = false
+
     var status: PlaybackStatus = .idle
 
     var muted: Bool = true
@@ -43,6 +46,7 @@ struct VideoQuality {
     var channelId: String? = nil
     var quality: String = "auto"
     var availableQualities: [VideoQuality] = []
+    var maxVideoQuality: VideoQuality?
 
     weak var webView: WKWebView?
 
@@ -110,6 +114,10 @@ struct VideoQuality {
         self.webView?.reload()
     }
 
+    func setIsVideo(_ isVideo: Bool) {
+        self.isVideo = isVideo
+    }
+
     func applyEvent(_ event: TwitchEvent) {
         // TODO: Handle currentTime
         // Mark low enough volume as muted as well
@@ -127,6 +135,15 @@ struct VideoQuality {
 
         self.quality = event.quality
         self.availableQualities = event.availableQualities
+
+        // If we are viewing a VoD and have not set max quality, on first instance of availableQualities, force quality to the highest value
+        // This prevents VoDs not playing back depending on quality on Vision (including in Safari)
+        if self.isVideo && self.maxVideoQuality == nil && self.availableQualities.count > 0 {
+            if let maxQuality = self.availableQualities.filter({ $0.quality != "auto" }).first {
+                self.maxVideoQuality = maxQuality
+                self.setQuality(maxQuality.quality)
+            }
+        }
 
         SharedPlaybackSettings.setVolume(self.volume)
         SharedPlaybackSettings.setQuality(self.quality)
