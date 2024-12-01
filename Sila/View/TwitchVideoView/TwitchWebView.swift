@@ -381,6 +381,7 @@ class TwitchWebViewCoordinator: NSObject, WKUIDelegate, WKNavigationDelegate, WK
 
         // Playback info
         let currentTime = params["currentTime"] as? NSNumber ?? 0.0
+        let duration = params["duration"] as? NSNumber ?? 0.0
         let muted = ((params["muted"] as? NSNumber) ?? 0) == 1
         let playback = params["playback"] as? String ?? "Idle"
         let volume = params["volume"] as? NSNumber ?? 0.0
@@ -455,7 +456,7 @@ class TwitchWebViewCoordinator: NSObject, WKUIDelegate, WKNavigationDelegate, WK
 
         self.lastStatus = status
 
-        self.player?.applyEvent(TwitchEvent(currentTime: currentTime.doubleValue, muted: muted, playback: status, volume: volume.doubleValue, channelId: channelId, channel: channelName, quality: quality, availableQualities: qualities))
+        self.player?.applyEvent(TwitchEvent(currentTime: currentTime.doubleValue, duration: duration.doubleValue, muted: muted, playback: status, volume: volume.doubleValue, channelId: channelId, channel: channelName, quality: quality, availableQualities: qualities))
     }
 }
 

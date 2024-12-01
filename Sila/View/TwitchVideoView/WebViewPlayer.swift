@@ -18,6 +18,7 @@ enum PlaybackStatus {
 
 struct TwitchEvent {
     let currentTime: Double
+    let duration: Double
     let muted: Bool
     let playback: PlaybackStatus
     let volume: Double
@@ -39,6 +40,12 @@ struct VideoQuality {
 
     var status: PlaybackStatus = .idle
 
+    var currentTime: Double
+    var duration: Double
+
+    var seekDebounceTimer: Timer?
+    var seekDebounceTime: Double
+
     var muted: Bool = true
     var volume: Double = 0.0
 
@@ -51,6 +58,10 @@ struct VideoQuality {
     weak var webView: WKWebView?
 
     init() {
+        self.currentTime = 0.0
+        self.duration = 0.0
+        self.seekDebounceTime = 0.0
+
         self.volume = SharedPlaybackSettings.getVolume()
         self.quality = SharedPlaybackSettings.getQuality()
 
@@ -82,6 +93,31 @@ struct VideoQuality {
         self.webView?.evaluateJavaScript("""
             Twitch._player.pause();
         """)
+    }
+
+    func seek(_ time: Double) {
+        self.seekDebounceTime = time
+        self.currentTime = time
+
+        if (self.seekDebounceTimer == nil) {
+            self.startSeekDebounceTimer()
+        }
+    }
+
+    private func seekImmediate(_ time: Double) {
+        self.webView?.evaluateJavaScript("""
+            Twitch._player.seek(\(time));
+        """)
+    }
+
+    func startSeekDebounceTimer() {
+        // TODO: This doesn't handle correctly if the video keeps playing while seeking
+        self.seekDebounceTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { timer in
+            timer.invalidate()
+            self.seekDebounceTimer = nil
+
+            self.seekImmediate(self.seekDebounceTime)
+        })
     }
 
     func toggleMute() {
@@ -119,7 +155,9 @@ struct VideoQuality {
     }
 
     func applyEvent(_ event: TwitchEvent) {
-        // TODO: Handle currentTime
+        self.currentTime = event.currentTime
+        self.duration = event.duration
+        
         // Mark low enough volume as muted as well
         self.muted = event.muted || event.volume < 0.01
         self.status = event.playback
@@ -146,6 +184,10 @@ struct VideoQuality {
         }
 
         SharedPlaybackSettings.setVolume(self.volume)
-        SharedPlaybackSettings.setQuality(self.quality)
+
+        if self.isVideo {
+            // Don't save last selected quality when playing back VoD
+            SharedPlaybackSettings.setQuality(self.quality)
+        }
     }
 }

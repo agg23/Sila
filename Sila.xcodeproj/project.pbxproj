@@ -69,6 +69,7 @@
 		66A5ADBB2B97E98E0025EF75 /* Licenses.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 66A5ADBA2B97E98E0025EF75 /* Licenses.xcstrings */; };
 		66A5ADBE2B9933730025EF75 /* WindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A5ADBD2B9933730025EF75 /* WindowController.swift */; };
 		66A5ADC12B9949C40025EF75 /* EmptyContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A5ADC02B9949C40025EF75 /* EmptyContentView.swift */; };
+		66AFA2E42CFCBF7600491D98 /* PlayerDurationSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AFA2E32CFCBF7600491D98 /* PlayerDurationSliderView.swift */; };
 		66B5DD852B9FCBCC0054121D /* MatureStreamFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B5DD832B9FCBCC0054121D /* MatureStreamFilterView.swift */; };
 		66B5DD862B9FCBCC0054121D /* StreamTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B5DD842B9FCBCC0054121D /* StreamTimer.swift */; };
 		66B5DD882B9FCC150054121D /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B5DD872B9FCC150054121D /* Setting.swift */; };
@@ -190,6 +191,7 @@
 		66A5ADBA2B97E98E0025EF75 /* Licenses.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = Licenses.xcstrings; path = Sila/Licenses.xcstrings; sourceTree = SOURCE_ROOT; };
 		66A5ADBD2B9933730025EF75 /* WindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowController.swift; sourceTree = "<group>"; };
 		66A5ADC02B9949C40025EF75 /* EmptyContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyContentView.swift; sourceTree = "<group>"; };
+		66AFA2E32CFCBF7600491D98 /* PlayerDurationSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerDurationSliderView.swift; sourceTree = "<group>"; };
 		66B5DD832B9FCBCC0054121D /* MatureStreamFilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatureStreamFilterView.swift; sourceTree = "<group>"; };
 		66B5DD842B9FCBCC0054121D /* StreamTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamTimer.swift; sourceTree = "<group>"; };
 		66B5DD872B9FCC150054121D /* Setting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
@@ -279,6 +281,7 @@
 				6648435D2C0B6B7B00F1427C /* PlayerOverlayControlsView.swift */,
 				6600E0882B8BB5E8003B2270 /* StreamableVideoStatusControlView.swift */,
 				66DF455C2B8BA645006C1D99 /* VolumeSlider.swift */,
+				66AFA2E32CFCBF7600491D98 /* PlayerDurationSliderView.swift */,
 			);
 			path = Controls;
 			sourceTree = "<group>";
@@ -815,6 +818,7 @@
 				6645AFE82BA910DC0096BC03 /* IntentError.swift in Sources */,
 				66A5ADBE2B9933730025EF75 /* WindowController.swift in Sources */,
 				66B5DD852B9FCBCC0054121D /* MatureStreamFilterView.swift in Sources */,
+				66AFA2E42CFCBF7600491D98 /* PlayerDurationSliderView.swift in Sources */,
 				66125F502B83B913002169B5 /* CategoryView.swift in Sources */,
 				66F8D1992B89A051008C4F7C /* SearchView.swift in Sources */,
 				66028DFF2B917AD800696071 /* PrivateMessageMock.swift in Sources */,
