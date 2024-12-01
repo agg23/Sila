@@ -15,9 +15,14 @@ struct PlayerDurationSliderView: View {
     var currentTime: Binding<CGFloat>
     var duration: Binding<CGFloat>
 
-    init(currentTime: Binding<CGFloat>, duration: Binding<CGFloat>) {
+    @State private var interactionTimer: Timer?
+
+    let isActive: Binding<Bool>
+
+    init(currentTime: Binding<CGFloat>, duration: Binding<CGFloat>, isActive: Binding<Bool>) {
         self.currentTime = currentTime
         self.duration = duration
+        self.isActive = isActive
 
         self.hourFormatter = DateComponentsFormatter()
         self.hourFormatter.allowedUnits = [.hour, .minute, .second]
@@ -38,8 +43,17 @@ struct PlayerDurationSliderView: View {
                 .monospacedDigit()
                 .multilineTextAlignment(.trailing)
 
-            JunoSlider(sliderValue: self.currentTime, maxSliderValue: self.duration.wrappedValue, label: "")
-                .padding(.horizontal)
+            JunoSlider(sliderValue: self.currentTime, maxSliderValue: self.duration.wrappedValue, label: "Current time") { editingChanged in
+                self.isActive.wrappedValue = true
+
+                if editingChanged {
+                    self.interactionTimer?.invalidate()
+                    self.interactionTimer = nil
+                } else {
+                    self.resetTimer()
+                }
+            }
+            .padding(.horizontal)
 
             Text(self.format(time: self.duration.wrappedValue, usingHours: useHours))
                 .monospacedDigit()
@@ -54,12 +68,19 @@ struct PlayerDurationSliderView: View {
             return self.minuteFormatter.string(from: TimeInterval(time)) ?? "0:00"
         }
     }
+
+    func resetTimer() {
+        self.interactionTimer?.invalidate()
+        self.interactionTimer = Timer.scheduledTimer(withTimeInterval: 3, repeats: false, block: { _ in
+            self.isActive.wrappedValue = false
+        })
+    }
 }
 
 #Preview("Minutes") {
-    PlayerDurationSliderView(currentTime: .constant(10), duration: .constant(100))
+    PlayerDurationSliderView(currentTime: .constant(10), duration: .constant(100), isActive: .constant(false))
 }
 
 #Preview("Hours") {
-    PlayerDurationSliderView(currentTime: .constant(10), duration: .constant(10000))
+    PlayerDurationSliderView(currentTime: .constant(10), duration: .constant(10000), isActive: .constant(false))
 }

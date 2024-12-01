@@ -16,6 +16,8 @@ struct PlayerControlsView: View {
 
     @Binding var chatVisibility: Visibility
 
+    @State private var durationSliderPreventClose: Bool = false
+
     let onInteraction: (() -> Void)?
     let activeChanged: ((Bool) -> Void)?
 
@@ -29,7 +31,7 @@ struct PlayerControlsView: View {
                 VStack {
                     self.mainBody
 
-                    PlayerDurationSliderView(currentTime: currentTimeBinding, duration: durationBinding)
+                    PlayerDurationSliderView(currentTime: currentTimeBinding, duration: durationBinding, isActive: self.$durationSliderPreventClose)
                         .padding(.horizontal)
                 }
             } else {
@@ -38,6 +40,9 @@ struct PlayerControlsView: View {
         }
         .padding(.vertical, 8)
         .padding(.horizontal)
+        .onChange(of: self.durationSliderPreventClose, { _, newValue in
+            self.activeChanged?(newValue)
+        })
     }
 
     @ViewBuilder
