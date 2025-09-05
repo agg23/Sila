@@ -18,6 +18,7 @@ struct MainWindowView: View {
     @Environment(Router.self) private var router
 
     @State private var streamTimer = StreamTimer()
+    @State private var showOauth = false
 
     /// Hack to prevent crash when saved stream windows are opened after reboot with a `nil` id
     /// Present in 1.1.1
@@ -116,6 +117,13 @@ struct MainWindowView: View {
             }
 
             print("Improperly handled deeplink \(url)")
+        }
+        .onReceive(self.authController.requestReauthSubject) { _ in
+            // We need to reauth
+            self.showOauth = true
+        }
+        .sheet(isPresented: $showOauth) {
+            OAuthView()
         }
     }
 

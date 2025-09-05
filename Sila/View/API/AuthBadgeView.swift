@@ -11,8 +11,6 @@ import Combine
 struct AuthBadgeView: View {
     @Environment(AuthController.self) private var authController
 
-    @State var showOauth = false
-
     var body: some View {
         Menu("Account", systemImage: "person.fill") {
             if let authUser = self.authController.status.user() {
@@ -23,19 +21,12 @@ struct AuthBadgeView: View {
                 }
             } else {
                 Button("Log In") {
-                    self.showOauth = true
+                    self.authController.requestLoginReauthWithUI()
                 }
             }
         }
         // Force rounded icon on vision 2.0+
         .menuStyle(.borderlessButton)
-        .onReceive(self.authController.requestReauthSubject) { _ in
-            // We need to reauth
-            self.showOauth = true
-        }
-        .sheet(isPresented: $showOauth) {
-            OAuthView()
-        }
     }
 }
 

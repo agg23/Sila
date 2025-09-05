@@ -16,8 +16,8 @@ class Shortcuts: AppShortcutsProvider {
                 "Watch stream in \(.applicationName)",
                 "Open \(.applicationName) stream",
                 "Open stream in \(.applicationName)",
-                "Watch twitch stream",
-                "Watch livestream"
+                "Watch \(.applicationName) twitch stream",
+                "Watch \(.applicationName) livestream"
             ],
             shortTitle: "Open Stream",
             systemImageName: "tv"),
