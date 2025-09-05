@@ -22,7 +22,7 @@ struct StreamableVideoStatusControlView: View {
             StreamableVideoStatusControlContentView(streamableVideo: stream ?? self.streamableVideo, user: user)
         }, loading: { data in
             StreamableVideoStatusControlContentView(streamableVideo: data?.1 ?? self.streamableVideo, user: data?.0)
-        }, error: { (_: HelixError?) in
+        }, error: { (_: Error?) in
             StreamableVideoStatusControlContentView(streamableVideo: self.streamableVideo, user: nil)
         })
         .onChange(of: self.player.channelId, { oldValue, newValue in

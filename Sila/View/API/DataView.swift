@@ -8,7 +8,7 @@
 import SwiftUI
 import Twitch
 
-struct DataView<T, E: Error, Content: View, Loading: View, ErrorView: View>: View {
+struct DataView<T, Content: View, Loading: View, ErrorView: View>: View {
     @Environment(AuthController.self) private var authController
 
     let loader: Binding<StandardDataLoader<T>>
@@ -16,7 +16,7 @@ struct DataView<T, E: Error, Content: View, Loading: View, ErrorView: View>: Vie
 
     @ViewBuilder let content: (_: T) -> Content
     @ViewBuilder let loading: (_: T?) -> Loading
-    @ViewBuilder let error: (_: E?) -> ErrorView
+    @ViewBuilder let error: (_: Error?) -> ErrorView
 
     var body: some View {
         if let apiAndUser = self.authController.status.apiAndUser() {
@@ -29,7 +29,7 @@ struct DataView<T, E: Error, Content: View, Loading: View, ErrorView: View>: Vie
                 case .finished(let data), .loadingMore(let data):
                     self.content(data)
                 case .error(let error):
-                    self.error(error as? E)
+                    self.error(error)
                 }
             }
             .task(id: self.authController.status, {

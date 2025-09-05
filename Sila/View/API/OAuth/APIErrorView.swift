@@ -8,10 +8,18 @@
 import SwiftUI
 
 struct APIErrorView<TData, TDataAugment, TChange: Equatable>: View {
+    let title: String
+    let description: String
     let loader: Binding<DataLoader<TData, TDataAugment, TChange>>
 
+    init(loader: Binding<DataLoader<TData, TDataAugment, TChange>>, title: String = "An error occurred", description: String = "Failed to load requested content") {
+        self.title = title
+        self.description = description
+        self.loader = loader
+    }
+
     var body: some View {
-        EmptyContentView(title: "An error occurred", systemImage: "exclamationmark.icloud.fill", description: "Failed to load requested content", buttonTitle: "Reload", buttonSystemImage: "arrow.clockwise", ignoreSafeArea: true) {
+        EmptyContentView(title: self.title, systemImage: "exclamationmark.icloud.fill", description: self.description, buttonTitle: "Reload", buttonSystemImage: "arrow.clockwise", ignoreSafeArea: true) {
             Task {
                 try? await self.loader.wrappedValue.refresh()
             }

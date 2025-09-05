@@ -24,8 +24,16 @@ struct StandardDataView<T, Content: View>: View {
                 ProgressView()
             }
             .ignoresSafeArea()
-        } error: { (_: HelixError?) in
-            APIErrorView(loader: self.loader)
+        } error: { (error: Error?) in
+            if let error = error as? URLError {
+                if error.code == URLError.Code.notConnectedToInternet {
+                    APIErrorView(loader: self.loader, title: "No internet connection", description: "Make sure your device has a reliable internet connection and try again", )
+                } else {
+                    APIErrorView(loader: self.loader)
+                }
+            } else {
+                APIErrorView(loader: self.loader)
+            }
         }
     }
 }
