@@ -12,9 +12,13 @@ struct OAuthView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(AuthController.self) private var authController
 
+    @State private var isLoading: Bool = true
+
     var body: some View {
         NavigationStack {
-            OAuthWebView(completed: self.receiveOAuthStatus)
+            OAuthWebView(setIsLoading: {
+                isLoading = $0
+            }, completed: self.receiveOAuthStatus)
                 .ignoresSafeArea()
                 .toolbar {
                     ToolbarItem(placement: .cancellationAction) {
@@ -22,6 +26,13 @@ struct OAuthView: View {
                             self.authController.logOut()
                             dismiss()
                         }
+                    }
+                }
+                .blur(radius: isLoading ? 10 : 0)
+                .overlay {
+                    if isLoading {
+                        ProgressView()
+                            .controlSize(.large)
                     }
                 }
         }

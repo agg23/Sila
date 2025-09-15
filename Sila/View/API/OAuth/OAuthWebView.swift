@@ -17,9 +17,10 @@ struct OAuthWebView: UIViewRepresentable {
     typealias UIViewType = WKWebView
 
     let webView: WKWebView
+    let setIsLoading: (_ status: Bool) -> Void
     let completed: (_ status: OAuthStatus) -> Void
 
-    init(completed: @escaping (_ status: OAuthStatus) -> Void) {
+    init(setIsLoading: @escaping (_ status: Bool) -> Void, completed: @escaping (_ status: OAuthStatus) -> Void) {
         // Hide Twitch sign up and "Trouble logging in" links
         // Twitch sign up is problematic for App Store review, and doesn't make much
         // sense in the app, as the user cannot follow new channels
@@ -47,17 +48,21 @@ struct OAuthWebView: UIViewRepresentable {
 
         self.webView = WKWebView(frame: .zero, configuration: configuration)
 
+        self.setIsLoading = setIsLoading
         self.completed = completed
     }
 
     func makeCoordinator() -> OAuthWebViewCoordinator {
-        OAuthWebViewCoordinator(webView: self.webView, completed: self.completed)
+        OAuthWebViewCoordinator(webView: self.webView, setIsLoading: self.setIsLoading, completed: self.completed)
     }
 
     func makeUIView(context: Context) -> WKWebView {
-        webView.isInspectable = true
-        webView.uiDelegate = context.coordinator
-        webView.navigationDelegate = context.coordinator
+        self.webView.isInspectable = true
+        self.webView.uiDelegate = context.coordinator
+        self.webView.navigationDelegate = context.coordinator
+        self.webView.isOpaque = false
+        // Match Twitch background color
+        self.webView.scrollView.backgroundColor = UIColor(red: 14.0/255.0, green: 14.0/255.0, blue: 16.0/255.0, alpha: 1.0)
 
         var oauthUrl = URL(string: "https://id.twitch.tv/oauth2/authorize")!
         oauthUrl.append(queryItems: [
@@ -66,9 +71,9 @@ struct OAuthWebView: UIViewRepresentable {
             URLQueryItem(name: "response_type", value: "token"),
             URLQueryItem(name: "scope", value: "chat:edit chat:read user:read:follows")
         ])
-        webView.load(URLRequest(url: oauthUrl))
+        self.webView.load(URLRequest(url: oauthUrl))
 
-        return webView
+        return self.webView
     }
 
     func updateUIView(_ uiView: WKWebView, context: Context) {
@@ -79,11 +84,25 @@ struct OAuthWebView: UIViewRepresentable {
 
 class OAuthWebViewCoordinator: NSObject, WKUIDelegate, WKNavigationDelegate {
     weak var webView: WKWebView?
+    var setIsLoading: (_ status: Bool) -> Void
     var completed: (_ status: OAuthStatus) -> Void
 
-    init(webView: WKWebView, completed: @escaping (_ status: OAuthStatus) -> Void){
+    init(webView: WKWebView, setIsLoading: @escaping (_ status: Bool) -> Void, completed: @escaping (_ status: OAuthStatus) -> Void){
         self.webView = webView
+        self.setIsLoading = setIsLoading
         self.completed = completed
+    }
+
+    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+        self.setIsLoading(true)
+    }
+
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        self.setIsLoading(false)
+    }
+
+    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: any Error) {
+        self.setIsLoading(false)
     }
 
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
@@ -109,6 +128,8 @@ class OAuthWebViewCoordinator: NSObject, WKUIDelegate, WKNavigationDelegate {
 
 #Preview {
     OAuthWebView { _ in
+
+    } completed: { _ in
 
     }
 }

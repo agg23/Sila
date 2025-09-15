@@ -18,6 +18,7 @@ struct TabPage<Content: View>: View {
             self.content()
 //                .navigationTitle(self.title)
                 // navigationTitle is very small on visionOS 2.0. Insert our own title instead
+                // TODO: This seems to be fixed in visionOS 26.0
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) {
                         Text(self.title)
