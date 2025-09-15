@@ -28,7 +28,7 @@ struct OAuthWebView: UIViewRepresentable {
         let hideSignUpAndTroubleLoggingIn = WKUserScript(source: """
             const style = document.createElement("style");
             style.textContent = `
-              li:nth-child(2) {
+              button:not([type="submit"]):not([aria-label]) {
                 display: none !important;
               }
 
