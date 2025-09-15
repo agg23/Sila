@@ -33,7 +33,7 @@ struct SettingsView: View {
                 }
 
                 Section("Playback") {
-                    Toggle("Shrink Video Corners", isOn: self.$smallBorderRadius)
+                    Toggle("See More in Video Corners", isOn: self.$smallBorderRadius)
                     Toggle("Dim Surroundings", isOn: self.$dimSurroundings)
                 }
 
