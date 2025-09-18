@@ -28,8 +28,13 @@ struct OAuthWebView: UIViewRepresentable {
         let hideSignUpAndTroubleLoggingIn = WKUserScript(source: """
             const style = document.createElement("style");
             style.textContent = `
-              button:not([type="submit"]):not([aria-label]) {
+              button:has([data-a-target="tw-core-button-label-text"]) {
                 display: none !important;
+              }
+            
+              /* Reenable display of the login button itself */
+              button[data-a-target="passport-login-button"] {
+                display: unset !important;
               }
 
               a[href="https://www.twitch.tv/user/account-recovery"] {
