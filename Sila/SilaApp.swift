@@ -52,6 +52,10 @@ struct SilaAppApp: App {
             TwitchStreamVideoView(stream: stream)
                 .playbackWindow(for: stream)
                 .environment(self.authController)
+                // Prevent reopening the app from spawning this window
+                // Closing the main window, then closing all video windows will open the main
+                // window when the app is launched again
+                .handlesExternalEvents(preferring: [], allowing: [])
         } defaultValue: {
             // Providing a default allows us to refocus an open window
             // TODO: Replace with actual value
