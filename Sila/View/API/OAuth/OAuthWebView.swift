@@ -32,8 +32,17 @@ struct OAuthWebView: UIViewRepresentable {
                 display: none !important;
               }
             
+              a:has([data-a-target="tw-core-button-label-text"]) {
+                display: none !important;
+              }
+            
               /* Reenable display of the login button itself */
               button[data-a-target="passport-login-button"] {
+                display: unset !important;
+              }
+            
+              /* Reenable display of 2FA code submit button */
+              button[type=submit] {
                 display: unset !important;
               }
 
