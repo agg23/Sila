@@ -18,7 +18,9 @@ class EmoteController {
 
     func getEmote(named: String, for userId: String) -> Emote? {
         if let emote = self.globalEmotes[named] as? Emote {
+            #if DEBUG
             print("Logging global \(emote.source) \(emote.name)")
+            #endif
             return emote
         }
 
@@ -29,7 +31,9 @@ class EmoteController {
         let emote = userEmotes[named] as? Emote
 
         if let emote = emote {
-            print("Logging \(emote.source) \(emote.name)")
+            #if DEBUG
+            print("Logging \(emote.source) \(emote.name) \(emote.imageUrl)")
+            #endif
         }
 
         return emote

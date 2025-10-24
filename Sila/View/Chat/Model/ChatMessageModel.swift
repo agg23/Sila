@@ -60,7 +60,9 @@ private func buildChunks(from message: PrivateMessage, userId: String) -> ([Anim
         extractEmoteSection(string: string, startIndex: startIndex, emoteStartIndex: emoteStartIndex, emoteUrl: url, chunks: &chunks, emoteUrls: &emoteUrls)
         startIndex = string.index(string.startIndex, offsetBy: emote.endIndex + 1, limitedBy: string.endIndex) ?? string.endIndex
 
+        #if DEBUG
         print("Logging Twitch \(emote.name)")
+        #endif
     }
 
     // Final segment

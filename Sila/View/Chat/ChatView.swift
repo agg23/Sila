@@ -111,7 +111,9 @@ struct ChatListView: View {
                     .onAppear {
                         if (!self.scrollAtBottom) {
                             self.scrollAtBottom = true
+                            #if DEBUG
                             print("At bottom")
+                            #endif
                         }
                     }
             }
