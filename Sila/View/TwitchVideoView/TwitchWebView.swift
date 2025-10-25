@@ -25,6 +25,11 @@ struct TwitchWebView: UIViewRepresentable {
         self.loading = loading
         self.delayLoading = delayLoading
 
+        // Using the Twitch embed API would prevent ads from playing "normally" and using the user's auth;
+        // the user wouldn't count as a viewer of the stream
+        //
+        // Instead, we load the player.twitch.tv player directly with certain query params and inject the
+        // embed API in to control the player (surprisingly this works)
         let overrideScript = WKUserScript(source: """
             // Set custom window parent
             window.parent = {
@@ -48,11 +53,15 @@ struct TwitchWebView: UIViewRepresentable {
                       return;
                     }
 
-                    listener({
-                      type: "message",
-                      data: { eventName: event.data.eventName, params: event.data.params, namespace: "twitch-embed-player-proxy" },
-                      source: window.parent
-                    });
+                    try {
+                        listener({
+                          type: "message",
+                          data: { eventName: event.data.eventName, params: event.data.params, namespace: "twitch-embed-player-proxy" },
+                          source: window.parent
+                        });
+                    } catch (e) {
+                        console.error(`Twitch event listener forwarding error: ${e}`);
+                    }
 
                     return;
                   }
@@ -63,6 +72,7 @@ struct TwitchWebView: UIViewRepresentable {
             };
             """, injectionTime: .atDocumentStart, forMainFrameOnly: true)
 
+        // Required to expose window.Twitch API to page. We use this to inject events. This is not part of the normal embedded player
         let injectPlayerAPI = WKUserScript(source: """
             const script = document.createElement("script");
             script.src = "https://player.twitch.tv/js/embed/v1.js";
@@ -140,7 +150,6 @@ struct TwitchWebView: UIViewRepresentable {
         // Allow videos to not play in the native player
         configuration.allowsInlineMediaPlayback = true
 
-        configuration.requiresUserActionForMediaPlayback = false
         configuration.mediaTypesRequiringUserActionForPlayback = []
 
         // Disable selection of anything in WebView
@@ -266,6 +275,7 @@ class TwitchWebViewCoordinator: NSObject, WKUIDelegate, WKNavigationDelegate, WK
             // Calling this, rather than treating it as a constructor, creates the _player object
             // This will throw an error
             try {
+                console.log("Creating Twitch _player object");
                 Twitch.Player();
             } catch {
 
@@ -273,15 +283,17 @@ class TwitchWebViewCoordinator: NSObject, WKUIDelegate, WKNavigationDelegate, WK
 
             // Mark video as in current window
             Twitch._player._embedWindow = window;
+        
+            console.log("Waiting for Twitch ready");
 
             window.addEventListener("message", (event) => {
                 if (event.data.eventName === "ready") {
-                    console.log("Ready");
+                    console.log("Twitch client ready");
                     // TODO: Does this actually do anything?
                     Twitch._player.play();
                     // Twitch._player.setMute(false);
                     window.getVideoTag().muted = false;
-                    console.log(Twitch._player);
+                    console.log("Twitch._player", Twitch._player);
                 }
             });
         """)

@@ -85,13 +85,21 @@ struct VideoQuality {
 
     func play() {
         self.webView?.evaluateJavaScript("""
-            Twitch._player.play();
+            try {
+                Twitch._player.play();
+            } catch (e) {
+                console.error(`Failed to play: ${e}`);
+            }
         """)
     }
 
     func pause() {
         self.webView?.evaluateJavaScript("""
-            Twitch._player.pause();
+            try {
+                Twitch._player.pause();
+            } catch (e) {
+                console.error(`Failed to pause: ${e}`);
+            }
         """)
     }
 
@@ -106,7 +114,11 @@ struct VideoQuality {
 
     private func seekImmediate(_ time: Double) {
         self.webView?.evaluateJavaScript("""
-            Twitch._player.seek(\(time));
+            try {
+                Twitch._player.seek(\(time));
+            } catch (e) {
+                console.error(`Failed to seek: ${e}`);
+            }
         """)
     }
 
@@ -126,23 +138,35 @@ struct VideoQuality {
 
     func setMute(_ mute: Bool) {
         self.webView?.evaluateJavaScript("""
-            Twitch._player.setMuted(\(mute));
+            try {
+                Twitch._player.setMuted(\(mute));
+            } catch (e) {
+                console.error(`Failed to set muted: ${e}`);
+            }
         """)
     }
 
     func setVolume(_ volume: Double) {
         self.webView?.evaluateJavaScript("""
-            if (\(self.muted)) {
-                Twitch._player.setMuted(false);
-            }
+            try {
+                if (\(self.muted)) {
+                    Twitch._player.setMuted(false);
+                }
 
-            Twitch._player.setVolume(\(volume));
+                Twitch._player.setVolume(\(volume));
+            } catch (e) {
+                console.error(`Failed to set volume: ${e}`);
+            }
         """)
     }
 
     func setQuality(_ quality: String) {
         self.webView?.evaluateJavaScript("""
-            Twitch._player.setQuality("\(quality)");
+            try {
+                Twitch._player.setQuality("\(quality)");
+            } catch (e) {
+                console.error(`Failed to set quality: ${e}`);
+            }
         """)
     }
 
