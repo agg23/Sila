@@ -9,6 +9,20 @@ import SwiftUI
 import AsyncAnimatedImageUI
 import TwitchIRC
 
+let transparentEmoteImage = makeTransparentImage(size: CGSize(width: 28, height: 28))
+
+func makeTransparentImage(size: CGSize) -> UIImage {
+    let format = UIGraphicsImageRendererFormat()
+    format.scale = 1
+    format.opaque = false
+
+    let renderer = UIGraphicsImageRenderer(size: size, format: format)
+    let image = renderer.image { _ in
+        // Transparent
+    }
+    return image
+}
+
 struct ChatMessage: View {
     let message: ChatMessageModel
     let cachedColors: CachedColors
@@ -23,7 +37,7 @@ struct ChatMessage: View {
                 case .text(let string):
                     return existingText + Text(string)
                 case .image(let url):
-                    return existingText + Text("\(AsyncAnimatedImage(url: url))")
+                    return existingText + Text("\(AsyncAnimatedImage(url: url) ?? Image(uiImage: transparentEmoteImage))")
                         .baselineOffset(-8.5)
                 }
             }
