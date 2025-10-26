@@ -19,7 +19,10 @@ struct StreamButtonView: View {
     let stream: Twitch.Stream
 
     var body: some View {
-        SharedStreamButtonView(source: .stream(self.stream), displayUrl: self.stream.thumbnailURL, preTitleLeft: self.stream.gameName, title: self.stream.title, subtitle: self.stream.userName) {
+        let title = !self.stream.title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? self.stream.title : self.stream.userName
+        let gameName = !self.stream.gameName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? self.stream.gameName : "No Category"
+
+        SharedStreamButtonView(source: .stream(self.stream), displayUrl: self.stream.thumbnailURL, preTitleLeft: gameName, title: title, subtitle: self.stream.userName) {
             if self.stream.isMature {
                 Text("Mature")
                     .foregroundStyle(.primary)

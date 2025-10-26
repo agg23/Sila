@@ -104,6 +104,8 @@ struct StreamableVideoStatusDisplayView: View {
     let viewerCount: Int?
 
     var body: some View {
+        let title = !self.title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? self.title : self.userName
+
         HStack(alignment: .top) {
             // TODO: This probably should show something other than clear in the error case
             LoadingAsyncImage(imageUrl: self.profileImageUrl, aspectRatio: 1.0, defaultColor: Color.clear)
