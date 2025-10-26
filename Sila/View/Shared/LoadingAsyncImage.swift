@@ -11,6 +11,13 @@ import NukeUI
 struct LoadingAsyncImage: View {
     let imageUrl: URL?
     let aspectRatio: CGFloat
+    let defaultColor: Color
+
+    init(imageUrl: URL?, aspectRatio: CGFloat, defaultColor: Color = Color.clear) {
+        self.imageUrl = imageUrl
+        self.aspectRatio = aspectRatio
+        self.defaultColor = defaultColor
+    }
 
     var body: some View {
         LazyImage(url: self.imageUrl) { state in
@@ -18,7 +25,7 @@ struct LoadingAsyncImage: View {
                 image
                     .resizable()
             } else if state.error != nil {
-                // TODO: Show error
+                self.defaultColor
             } else {
                 Color.clear
                     .overlay {

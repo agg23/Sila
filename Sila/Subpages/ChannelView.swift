@@ -69,6 +69,7 @@ struct ChannelViewContent: View {
                 Spacer()
             }
             .padding()
+            // TODO: Add "VoDs" title or similar to lower section
             AuthroizedStandardDataView(loader: self.$vodLoader, task: { api, _ in
                 return try await api.getVideosByUserId(self.channelUser.id)
             }, noAuthMessage: "this channel's VoDs", noAuthSystemImage: Icon.channel) { videos, _ in

@@ -8,6 +8,8 @@
 import SwiftUI
 import WebKit
 
+// Any slowness observed with this opening is solely due to Xcode being connected to the app launch
+// Launching the app directly on device will result in instant loading of the web view
 struct TwitchWebView: UIViewRepresentable {
     typealias UIViewType = WKWebView
 
