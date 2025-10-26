@@ -91,7 +91,7 @@ struct StreamButtonView: View {
                 categoryButton
             }
         }
-        .help(self.stream.title)
+        .help(title)
         .onReceive(self.streamTimer.secondTimer, perform: { date in
             guard !self.disableIncrementingStreamDuration else {
                 return
