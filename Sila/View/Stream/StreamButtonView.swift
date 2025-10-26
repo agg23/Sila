@@ -54,10 +54,15 @@ struct StreamButtonView: View {
                 Label("View Channel", systemImage: Icon.channel)
             }
 
-            let categoryButton = Button {
-                self.router.pushToActiveTab(route: .category(game: .id(stream.gameID)))
-            } label: {
-                Label("More in this Category", systemImage: Icon.category)
+            let categoryButton: Button? = if !stream.gameID.isEmpty {
+                // If gameID is the empty string, we have no category
+                Button {
+                    self.router.pushToActiveTab(route: .category(game: .id(stream.gameID)))
+                } label: {
+                    Label("More in this Category", systemImage: Icon.category)
+                }
+            } else {
+                nil
             }
 
             #if VOD_ENABLED
