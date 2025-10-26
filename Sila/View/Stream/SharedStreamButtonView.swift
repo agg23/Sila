@@ -78,14 +78,15 @@ struct SharedStreamButtonView<PreTitleRight: View, ImageOverlay: View, ContextMe
     }
 
     func buildImageUrl(using urlString: String) -> URL? {
-        // For VoDs Twitch API limits us to 320x180 for these for some reason
+        // URLs are of the form https://static-cdn.jtvnw.net/previews-ttv/live_user_[USERNAME]-{width}x{height}.jpg
+        // Twitch web client uses 440x248, which we replicate to hit the same CDN caches
+        // For VoDs Twitch API limits us to 320x180 for these for some reason (this is also what the web UI uses)
         let url = urlString.replacingOccurrences(of: "%{width}", with: "320").replacingOccurrences(of: "%{height}", with: "180")
             // For streams
-            .replacingOccurrences(of: "{width}", with: "960").replacingOccurrences(of: "{height}", with: "540")
+            .replacingOccurrences(of: "{width}", with: "440").replacingOccurrences(of: "{height}", with: "248")
 
         return URL(string: url)
     }
-
 }
 
 extension SharedStreamButtonView where PreTitleRight == EmptyView, ImageOverlay == EmptyView, ContextMenu == EmptyView {
