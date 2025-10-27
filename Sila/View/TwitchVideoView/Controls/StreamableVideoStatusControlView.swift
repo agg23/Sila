@@ -111,7 +111,7 @@ struct StreamableVideoStatusDisplayView: View {
             LoadingAsyncImage(imageUrl: self.profileImageUrl, aspectRatio: 1.0, defaultColor: Color.clear)
                 .clipShape(.rect(cornerRadius: 8))
             VStack(alignment: .leading) {
-                Text(self.title)
+                Text(title)
                     .lineLimit(1)
                     .truncationMode(.tail)
                 Text(self.userName)
