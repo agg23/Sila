@@ -100,7 +100,6 @@ private struct PopularContentView: View {
         }
     })
     .environment(Router())
-    .environment(StreamTimer())
 }
 
 #Preview {
@@ -110,5 +109,4 @@ private struct PopularContentView: View {
         }
     })
     .environment(Router())
-    .environment(StreamTimer())
 }

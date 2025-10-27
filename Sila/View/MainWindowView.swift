@@ -17,7 +17,6 @@ struct MainWindowView: View {
 
     @Environment(Router.self) private var router
 
-    @State private var streamTimer = StreamTimer()
     @State private var showOauth = false
 
     /// Hack to prevent crash when saved stream windows are opened after reboot with a `nil` id
@@ -55,7 +54,6 @@ struct MainWindowView: View {
                     }
             })
         }
-        .environment(self.streamTimer)
         .onAppear {
             if self.id == nil {
                 // This window shouldn't exist

@@ -12,13 +12,23 @@ struct StreamButtonView: View {
     @AppStorage(Setting.disableIncrementingStreamDuration) var disableIncrementingStreamDuration: Bool = false
 
     @Environment(Router.self) private var router
-    @Environment(StreamTimer.self) private var streamTimer
 
-    @State private var currentDate = Date.now
+    @State private var initialRenderDate = Date.now
 
     let stream: Twitch.Stream
 
     var body: some View {
+        if self.disableIncrementingStreamDuration {
+            streamButton(current: self.initialRenderDate)
+        } else {
+            TimelineView(.periodic(from: self.initialRenderDate, by: 1.0)) { context in
+                streamButton(current: context.date)
+            }
+        }
+    }
+
+    @ViewBuilder
+    func streamButton(current currentDate: Date) -> some View {
         let title = !self.stream.title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? self.stream.title : self.stream.userName
         let gameName = !self.stream.gameName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? self.stream.gameName : "No Category"
 
@@ -33,7 +43,7 @@ struct StreamButtonView: View {
         } imageOverlay: {
             HStack {
                 self.overlayPill {
-                    Text(self.buildRuntime())
+                    Text(self.buildRuntimeTimestamp(currentDate))
                         .lineLimit(1)
                 }
 
@@ -92,13 +102,7 @@ struct StreamButtonView: View {
             }
         }
         .help(title)
-        .onReceive(self.streamTimer.secondTimer, perform: { date in
-            guard !self.disableIncrementingStreamDuration else {
-                return
-            }
 
-            self.currentDate = date
-        })
     }
 
     @ViewBuilder
@@ -113,16 +117,11 @@ struct StreamButtonView: View {
         .monospaced()
     }
 
-    func buildRuntime() -> String {
-        let components = Calendar.current.dateComponents([.hour, .minute, .second], from: self.stream.startedAt, to: self.currentDate)
-
-        // Create a date components formatter
-        let formatter = DateComponentsFormatter()
-        formatter.allowedUnits = [.hour, .minute, .second]
-        formatter.unitsStyle = .positional
+    func buildRuntimeTimestamp(_ date: Date) -> String {
+        let components = Calendar.current.dateComponents([.hour, .minute, .second], from: self.stream.startedAt, to: date)
 
         // Format the time interval as a string
-        return formatter.string(from: components) ?? ""
+        return RuntimeFormatter.shared.string(from: components) ?? ""
     }
 
 //    @ViewBuilder
@@ -134,12 +133,6 @@ struct StreamButtonView: View {
 //            }
 //        }
 //    }
-
-    func buildImageUrl(using stream: Twitch.Stream) -> URL? {
-        let url = stream.thumbnailURL.replacingOccurrences(of: "{width}", with: "960").replacingOccurrences(of: "{height}", with: "540")
-
-        return URL(string: url)
-    }
 }
 
 #Preview {
@@ -147,5 +140,4 @@ struct StreamButtonView: View {
         StreamButtonView(stream: STREAM_MOCK())
             .frame(width: 400, height: 340)
     }
-    .environment(StreamTimer())
 }

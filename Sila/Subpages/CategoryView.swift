@@ -126,5 +126,4 @@ private struct CategoryViewContent: View {
         CategoryViewContent(game: CATEGORY_MOCK(), streams: STREAMS_LIST_MOCK(), selectedLanguage: .constant("en"), loader: StandardDataLoader()) {}
     }
     .environment(Router())
-    .environment(StreamTimer())
 }
