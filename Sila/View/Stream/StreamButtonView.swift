@@ -18,17 +18,6 @@ struct StreamButtonView: View {
     let stream: Twitch.Stream
 
     var body: some View {
-        if self.disableIncrementingStreamDuration {
-            streamButton(current: self.initialRenderDate)
-        } else {
-            TimelineView(.periodic(from: self.initialRenderDate, by: 1.0)) { context in
-                streamButton(current: context.date)
-            }
-        }
-    }
-
-    @ViewBuilder
-    func streamButton(current currentDate: Date) -> some View {
         let title = !self.stream.title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? self.stream.title : self.stream.userName
         let gameName = !self.stream.gameName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? self.stream.gameName : "No Category"
 
@@ -43,8 +32,13 @@ struct StreamButtonView: View {
         } imageOverlay: {
             HStack {
                 self.overlayPill {
-                    Text(self.buildRuntimeTimestamp(currentDate))
-                        .lineLimit(1)
+                    if self.disableIncrementingStreamDuration {
+                        self.runtime(self.initialRenderDate)
+                    } else {
+                        TimelineView(.periodic(from: self.initialRenderDate, by: 1.0)) { context in
+                            self.runtime(context.date)
+                        }
+                    }
                 }
 
                 Spacer(minLength: /*@START_MENU_TOKEN@*/0/*@END_MENU_TOKEN@*/)
@@ -115,6 +109,12 @@ struct StreamButtonView: View {
         .clipShape(.rect(cornerRadius: 8))
         .padding(16)
         .monospaced()
+    }
+
+    @ViewBuilder
+    func runtime(_ date: Date) -> some View {
+        Text(self.buildRuntimeTimestamp(date))
+            .lineLimit(1)
     }
 
     func buildRuntimeTimestamp(_ date: Date) -> String {
