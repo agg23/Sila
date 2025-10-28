@@ -208,7 +208,7 @@ private struct HistoryView: View {
                         }
                         .padding(.horizontal, 16)
                         
-                        LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())], spacing: 12) {
+                        LazyVGrid(columns: [GridItem(), GridItem(), GridItem()], spacing: 12) {
                             ForEach(historyStore.searchHistory, id: \.self) { query in
                                 Button {
                                     onSelectHistoryItem(query)
