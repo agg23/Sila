@@ -81,9 +81,9 @@ struct StreamableVideoStatusControlContentView: View {
     var body: some View {
         switch self.streamableVideo {
         case .stream(let stream):
-            StreamableVideoStatusDisplayView(title: stream.title, userName: stream.userName, gameName: stream.gameName, profileImageUrl: self.profileImageUrl(), viewerCount: stream.viewerCount)
+            StreamableVideoStatusDisplayView(title: stream.title, userName: stream.userName, gameName: stream.gameName, profileImageUrl: self.profileImageUrl(), viewerCount: stream.viewerCount, timestamp: stream.startedAt)
         case .video(let video):
-            StreamableVideoStatusDisplayView(title: video.title, userName: video.userName, gameName: nil, profileImageUrl: self.profileImageUrl(), viewerCount: nil)
+            StreamableVideoStatusDisplayView(title: video.title, userName: video.userName, gameName: nil, profileImageUrl: self.profileImageUrl(), viewerCount: nil, timestamp: nil)
         }
     }
 
@@ -102,6 +102,7 @@ struct StreamableVideoStatusDisplayView: View {
     let gameName: String?
     let profileImageUrl: URL?
     let viewerCount: Int?
+    let timestamp: Date?
 
     var body: some View {
         let title = !self.title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? self.title : self.userName
@@ -122,13 +123,20 @@ struct StreamableVideoStatusDisplayView: View {
                     .foregroundColor(.secondary)
             }
             Spacer()
-            if let viewerCount = viewerCount {
-                Image(systemName: Icon.viewerCount)
-                    .symbolRenderingMode(.palette)
-                    .foregroundStyle(.red, .white)
-                Text(viewerCount.formatted(.number))
-                    .padding(.trailing, 8)
+            VStack(alignment: .trailing) {
+                if let timestamp = self.timestamp {
+                    RuntimeTimelineView(timestamp: timestamp)
+                        .monospacedDigit()
+                        .multilineTextAlignment(.trailing)
+                }
+
+                Spacer()
+
+                if let viewerCount = viewerCount {
+                    ViewerCountView(viewerCount: viewerCount)
+                }
             }
+            .padding(.trailing, 8)
         }
     }
 }
