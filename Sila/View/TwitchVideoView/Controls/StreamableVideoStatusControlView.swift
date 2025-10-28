@@ -107,8 +107,7 @@ struct StreamableVideoStatusDisplayView: View {
         let title = !self.title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? self.title : self.userName
 
         HStack(alignment: .top) {
-            // TODO: This probably should show something other than clear in the error case
-            LoadingAsyncImage(imageUrl: self.profileImageUrl, aspectRatio: 1.0, defaultColor: Color.clear)
+            LoadingAsyncImage(imageUrl: self.profileImageUrl, aspectRatio: 1.0)
                 .clipShape(.rect(cornerRadius: 8))
             VStack(alignment: .leading) {
                 Text(title)
