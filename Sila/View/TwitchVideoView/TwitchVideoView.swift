@@ -69,14 +69,16 @@ struct TwitchVideoView: View {
                     // TODO: Handle VoDs
                     if case .stream(let stream) = self.streamableVideo {
                         HStack {
+                            // This is the gap between the main window and our ornament
                             Color.clear.frame(width: self.ornamentSpacing)
                             ChatPaneView(channel: stream.userLogin, userId: stream.userId, title: stream.userName) {
                                 withAnimation {
                                     self.chatVisibility = .hidden
                                 }
                             }
-                            .frame(width: 400, height: geometry.size.height)
-                            .glassBackgroundEffect(tint: .black.opacity(0.5))
+                            // Calibrated for a 400 width at default window size
+                            .frame(width: geometry.size.width * 0.3125, height: geometry.size.height)
+                            .glassBackgroundEffect(tint: Color(red: 24.0/255.0, green: 24.0/255.0, blue: 27.0/255.0))
                         }
                     }
                 }
