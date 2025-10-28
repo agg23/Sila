@@ -73,6 +73,7 @@
 		66AFA2E42CFCBF7600491D98 /* PlayerDurationSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AFA2E32CFCBF7600491D98 /* PlayerDurationSliderView.swift */; };
 		66B5DD852B9FCBCC0054121D /* MatureStreamFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B5DD832B9FCBCC0054121D /* MatureStreamFilterView.swift */; };
 		66B5DD882B9FCC150054121D /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B5DD872B9FCC150054121D /* Setting.swift */; };
+		66HIST012024100100000002 /* HistoryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66HIST012024100100000001 /* HistoryStore.swift */; };
 		66C4BC332BCD97F000AA8732 /* SevenTVModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C4BC322BCD97F000AA8732 /* SevenTVModels.swift */; };
 		66C4BC382BCD9C1400AA8732 /* Emote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C4BC372BCD9C1400AA8732 /* Emote.swift */; };
 		66C4BC3A2BCD9C9200AA8732 /* EmoteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C4BC392BCD9C9200AA8732 /* EmoteController.swift */; };
@@ -195,6 +196,7 @@
 		66AFA2E32CFCBF7600491D98 /* PlayerDurationSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerDurationSliderView.swift; sourceTree = "<group>"; };
 		66B5DD832B9FCBCC0054121D /* MatureStreamFilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatureStreamFilterView.swift; sourceTree = "<group>"; };
 		66B5DD872B9FCC150054121D /* Setting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
+		66HIST012024100100000001 /* HistoryStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryStore.swift; sourceTree = "<group>"; };
 		66C4BC322BCD97F000AA8732 /* SevenTVModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SevenTVModels.swift; sourceTree = "<group>"; };
 		66C4BC372BCD9C1400AA8732 /* Emote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Emote.swift; sourceTree = "<group>"; };
 		66C4BC392BCD9C9200AA8732 /* EmoteController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmoteController.swift; sourceTree = "<group>"; };
@@ -635,6 +637,7 @@
 				66F8D18F2B88581D008C4F7C /* Icon.swift */,
 				6690EBA32BA73C2B0093B18C /* Language.swift */,
 				66B5DD872B9FCC150054121D /* Setting.swift */,
+				66HIST012024100100000001 /* HistoryStore.swift */,
 				66F105A42BA4B3DF006B7ADE /* Task.swift */,
 			);
 			path = Util;
@@ -742,6 +745,7 @@
 				6666F34F2BAA7119009D5A29 /* OpenApp.swift in Sources */,
 				660F73A52B745D710011FD65 /* PlayerControlsView.swift in Sources */,
 				66B5DD882B9FCC150054121D /* Setting.swift in Sources */,
+				66HIST012024100100000002 /* HistoryStore.swift in Sources */,
 				66C96BE72B8ECD5D0016A91B /* Video.swift in Sources */,
 				66125F5C2B83D9EC002169B5 /* OrnamentPickerTabView.swift in Sources */,
 				66F4E4252B811B6C008C565D /* CloseButtonView.swift in Sources */,

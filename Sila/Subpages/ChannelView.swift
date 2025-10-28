@@ -58,6 +58,8 @@ struct ChannelViewContent: View {
 
                     if let stream = self.stream {
                         Button {
+                            // Track the opened stream in history
+                            HistoryStore.shared.addRecentStream(stream)
                             openWindow(id: "stream", value: stream)
                         } label: {
                             Text("Watch Now")
