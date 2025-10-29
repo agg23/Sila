@@ -27,95 +27,75 @@ class HistoryStore: ObservableObject {
     // MARK: - Search History
     
     func addSearchQuery(_ query: String) {
-        // Don't add empty strings
         guard !query.trimmingCharacters(in: .whitespaces).isEmpty else {
             return
         }
         
-        // Remove if it already exists (to move it to the front)
-        searchHistory.removeAll { $0 == query }
+        self.searchHistory.removeAll { $0 == query }
+        self.searchHistory.insert(query, at: 0)
         
-        // Add to the beginning
-        searchHistory.insert(query, at: 0)
-        
-        // Limit the size
-        if searchHistory.count > maxHistoryItems {
-            searchHistory = Array(searchHistory.prefix(maxHistoryItems))
+        if self.searchHistory.count > self.maxHistoryItems {
+            self.searchHistory = Array(self.searchHistory.prefix(self.maxHistoryItems))
         }
         
-        saveSearchHistory()
+        self.saveSearchHistory()
     }
     
     func clearSearchHistory() {
-        searchHistory = []
-        saveSearchHistory()
+        self.searchHistory = []
+        self.saveSearchHistory()
     }
     
     private func loadSearchHistory() {
-        if let data = UserDefaults.standard.array(forKey: searchHistoryKey) as? [String] {
-            searchHistory = data
+        if let data = UserDefaults.standard.array(forKey: self.searchHistoryKey) as? [String] {
+            self.searchHistory = data
         }
     }
     
     private func saveSearchHistory() {
-        UserDefaults.standard.set(searchHistory, forKey: searchHistoryKey)
+        UserDefaults.standard.set(self.searchHistory, forKey: self.searchHistoryKey)
     }
-    
-    // MARK: - Recent Streams
     
     func addRecentStream(_ stream: Twitch.Stream) {
         let recentStream = RecentStream(
-            id: stream.id,
             userLogin: stream.userLogin,
-            userName: stream.userName,
-            gameName: stream.gameName,
-            title: stream.title,
-            viewerCount: stream.viewerCount,
-            thumbnailURL: stream.thumbnailURL,
-            timestamp: Date()
+            userName: stream.userName
         )
         
-        // Remove if it already exists (to move it to the front)
-        recentStreams.removeAll { $0.userLogin == stream.userLogin }
+        self.recentStreams.removeAll { $0.userLogin == stream.userLogin }
+        self.recentStreams.insert(recentStream, at: 0)
         
-        // Add to the beginning
-        recentStreams.insert(recentStream, at: 0)
-        
-        // Limit the size
-        if recentStreams.count > maxHistoryItems {
-            recentStreams = Array(recentStreams.prefix(maxHistoryItems))
+        if self.recentStreams.count > self.maxHistoryItems {
+            self.recentStreams = Array(self.recentStreams.prefix(self.maxHistoryItems))
         }
         
-        saveRecentStreams()
+        self.saveRecentStreams()
     }
     
     func clearRecentStreams() {
-        recentStreams = []
-        saveRecentStreams()
+        self.recentStreams = []
+        self.saveRecentStreams()
     }
     
     private func loadRecentStreams() {
-        if let data = UserDefaults.standard.data(forKey: recentStreamsKey),
+        if let data = UserDefaults.standard.data(forKey: self.recentStreamsKey),
            let decoded = try? JSONDecoder().decode([RecentStream].self, from: data) {
-            recentStreams = decoded
+            self.recentStreams = decoded
         }
     }
     
     private func saveRecentStreams() {
-        if let encoded = try? JSONEncoder().encode(recentStreams) {
-            UserDefaults.standard.set(encoded, forKey: recentStreamsKey)
+        if let encoded = try? JSONEncoder().encode(self.recentStreams) {
+            UserDefaults.standard.set(encoded, forKey: self.recentStreamsKey)
         }
     }
 }
 
-/// Simplified representation of a stream for history tracking
 struct RecentStream: Codable, Identifiable {
-    let id: String
     let userLogin: String
     let userName: String
-    let gameName: String
-    let title: String
-    let viewerCount: Int
-    let thumbnailURL: String
-    let timestamp: Date
+    
+    var id: String {
+        self.userLogin
+    }
 }

@@ -12,7 +12,6 @@ struct SearchView: View {
     @State private var loader = StandardDataLoader<([Twitch.Category], [Channel])>()
     @State private var requestTask: Task<(), Error>?
     @State private var query = ""
-    @StateObject private var historyStore = HistoryStore.shared
 
     @State private var channelsExpanded = true
     @State private var categoriesExpanded = true
@@ -22,18 +21,12 @@ struct SearchView: View {
             // Dummy response. All data comes from onChange via the search text
             ([], [])
         } content: { categories, channels in
-            SearchListView(channels: channels, categories: categories, query: self.query, historyStore: self.historyStore, onSelectHistoryItem: { selectedQuery in
+            SearchListView(channels: channels, categories: categories, query: self.query, onSelectHistoryItem: { selectedQuery in
                 self.query = selectedQuery
             })
         }
         // TODO: Maybe follow how Christian made a search bar https://christianselig.com/2024/03/recreating-visionos-search-bar/
         .searchable(text: self.$query, placement: .navigationBarDrawer)
-        .onSubmit(of: .search) {
-            // Save the search query when user submits
-            if !self.query.isEmpty {
-                self.historyStore.addSearchQuery(self.query)
-            }
-        }
         .onChange(of: self.query) { _, newValue in
             self.requestTask?.cancel()
 
@@ -48,6 +41,10 @@ struct SearchView: View {
                     return try await (categories, channels)
                 }
             }
+            
+            if !newValue.isEmpty {
+                HistoryStore.shared.addSearchQuery(newValue)
+            }
         }
     }
 }
@@ -60,15 +57,12 @@ struct SearchListView: View {
     let channels: [Channel]
     let categories: [Twitch.Category]
     let query: String
-    let historyStore: HistoryStore
     let onSelectHistoryItem: (String) -> Void
 
     var body: some View {
         if self.query.isEmpty {
-            // Show history when no active search
-            HistoryView(historyStore: self.historyStore, onSelectHistoryItem: self.onSelectHistoryItem)
+            HistoryView(onSelectHistoryItem: self.onSelectHistoryItem)
         } else {
-            // Show search results
             let noMatchingChannelsView = EmptyContentView(title: "No matching channels", systemImage: Icon.channel, description: "Adjust your search query for matching channels.", buttonTitle: "", buttonSystemImage: "", ignoreSafeArea: false, action: nil)
             let noMatchingCategoriesView = EmptyContentView(title: "No matching categories", systemImage: Icon.category, description: "Adjust your search query for matching categories.", buttonTitle: "", buttonSystemImage: "", ignoreSafeArea: false, action: nil)
             
@@ -82,8 +76,6 @@ struct SearchListView: View {
                                 .clipShape(.rect(cornerRadius: 8))
                         }) {
                             Task {
-                                // TODO: This can obviously fail. Ideally we can launch the stream window with just a channel login
-                                // similar to how category/channel routes work
                                 guard let api = self.authController.status.api() else {
                                     return
                                 }
@@ -94,14 +86,12 @@ struct SearchListView: View {
                                     return
                                 }
 
-                                // Track the opened stream in history
-                                self.historyStore.addRecentStream(stream)
+                                HistoryStore.shared.addRecentStream(stream)
                                 
                                 openWindow(id: "stream", value: stream)
                             }
                         }
                     }
-                    // Padding applied inside TabView so panning gesture between pages doesn't show items butting up next to each other
                     .padding(16)
                 }
             }, rightTitle: "Categories") {
@@ -114,7 +104,6 @@ struct SearchListView: View {
                                     LoadingAsyncImage(imageUrl: URL(string: category.boxArtUrl), aspectRatio: 0.75)
                                         .clipShape(.rect(cornerRadius: 8))
 
-                                    // Background rectangle to horizontally center the image in the same footprint as the square channel avatars
                                     Color.clear
                                         .aspectRatio(1.0, contentMode: .fit)
                                 }
@@ -122,7 +111,6 @@ struct SearchListView: View {
                             self.router.pushToActiveTab(route: .category(game: .id(category.id)))
                         }
                     }
-                    // Padding applied inside TabView so panning gesture between pages doesn't show items butting up next to each other
                     .padding(16)
                 }
             }
@@ -187,118 +175,176 @@ private struct HistoryView: View {
     @Environment(Router.self) private var router
     @Environment(AuthController.self) private var authController
     
-    @ObservedObject var historyStore: HistoryStore
     let onSelectHistoryItem: (String) -> Void
     
+    @State private var streamStatuses: [String: Twitch.Stream?] = [:]
+    
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 24) {
-                // Search History Section
-                if !historyStore.searchHistory.isEmpty {
-                    VStack(alignment: .leading, spacing: 12) {
-                        HStack {
-                            Text("Search History")
-                                .font(.title2)
-                                .bold()
-                            Spacer()
-                            Button("Clear") {
-                                historyStore.clearSearchHistory()
-                            }
-                            .buttonStyle(.borderless)
-                        }
-                        .padding(.horizontal, 16)
-                        
-                        LazyVGrid(columns: [GridItem(), GridItem(), GridItem()], spacing: 12) {
-                            ForEach(historyStore.searchHistory, id: \.self) { query in
-                                Button {
-                                    onSelectHistoryItem(query)
-                                } label: {
-                                    HStack {
-                                        Image(systemName: Icon.search)
-                                            .foregroundColor(.secondary)
-                                        Text(query)
-                                            .lineLimit(1)
-                                        Spacer()
-                                    }
-                                    .padding(12)
-                                    .background(.tertiary)
-                                    .cornerRadius(10)
+        let historyStore = HistoryStore.shared
+        let noQueryView = EmptyContentView(title: "Enter a search query", systemImage: Icon.search, description: "Enter a search query to find live channels or categories.", buttonTitle: "", buttonSystemImage: "", ignoreSafeArea: false, action: nil)
+        
+        if historyStore.searchHistory.isEmpty && historyStore.recentStreams.isEmpty {
+            noQueryView
+        } else {
+            ScrollView {
+                VStack(alignment: .leading, spacing: 24) {
+                    if !historyStore.searchHistory.isEmpty {
+                        VStack(alignment: .leading, spacing: 12) {
+                            HStack {
+                                Text("Search History")
+                                    .font(.title2)
+                                    .bold()
+                                Spacer()
+                                Button("Clear") {
+                                    historyStore.clearSearchHistory()
                                 }
-                                .buttonStyle(.plain)
-                                .buttonBorderShape(.roundedRectangle(radius: 10))
+                                .buttonStyle(.borderless)
                             }
-                        }
-                        .padding(.horizontal, 16)
-                    }
-                }
-                
-                // Recent Streams Section
-                if !historyStore.recentStreams.isEmpty {
-                    VStack(alignment: .leading, spacing: 12) {
-                        HStack {
-                            Text("Recently Opened Streams")
-                                .font(.title2)
-                                .bold()
-                            Spacer()
-                            Button("Clear") {
-                                historyStore.clearRecentStreams()
-                            }
-                            .buttonStyle(.borderless)
-                        }
-                        .padding(.horizontal, 16)
-                        
-                        LazyVGrid(columns: [GridItem(), GridItem(), GridItem()], spacing: 12) {
-                            ForEach(historyStore.recentStreams) { recentStream in
-                                SearchButton(title: recentStream.userName, subtitle: recentStream.gameName, squareImage: {
-                                    // Use a placeholder for recent streams since we don't store profile pictures
-                                    ZStack {
-                                        Color.gray.opacity(0.3)
-                                        Image(systemName: Icon.channel)
-                                            .font(.largeTitle)
-                                            .foregroundColor(.secondary)
-                                    }
-                                    .aspectRatio(1.0, contentMode: .fit)
-                                    .clipShape(.rect(cornerRadius: 8))
-                                }) {
-                                    Task {
-                                        guard let api = self.authController.status.api() else {
-                                            return
+                            .padding(.horizontal, 16)
+                            
+                            VStack(spacing: 8) {
+                                ForEach(historyStore.searchHistory, id: \.self) { query in
+                                    Button {
+                                        self.onSelectHistoryItem(query)
+                                    } label: {
+                                        HStack {
+                                            Image(systemName: Icon.search)
+                                                .foregroundColor(.secondary)
+                                            Text(query)
+                                                .lineLimit(1)
+                                            Spacer()
                                         }
-                                        
-                                        // Re-fetch the stream to ensure it's still live
-                                        let (streams, _) = try await api.getStreams(userLogins: [recentStream.userLogin])
-                                        
-                                        guard let stream = streams.first else {
-                                            return
-                                        }
-                                        
-                                        // Update the recent stream entry with the latest data
-                                        historyStore.addRecentStream(stream)
-                                        
-                                        openWindow(id: "stream", value: stream)
+                                        .padding(12)
+                                        .background(.tertiary)
+                                        .cornerRadius(10)
                                     }
+                                    .buttonStyle(.plain)
+                                    .buttonBorderShape(.roundedRectangle(radius: 10))
                                 }
                             }
+                            .padding(.horizontal, 16)
                         }
-                        .padding(.horizontal, 16)
+                    }
+                    
+                    if !historyStore.recentStreams.isEmpty {
+                        VStack(alignment: .leading, spacing: 12) {
+                            HStack {
+                                Text("Recently Opened Streams")
+                                    .font(.title2)
+                                    .bold()
+                                Spacer()
+                                Button("Clear") {
+                                    historyStore.clearRecentStreams()
+                                }
+                                .buttonStyle(.borderless)
+                            }
+                            .padding(.horizontal, 16)
+                            
+                            VStack(spacing: 8) {
+                                ForEach(historyStore.recentStreams) { recentStream in
+                                    RecentStreamButton(
+                                        recentStream: recentStream,
+                                        streamStatus: self.streamStatuses[recentStream.userLogin] ?? nil,
+                                        onTap: {
+                                            Task {
+                                                guard let api = self.authController.status.api() else {
+                                                    return
+                                                }
+                                                
+                                                let (streams, _) = try await api.getStreams(userLogins: [recentStream.userLogin])
+                                                
+                                                if let stream = streams.first {
+                                                    historyStore.addRecentStream(stream)
+                                                    self.openWindow(id: "stream", value: stream)
+                                                }
+                                            }
+                                        }
+                                    )
+                                }
+                            }
+                            .padding(.horizontal, 16)
+                        }
+                        .task {
+                            await self.fetchStreamStatuses(for: historyStore.recentStreams)
+                        }
                     }
                 }
-                
-                // Empty state when no history
-                if historyStore.searchHistory.isEmpty && historyStore.recentStreams.isEmpty {
-                    EmptyContentView(
-                        title: "No Search History",
-                        systemImage: Icon.search,
-                        description: "Search for live channels or categories to see your history here.",
-                        buttonTitle: "",
-                        buttonSystemImage: "",
-                        ignoreSafeArea: false,
-                        action: nil
-                    )
-                }
+                .padding(.vertical, 16)
             }
-            .padding(.vertical, 16)
         }
+    }
+    
+    private func fetchStreamStatuses(for recentStreams: [RecentStream]) async {
+        guard let api = self.authController.status.api() else {
+            return
+        }
+        
+        let userLogins = recentStreams.map { $0.userLogin }
+        
+        do {
+            let (streams, _) = try await api.getStreams(userLogins: userLogins)
+            
+            var statuses: [String: Twitch.Stream?] = [:]
+            for login in userLogins {
+                statuses[login] = streams.first { $0.userLogin == login }
+            }
+            
+            DispatchQueue.main.async {
+                self.streamStatuses = statuses
+            }
+        } catch {
+            print("Failed to fetch stream statuses: \(error)")
+        }
+    }
+}
+
+private struct RecentStreamButton: View {
+    let recentStream: RecentStream
+    let streamStatus: Twitch.Stream?
+    let onTap: () -> Void
+    
+    var body: some View {
+        Button {
+            self.onTap()
+        } label: {
+            HStack {
+                ZStack {
+                    Color.gray.opacity(0.3)
+                    Image(systemName: Icon.channel)
+                        .font(.title2)
+                        .foregroundColor(.secondary)
+                }
+                .frame(width: 40, height: 40)
+                .clipShape(.rect(cornerRadius: 8))
+                
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(self.recentStream.userName)
+                        .lineLimit(1)
+                    
+                    if let stream = self.streamStatus {
+                        HStack(spacing: 4) {
+                            Circle()
+                                .fill(.red)
+                                .frame(width: 6, height: 6)
+                            Text(stream.gameName)
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                        }
+                    } else {
+                        Text("Offline")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
+                }
+                
+                Spacer()
+            }
+            .padding(12)
+            .background(.tertiary)
+            .cornerRadius(10)
+        }
+        .buttonStyle(.plain)
+        .buttonBorderShape(.roundedRectangle(radius: 10))
     }
 }
 
@@ -306,7 +352,7 @@ private struct HistoryView: View {
     PreviewNavStack {
         SearchListView(channels: CHANNEL_LIST_MOCK().prefix(20).map({ $0 }), categories: CATEGORY_LIST_MOCK().prefix(20).map({ game in
             Category(game: game)
-        }), query: "test", historyStore: HistoryStore.shared, onSelectHistoryItem: { _ in })
+        }), query: "test", onSelectHistoryItem: { _ in })
     }
 }
 
@@ -314,7 +360,7 @@ private struct HistoryView: View {
     PreviewNavStack {
         SearchListView(channels: CHANNEL_LIST_MOCK().prefix(10).map({ $0 }), categories: CATEGORY_LIST_MOCK().prefix(10).map({ game in
             Category(game: game)
-        }), query: "test", historyStore: HistoryStore.shared, onSelectHistoryItem: { _ in })
+        }), query: "test", onSelectHistoryItem: { _ in })
     }
 }
 
@@ -322,7 +368,7 @@ private struct HistoryView: View {
     PreviewNavStack {
         SearchListView(channels: CHANNEL_LIST_MOCK().prefix(1).map({ $0 }), categories: CATEGORY_LIST_MOCK().prefix(1).map({ game in
             Category(game: game)
-        }), query: "test", historyStore: HistoryStore.shared, onSelectHistoryItem: { _ in })
+        }), query: "test", onSelectHistoryItem: { _ in })
     }
 }
 
