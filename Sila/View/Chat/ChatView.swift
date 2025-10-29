@@ -12,12 +12,12 @@ import Twitch
 import TwitchIRC
 
 struct ChatView: View {
-    @State private var chatModel = ChatModel()
+    @State private var chatModel: ChatModel?
 
     @State private var toggle = true
     @State private var timer: Timer?
 
-    let channel: String
+    let channelName: String
     let userId: String
 
     // Forsen
@@ -25,16 +25,16 @@ struct ChatView: View {
 
     var body: some View {
         VStack {
-            ChatListView(messages: self.chatModel.messages, cachedColors: self.chatModel.cachedColors, resetScrollPublisher: self.chatModel.resetScrollSubject.eraseToAnyPublisher())
-                .task(id: self.toggle) {
-                    guard self.toggle else {
-                        return
-                    }
+            if let chatModel = self.chatModel {
+                ChatListView(entries: chatModel.entries, cachedColors: chatModel.cachedColors, resetScrollPublisher: chatModel.resetScrollSubject.eraseToAnyPublisher())
+            }
+        }
+        .task {
+            print("Connecting to chat")
+            self.chatModel = ChatRegistry.shared.model(for: channelName, with: userId)
 
-                    print("Connecting to chat")
-
-                    await self.chatModel.connect(to: self.channel, for: self.userId)
-                }
+            await self.chatModel?.connect()
+        }
 //                .task {
 //                    await EmoteController.shared.fetchUserEmotes(for: DEBUG_USER_ID)
 //
@@ -47,7 +47,6 @@ struct ChatView: View {
 //
 //                    fireDebugTimer(index: 0)
 //                }
-        }
     }
 
     func fireDebugTimer(index: Int) {
@@ -60,7 +59,7 @@ struct ChatView: View {
 
         let message = messages[newIndex]
 
-        self.chatModel.appendChatMessage(message, userId: DEBUG_USER_ID)
+        self.chatModel?.appendChatMessage(message, userId: DEBUG_USER_ID)
 
         self.timer = Timer.scheduledTimer(withTimeInterval: 0.2, repeats: false) { _ in
             self.fireDebugTimer(index: newIndex + 1)
@@ -73,6 +72,7 @@ struct ChatListView: View {
     private let bottomRowId = "bottomRow"
 
     static let rowInset = EdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 0)
+    static let dividerInset = EdgeInsets(top: 4, leading: 0, bottom: 8, trailing: 0)
     static let bottomInset = EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
 
     @State private var isTapped = false
@@ -80,12 +80,12 @@ struct ChatListView: View {
     @State private var scrollAtBottom = true
     @State private var pendingScrollRequest: UUID? = nil
 
-    let messages: [ChatMessageModel]
+    let entries: [ChatLogEntryModel]
     let cachedColors: CachedColors
     let resetScrollPublisher: AnyPublisher<(), Never>
 
-    init(messages: [ChatMessageModel], cachedColors: CachedColors, resetScrollPublisher: AnyPublisher<(), Never> = Empty().eraseToAnyPublisher()) {
-        self.messages = messages
+    init(entries: [ChatLogEntryModel], cachedColors: CachedColors, resetScrollPublisher: AnyPublisher<(), Never> = Empty().eraseToAnyPublisher()) {
+        self.entries = entries
         self.cachedColors = cachedColors
         self.resetScrollPublisher = resetScrollPublisher
     }
@@ -93,11 +93,22 @@ struct ChatListView: View {
     var body: some View {
         ScrollViewReader { proxy in
             List {
-                ForEach(self.messages, id: \.message.id) { message in
-                    ChatMessage(message: message, cachedColors: self.cachedColors)
-                        .listRowInsets(ChatListView.rowInset)
-                        .listRowSeparator(.hidden)
-                        .padding(.vertical, 2)
+                ForEach(self.entries) { entry in
+                    switch entry {
+                    case .message(let message):
+                        ChatMessage(message: message, cachedColors: self.cachedColors)
+                            .listRowInsets(ChatListView.rowInset)
+                            .listRowSeparator(.hidden)
+                            .padding(.vertical, 2)
+                    case .divider(let date):
+                        Text("Reconnected at \(TimeFormatter.shared.string(from: date))")
+                            .frame(maxWidth: .infinity, alignment: .center)
+                            .foregroundColor(.secondary)
+                            .multilineTextAlignment(.center)
+                            .listRowInsets(ChatListView.dividerInset)
+                            // Use list separator at the bottom of the row as a psuedo-Divider
+                            .listRowSeparator(.visible)
+                    }
                 }
 
                 Color.clear
@@ -153,7 +164,7 @@ struct ChatListView: View {
                 print("Received reset")
                 self.scrollAtBottom = true
             }
-            .onChange(of: self.messages, { _, newValue in
+            .onChange(of: self.entries, { _, newValue in
                 // If we are currently at the bottom and we have any change to the messages array (new message, clearing of old data), scroll to the new bottom
                 guard self.scrollAtBottom else {
                     return
@@ -197,7 +208,7 @@ struct ChatListView: View {
 
 #Preview {
     // MoonMoon
-    ChatListView(messages: PRIVATEMESSAGE_LIST_MOCK().map({ ChatMessageModel(message: $0, userId: "121059319") }), cachedColors: CachedColors())
+    ChatListView(entries: PRIVATEMESSAGE_LIST_MOCK().map({ .message(ChatMessageModel(message: $0, userId: "121059319")) }), cachedColors: CachedColors())
         .frame(width: 400)
         .glassBackgroundEffect()
 }

@@ -21,3 +21,18 @@ class RuntimeFormatter: DateComponentsFormatter, @unchecked Sendable {
         fatalError("init(coder:) has not been implemented")
     }
 }
+
+class TimeFormatter: DateFormatter, @unchecked Sendable {
+    static let shared = TimeFormatter()
+
+    override init() {
+        super.init()
+        
+        self.timeStyle = .medium
+        self.dateStyle = .none
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}

@@ -9,6 +9,35 @@ import SwiftUI
 import AsyncAnimatedImageUI
 import TwitchIRC
 
+enum ChatLogEntryModel {
+    case message(_ message: ChatMessageModel)
+    case divider(_ timestamp: Date)
+}
+
+extension ChatLogEntryModel: Identifiable {
+    var id: String {
+        switch self {
+        case .message(let model):
+            return model.message.id
+        case .divider(let timestamp):
+            return "divider_\(timestamp.timeIntervalSince1970)"
+        }
+    }
+}
+
+extension ChatLogEntryModel: Equatable {
+    static func == (lhs: ChatLogEntryModel, rhs: ChatLogEntryModel) -> Bool {
+        switch (lhs, rhs) {
+        case (.message(let lhsMessage), .message(let rhsMessage)):
+            return lhsMessage.message == rhsMessage.message
+        case (.divider, .divider):
+            return true
+        default:
+            return false
+        }
+    }
+}
+
 class ChatMessageModel {
     let message: PrivateMessage
     let emoteURLs: [URL]
@@ -21,12 +50,6 @@ class ChatMessageModel {
 
         self.chunks = chunks
         self.emoteURLs = emoteURLs
-    }
-}
-
-extension ChatMessageModel: Equatable {
-    static func == (lhs: ChatMessageModel, rhs: ChatMessageModel) -> Bool {
-        lhs.message == rhs.message
     }
 }
 

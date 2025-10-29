@@ -8,14 +8,14 @@
 import SwiftUI
 
 struct ChatPaneView: View {
-    let channel: String
+    let channelName: String
     let userId: String
     let title: String?
     let dismissPane: () -> Void
 
     var body: some View {
         NavigationStack {
-            ChatView(channel: self.channel, userId: self.userId)
+            ChatView(channelName: self.channelName, userId: self.userId)
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) {
                         Button {
@@ -32,7 +32,7 @@ struct ChatPaneView: View {
 }
 
 #Preview {
-    ChatPaneView(channel: "barbarousking", userId: "56865374", title: "BarbarousKing") {
+    ChatPaneView(channelName: "barbarousking", userId: "56865374", title: "BarbarousKing") {
         print("Dismiss")
     }
 }
