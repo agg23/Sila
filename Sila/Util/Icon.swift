@@ -30,4 +30,9 @@ struct Icon {
 
     static let refresh = "arrow.clockwise"
     static let dimming = "circle.lefthalf.striped.horizontal.inverse"
+
+    static let close = "xmark"
+    static let popOut = "rectangle.portrait.and.arrow.right"
+    // TODO: Need icon
+    static let popIn = "xmark"
 }

@@ -58,7 +58,7 @@ struct ChannelViewContent: View {
 
                     if let stream = self.stream {
                         Button {
-                            openWindow(id: "stream", value: stream)
+                            openWindow(id: Window.stream, value: stream)
                         } label: {
                             Text("Watch Now")
                         }

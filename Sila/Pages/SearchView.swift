@@ -81,7 +81,7 @@ struct SearchListView: View {
                                 return
                             }
 
-                            openWindow(id: "stream", value: stream)
+                            openWindow(id: Window.stream, value: stream)
                         }
                     }
                 }

@@ -71,14 +71,13 @@ struct TwitchVideoView: View {
                         HStack {
                             // This is the gap between the main window and our ornament
                             Color.clear.frame(width: self.ornamentSpacing)
-                            ChatPaneView(channelName: stream.userLogin, userId: stream.userId, title: stream.userName) {
+                            ChatPaneView(channelName: stream.userLogin, userId: stream.userId, title: stream.userName, isWindow: false) {
                                 withAnimation {
                                     self.chatVisibility = .hidden
                                 }
                             }
                             // Calibrated for a 400 width at default window size
                             .frame(width: geometry.size.width * 0.3125, height: geometry.size.height)
-                            .glassBackgroundEffect(tint: Color(red: 24.0/255.0, green: 24.0/255.0, blue: 27.0/255.0))
                         }
                     }
                 }
@@ -117,6 +116,13 @@ struct TwitchVideoView: View {
 
                 await EmoteController.shared.fetchUserEmotes(for: channelId)
             }
+            .onReceive(WindowController.shared.popoutChatSubject, perform: { popoutUserId in
+                if popoutUserId == self.player.channelId {
+                    withAnimation {
+                        self.chatVisibility = .visible
+                    }
+                }
+            })
             .onChange(of: self.player.status) { oldValue, newValue in
                 if newValue == .idle {
                     self.forceVisibility()

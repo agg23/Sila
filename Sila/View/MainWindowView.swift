@@ -70,9 +70,9 @@ struct MainWindowView: View {
 
             switch window {
             case .stream(let stream):
-                openWindow(id: "stream", value: stream)
+                openWindow(id: Window.stream, value: stream)
             case .vod(let video):
-                openWindow(id: "vod", value: video)
+                openWindow(id: Window.vod, value: video)
             }
         })
         .onOpenURL { url in
@@ -138,7 +138,7 @@ struct MainWindowView: View {
 
             let stream = streams[0]
             DispatchQueue.main.async {
-                openWindow(id: "stream", value: stream)
+                openWindow(id: Window.stream, value: stream)
             }
         }
     }
