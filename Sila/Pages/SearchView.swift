@@ -90,6 +90,7 @@ struct SearchListView: View {
                                 
                                 openWindow(id: Window.stream, value: stream)
                             }
+
                         }
                     }
                     .padding(16)

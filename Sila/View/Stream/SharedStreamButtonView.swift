@@ -46,6 +46,7 @@ struct SharedStreamButtonView<PreTitleRight: View, ImageOverlay: View, ContextMe
             switch self.source {
             case .stream(let stream):
                 HistoryStore.shared.addRecentStream(stream)
+
                 openWindow(id: Window.stream, value: stream)
             case .video(let video):
                 openWindow(id: Window.vod, value: video)
