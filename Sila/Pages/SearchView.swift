@@ -187,7 +187,7 @@ private struct HistoryView: View {
     @ObservedObject private var historyStore = HistoryStore.shared
     let onSelectHistoryItem: (String) -> Void
     
-    @State private var streamStatuses: [String: Twitch.Stream?] = [:]
+    @State private var streamStatuses: [String: StreamStatus] = [:]
     
     var body: some View {
         let noQueryView = EmptyContentView(title: "Enter a search query", systemImage: Icon.search, description: "Enter a search query to find live channels or categories.", buttonTitle: "", buttonSystemImage: "", ignoreSafeArea: false, action: nil)
@@ -253,7 +253,7 @@ private struct HistoryView: View {
                                 ForEach(historyStore.recentStreams) { recentStream in
                                     RecentStreamButton(
                                         recentStream: recentStream,
-                                        streamStatus: self.streamStatuses[recentStream.userLogin] ?? nil,
+                                        streamStatus: self.streamStatuses[recentStream.userLogin] ?? .unknown,
                                         onTap: {
                                             Task {
                                                 guard let api = self.authController.status.api() else {
@@ -293,9 +293,13 @@ private struct HistoryView: View {
         do {
             let (streams, _) = try await api.getStreams(userLogins: userLogins)
             
-            var statuses: [String: Twitch.Stream?] = [:]
+            var statuses: [String: StreamStatus] = [:]
             for login in userLogins {
-                statuses[login] = streams.first { $0.userLogin == login }
+                if let stream = streams.first(where: { $0.userLogin == login }) {
+                    statuses[login] = .online(stream)
+                } else {
+                    statuses[login] = .offline
+                }
             }
             
             DispatchQueue.main.async {
@@ -307,9 +311,28 @@ private struct HistoryView: View {
     }
 }
 
+enum StreamStatus: Equatable {
+    case unknown
+    case online(Twitch.Stream)
+    case offline
+    
+    static func == (lhs: StreamStatus, rhs: StreamStatus) -> Bool {
+        switch (lhs, rhs) {
+        case (.unknown, .unknown):
+            return true
+        case (.offline, .offline):
+            return true
+        case (.online(let stream1), .online(let stream2)):
+            return stream1.id == stream2.id
+        default:
+            return false
+        }
+    }
+}
+
 private struct RecentStreamButton: View {
     let recentStream: RecentStream
-    let streamStatus: Twitch.Stream?
+    let streamStatus: StreamStatus
     let onTap: () -> Void
     
     var body: some View {
@@ -330,7 +353,8 @@ private struct RecentStreamButton: View {
                     Text(self.recentStream.userName)
                         .lineLimit(1)
                     
-                    if let stream = self.streamStatus {
+                    switch self.streamStatus {
+                    case .online(let stream):
                         HStack(spacing: 4) {
                             Circle()
                                 .fill(.red)
@@ -339,8 +363,12 @@ private struct RecentStreamButton: View {
                                 .font(.caption)
                                 .foregroundColor(.secondary)
                         }
-                    } else {
+                    case .offline:
                         Text("Offline")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    case .unknown:
+                        Text("Loading...")
                             .font(.caption)
                             .foregroundColor(.secondary)
                     }
@@ -352,7 +380,7 @@ private struct RecentStreamButton: View {
             .background(.tertiary)
             .cornerRadius(10)
         }
-        .disabled(self.streamStatus == nil)
+        .disabled(self.streamStatus == .offline)
         .buttonStyle(.plain)
         .buttonBorderShape(.roundedRectangle(radius: 10))
     }
