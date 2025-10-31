@@ -12,6 +12,7 @@ struct SearchView: View {
     @State private var loader = StandardDataLoader<([Twitch.Category], [Channel])>()
     @State private var requestTask: Task<(), Error>?
     @State private var query = ""
+    @State private var previousQuery = ""
 
     @State private var channelsExpanded = true
     @State private var categoriesExpanded = true
@@ -27,7 +28,7 @@ struct SearchView: View {
         }
         // TODO: Maybe follow how Christian made a search bar https://christianselig.com/2024/03/recreating-visionos-search-bar/
         .searchable(text: self.$query, placement: .navigationBarDrawer)
-        .onChange(of: self.query) { _, newValue in
+        .onChange(of: self.query) { oldValue, newValue in
             self.requestTask?.cancel()
 
             self.requestTask = Task {
@@ -41,6 +42,11 @@ struct SearchView: View {
                     return try await (categories, channels)
                 }
             }
+            
+            if newValue.isEmpty && !self.previousQuery.isEmpty {
+                HistoryStore.shared.addSearchQuery(self.previousQuery)
+            }
+            self.previousQuery = newValue
         }
         .onDisappear {
             if !self.query.isEmpty {
@@ -379,6 +385,7 @@ private struct RecentStreamButton: View {
             .padding(12)
             .background(.tertiary)
             .cornerRadius(10)
+            .opacity(self.streamStatus == .offline ? 0.5 : 1.0)
         }
         .disabled(self.streamStatus == .offline)
         .buttonStyle(.plain)
