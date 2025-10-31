@@ -48,7 +48,7 @@ struct SilaAppApp: App {
         }
         .windowResizability(.contentSize)
 
-        WindowGroup(id: "stream", for: Twitch.Stream.self) { $stream in
+        WindowGroup(id: Window.stream, for: Twitch.Stream.self) { $stream in
             TwitchStreamVideoView(stream: stream)
                 .playbackWindow(for: stream)
                 .environment(self.authController)
@@ -65,11 +65,19 @@ struct SilaAppApp: App {
         .windowStyle(.plain)
 
         #if VOD_ENABLED
-        WindowGroup(id: "vod", for: Twitch.Video.self) { $video in
+        WindowGroup(id: Window.vod, for: Twitch.Video.self) { $video in
             TwitchVoDVideoView(video: video)
                 .environment(self.authController)
         }
         .defaultSize(CGSize(width: 1280.0, height: 720.0))
         #endif
+
+        WindowGroup(id: Window.chat, for: ChatWindowModel.self) { $chat in
+            ChatPaneWindow(channelName: chat.channelName, userId: chat.userId, title: chat.title)
+        } defaultValue: {
+            let defaultUser = USER_MOCK()
+            return ChatWindowModel(channelName: defaultUser.login, userId: defaultUser.id, title: defaultUser.displayName)
+        }
+        .defaultSize(CGSize(width: 400.0, height: 720.0))
     }
 }

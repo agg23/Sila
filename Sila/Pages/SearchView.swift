@@ -88,7 +88,7 @@ struct SearchListView: View {
 
                                 HistoryStore.shared.addRecentStream(stream)
                                 
-                                openWindow(id: "stream", value: stream)
+                                openWindow(id: Window.stream, value: stream)
                             }
                         }
                     }
@@ -255,7 +255,7 @@ private struct HistoryView: View {
                                                 
                                                 if let stream = streams.first {
                                                     historyStore.addRecentStream(stream)
-                                                    self.openWindow(id: "stream", value: stream)
+                                                    self.openWindow(id: Window.stream, value: stream)
                                                 }
                                             }
                                         }

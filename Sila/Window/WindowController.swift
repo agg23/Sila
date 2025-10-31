@@ -17,6 +17,7 @@ class WindowController {
     static let shared = WindowController()
 
     let allMuteSubject: PassthroughSubject<Bool, Never> = PassthroughSubject()
+    let popoutChatSubject: PassthroughSubject<String, Never> = PassthroughSubject()
 
     /// Tracks whether there is currently a main window displayed
     var mainWindowSpawned = false

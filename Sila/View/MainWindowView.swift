@@ -70,11 +70,10 @@ struct MainWindowView: View {
 
             switch window {
             case .stream(let stream):
-                // Track the opened stream in history
                 HistoryStore.shared.addRecentStream(stream)
-                openWindow(id: "stream", value: stream)
+                openWindow(id: Window.stream, value: stream)
             case .vod(let video):
-                openWindow(id: "vod", value: video)
+                openWindow(id: Window.vod, value: video)
             }
         })
         .onOpenURL { url in
@@ -140,9 +139,8 @@ struct MainWindowView: View {
 
             let stream = streams[0]
             DispatchQueue.main.async {
-                // Track the opened stream in history
                 HistoryStore.shared.addRecentStream(stream)
-                openWindow(id: "stream", value: stream)
+                openWindow(id: Window.stream, value: stream)
             }
         }
     }

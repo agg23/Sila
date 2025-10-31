@@ -45,11 +45,10 @@ struct SharedStreamButtonView<PreTitleRight: View, ImageOverlay: View, ContextMe
         AsyncImageButtonView(imageUrl: buildImageUrl(using: self.displayUrl), aspectRatio: 16.0/9.0, overlayAlignment: .bottomTrailing) {
             switch self.source {
             case .stream(let stream):
-                // Track the opened stream in history
                 HistoryStore.shared.addRecentStream(stream)
-                openWindow(id: "stream", value: stream)
+                openWindow(id: Window.stream, value: stream)
             case .video(let video):
-                openWindow(id: "vod", value: video)
+                openWindow(id: Window.vod, value: video)
             }
         } content: {
             VStack(alignment: .leading) {

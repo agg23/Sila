@@ -32,23 +32,13 @@ struct StreamButtonView: View {
         } imageOverlay: {
             HStack {
                 self.overlayPill {
-                    if self.disableIncrementingStreamDuration {
-                        self.runtime(self.initialRenderDate)
-                    } else {
-                        TimelineView(.periodic(from: self.initialRenderDate, by: 1.0)) { context in
-                            self.runtime(context.date)
-                        }
-                    }
+                    RuntimeTimelineView(timestamp: self.stream.startedAt)
                 }
 
                 Spacer(minLength: /*@START_MENU_TOKEN@*/0/*@END_MENU_TOKEN@*/)
 
                 self.overlayPill {
-                    Image(systemName: Icon.viewerCount)
-                        .symbolRenderingMode(.palette)
-                        .foregroundStyle(.red, .white)
-                    Text(self.stream.viewerCount.formatted(.number))
-                        .lineLimit(1)
+                    ViewerCountView(viewerCount: self.stream.viewerCount)
                 }
             }
         } contextMenu: {
@@ -108,7 +98,6 @@ struct StreamButtonView: View {
         .background(.black.opacity(0.5))
         .clipShape(.rect(cornerRadius: 8))
         .padding(16)
-        .monospaced()
     }
 
     @ViewBuilder

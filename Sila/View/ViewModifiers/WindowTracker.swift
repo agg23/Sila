@@ -29,7 +29,7 @@ struct WindowTrackerViewModifier: ViewModifier {
                         // If we are spawning the main window, that means there should be no players
                         // Thanks to a bug (as of 1.1.1), there may be phantom windows hanging around
                         // Kill any possible window
-                        dismissWindow(id: "stream", value: id)
+                        dismissWindow(id: Window.stream, value: id)
                     }
                 case .playback(let stream):
                     WindowController.shared.refPlaybackWindow(with: stream)
