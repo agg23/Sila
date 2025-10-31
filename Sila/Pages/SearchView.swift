@@ -12,7 +12,6 @@ struct SearchView: View {
     @State private var loader = StandardDataLoader<([Twitch.Category], [Channel])>()
     @State private var requestTask: Task<(), Error>?
     @State private var query = ""
-    @State private var searchDebounceTask: Task<Void, Never>?
 
     @State private var channelsExpanded = true
     @State private var categoriesExpanded = true
@@ -42,13 +41,10 @@ struct SearchView: View {
                     return try await (categories, channels)
                 }
             }
-            
-            self.searchDebounceTask?.cancel()
-            self.searchDebounceTask = Task {
-                try? await Task.sleep(nanoseconds: 500_000_000)
-                if !Task.isCancelled && !newValue.isEmpty {
-                    HistoryStore.shared.addSearchQuery(newValue)
-                }
+        }
+        .onDisappear {
+            if !self.query.isEmpty {
+                HistoryStore.shared.addSearchQuery(self.query)
             }
         }
     }
@@ -80,6 +76,10 @@ struct SearchListView: View {
                             LoadingAsyncImage(imageUrl: URL(string: channel.profilePictureURL), aspectRatio: 1.0)
                                 .clipShape(.rect(cornerRadius: 8))
                         }) {
+                            if !self.query.isEmpty {
+                                HistoryStore.shared.addSearchQuery(self.query)
+                            }
+                            
                             Task {
                                 guard let api = self.authController.status.api() else {
                                     return
@@ -114,6 +114,9 @@ struct SearchListView: View {
                                         .aspectRatio(1.0, contentMode: .fit)
                                 }
                         }) {
+                            if !self.query.isEmpty {
+                                HistoryStore.shared.addSearchQuery(self.query)
+                            }
                             self.router.pushToActiveTab(route: .category(game: .id(category.id)))
                         }
                     }
@@ -349,6 +352,7 @@ private struct RecentStreamButton: View {
             .background(.tertiary)
             .cornerRadius(10)
         }
+        .disabled(self.streamStatus == nil)
         .buttonStyle(.plain)
         .buttonBorderShape(.roundedRectangle(radius: 10))
     }
