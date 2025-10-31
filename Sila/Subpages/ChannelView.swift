@@ -58,7 +58,7 @@ struct ChannelViewContent: View {
 
                     if let stream = self.stream {
                         Button {
-                            HistoryStore.shared.addRecentStream(stream)
+                            RecentsStore.shared.addRecentStream(stream)
 
                             openWindow(id: Window.stream, value: stream)
                         } label: {

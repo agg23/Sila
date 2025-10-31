@@ -45,7 +45,7 @@ struct SharedStreamButtonView<PreTitleRight: View, ImageOverlay: View, ContextMe
         AsyncImageButtonView(imageUrl: buildImageUrl(using: self.displayUrl), aspectRatio: 16.0/9.0, overlayAlignment: .bottomTrailing) {
             switch self.source {
             case .stream(let stream):
-                HistoryStore.shared.addRecentStream(stream)
+                RecentsStore.shared.addRecentStream(stream)
 
                 openWindow(id: Window.stream, value: stream)
             case .video(let video):
