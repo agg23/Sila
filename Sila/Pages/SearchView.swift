@@ -12,6 +12,7 @@ struct SearchView: View {
     @State private var loader = StandardDataLoader<([Twitch.Category], [Channel])>()
     @State private var requestTask: Task<(), Error>?
     @State private var query = ""
+    @State private var searchDebounceTask: Task<Void, Never>?
 
     @State private var channelsExpanded = true
     @State private var categoriesExpanded = true
@@ -42,8 +43,12 @@ struct SearchView: View {
                 }
             }
             
-            if !newValue.isEmpty {
-                HistoryStore.shared.addSearchQuery(newValue)
+            self.searchDebounceTask?.cancel()
+            self.searchDebounceTask = Task {
+                try? await Task.sleep(nanoseconds: 500_000_000)
+                if !Task.isCancelled && !newValue.isEmpty {
+                    HistoryStore.shared.addSearchQuery(newValue)
+                }
             }
         }
     }
@@ -176,12 +181,12 @@ private struct HistoryView: View {
     @Environment(Router.self) private var router
     @Environment(AuthController.self) private var authController
     
+    @ObservedObject private var historyStore = HistoryStore.shared
     let onSelectHistoryItem: (String) -> Void
     
     @State private var streamStatuses: [String: Twitch.Stream?] = [:]
     
     var body: some View {
-        let historyStore = HistoryStore.shared
         let noQueryView = EmptyContentView(title: "Enter a search query", systemImage: Icon.search, description: "Enter a search query to find live channels or categories.", buttonTitle: "", buttonSystemImage: "", ignoreSafeArea: false, action: nil)
         
         if historyStore.searchHistory.isEmpty && historyStore.recentStreams.isEmpty {
