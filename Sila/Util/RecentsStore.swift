@@ -14,7 +14,7 @@ class RecentsStore: ObservableObject {
     
     private let searchRecentsKey = "searchHistory"
     private let recentStreamsKey = "recentStreams"
-    private let maxRecentsItems = 20
+    private let maxRecentsItems = 4
     
     @Published var searchRecents: [String] = []
     @Published var recentStreams: [RecentStream] = []

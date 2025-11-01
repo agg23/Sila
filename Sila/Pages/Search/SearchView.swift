@@ -135,18 +135,6 @@ struct SearchListView: View {
     }
 }
 
-private struct SearchRecentsHistoryView: View {
-    let onSelectHistoryItem: (String) -> Void
-
-#Preview {
-    PreviewNavStack {
-        SearchListView(channels: CHANNEL_LIST_MOCK().prefix(20).map({ $0 }), categories: CATEGORY_LIST_MOCK().prefix(20).map({ game in
-            Category(game: game)
-        }), query: "test", onSelectHistoryItem: { _ in })
-            .withEnvironments()
-    }
-}
-
 private struct SearchGrid<T: Identifiable, Content: View>: View {
     let items: [T]
     @ViewBuilder let content: (_: T) -> Content
