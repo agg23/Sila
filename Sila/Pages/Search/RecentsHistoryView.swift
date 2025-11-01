@@ -167,32 +167,13 @@ enum ChannelStatus {
 }
 
 struct StreamOpener {
-    static func openStream(stream: Twitch.Stream, openWindow: OpenWindowAction, profileImageUrl: String? = nil, authController: AuthController? = nil) {
+    static func openStream(stream: Twitch.Stream, openWindow: OpenWindowAction, profileImageUrl: String) {
         openWindow(id: Window.stream, value: stream)
         
-        if let profileImageUrl = profileImageUrl, !profileImageUrl.isEmpty {
-            RecentsStore.shared.addRecentChannel(
-                userLogin: stream.userLogin,
-                userName: stream.userName,
-                profileImageUrl: profileImageUrl
-            )
-        } else if let authController = authController {
-            Task {
-                guard let api = authController.status.api() else {
-                    return
-                }
-                
-                let users = try? await api.getUsers(userIDs: [stream.userID])
-                let profileUrl = users?.first?.profileImageUrl ?? ""
-                
-                await MainActor.run {
-                    RecentsStore.shared.addRecentChannel(
-                        userLogin: stream.userLogin,
-                        userName: stream.userName,
-                        profileImageUrl: profileUrl
-                    )
-                }
-            }
-        }
+        RecentsStore.shared.addRecentChannel(
+            userLogin: stream.userLogin,
+            userName: stream.userName,
+            profileImageUrl: profileImageUrl
+        )
     }
 }

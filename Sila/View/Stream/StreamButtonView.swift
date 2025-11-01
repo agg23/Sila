@@ -21,7 +21,7 @@ struct StreamButtonView: View {
         let title = !self.stream.title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? self.stream.title : self.stream.userName
         let gameName = !self.stream.gameName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? self.stream.gameName : "No Category"
 
-        SharedStreamButtonView(source: .stream(self.stream), displayUrl: self.stream.thumbnailURL, preTitleLeft: gameName, title: title, subtitle: self.stream.userName) {
+        SharedStreamButtonView(source: .stream(self.stream), displayUrl: self.stream.thumbnailURL, profileImageUrl: "", preTitleLeft: gameName, title: title, subtitle: self.stream.userName) {
             if self.stream.isMature {
                 Text("Mature")
                     .foregroundStyle(.primary)

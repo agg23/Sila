@@ -21,6 +21,7 @@ struct SharedStreamButtonView<PreTitleRight: View, ImageOverlay: View, ContextMe
     let source: StreamOrVideo
 
     let displayUrl: String
+    let profileImageUrl: String?
 
     let preTitleLeft: String
     @ViewBuilder let preTitleRight: () -> PreTitleRight
@@ -31,9 +32,10 @@ struct SharedStreamButtonView<PreTitleRight: View, ImageOverlay: View, ContextMe
     @ViewBuilder let imageOverlay: () -> ImageOverlay
     @ViewBuilder let contextMenu: () -> ContextMenu
 
-    init(source: StreamOrVideo, displayUrl: String, preTitleLeft: String, title: String, subtitle: String, @ViewBuilder preTitleRight: @escaping () -> PreTitleRight, @ViewBuilder imageOverlay: @escaping () -> ImageOverlay, @ViewBuilder contextMenu: @escaping () -> ContextMenu) {
+    init(source: StreamOrVideo, displayUrl: String, profileImageUrl: String? = nil, preTitleLeft: String, title: String, subtitle: String, @ViewBuilder preTitleRight: @escaping () -> PreTitleRight, @ViewBuilder imageOverlay: @escaping () -> ImageOverlay, @ViewBuilder contextMenu: @escaping () -> ContextMenu) {
         self.source = source
         self.displayUrl = displayUrl
+        self.profileImageUrl = profileImageUrl
         self.preTitleLeft = preTitleLeft
         self.preTitleRight = preTitleRight
         self.title = title
@@ -46,7 +48,7 @@ struct SharedStreamButtonView<PreTitleRight: View, ImageOverlay: View, ContextMe
         AsyncImageButtonView(imageUrl: buildImageUrl(using: self.displayUrl), aspectRatio: 16.0/9.0, overlayAlignment: .bottomTrailing) {
             switch self.source {
             case .stream(let stream):
-                StreamOpener.openStream(stream: stream, openWindow: self.openWindow, authController: self.authController)
+                StreamOpener.openStream(stream: stream, openWindow: self.openWindow, profileImageUrl: self.profileImageUrl)
             case .video(let video):
                 openWindow(id: Window.vod, value: video)
             }
@@ -91,9 +93,10 @@ struct SharedStreamButtonView<PreTitleRight: View, ImageOverlay: View, ContextMe
 }
 
 extension SharedStreamButtonView where PreTitleRight == EmptyView, ImageOverlay == EmptyView, ContextMenu == EmptyView {
-    init(source: StreamOrVideo, displayUrl: String, preTitleLeft: String, title: String, subtitle: String) {
+    init(source: StreamOrVideo, displayUrl: String, profileImageUrl: String? = nil, preTitleLeft: String, title: String, subtitle: String) {
         self.source = source
         self.displayUrl = displayUrl
+        self.profileImageUrl = profileImageUrl
         self.preTitleLeft = preTitleLeft
         self.title = title
         self.subtitle = subtitle

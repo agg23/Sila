@@ -70,7 +70,23 @@ struct MainWindowView: View {
 
             switch window {
             case .stream(let stream):
-                StreamOpener.openStream(stream: stream, openWindow: self.openWindow, authController: self.authController)
+                // Fetch user profile image for the stream
+                Task {
+                    do {
+                        let api = try AuthShortcut.getAPI(self.authController)
+                        let users = try await api.getUsers(userIDs: [stream.userId])
+                        
+                        let profileUrl = users.first?.profileImageUrl ?? ""
+                        await MainActor.run {
+                            StreamOpener.openStream(stream: stream, openWindow: self.openWindow, profileImageUrl: profileUrl)
+                        }
+                    } catch {
+                        print("Failed to fetch user profile image: \(error)")
+                        await MainActor.run {
+                            StreamOpener.openStream(stream: stream, openWindow: self.openWindow, profileImageUrl: "")
+                        }
+                    }
+                }
             case .vod(let video):
                 openWindow(id: Window.vod, value: video)
             }
@@ -137,8 +153,13 @@ struct MainWindowView: View {
             }
 
             let stream = streams[0]
+            
+            // Fetch user profile image
+            let users = try await api.getUsers(userIDs: [stream.userId])
+            let profileUrl = users.first?.profileImageUrl ?? ""
+            
             DispatchQueue.main.async {
-                StreamOpener.openStream(stream: stream, openWindow: self.openWindow, authController: self.authController)
+                StreamOpener.openStream(stream: stream, openWindow: self.openWindow, profileImageUrl: profileUrl)
             }
         }
     }
