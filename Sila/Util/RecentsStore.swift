@@ -2,8 +2,6 @@
 //  RecentsStore.swift
 //  VisionTwitch
 //
-//  Created for issue #42
-//
 
 import Foundation
 import Twitch

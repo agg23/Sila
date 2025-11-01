@@ -93,6 +93,8 @@ struct SearchListView: View {
                             saveSearchQuery(self.query)
                             
                             Task {
+                                // TODO: This can obviously fail. Ideally we can launch the stream window with just a channel login
+                                // similar to how category/channel routes work
                                 guard let api = self.authController.status.api() else {
                                     return
                                 }
@@ -108,6 +110,7 @@ struct SearchListView: View {
 
                         }
                     }
+                    // Padding applied inside TabView so panning gesture between pages doesn't show items butting up next to each other
                     .padding(16)
                 }
             }, rightTitle: "Categories") {
