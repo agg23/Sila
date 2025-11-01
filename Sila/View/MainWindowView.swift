@@ -70,7 +70,7 @@ struct MainWindowView: View {
 
             switch window {
             case .stream(let stream):
-                StreamOpener.openStream(stream: stream, openWindow: self.openWindow)
+                StreamOpener.openStream(stream: stream, openWindow: self.openWindow, authController: self.authController)
             case .vod(let video):
                 openWindow(id: Window.vod, value: video)
             }
@@ -138,7 +138,7 @@ struct MainWindowView: View {
 
             let stream = streams[0]
             DispatchQueue.main.async {
-                StreamOpener.openStream(stream: stream, openWindow: self.openWindow)
+                StreamOpener.openStream(stream: stream, openWindow: self.openWindow, authController: self.authController)
             }
         }
     }

@@ -1,10 +1,3 @@
-//
-//  RecentsHistoryView.swift
-//  Sila
-//
-//  Created for issue #42
-//
-
 import SwiftUI
 import Twitch
 
@@ -17,30 +10,28 @@ struct RecentsHistoryView: View {
         let recentsStore = RecentsStore.shared
         let noQueryView = EmptyContentView(title: "Enter a search query", systemImage: Icon.search, description: "Enter a search query to find live channels or categories.", buttonTitle: "", buttonSystemImage: "", ignoreSafeArea: false, action: nil)
         
-        if recentsStore.searchRecents.isEmpty && recentsStore.recentStreams.isEmpty {
+        if recentsStore.searchRecents.isEmpty && recentsStore.recentChannels.isEmpty {
             noQueryView
         } else {
-            RecentStreamsSection(onSelectSearchQuery: self.onSelectSearchQuery)
+            RecentChannelsSection(onSelectSearchQuery: self.onSelectSearchQuery)
                 .padding(.vertical, 16)
         }
     }
 }
 
-private struct RecentStreamsSection: View {
+private struct RecentChannelsSection: View {
     @Environment(AuthController.self) private var authController
 
     @ObservedObject private var recentsStore = RecentsStore.shared
-    @State private var loader = StandardDataLoader<[String: StreamStatus]>()
+    @State private var loader = StandardDataLoader<[String: ChannelStatus]>()
 
-    @State private var streamStatuses: [String: StreamStatus] = [:]
+    @State private var channelStatuses: [String: ChannelStatus] = [:]
 
     let onSelectSearchQuery: (String) -> Void
 
     var body: some View {
-        // TODO: I don't like this formatting at all. There's too many problems. The section headers have a straight line at the top when they intersect with the NavStack toolbar
         List {
             if !self.recentsStore.searchRecents.isEmpty {
-                // TODO: Section headers don't have a gap with content, so highlighting the first item shows the sections touching
                 Section(content: {
                     ForEach(self.recentsStore.searchRecents, id: \.self) { query in
                         Button {
@@ -63,17 +54,17 @@ private struct RecentStreamsSection: View {
                 .listRowSpacing(8)
             }
 
-            if !self.recentsStore.recentStreams.isEmpty {
+            if !self.recentsStore.recentChannels.isEmpty {
                 Section(content: {
-                    ForEach(self.recentsStore.recentStreams) { recentStream in
-                        RecentStreamRow(
-                            recentStream: recentStream,
-                            streamStatus: self.streamStatuses[recentStream.userLogin] ?? .unknown
+                    ForEach(self.recentsStore.recentChannels) { recentChannel in
+                        RecentChannelRow(
+                            recentChannel: recentChannel,
+                            channelStatus: self.channelStatuses[recentChannel.userLogin] ?? .unknown
                         )
                     }
                 }, header: {
-                    RecentsSectionHeader(title: "Recently Opened Streams") {
-                        self.recentsStore.clearSearchRecents()
+                    RecentsSectionHeader(title: "Recently Opened Channels") {
+                        self.recentsStore.clearRecentChannels()
                     }
                 })
             }
@@ -85,12 +76,12 @@ private struct RecentStreamsSection: View {
                 return
             }
 
-            let userLogins = self.recentsStore.recentStreams.map { $0.userLogin }
+            let userLogins = self.recentsStore.recentChannels.map { $0.userLogin }
             guard let (streams, _) = try? await api.getStreams(userLogins: userLogins) else {
                 return
             }
 
-            var statuses: [String: StreamStatus] = [:]
+            var statuses: [String: ChannelStatus] = [:]
             for login in userLogins {
                 if let stream = streams.first(where: { $0.userLogin == login }) {
                     statuses[login] = .online(stream)
@@ -99,7 +90,7 @@ private struct RecentStreamsSection: View {
                 }
             }
 
-            self.streamStatuses = statuses
+            self.channelStatuses = statuses
         }
     }
 }
@@ -109,28 +100,26 @@ private struct RecentsSectionHeader: View {
     let onClear: () -> Void
     
     var body: some View {
-        // TODO: This has a background. I don't know how to remove it
         HStack {
             Text(self.title)
             Spacer()
             Button("Clear") {
                 self.onClear()
             }
-            // TODO: I don't like the styling of this button combined with the background
             .buttonStyle(.borderless)
         }
         .frame(height: 32)
     }
 }
 
-private struct RecentStreamRow: View {
+private struct RecentChannelRow: View {
     @Environment(\.openWindow) private var openWindow
     
-    let recentStream: RecentStream
-    let streamStatus: StreamStatus
+    let recentChannel: RecentChannel
+    let channelStatus: ChannelStatus
     
     var isEnabled: Bool {
-        if case .online = self.streamStatus {
+        if case .online = self.channelStatus {
             return true
         }
         return false
@@ -138,21 +127,21 @@ private struct RecentStreamRow: View {
     
     var body: some View {
         Button {
-            if case .online(let stream) = self.streamStatus {
-                StreamOpener.openStream(stream: stream, openWindow: self.openWindow, addToRecents: false)
+            if case .online(let stream) = self.channelStatus {
+                StreamOpener.openStream(stream: stream, openWindow: self.openWindow, profileImageUrl: self.recentChannel.profileImageUrl)
             }
         } label: {
             HStack {
-                Image(systemName: Icon.channel)
-                    .font(.title2)
-                .frame(width: 40, height: 40)
+                LoadingAsyncImage(imageUrl: URL(string: self.recentChannel.profileImageUrl), aspectRatio: 1.0)
+                    .frame(width: 40, height: 40)
+                    .clipShape(Circle())
 
                 VStack(alignment: .leading, spacing: 2) {
-                    Text(self.recentStream.userName)
+                    Text(self.recentChannel.userName)
                         .lineLimit(1)
 
                     Group {
-                        switch self.streamStatus {
+                        switch self.channelStatus {
                         case .online(let stream):
                             Text(stream.gameName)
                         case .offline:
@@ -171,17 +160,39 @@ private struct RecentStreamRow: View {
     }
 }
 
-enum StreamStatus {
+enum ChannelStatus {
     case unknown
     case online(Twitch.Stream)
     case offline
 }
 
 struct StreamOpener {
-    static func openStream(stream: Twitch.Stream, openWindow: OpenWindowAction, addToRecents: Bool = true) {
-        if addToRecents {
-            RecentsStore.shared.addRecentStream(stream, resort: true)
-        }
+    static func openStream(stream: Twitch.Stream, openWindow: OpenWindowAction, profileImageUrl: String? = nil, authController: AuthController? = nil) {
         openWindow(id: Window.stream, value: stream)
+        
+        if let profileImageUrl = profileImageUrl, !profileImageUrl.isEmpty {
+            RecentsStore.shared.addRecentChannel(
+                userLogin: stream.userLogin,
+                userName: stream.userName,
+                profileImageUrl: profileImageUrl
+            )
+        } else if let authController = authController {
+            Task {
+                guard let api = authController.status.api() else {
+                    return
+                }
+                
+                let users = try? await api.getUsers(userIDs: [stream.userID])
+                let profileUrl = users?.first?.profileImageUrl ?? ""
+                
+                await MainActor.run {
+                    RecentsStore.shared.addRecentChannel(
+                        userLogin: stream.userLogin,
+                        userName: stream.userName,
+                        profileImageUrl: profileUrl
+                    )
+                }
+            }
+        }
     }
 }

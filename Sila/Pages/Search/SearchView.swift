@@ -103,7 +103,7 @@ struct SearchListView: View {
                                     return
                                 }
 
-                                StreamOpener.openStream(stream: stream, openWindow: self.openWindow)
+                                StreamOpener.openStream(stream: stream, openWindow: self.openWindow, profileImageUrl: channel.profilePictureURL)
                             }
 
                         }

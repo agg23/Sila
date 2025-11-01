@@ -8,25 +8,25 @@
 import Foundation
 import Twitch
 
-/// Manages search recents and recently opened stream recents using UserDefaults
+/// Manages search recents and recently opened channel recents using UserDefaults
 class RecentsStore: ObservableObject {
     static let shared = RecentsStore()
     
     private let searchRecentsKey = "searchHistory"
-    private let recentStreamsKey = "recentStreams"
+    private let recentChannelsKey = "recentChannels"
     private let maxRecentsItems = 4
     
     @Published var searchRecents: [String] = []
-    @Published var recentStreams: [RecentStream] = []
+    @Published var recentChannels: [RecentChannel] = []
     
     private init() {
         if let data = UserDefaults.standard.array(forKey: self.searchRecentsKey) as? [String] {
             self.searchRecents = data
         }
         
-        if let data = UserDefaults.standard.data(forKey: self.recentStreamsKey),
-           let decoded = try? JSONDecoder().decode([RecentStream].self, from: data) {
-            self.recentStreams = decoded
+        if let data = UserDefaults.standard.data(forKey: self.recentChannelsKey),
+           let decoded = try? JSONDecoder().decode([RecentChannel].self, from: data) {
+            self.recentChannels = decoded
         }
     }
     
@@ -52,41 +52,37 @@ class RecentsStore: ObservableObject {
         UserDefaults.standard.set(self.searchRecents, forKey: self.searchRecentsKey)
     }
     
-    func addRecentStream(_ stream: Twitch.Stream, resort: Bool = true) {
-        let recentStream = RecentStream(
-            userLogin: stream.userLogin,
-            userName: stream.userName
+    func addRecentChannel(userLogin: String, userName: String, profileImageUrl: String) {
+        let recentChannel = RecentChannel(
+            userLogin: userLogin,
+            userName: userName,
+            profileImageUrl: profileImageUrl
         )
         
-        if resort {
-            self.recentStreams.removeAll { $0.userLogin == stream.userLogin }
-            self.recentStreams.insert(recentStream, at: 0)
-        } else {
-            if !self.recentStreams.contains(where: { $0.userLogin == stream.userLogin }) {
-                self.recentStreams.insert(recentStream, at: 0)
-            }
+        self.recentChannels.removeAll { $0.userLogin == userLogin }
+        self.recentChannels.insert(recentChannel, at: 0)
+        
+        if self.recentChannels.count > self.maxRecentsItems {
+            self.recentChannels = Array(self.recentChannels.prefix(self.maxRecentsItems))
         }
         
-        if self.recentStreams.count > self.maxRecentsItems {
-            self.recentStreams = Array(self.recentStreams.prefix(self.maxRecentsItems))
-        }
-        
-        if let encoded = try? JSONEncoder().encode(self.recentStreams) {
-            UserDefaults.standard.set(encoded, forKey: self.recentStreamsKey)
+        if let encoded = try? JSONEncoder().encode(self.recentChannels) {
+            UserDefaults.standard.set(encoded, forKey: self.recentChannelsKey)
         }
     }
     
-    func clearRecentStreams() {
-        self.recentStreams = []
-        if let encoded = try? JSONEncoder().encode(self.recentStreams) {
-            UserDefaults.standard.set(encoded, forKey: self.recentStreamsKey)
+    func clearRecentChannels() {
+        self.recentChannels = []
+        if let encoded = try? JSONEncoder().encode(self.recentChannels) {
+            UserDefaults.standard.set(encoded, forKey: self.recentChannelsKey)
         }
     }
 }
 
-struct RecentStream: Codable, Identifiable {
+struct RecentChannel: Codable, Identifiable {
     let userLogin: String
     let userName: String
+    let profileImageUrl: String
     
     var id: String {
         self.userLogin

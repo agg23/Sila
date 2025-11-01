@@ -58,7 +58,7 @@ struct ChannelViewContent: View {
 
                     if let stream = self.stream {
                         Button {
-                            StreamOpener.openStream(stream: stream, openWindow: self.openWindow)
+                            StreamOpener.openStream(stream: stream, openWindow: self.openWindow, profileImageUrl: self.channelUser.profileImageUrl)
                         } label: {
                             Text("Watch Now")
                         }
