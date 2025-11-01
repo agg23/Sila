@@ -16,10 +16,12 @@ enum StreamOrVideo {
 struct SharedStreamButtonView<PreTitleRight: View, ImageOverlay: View, ContextMenu: View>: View {
     @Environment(Router.self) private var router
     @Environment(\.openWindow) private var openWindow
+    @Environment(AuthController.self) private var authController
 
     let source: StreamOrVideo
 
     let displayUrl: String
+    let profileImageUrl: String
 
     let preTitleLeft: String
     @ViewBuilder let preTitleRight: () -> PreTitleRight
@@ -30,9 +32,10 @@ struct SharedStreamButtonView<PreTitleRight: View, ImageOverlay: View, ContextMe
     @ViewBuilder let imageOverlay: () -> ImageOverlay
     @ViewBuilder let contextMenu: () -> ContextMenu
 
-    init(source: StreamOrVideo, displayUrl: String, preTitleLeft: String, title: String, subtitle: String, @ViewBuilder preTitleRight: @escaping () -> PreTitleRight, @ViewBuilder imageOverlay: @escaping () -> ImageOverlay, @ViewBuilder contextMenu: @escaping () -> ContextMenu) {
+    init(source: StreamOrVideo, displayUrl: String, profileImageUrl: String, preTitleLeft: String, title: String, subtitle: String, @ViewBuilder preTitleRight: @escaping () -> PreTitleRight, @ViewBuilder imageOverlay: @escaping () -> ImageOverlay, @ViewBuilder contextMenu: @escaping () -> ContextMenu) {
         self.source = source
         self.displayUrl = displayUrl
+        self.profileImageUrl = profileImageUrl
         self.preTitleLeft = preTitleLeft
         self.preTitleRight = preTitleRight
         self.title = title
@@ -45,7 +48,7 @@ struct SharedStreamButtonView<PreTitleRight: View, ImageOverlay: View, ContextMe
         AsyncImageButtonView(imageUrl: buildImageUrl(using: self.displayUrl), aspectRatio: 16.0/9.0, overlayAlignment: .bottomTrailing) {
             switch self.source {
             case .stream(let stream):
-                openWindow(id: Window.stream, value: stream)
+                StreamOpener.openStream(stream: stream, openWindow: self.openWindow, profileImageUrl: self.profileImageUrl)
             case .video(let video):
                 openWindow(id: Window.vod, value: video)
             }
@@ -90,9 +93,10 @@ struct SharedStreamButtonView<PreTitleRight: View, ImageOverlay: View, ContextMe
 }
 
 extension SharedStreamButtonView where PreTitleRight == EmptyView, ImageOverlay == EmptyView, ContextMenu == EmptyView {
-    init(source: StreamOrVideo, displayUrl: String, preTitleLeft: String, title: String, subtitle: String) {
+    init(source: StreamOrVideo, displayUrl: String, profileImageUrl: String, preTitleLeft: String, title: String, subtitle: String) {
         self.source = source
         self.displayUrl = displayUrl
+        self.profileImageUrl = profileImageUrl
         self.preTitleLeft = preTitleLeft
         self.title = title
         self.subtitle = subtitle
@@ -110,7 +114,7 @@ extension SharedStreamButtonView where PreTitleRight == EmptyView, ImageOverlay 
 
 #Preview {
     PreviewNavStack {
-        SharedStreamButtonView(source: .stream(STREAM_MOCK()), displayUrl: STREAM_MOCK().thumbnailURL, preTitleLeft: "Pretitle left", title: "Title", subtitle: "Subtitle") {
+        SharedStreamButtonView(source: .stream(STREAM_MOCK()), displayUrl: STREAM_MOCK().thumbnailURL, profileImageUrl: CHANNEL_LIST_MOCK()[0].profilePictureURL, preTitleLeft: "Pretitle left", title: "Title", subtitle: "Subtitle") {
             Text("Pretitle right")
         } imageOverlay: {
             Text("This is on the image overlay")
