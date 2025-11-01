@@ -75,7 +75,7 @@ struct SearchListView: View {
 
     var body: some View {
         if self.query.isEmpty {
-            SearchRecentsHistoryView(onSelectHistoryItem: self.onSelectHistoryItem)
+            RecentsHistoryView(onSelectSearchQuery: self.onSelectHistoryItem)
         } else {
             let noMatchingChannelsView = EmptyContentView(title: "No matching channels", systemImage: Icon.channel, description: "Adjust your search query for matching channels.", buttonTitle: "", buttonSystemImage: "", ignoreSafeArea: false, action: nil)
             let noMatchingCategoriesView = EmptyContentView(title: "No matching categories", systemImage: Icon.category, description: "Adjust your search query for matching categories.", buttonTitle: "", buttonSystemImage: "", ignoreSafeArea: false, action: nil)
@@ -103,9 +103,7 @@ struct SearchListView: View {
                                     return
                                 }
 
-                                RecentsStore.shared.addRecentStream(stream)
-                                
-                                openWindow(id: Window.stream, value: stream)
+                                StreamOpener.openStream(stream: stream, openWindow: self.openWindow)
                             }
 
                         }
@@ -139,24 +137,6 @@ struct SearchListView: View {
 
 private struct SearchRecentsHistoryView: View {
     let onSelectHistoryItem: (String) -> Void
-    
-    var body: some View {
-        let recentsStore = RecentsStore.shared
-        let noQueryView = EmptyContentView(title: "Enter a search query", systemImage: Icon.search, description: "Enter a search query to find live channels or categories.", buttonTitle: "", buttonSystemImage: "", ignoreSafeArea: false, action: nil)
-        
-        if recentsStore.searchRecents.isEmpty && recentsStore.recentStreams.isEmpty {
-            noQueryView
-        } else {
-            ScrollView {
-                VStack(alignment: .leading, spacing: 24) {
-                    SearchRecentsView(onSelectHistoryItem: self.onSelectHistoryItem)
-                    RecentStreamsView()
-                }
-                .padding(.vertical, 16)
-            }
-        }
-    }
-}
 
 #Preview {
     PreviewNavStack {

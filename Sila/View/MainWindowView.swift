@@ -70,9 +70,7 @@ struct MainWindowView: View {
 
             switch window {
             case .stream(let stream):
-                RecentsStore.shared.addRecentStream(stream)
-
-                openWindow(id: Window.stream, value: stream)
+                StreamOpener.openStream(stream: stream, openWindow: self.openWindow)
             case .vod(let video):
                 openWindow(id: Window.vod, value: video)
             }
@@ -140,9 +138,7 @@ struct MainWindowView: View {
 
             let stream = streams[0]
             DispatchQueue.main.async {
-                RecentsStore.shared.addRecentStream(stream)
-
-                openWindow(id: Window.stream, value: stream)
+                StreamOpener.openStream(stream: stream, openWindow: self.openWindow)
             }
         }
     }
