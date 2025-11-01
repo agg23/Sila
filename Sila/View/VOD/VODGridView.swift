@@ -9,11 +9,13 @@ import SwiftUI
 import Twitch
 
 struct VODGridView: View {
+    let channel: Twitch.User
     let videos: [Video]
 
     let onPaginationThresholdMet: (() async -> Void)?
 
-    internal init(videos: [Video], onPaginationThresholdMet: (() async -> Void)? = nil) {
+    internal init(channel: Twitch.User, videos: [Video], onPaginationThresholdMet: (() async -> Void)? = nil) {
+        self.channel = channel
         self.videos = videos
         self.onPaginationThresholdMet = onPaginationThresholdMet
     }
@@ -26,7 +28,7 @@ struct VODGridView: View {
             GridItem()
         ], content: {
             ForEach(self.videos, id: \.id) { video in
-                VODButtonView(video: video)
+                VODButtonView(video: video, channel: self.channel)
             }
             
             Color.clear.task {
@@ -37,5 +39,5 @@ struct VODGridView: View {
 }
 
 #Preview {
-    VODGridView(videos: VIDEO_LIST_MOCK())
+    VODGridView(channel: USER_MOCK(), videos: VIDEO_LIST_MOCK())
 }

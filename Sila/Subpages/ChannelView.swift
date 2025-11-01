@@ -44,7 +44,7 @@ struct ChannelViewContent: View {
     @State private var userLoader = StandardDataLoader<[Twitch.Stream]>()
     @State private var vodLoader = StandardDataLoader<([Video], String?)>()
 
-    let channelUser: User
+    let channelUser: Twitch.User
     let stream: Twitch.Stream?
 
     var body: some View {
@@ -74,7 +74,7 @@ struct ChannelViewContent: View {
                 return try await api.getVideosByUserId(self.channelUser.id)
             }, noAuthMessage: "this channel's VoDs", noAuthSystemImage: Icon.channel) { videos, _ in
                 RefreshableScrollGridView(loader: self.vodLoader) {
-                    VODGridView(videos: videos, onPaginationThresholdMet: self.onPaginationThresholdMet)
+                    VODGridView(channel: self.channelUser, videos: videos, onPaginationThresholdMet: self.onPaginationThresholdMet)
                 }
             }
             // Make profile image be pushed to the top

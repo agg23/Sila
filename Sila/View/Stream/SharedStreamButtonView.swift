@@ -21,7 +21,7 @@ struct SharedStreamButtonView<PreTitleRight: View, ImageOverlay: View, ContextMe
     let source: StreamOrVideo
 
     let displayUrl: String
-    let profileImageUrl: String?
+    let profileImageUrl: String
 
     let preTitleLeft: String
     @ViewBuilder let preTitleRight: () -> PreTitleRight
@@ -32,7 +32,7 @@ struct SharedStreamButtonView<PreTitleRight: View, ImageOverlay: View, ContextMe
     @ViewBuilder let imageOverlay: () -> ImageOverlay
     @ViewBuilder let contextMenu: () -> ContextMenu
 
-    init(source: StreamOrVideo, displayUrl: String, profileImageUrl: String? = nil, preTitleLeft: String, title: String, subtitle: String, @ViewBuilder preTitleRight: @escaping () -> PreTitleRight, @ViewBuilder imageOverlay: @escaping () -> ImageOverlay, @ViewBuilder contextMenu: @escaping () -> ContextMenu) {
+    init(source: StreamOrVideo, displayUrl: String, profileImageUrl: String, preTitleLeft: String, title: String, subtitle: String, @ViewBuilder preTitleRight: @escaping () -> PreTitleRight, @ViewBuilder imageOverlay: @escaping () -> ImageOverlay, @ViewBuilder contextMenu: @escaping () -> ContextMenu) {
         self.source = source
         self.displayUrl = displayUrl
         self.profileImageUrl = profileImageUrl
@@ -93,7 +93,7 @@ struct SharedStreamButtonView<PreTitleRight: View, ImageOverlay: View, ContextMe
 }
 
 extension SharedStreamButtonView where PreTitleRight == EmptyView, ImageOverlay == EmptyView, ContextMenu == EmptyView {
-    init(source: StreamOrVideo, displayUrl: String, profileImageUrl: String? = nil, preTitleLeft: String, title: String, subtitle: String) {
+    init(source: StreamOrVideo, displayUrl: String, profileImageUrl: String, preTitleLeft: String, title: String, subtitle: String) {
         self.source = source
         self.displayUrl = displayUrl
         self.profileImageUrl = profileImageUrl
@@ -114,7 +114,7 @@ extension SharedStreamButtonView where PreTitleRight == EmptyView, ImageOverlay 
 
 #Preview {
     PreviewNavStack {
-        SharedStreamButtonView(source: .stream(STREAM_MOCK()), displayUrl: STREAM_MOCK().thumbnailURL, preTitleLeft: "Pretitle left", title: "Title", subtitle: "Subtitle") {
+        SharedStreamButtonView(source: .stream(STREAM_MOCK()), displayUrl: STREAM_MOCK().thumbnailURL, profileImageUrl: CHANNEL_LIST_MOCK()[0].profilePictureURL, preTitleLeft: "Pretitle left", title: "Title", subtitle: "Subtitle") {
             Text("Pretitle right")
         } imageOverlay: {
             Text("This is on the image overlay")
