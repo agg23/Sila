@@ -9,6 +9,12 @@ import SwiftUI
 import Twitch
 
 struct StreamGridView: View {
+    private static let columnSpacing: CGFloat = 16
+    private static let columns: [GridItem] = Array(
+        repeating: GridItem(.flexible(), spacing: StreamGridView.columnSpacing, alignment: .top),
+        count: 4
+    )
+
     let streams: [Twitch.Stream]
 
     let onPaginationThresholdMet: (() async -> Void)?
@@ -19,19 +25,22 @@ struct StreamGridView: View {
     }
 
     var body: some View {
-        LazyVGrid(columns: [
-            GridItem(spacing: 16),
-            GridItem(spacing: 16),
-            GridItem(spacing: 16),
-            GridItem(spacing: 16)
-        ], spacing: 16) {
+        LazyVGrid(columns: StreamGridView.columns, spacing: StreamGridView.columnSpacing) {
             ForEach(self.streams) { stream in
                 StreamButtonView(stream: stream)
             }
 
-            Color.clear.task {
-                await self.onPaginationThresholdMet?()
-            }
+            Color.clear
+                .frame(height: 1)
+                .onAppear {
+                    guard let onPaginationThresholdMet = self.onPaginationThresholdMet else {
+                        return
+                    }
+
+                    Task {
+                        await onPaginationThresholdMet()
+                    }
+                }
         }
     }
 }
