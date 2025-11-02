@@ -32,9 +32,8 @@ struct SilaAppApp: App {
     }
 
     var body: some Scene {
-        WindowGroup(for: String?.self) { $id in
-            // This `nil` ID is used to bypass a bug. See inside of `MainWindowView`
-            MainWindowView(id: id)
+        WindowGroup(for: String.self) { $id in
+            MainWindowView()
                 .mainWindow()
                 // This is the default window size of the launching animation
                 .frame(width: 1280.0, height: 720.0)
@@ -63,6 +62,7 @@ struct SilaAppApp: App {
         }
         .defaultSize(CGSize(width: 1280.0, height: 720.0))
         .windowStyle(.plain)
+        .defaultLaunchBehavior(.suppressed)
 
         #if VOD_ENABLED
         WindowGroup(id: Window.vod, for: Twitch.Video.self) { $video in
@@ -70,6 +70,7 @@ struct SilaAppApp: App {
                 .environment(self.authController)
         }
         .defaultSize(CGSize(width: 1280.0, height: 720.0))
+        .defaultLaunchBehavior(.suppressed)
         #endif
 
         WindowGroup(id: Window.chat, for: ChatWindowModel.self) { $chat in
@@ -79,5 +80,6 @@ struct SilaAppApp: App {
             return ChatWindowModel(channelName: defaultUser.login, userId: defaultUser.id, title: defaultUser.displayName)
         }
         .defaultSize(CGSize(width: 400.0, height: 720.0))
+        .defaultLaunchBehavior(.suppressed)
     }
 }

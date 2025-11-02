@@ -19,10 +19,6 @@ struct MainWindowView: View {
 
     @State private var showOauth = false
 
-    /// Hack to prevent crash when saved stream windows are opened after reboot with a `nil` id
-    /// Present in 1.1.1
-    let id: String?
-
     var body: some View {
         TabView(selection: self.router.tabBinding) {
             TabPage(title: "Following", systemImage: Icon.following, tab: .following) {
@@ -53,12 +49,6 @@ struct MainWindowView: View {
                         defaultToolbar()
                     }
             })
-        }
-        .onAppear {
-            if self.id == nil {
-                // This window shouldn't exist
-                dismissWindow()
-            }
         }
         // Located at root of main window, as each of the tabs can be rendered at the same time
         .onChange(of: self.router.bufferedWindowOpen, initial: true, { _, newValue in
@@ -145,5 +135,5 @@ struct MainWindowView: View {
 }
 
 #Preview {
-    MainWindowView(id: "main")
+    MainWindowView()
 }

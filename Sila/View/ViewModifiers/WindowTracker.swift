@@ -13,10 +13,8 @@ enum WindowTrackerParams {
     case playback(stream: Twitch.Stream)
 }
 
+// TODO: Remove completely after the introduction of .defaultLaunchBehavior()
 struct WindowTrackerViewModifier: ViewModifier {
-    @Environment(\.openWindow) private var openWindow
-    @Environment(\.dismissWindow) private var dismissWindow
-
     let state: WindowTrackerParams
 
     func body(content: Content) -> some View {
@@ -25,12 +23,6 @@ struct WindowTrackerViewModifier: ViewModifier {
                 switch self.state {
                 case .main:
                     WindowController.shared.mainWindowSpawned = true
-                    for id in WindowController.shared.previouslyOpenedWindows {
-                        // If we are spawning the main window, that means there should be no players
-                        // Thanks to a bug (as of 1.1.1), there may be phantom windows hanging around
-                        // Kill any possible window
-                        dismissWindow(id: Window.stream, value: id)
-                    }
                 case .playback(let stream):
                     WindowController.shared.refPlaybackWindow(with: stream)
                     NotificationCenter.default.post(name: .twitchMuteAll, object: nil, userInfo: nil)
@@ -41,11 +33,6 @@ struct WindowTrackerViewModifier: ViewModifier {
                     WindowController.shared.mainWindowSpawned = false
                 case .playback(let stream):
                     WindowController.shared.derefPlaybackWindow(with: stream.id)
-
-                    if WindowController.shared.spawnedPlaybackCount < 1 && !WindowController.shared.mainWindowSpawned {
-                        // Spawn main window
-                        openWindow(value: "main" as String?)
-                    }
                 }
             }
     }
