@@ -10,6 +10,11 @@ import Combine
 import Twitch
 import TwitchIRC
 
+struct Connection {
+    let chatClient: ChatClient
+    let task: Task<(), Never>
+}
+
 @Observable class ChatModel {
     // These values are arbitrary. We want this to not get too big, and to truncate rarely
     // With larger values, the List slows down significantly, so lets keep this small
@@ -20,9 +25,15 @@ import TwitchIRC
     // Used to track the third party emotes relevant to this model
     @ObservationIgnored let userId: String
 
-    @ObservationIgnored private var chatClient: ChatClient? = nil
-    @ObservationIgnored let resetScrollSubject = PassthroughSubject<(), Never>()
+    // Events indicate the chat should be scrolled to the bottom. Once it reaches the bottom,
+    // the necessary REMOVE_COUNT chat entries from the beginning of the log should be pruned
+    @ObservationIgnored let queuePruneWhenAtBottom = PassthroughSubject<(), Never>()
     @ObservationIgnored let cachedColors = CachedColors()
+
+    @ObservationIgnored private var connection: Connection? = nil
+    @ObservationIgnored private var disconnectTimer: Timer? = nil
+    @ObservationIgnored private var refCount: Int = 0
+
     var entries: [ChatLogEntryModel]
 
     init(channelName: String, userId: String) {
@@ -32,42 +43,81 @@ import TwitchIRC
     }
 
     func connect() async {
-        let client = ChatClient(.anonymous)
-        self.chatClient = client
+        if self.disconnectTimer != nil {
+            self.disconnectTimer?.invalidate()
+            self.disconnectTimer = nil
+        }
+
+        self.refCount += 1
+        print("Chat connect, ref \(self.refCount)")
+
+        if self.refCount == 1 && self.connection == nil {
+            print("Opening IRC connection")
+            let client = ChatClient(.anonymous)
+            let task = Task {
+                do {
+                    let stream = try await client.connect()
+
+                    try await client.join(to: self.channelName)
+
+                    for try await message in stream {
+                        // Close connection
+                        if Task.isCancelled {
+                            return
+                        }
+
+                        switch message {
+                        case .privateMessage(let message):
+                            await self.appendChatMessage(message, userId: self.userId)
+                        default:
+                            break
+                        }
+                    }
+                } catch {
+                    print("Chat error")
+                    print(error)
+                }
+            }
+
+            self.connection = Connection(chatClient: client, task: task)
+        }
 
         await withTaskCancellationHandler {
-            do {
-                let stream = try await client.connect()
-
-                try await client.join(to: self.channelName)
-
-                for try await message in stream {
-                    // Close connection
-                    if Task.isCancelled {
-                        print("Chat disconnect")
-                        client.disconnect()
-                        return
-                    }
-
-                    switch message {
-                    case .privateMessage(let message):
-                        await self.appendChatMessage(message, userId: self.userId)
-                    default:
-                        break
-                    }
-                }
-            } catch {
-                print("Chat error")
-                print(error)
-            }
+            await self.connection?.task.value
         } onCancel: {
-            print("Chat disconnect")
+            self.queueDisconnect()
+        }
+    }
+
+    func queueDisconnect() {
+        if self.refCount > 0 {
+            self.refCount -= 1
+        }
+
+        print("Queued chat disconnect \(self.refCount)")
+
+        if self.disconnectTimer != nil {
+            return
+        }
+
+        self.disconnectTimer = Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { timer in
+            timer.invalidate()
+            self.disconnectTimer = nil
             self.disconnect()
         }
     }
 
     func disconnect() {
-        self.chatClient?.disconnect()
+        print("Attempted chat disconnect ref \(self.refCount)")
+
+        if self.refCount != 0 {
+            return
+        }
+
+        print("Chat disconnect")
+        self.connection?.task.cancel()
+        self.connection?.chatClient.disconnect()
+        self.connection = nil
 
         var insertDivider = true
 
@@ -88,18 +138,18 @@ import TwitchIRC
 
     @MainActor
     func appendChatMessage(_ message: PrivateMessage, userId: String) {
-        var deleted = false
-
         if self.entries.count >= ChatModel.MESSAGE_LIMIT {
-            print("Removing chat messages")
-            self.entries.removeFirst(ChatModel.REMOVE_COUNT)
-            deleted = true
+            self.queuePruneWhenAtBottom.send(())
         }
 
         self.entries.append(.message(ChatMessageModel(message: message, userId: userId)))
+    }
 
-        if deleted {
-            self.resetScrollSubject.send(())
+    @MainActor
+    func pruneChatMessagesOverLimit() {
+        if self.entries.count >= ChatModel.MESSAGE_LIMIT {
+            print("Removing chat messages")
+            self.entries.removeFirst(ChatModel.REMOVE_COUNT)
         }
     }
 }

@@ -26,7 +26,7 @@ struct ChatView: View {
     var body: some View {
         VStack {
             if let chatModel = self.chatModel {
-                ChatListView(entries: chatModel.entries, cachedColors: chatModel.cachedColors, resetScrollPublisher: chatModel.resetScrollSubject.eraseToAnyPublisher())
+                ChatListView(chatModel: chatModel)
             }
         }
         .task {
@@ -78,25 +78,22 @@ struct ChatListView: View {
     @State private var isTapped = false
 
     @State private var scrollAtBottom = true
+    @State private var queuePruneWhenAtBottom = false
     @State private var pendingScrollRequest: UUID? = nil
 
-    let entries: [ChatLogEntryModel]
-    let cachedColors: CachedColors
-    let resetScrollPublisher: AnyPublisher<(), Never>
+    let chatModel: ChatModel
 
-    init(entries: [ChatLogEntryModel], cachedColors: CachedColors, resetScrollPublisher: AnyPublisher<(), Never> = Empty().eraseToAnyPublisher()) {
-        self.entries = entries
-        self.cachedColors = cachedColors
-        self.resetScrollPublisher = resetScrollPublisher
+    init(chatModel: ChatModel) {
+        self.chatModel = chatModel
     }
 
     var body: some View {
         ScrollViewReader { proxy in
             List {
-                ForEach(self.entries) { entry in
+                ForEach(self.chatModel.entries) { entry in
                     switch entry {
                     case .message(let message):
-                        ChatMessage(message: message, cachedColors: self.cachedColors)
+                        ChatMessage(message: message, cachedColors: self.chatModel.cachedColors)
                             .listRowInsets(ChatListView.rowInset)
                             .listRowSeparator(.hidden)
                             .padding(.vertical, 2)
@@ -120,12 +117,14 @@ struct ChatListView: View {
                     // Explicit ID for scrollToBottom()
                     .id(bottomRowId)
                     .onAppear {
-                        if (!self.scrollAtBottom) {
+                        if !self.scrollAtBottom {
                             self.scrollAtBottom = true
                             #if DEBUG
                             print("At bottom")
                             #endif
                         }
+
+                        self.chatModel.pruneChatMessagesOverLimit()
                     }
             }
             .environment(\.defaultMinListRowHeight, 0)
@@ -159,18 +158,17 @@ struct ChatListView: View {
                 // Clear all active emotes
                 AnimatedImageCache.shared.flush()
             }
-            .onReceive(self.resetScrollPublisher) { _ in
+            .onReceive(self.chatModel.queuePruneWhenAtBottom) { _ in
                 // Automatically scroll to bottom with the message list update
-                print("Received reset")
-                self.scrollAtBottom = true
+                self.queueScrollToBottom(proxy)
             }
-            .onChange(of: self.entries, { _, newValue in
+            .onChange(of: self.chatModel.entries, { _, newValue in
                 // If we are currently at the bottom and we have any change to the messages array (new message, clearing of old data), scroll to the new bottom
                 guard self.scrollAtBottom else {
                     return
                 }
 
-                queueScrollToBottom(proxy)
+                self.queueScrollToBottom(proxy)
             })
         }
     }
@@ -208,7 +206,9 @@ struct ChatListView: View {
 
 #Preview {
     // MoonMoon
-    ChatListView(entries: PRIVATEMESSAGE_LIST_MOCK().map({ .message(ChatMessageModel(message: $0, userId: "121059319")) }), cachedColors: CachedColors())
+    let chatModel = ChatModel(channelName: "foo", userId: "bar")
+    chatModel.entries = PRIVATEMESSAGE_LIST_MOCK().map({ .message(ChatMessageModel(message: $0, userId: "121059319")) })
+    return ChatListView(chatModel: chatModel)
         .frame(width: 400)
         .glassBackgroundEffect()
 }
