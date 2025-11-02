@@ -196,7 +196,13 @@ struct VideoQuality {
         }
 
         self.quality = event.quality
-        self.availableQualities = event.availableQualities
+        self.availableQualities = event.availableQualities.map({ quality in
+            if quality.quality == "auto" {
+                VideoQuality(quality: quality.quality, name: "Automatic")
+            } else {
+                VideoQuality(quality: quality.quality, name: quality.name.replacingOccurrences(of: "(source)", with: "(Source)"))
+            }
+        })
 
         // If we are viewing a VoD and have not set max quality, on first instance of availableQualities, force quality to the highest value
         // This prevents VoDs not playing back depending on quality on Vision (including in Safari)
