@@ -8,7 +8,7 @@
 import SwiftUI
 import Twitch
 
-struct StreamableVideoStatusControlView: View {
+struct PlayerStreamInfoView: View {
     @State private var loader = StandardDataLoader<(User?, StreamableVideo?)>()
 
     let player: WebViewPlayer
@@ -19,11 +19,11 @@ struct StreamableVideoStatusControlView: View {
             let task = self.createTask(requestStream: false, channelId: self.userId())
             return try await task(api)
         }, content: { user, stream in
-            StreamableVideoStatusControlContentView(streamableVideo: stream ?? self.streamableVideo, user: user)
+            PlayerStreamInfoContentWrapperView(streamableVideo: stream ?? self.streamableVideo, user: user)
         }, loading: { data in
-            StreamableVideoStatusControlContentView(streamableVideo: data?.1 ?? self.streamableVideo, user: data?.0)
+            PlayerStreamInfoContentWrapperView(streamableVideo: data?.1 ?? self.streamableVideo, user: data?.0)
         }, error: { (_: Error?) in
-            StreamableVideoStatusControlContentView(streamableVideo: self.streamableVideo, user: nil)
+            PlayerStreamInfoContentWrapperView(streamableVideo: self.streamableVideo, user: nil)
         })
         .onChange(of: self.player.channelId, { oldValue, newValue in
             guard oldValue != nil, let newValue = newValue else {
@@ -74,16 +74,16 @@ struct StreamableVideoStatusControlView: View {
     }
 }
 
-struct StreamableVideoStatusControlContentView: View {
+struct PlayerStreamInfoContentWrapperView: View {
     let streamableVideo: StreamableVideo
     let user: User?
 
     var body: some View {
         switch self.streamableVideo {
         case .stream(let stream):
-            StreamableVideoStatusDisplayView(title: stream.title, userName: stream.userName, gameName: stream.gameName, profileImageUrl: self.profileImageUrl(), viewerCount: stream.viewerCount, timestamp: stream.startedAt)
+            PlayerStreamInfoContentView(title: stream.title, userName: stream.userName, gameName: stream.gameName, profileImageUrl: self.profileImageUrl(), viewerCount: stream.viewerCount, timestamp: stream.startedAt)
         case .video(let video):
-            StreamableVideoStatusDisplayView(title: video.title, userName: video.userName, gameName: nil, profileImageUrl: self.profileImageUrl(), viewerCount: nil, timestamp: nil)
+            PlayerStreamInfoContentView(title: video.title, userName: video.userName, gameName: nil, profileImageUrl: self.profileImageUrl(), viewerCount: nil, timestamp: nil)
         }
     }
 
@@ -96,7 +96,7 @@ struct StreamableVideoStatusControlContentView: View {
     }
 }
 
-struct StreamableVideoStatusDisplayView: View {
+struct PlayerStreamInfoContentView: View {
     let title: String
     let userName: String
     let gameName: String?
@@ -141,9 +141,9 @@ struct StreamableVideoStatusDisplayView: View {
 }
 
 #Preview {
-    StreamableVideoStatusControlView(player: WebViewPlayer(), streamableVideo: .stream(STREAM_MOCK()))
+    PlayerStreamInfoView(player: WebViewPlayer(), streamableVideo: .stream(STREAM_MOCK()))
 }
 
 #Preview {
-    StreamableVideoStatusControlView(player: WebViewPlayer(), streamableVideo: .video(VIDEO_MOCK()))
+    PlayerStreamInfoView(player: WebViewPlayer(), streamableVideo: .video(VIDEO_MOCK()))
 }

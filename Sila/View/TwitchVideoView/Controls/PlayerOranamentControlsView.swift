@@ -9,7 +9,7 @@ import SwiftUI
 import Twitch
 import JunoUI
 
-struct PlayerControlsView: View {
+struct PlayerOranamentControlsView: View {
     let player: WebViewPlayer
 
     let streamableVideo: StreamableVideo
@@ -61,7 +61,7 @@ struct PlayerControlsView: View {
             }
             .controlSize(.extraLarge)
 
-            StreamableVideoStatusControlView(player: self.player, streamableVideo: self.streamableVideo)
+            PlayerStreamInfoView(player: self.player, streamableVideo: self.streamableVideo)
                 .padding(.horizontal, 4)
 
             if !self.player.isVideo {
@@ -124,7 +124,7 @@ private func previewPlayer(_ isVideo: Bool = false) -> WebViewPlayer {
 }
 
 #Preview("Basic") {
-    PlayerControlsView(player: previewPlayer(), streamableVideo: .stream(STREAM_MOCK()), chatVisibility: .constant(.hidden)) {
+    PlayerOranamentControlsView(player: previewPlayer(), streamableVideo: .stream(STREAM_MOCK()), chatVisibility: .constant(.hidden)) {
 
     } activeChanged: { _ in
 
@@ -135,7 +135,7 @@ private func previewPlayer(_ isVideo: Bool = false) -> WebViewPlayer {
 #Preview("On Window") {
     Rectangle()
         .ornament(attachmentAnchor: .scene(.bottom)) {
-            PlayerControlsView(player: previewPlayer(), streamableVideo: .stream(STREAM_MOCK()), chatVisibility: .constant(.visible)) {
+            PlayerOranamentControlsView(player: previewPlayer(), streamableVideo: .stream(STREAM_MOCK()), chatVisibility: .constant(.visible)) {
 
             } activeChanged: { _ in
 
@@ -148,7 +148,7 @@ private func previewPlayer(_ isVideo: Bool = false) -> WebViewPlayer {
 #Preview("On Window - VoD") {
     Rectangle()
         .ornament(attachmentAnchor: .scene(.bottom)) {
-            PlayerControlsView(player: previewPlayer(true), streamableVideo: .video(VIDEO_MOCK()), chatVisibility: .constant(.visible)) {
+            PlayerOranamentControlsView(player: previewPlayer(true), streamableVideo: .video(VIDEO_MOCK()), chatVisibility: .constant(.visible)) {
 
             } activeChanged: { _ in
 

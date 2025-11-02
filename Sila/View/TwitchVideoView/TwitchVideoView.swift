@@ -86,7 +86,7 @@ struct TwitchVideoView: View {
                 VStack {
                     // Add spacing between main window and PlayerControlsView to allow for the window resizer
                     Color.clear.frame(height: self.ornamentSpacing)
-                    PlayerControlsView(player: self.player, streamableVideo: self.streamableVideo, chatVisibility: self.$chatVisibility) {
+                    PlayerOranamentControlsView(player: self.player, streamableVideo: self.streamableVideo, chatVisibility: self.$chatVisibility) {
                         self.onControlInteraction()
                     } activeChanged: { isActive in
                         if isActive {
