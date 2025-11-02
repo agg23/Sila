@@ -132,9 +132,9 @@ private struct RecentChannelRow: View {
             }
         } label: {
             HStack {
-                LoadingAsyncImage(imageUrl: URL(string: self.recentChannel.profileImageUrl), aspectRatio: 1.0)
+                ProfileImage(imageUrl: URL(string: self.recentChannel.profileImageUrl))
                     .frame(width: 40, height: 40)
-                    .clipShape(Circle())
+                    .opacity(!self.isEnabled ? 0.5 : 1.0)
 
                 VStack(alignment: .leading, spacing: 2) {
                     Text(self.recentChannel.userName)

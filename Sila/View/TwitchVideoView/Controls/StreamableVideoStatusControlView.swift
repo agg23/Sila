@@ -108,8 +108,7 @@ struct StreamableVideoStatusDisplayView: View {
         let title = !self.title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? self.title : self.userName
 
         HStack(alignment: .top) {
-            LoadingAsyncImage(imageUrl: self.profileImageUrl, aspectRatio: 1.0)
-                .clipShape(.rect(cornerRadius: 8))
+            ProfileImage(imageUrl: self.profileImageUrl)
             VStack(alignment: .leading) {
                 Text(title)
                     .lineLimit(1)

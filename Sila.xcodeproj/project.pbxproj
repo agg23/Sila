@@ -23,6 +23,7 @@
 		660BD01A2EB2FE1300E88BAF /* Window.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660BD0192EB2FE1300E88BAF /* Window.swift */; };
 		660BD01C2EB6394E00E88BAF /* RecentsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660BD01B2EB6394E00E88BAF /* RecentsStore.swift */; };
 		660BD01F2EB639BE00E88BAF /* RecentsHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660BD01D2EB639BE00E88BAF /* RecentsHistoryView.swift */; };
+		660BD0242EB7950F00E88BAF /* ProfileImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660BD0232EB7950F00E88BAF /* ProfileImage.swift */; };
 		660F73A22B7446D70011FD65 /* WebViewPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660F73A12B7446D70011FD65 /* WebViewPlayer.swift */; };
 		660F73A52B745D710011FD65 /* PlayerControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660F73A42B745D710011FD65 /* PlayerControlsView.swift */; };
 		66125F502B83B913002169B5 /* CategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66125F4F2B83B913002169B5 /* CategoryView.swift */; };
@@ -152,6 +153,7 @@
 		660BD0192EB2FE1300E88BAF /* Window.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Window.swift; sourceTree = "<group>"; };
 		660BD01B2EB6394E00E88BAF /* RecentsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentsStore.swift; sourceTree = "<group>"; };
 		660BD01D2EB639BE00E88BAF /* RecentsHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentsHistoryView.swift; sourceTree = "<group>"; };
+		660BD0232EB7950F00E88BAF /* ProfileImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImage.swift; sourceTree = "<group>"; };
 		660F73A12B7446D70011FD65 /* WebViewPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewPlayer.swift; sourceTree = "<group>"; };
 		660F73A42B745D710011FD65 /* PlayerControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerControlsView.swift; sourceTree = "<group>"; };
 		66125F4F2B83B913002169B5 /* CategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryView.swift; sourceTree = "<group>"; };
@@ -617,6 +619,7 @@
 				666E97E82B8D7085008EE950 /* EmptyDataView.swift */,
 				66F8D1952B898141008C4F7C /* LoadingAsyncImage.swift */,
 				66125F5B2B83D9EC002169B5 /* OrnamentPickerTabView.swift */,
+				660BD0232EB7950F00E88BAF /* ProfileImage.swift */,
 				6690EBA72BA78C810093B18C /* RefreshableScrollGridView.swift */,
 				660BD0102EB06DEB00E88BAF /* RuntimeTimelineView.swift */,
 				66125F522B83C003002169B5 /* ScrollGridView.swift */,
@@ -822,6 +825,7 @@
 				66F8D1962B898141008C4F7C /* LoadingAsyncImage.swift in Sources */,
 				6666F3532BAA7335009D5A29 /* StreamWrapperQuery.swift in Sources */,
 				66A5ADB52B96DA160025EF75 /* SettingsView.swift in Sources */,
+				660BD0242EB7950F00E88BAF /* ProfileImage.swift in Sources */,
 				66E102462B82E3E8007A44D4 /* Router.swift in Sources */,
 				66DF455D2B8BA645006C1D99 /* VolumeSlider.swift in Sources */,
 				663B73232B6DB9A30031D661 /* TwitchVideoView.swift in Sources */,
