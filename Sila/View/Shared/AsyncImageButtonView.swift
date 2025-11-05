@@ -51,8 +51,8 @@ struct AsyncImageButtonView<Content: View, ImageOverlay: View, ContextMenu: View
                 self.contextMenu?()
             }
         }
-        .buttonStyle(.plain)
         .buttonBorderShape(.roundedRectangle(radius: self.cornerRadius))
+        .buttonStyle(StreamButtonStyle(radius: self.cornerRadius))
     }
 }
 

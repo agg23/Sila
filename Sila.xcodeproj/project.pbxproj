@@ -24,6 +24,7 @@
 		660BD01C2EB6394E00E88BAF /* RecentsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660BD01B2EB6394E00E88BAF /* RecentsStore.swift */; };
 		660BD01F2EB639BE00E88BAF /* RecentsHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660BD01D2EB639BE00E88BAF /* RecentsHistoryView.swift */; };
 		660BD0242EB7950F00E88BAF /* ProfileImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660BD0232EB7950F00E88BAF /* ProfileImage.swift */; };
+		660BD0262EBB0BEE00E88BAF /* StreamButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660BD0252EBB0BEE00E88BAF /* StreamButtonStyle.swift */; };
 		660F73A22B7446D70011FD65 /* WebViewPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660F73A12B7446D70011FD65 /* WebViewPlayer.swift */; };
 		660F73A52B745D710011FD65 /* PlayerOranamentControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660F73A42B745D710011FD65 /* PlayerOranamentControlsView.swift */; };
 		66125F502B83B913002169B5 /* CategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66125F4F2B83B913002169B5 /* CategoryView.swift */; };
@@ -154,6 +155,7 @@
 		660BD01B2EB6394E00E88BAF /* RecentsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentsStore.swift; sourceTree = "<group>"; };
 		660BD01D2EB639BE00E88BAF /* RecentsHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentsHistoryView.swift; sourceTree = "<group>"; };
 		660BD0232EB7950F00E88BAF /* ProfileImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImage.swift; sourceTree = "<group>"; };
+		660BD0252EBB0BEE00E88BAF /* StreamButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamButtonStyle.swift; sourceTree = "<group>"; };
 		660F73A12B7446D70011FD65 /* WebViewPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewPlayer.swift; sourceTree = "<group>"; };
 		660F73A42B745D710011FD65 /* PlayerOranamentControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerOranamentControlsView.swift; sourceTree = "<group>"; };
 		66125F4F2B83B913002169B5 /* CategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryView.swift; sourceTree = "<group>"; };
@@ -308,6 +310,7 @@
 				6600E08F2B8BC0FD003B2270 /* InsetBackground.swift */,
 				66F105A22BA4B28E006B7ADE /* Lifecycle.swift */,
 				66F105A62BA4B83A006B7ADE /* WindowTracker.swift */,
+				660BD0252EBB0BEE00E88BAF /* StreamButtonStyle.swift */,
 			);
 			path = ViewModifiers;
 			sourceTree = "<group>";
@@ -848,6 +851,7 @@
 				66C96BED2B900E7F0016A91B /* StreamableVideo.swift in Sources */,
 				66F4E4282B812932008C565D /* OAuthView.swift in Sources */,
 				66E102292B82988A007A44D4 /* PopularView.swift in Sources */,
+				660BD0262EBB0BEE00E88BAF /* StreamButtonStyle.swift in Sources */,
 				6666F34D2BAA6688009D5A29 /* PopularStreamsIntent.swift in Sources */,
 				66125F6F2B842F82002169B5 /* ChannelView.swift in Sources */,
 				66F8D1902B88581D008C4F7C /* Icon.swift in Sources */,
