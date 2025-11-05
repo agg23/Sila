@@ -21,7 +21,7 @@ struct SettingsView: View {
         VStack {
             Form {
                 Section("Navigation") {
-                    LanguageFilterPickerView(language: self.$filterLanguage, title: "Filter Language")
+                    LanguageFilterPickerView(language: self.$filterLanguage, title: "Default Filter Language")
                     Toggle(isOn: self.$hideMature) {
                         Text("Hide Mature Streams")
                         Text("Will not hide mature streams from streamers you follow")
