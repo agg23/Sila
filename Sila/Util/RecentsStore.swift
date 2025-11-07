@@ -50,7 +50,7 @@ class RecentsStore: ObservableObject {
         UserDefaults.standard.set(self.searchRecents, forKey: self.searchRecentsKey)
     }
     
-    func addRecentChannel(userLogin: String, userName: String, profileImageUrl: String) {
+    func addRecentChannel(userLogin: String, userName: String, profileImageUrl: String?) {
         let recentChannel = RecentChannel(
             userLogin: userLogin,
             userName: userName,
@@ -64,11 +64,29 @@ class RecentsStore: ObservableObject {
             self.recentChannels = Array(self.recentChannels.prefix(self.maxRecentsItems))
         }
         
+        self.saveRecentChannels()
+    }
+
+    func addRecentChannel(profileImageUrl: String, for userLogin: String) {
+        if let index = self.recentChannels.firstIndex(where: { $0.userLogin == userLogin }) {
+            let originalChannel = self.recentChannels[index]
+            let newChannel = RecentChannel(
+                userLogin: originalChannel.userLogin,
+                userName: originalChannel.userName,
+                profileImageUrl: profileImageUrl
+            )
+            self.recentChannels[index] = newChannel
+
+            self.saveRecentChannels()
+        }
+    }
+
+    func saveRecentChannels() {
         if let encoded = try? JSONEncoder().encode(self.recentChannels) {
             UserDefaults.standard.set(encoded, forKey: self.recentChannelsKey)
         }
     }
-    
+
     func clearRecentChannels() {
         self.recentChannels = []
         if let encoded = try? JSONEncoder().encode(self.recentChannels) {
@@ -80,8 +98,8 @@ class RecentsStore: ObservableObject {
 struct RecentChannel: Codable, Identifiable {
     let userLogin: String
     let userName: String
-    let profileImageUrl: String
-    
+    let profileImageUrl: String?
+
     var id: String {
         self.userLogin
     }

@@ -77,20 +77,28 @@ private struct RecentChannelsSection: View {
             }
 
             let userLogins = self.recentsStore.recentChannels.map { $0.userLogin }
-            guard let (streams, _) = try? await api.getStreams(userLogins: userLogins) else {
-                return
+            let userLoginsWithoutImages = self.recentsStore.recentChannels.filter { $0.profileImageUrl == nil }.map { $0.userLogin }
+            async let streams = try? await api.getStreams(userLogins: userLogins)
+            async let users = !userLoginsWithoutImages.isEmpty ? try? await api.getUsers(userIDs: [], userLogins: userLoginsWithoutImages) : nil
+
+            if let (streams, _) = await streams {
+                var statuses: [String: ChannelStatus] = [:]
+                for login in userLogins {
+                    if let stream = streams.first(where: { $0.userLogin == login }) {
+                        statuses[login] = .online(stream)
+                    } else {
+                        statuses[login] = .offline
+                    }
+                }
+
+                self.channelStatuses = statuses
             }
 
-            var statuses: [String: ChannelStatus] = [:]
-            for login in userLogins {
-                if let stream = streams.first(where: { $0.userLogin == login }) {
-                    statuses[login] = .online(stream)
-                } else {
-                    statuses[login] = .offline
+            if let users = await users {
+                for user in users {
+                    self.recentsStore.addRecentChannel(profileImageUrl: user.profileImageUrl, for: user.login)
                 }
             }
-
-            self.channelStatuses = statuses
         }
     }
 }
@@ -132,7 +140,7 @@ private struct RecentChannelRow: View {
             }
         } label: {
             HStack {
-                ProfileImage(imageUrl: URL(string: self.recentChannel.profileImageUrl))
+                ProfileImage(imageUrl: self.recentChannel.profileImageUrl != nil ? URL(string: self.recentChannel.profileImageUrl!) : nil)
                     .frame(width: 40, height: 40)
                     .opacity(!self.isEnabled ? 0.5 : 1.0)
 
@@ -167,7 +175,7 @@ enum ChannelStatus {
 }
 
 struct StreamOpener {
-    static func openStream(stream: Twitch.Stream, openWindow: OpenWindowAction, profileImageUrl: String) {
+    static func openStream(stream: Twitch.Stream, openWindow: OpenWindowAction, profileImageUrl: String?) {
         openWindow(id: Window.stream, value: stream)
         
         RecentsStore.shared.addRecentChannel(

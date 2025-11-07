@@ -21,7 +21,7 @@ struct SharedStreamButtonView<PreTitleRight: View, ImageOverlay: View, ContextMe
     let source: StreamOrVideo
 
     let displayUrl: String
-    let profileImageUrl: String
+    let profileImageUrl: String?
 
     let preTitleLeft: String
     @ViewBuilder let preTitleRight: () -> PreTitleRight
@@ -32,7 +32,7 @@ struct SharedStreamButtonView<PreTitleRight: View, ImageOverlay: View, ContextMe
     @ViewBuilder let imageOverlay: () -> ImageOverlay
     @ViewBuilder let contextMenu: () -> ContextMenu
 
-    init(source: StreamOrVideo, displayUrl: String, profileImageUrl: String, preTitleLeft: String, title: String, subtitle: String, @ViewBuilder preTitleRight: @escaping () -> PreTitleRight, @ViewBuilder imageOverlay: @escaping () -> ImageOverlay, @ViewBuilder contextMenu: @escaping () -> ContextMenu) {
+    init(source: StreamOrVideo, displayUrl: String, profileImageUrl: String?, preTitleLeft: String, title: String, subtitle: String, @ViewBuilder preTitleRight: @escaping () -> PreTitleRight, @ViewBuilder imageOverlay: @escaping () -> ImageOverlay, @ViewBuilder contextMenu: @escaping () -> ContextMenu) {
         self.source = source
         self.displayUrl = displayUrl
         self.profileImageUrl = profileImageUrl
@@ -93,7 +93,7 @@ struct SharedStreamButtonView<PreTitleRight: View, ImageOverlay: View, ContextMe
 }
 
 extension SharedStreamButtonView where PreTitleRight == EmptyView, ImageOverlay == EmptyView, ContextMenu == EmptyView {
-    init(source: StreamOrVideo, displayUrl: String, profileImageUrl: String, preTitleLeft: String, title: String, subtitle: String) {
+    init(source: StreamOrVideo, displayUrl: String, profileImageUrl: String?, preTitleLeft: String, title: String, subtitle: String) {
         self.source = source
         self.displayUrl = displayUrl
         self.profileImageUrl = profileImageUrl
