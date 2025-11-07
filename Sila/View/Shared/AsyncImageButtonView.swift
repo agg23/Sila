@@ -46,13 +46,12 @@ struct AsyncImageButtonView<Content: View, ImageOverlay: View, ContextMenu: View
             .background(.tertiary)
             // Without this (matching the corner radius), the context menu corners will not match
             .contentShape(.contextMenuPreview, RoundedRectangle(cornerRadius: self.cornerRadius))
-            .cornerRadius(self.cornerRadius)
-            .contextMenu {
-                self.contextMenu?()
-            }
         }
         .buttonBorderShape(.roundedRectangle(radius: self.cornerRadius))
         .buttonStyle(StreamButtonStyle(radius: self.cornerRadius))
+        .contextMenu {
+            self.contextMenu?()
+        }
     }
 }
 
