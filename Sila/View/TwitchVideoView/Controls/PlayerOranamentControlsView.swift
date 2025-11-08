@@ -76,10 +76,14 @@ struct PlayerOranamentControlsView: View {
                             }
                         }
                     }
+                    Text("Quality")
                 } label: {
                     Image(systemName: Icon.quality)
                         .symbolRenderingMode(.monochrome)
                 }
+                // Fixing #41: Controls disappearing when menu and/or Share Sheet is open
+                // Cannot create a custom ButtonStyle with isPressed as .borderless is a PrimitiveButtonStyle, but isPressed is ButtonStyle
+                // Menu doesn't respond to gesture recognizer and onTapGesture
                 .buttonStyle(.borderless)
                 .buttonBorderShape(.circle)
                 .help("Quality")
