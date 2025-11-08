@@ -70,6 +70,7 @@ struct SilaAppApp: App {
                 .environment(self.authController)
         }
         .defaultSize(CGSize(width: 1280.0, height: 720.0))
+        .windowStyle(.plain)
         .defaultLaunchBehavior(.suppressed)
         #endif
 
