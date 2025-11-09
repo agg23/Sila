@@ -129,6 +129,12 @@
 		66F4E4302B8132F5008C565D /* Twitch in Frameworks */ = {isa = PBXBuildFile; productRef = 66F4E42F2B8132F5008C565D /* Twitch */; };
 		66F4E4342B813A1F008C565D /* FollowedStreamsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E4332B813A1F008C565D /* FollowedStreamsView.swift */; };
 		66F4E43D2B818499008C565D /* DataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E43C2B818499008C565D /* DataView.swift */; };
+		66F73D0F2EC0F1C00093A4A6 /* PresentableTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F73D0E2EC0F1C00093A4A6 /* PresentableTypes.swift */; };
+		66F73D112EC0F1D80093A4A6 /* PresentableControllerBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F73D102EC0F1D80093A4A6 /* PresentableControllerBase.swift */; };
+		66F73D132EC0F1EC0093A4A6 /* PresentableInternalManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F73D122EC0F1EC0093A4A6 /* PresentableInternalManager.swift */; };
+		66F73D152EC0F21A0093A4A6 /* PresentableControllerRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F73D142EC0F21A0093A4A6 /* PresentableControllerRegistry.swift */; };
+		66F73D182EC0FDAA0093A4A6 /* ChatPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F73D172EC0FDAA0093A4A6 /* ChatPresentationController.swift */; };
+		66F73D1A2EC100F50093A4A6 /* PresentableTrackingViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F73D192EC100F50093A4A6 /* PresentableTrackingViewModifier.swift */; };
 		66F8D1902B88581D008C4F7C /* Icon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F8D18F2B88581D008C4F7C /* Icon.swift */; };
 		66F8D1932B894253008C4F7C /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F8D1922B894253008C4F7C /* Route.swift */; };
 		66F8D1962B898141008C4F7C /* LoadingAsyncImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F8D1952B898141008C4F7C /* LoadingAsyncImage.swift */; };
@@ -255,6 +261,12 @@
 		66F4E42B2B812A32008C565D /* AuthController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthController.swift; sourceTree = "<group>"; };
 		66F4E4332B813A1F008C565D /* FollowedStreamsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowedStreamsView.swift; sourceTree = "<group>"; };
 		66F4E43C2B818499008C565D /* DataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataView.swift; sourceTree = "<group>"; };
+		66F73D0E2EC0F1C00093A4A6 /* PresentableTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentableTypes.swift; sourceTree = "<group>"; };
+		66F73D102EC0F1D80093A4A6 /* PresentableControllerBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentableControllerBase.swift; sourceTree = "<group>"; };
+		66F73D122EC0F1EC0093A4A6 /* PresentableInternalManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentableInternalManager.swift; sourceTree = "<group>"; };
+		66F73D142EC0F21A0093A4A6 /* PresentableControllerRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentableControllerRegistry.swift; sourceTree = "<group>"; };
+		66F73D172EC0FDAA0093A4A6 /* ChatPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatPresentationController.swift; sourceTree = "<group>"; };
+		66F73D192EC100F50093A4A6 /* PresentableTrackingViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentableTrackingViewModifier.swift; sourceTree = "<group>"; };
 		66F8D18F2B88581D008C4F7C /* Icon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icon.swift; sourceTree = "<group>"; };
 		66F8D1922B894253008C4F7C /* Route.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
 		66F8D1952B898141008C4F7C /* LoadingAsyncImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingAsyncImage.swift; sourceTree = "<group>"; };
@@ -318,7 +330,13 @@
 		660BC1F42B9BB5B10043750C /* Window */ = {
 			isa = PBXGroup;
 			children = (
+				66F73D162EC0FD970093A4A6 /* Controllers */,
 				66A5ADBD2B9933730025EF75 /* WindowController.swift */,
+				66F73D102EC0F1D80093A4A6 /* PresentableControllerBase.swift */,
+				66F73D142EC0F21A0093A4A6 /* PresentableControllerRegistry.swift */,
+				66F73D122EC0F1EC0093A4A6 /* PresentableInternalManager.swift */,
+				66F73D192EC100F50093A4A6 /* PresentableTrackingViewModifier.swift */,
+				66F73D0E2EC0F1C00093A4A6 /* PresentableTypes.swift */,
 			);
 			path = Window;
 			sourceTree = "<group>";
@@ -660,6 +678,14 @@
 			path = Pages;
 			sourceTree = "<group>";
 		};
+		66F73D162EC0FD970093A4A6 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				66F73D172EC0FDAA0093A4A6 /* ChatPresentationController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
 		66F8D18E2B88580D008C4F7C /* Util */ = {
 			isa = PBXGroup;
 			children = (
@@ -766,6 +792,7 @@
 				66364FBA2B8ABB9C005180B8 /* APIErrorView.swift in Sources */,
 				663336942B75B7EA0098D188 /* View+WindowGeometryPreferences.swift in Sources */,
 				6645AFE32BA90AD70096BC03 /* ChannelEntity.swift in Sources */,
+				66F73D152EC0F21A0093A4A6 /* PresentableControllerRegistry.swift in Sources */,
 				6600E08C2B8BBBCB003B2270 /* DarkBackgroundView.swift in Sources */,
 				66D11B692BF8165B00DDD159 /* BetterTTVModels.swift in Sources */,
 				66E102422B82D94E007A44D4 /* AsyncImageButtonView.swift in Sources */,
@@ -782,6 +809,7 @@
 				660BD01F2EB639BE00E88BAF /* RecentsHistoryView.swift in Sources */,
 				66125F5C2B83D9EC002169B5 /* OrnamentPickerTabView.swift in Sources */,
 				66F4E4252B811B6C008C565D /* CloseButtonView.swift in Sources */,
+				66F73D112EC0F1D80093A4A6 /* PresentableControllerBase.swift in Sources */,
 				66E102492B82E496007A44D4 /* NavStack.swift in Sources */,
 				66125F592B83CE4E002169B5 /* DefaultToolbar.swift in Sources */,
 				66E885A22B86D95C004B4B8D /* AuthStatus.swift in Sources */,
@@ -797,11 +825,13 @@
 				66F105A52BA4B3DF006B7ADE /* Task.swift in Sources */,
 				66364FBD2B8AF629005180B8 /* CircleBackgroundLessButton.swift in Sources */,
 				662535402B9E01D000EBD081 /* ChatModel.swift in Sources */,
+				66F73D132EC0F1EC0093A4A6 /* PresentableInternalManager.swift in Sources */,
 				66F4E4342B813A1F008C565D /* FollowedStreamsView.swift in Sources */,
 				66891FFB2B9AA058000C0D92 /* View+BackgroundTint.swift in Sources */,
 				66891FF82B9A9E72000C0D92 /* Color.swift in Sources */,
 				6600E0892B8BB5E8003B2270 /* PlayerStreamInfoView.swift in Sources */,
 				6666F3552BAA75E8009D5A29 /* CategoryStreams.swift in Sources */,
+				66F73D0F2EC0F1C00093A4A6 /* PresentableTypes.swift in Sources */,
 				66F8D1A02B8A8F4B008C4F7C /* ChannelMock.swift in Sources */,
 				66F8D1932B894253008C4F7C /* Route.swift in Sources */,
 				66A5ADC12B9949C40025EF75 /* EmptyContentView.swift in Sources */,
@@ -850,6 +880,7 @@
 				66F105A32BA4B28E006B7ADE /* Lifecycle.swift in Sources */,
 				66C96BED2B900E7F0016A91B /* StreamableVideo.swift in Sources */,
 				66F4E4282B812932008C565D /* OAuthView.swift in Sources */,
+				66F73D1A2EC100F50093A4A6 /* PresentableTrackingViewModifier.swift in Sources */,
 				66E102292B82988A007A44D4 /* PopularView.swift in Sources */,
 				660BD0262EBB0BEE00E88BAF /* StreamButtonStyle.swift in Sources */,
 				6666F34D2BAA6688009D5A29 /* PopularStreamsIntent.swift in Sources */,
@@ -879,6 +910,7 @@
 				66125F662B84260D002169B5 /* UserMock.swift in Sources */,
 				6690EBA02BA6667B0093B18C /* ChatMessageModel.swift in Sources */,
 				6645AFEA2BA9153D0096BC03 /* Shortcuts.swift in Sources */,
+				66F73D182EC0FDAA0093A4A6 /* ChatPresentationController.swift in Sources */,
 				66D11B6E2BF8F2C000DDD159 /* FrankerFaceZModels.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

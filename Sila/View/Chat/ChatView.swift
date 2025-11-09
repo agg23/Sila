@@ -20,6 +20,10 @@ struct ChatView: View {
     let channelName: String
     let userId: String
 
+    var contentId: String {
+        "chat-\(self.userId)"
+    }
+
     // Forsen
     let DEBUG_USER_ID = "22484632"
 
@@ -29,11 +33,10 @@ struct ChatView: View {
                 ChatListView(chatModel: chatModel)
             }
         }
-        .task {
-            print("Connecting to chat")
-            self.chatModel = ChatRegistry.shared.model(for: channelName, with: userId)
-
-            await self.chatModel?.connect()
+        .presentableTracking(contentId: self.contentId, factory: {
+            return ChatPresentationController(contentId: self.contentId, chatModel: ChatRegistry.shared.model(for: channelName, with: userId))
+        }) { (controller: ChatPresentationController) in
+            self.chatModel = controller.chatModel
         }
 //                .task {
 //                    await EmoteController.shared.fetchUserEmotes(for: DEBUG_USER_ID)

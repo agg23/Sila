@@ -31,8 +31,6 @@ struct Connection {
     @ObservationIgnored let cachedColors = CachedColors()
 
     @ObservationIgnored private var connection: Connection? = nil
-    @ObservationIgnored private var disconnectTimer: Timer? = nil
-    @ObservationIgnored private var refCount: Int = 0
 
     var entries: [ChatLogEntryModel]
 
@@ -43,77 +41,43 @@ struct Connection {
     }
 
     func connect() async {
-        if self.disconnectTimer != nil {
-            self.disconnectTimer?.invalidate()
-            self.disconnectTimer = nil
-        }
+        print("Opening IRC connection")
+        let client = ChatClient(.anonymous)
+        let task = Task {
+            do {
+                let stream = try await client.connect()
 
-        self.refCount += 1
-        print("Chat connect, ref \(self.refCount)")
+                try await client.join(to: self.channelName)
 
-        if self.refCount == 1 && self.connection == nil {
-            print("Opening IRC connection")
-            let client = ChatClient(.anonymous)
-            let task = Task {
-                do {
-                    let stream = try await client.connect()
-
-                    try await client.join(to: self.channelName)
-
-                    for try await message in stream {
-                        // Close connection
-                        if Task.isCancelled {
-                            return
-                        }
-
-                        switch message {
-                        case .privateMessage(let message):
-                            await self.appendChatMessage(message, userId: self.userId)
-                        default:
-                            break
-                        }
+                for try await message in stream {
+                    // Close connection
+                    if Task.isCancelled {
+                        return
                     }
-                } catch {
-                    print("Chat error")
-                    print(error)
-                }
-            }
 
-            self.connection = Connection(chatClient: client, task: task)
+                    switch message {
+                    case .privateMessage(let message):
+                        await self.appendChatMessage(message, userId: self.userId)
+                    default:
+                        break
+                    }
+                }
+            } catch {
+                print("Chat error")
+                print(error)
+            }
         }
+
+        self.connection = Connection(chatClient: client, task: task)
 
         await withTaskCancellationHandler {
             await self.connection?.task.value
         } onCancel: {
-            self.queueDisconnect()
-        }
-    }
-
-    func queueDisconnect() {
-        if self.refCount > 0 {
-            self.refCount -= 1
-        }
-
-        print("Queued chat disconnect \(self.refCount)")
-
-        if self.disconnectTimer != nil {
-            return
-        }
-
-        self.disconnectTimer = Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { timer in
-            timer.invalidate()
-            self.disconnectTimer = nil
             self.disconnect()
         }
     }
 
     func disconnect() {
-        print("Attempted chat disconnect ref \(self.refCount)")
-
-        if self.refCount != 0 {
-            return
-        }
-
         print("Chat disconnect")
         self.connection?.task.cancel()
         self.connection?.chatClient.disconnect()
