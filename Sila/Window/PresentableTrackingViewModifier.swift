@@ -7,14 +7,14 @@
 
 import SwiftUI
 
-struct PresentableTrackingViewModifier<T>: ViewModifier where T: PresentableControllerBase {
+struct PresentableTrackingViewModifier<T: PresentableControllerBase>: ViewModifier {
     @StateObject private var presentableController: T
     @State private var token: PresenterToken?
 
     let withController: ((T) -> Void)?
 
     init(contentId: String, factory: @escaping () -> T, withController: ((T) -> Void)?) {
-        self._presentableController = StateObject(wrappedValue: PresentableControllerRegistry.shared.controller(for: contentId, factory: factory) as! T)
+        self._presentableController = StateObject(wrappedValue: PresentableControllerRegistry.shared(for: T.self).controller(for: contentId, factory: factory) as! T)
         self.withController = withController
     }
 
