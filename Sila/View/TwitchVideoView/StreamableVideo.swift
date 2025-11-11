@@ -11,7 +11,7 @@ enum StreamableVideo: Equatable {
     case stream(Twitch.Stream)
     case video(Twitch.Video)
 
-    func id() -> String {
+    var id: String {
         switch self {
         case .stream(let stream):
             return stream.id

@@ -34,8 +34,8 @@ struct ChatView: View {
             }
         }
         .presentableTracking(contentId: self.contentId, factory: {
-            return ChatPresentationController(contentId: self.contentId, chatModel: ChatRegistry.shared.model(for: channelName, with: userId))
-        }) { (controller: ChatPresentationController) in
+            return ChatPresentableController(contentId: self.contentId, chatModel: ChatRegistry.shared.model(for: channelName, with: userId))
+        }) { (controller: ChatPresentableController) in
             self.chatModel = controller.chatModel
         }
 //                .task {

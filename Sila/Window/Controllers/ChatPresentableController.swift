@@ -1,5 +1,5 @@
 //
-//  ChatPresentationController.swift
+//  ChatPresentableController.swift
 //  Sila
 //
 //  Created by Adam Gastineau on 11/9/25.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class ChatPresentationController: PresentableControllerBase {
+final class ChatPresentableController: PresentableControllerBase {
     let chatModel: ChatModel
 
     var task: Task<Void, Never>?

@@ -133,8 +133,9 @@
 		66F73D112EC0F1D80093A4A6 /* PresentableControllerBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F73D102EC0F1D80093A4A6 /* PresentableControllerBase.swift */; };
 		66F73D132EC0F1EC0093A4A6 /* PresentableInternalManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F73D122EC0F1EC0093A4A6 /* PresentableInternalManager.swift */; };
 		66F73D152EC0F21A0093A4A6 /* PresentableControllerRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F73D142EC0F21A0093A4A6 /* PresentableControllerRegistry.swift */; };
-		66F73D182EC0FDAA0093A4A6 /* ChatPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F73D172EC0FDAA0093A4A6 /* ChatPresentationController.swift */; };
+		66F73D182EC0FDAA0093A4A6 /* ChatPresentableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F73D172EC0FDAA0093A4A6 /* ChatPresentableController.swift */; };
 		66F73D1A2EC100F50093A4A6 /* PresentableTrackingViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F73D192EC100F50093A4A6 /* PresentableTrackingViewModifier.swift */; };
+		66F73D1C2EC19CCE0093A4A6 /* PlaybackPresentableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F73D1B2EC19CCE0093A4A6 /* PlaybackPresentableController.swift */; };
 		66F8D1902B88581D008C4F7C /* Icon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F8D18F2B88581D008C4F7C /* Icon.swift */; };
 		66F8D1932B894253008C4F7C /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F8D1922B894253008C4F7C /* Route.swift */; };
 		66F8D1962B898141008C4F7C /* LoadingAsyncImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F8D1952B898141008C4F7C /* LoadingAsyncImage.swift */; };
@@ -265,8 +266,9 @@
 		66F73D102EC0F1D80093A4A6 /* PresentableControllerBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentableControllerBase.swift; sourceTree = "<group>"; };
 		66F73D122EC0F1EC0093A4A6 /* PresentableInternalManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentableInternalManager.swift; sourceTree = "<group>"; };
 		66F73D142EC0F21A0093A4A6 /* PresentableControllerRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentableControllerRegistry.swift; sourceTree = "<group>"; };
-		66F73D172EC0FDAA0093A4A6 /* ChatPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatPresentationController.swift; sourceTree = "<group>"; };
+		66F73D172EC0FDAA0093A4A6 /* ChatPresentableController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatPresentableController.swift; sourceTree = "<group>"; };
 		66F73D192EC100F50093A4A6 /* PresentableTrackingViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentableTrackingViewModifier.swift; sourceTree = "<group>"; };
+		66F73D1B2EC19CCE0093A4A6 /* PlaybackPresentableController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackPresentableController.swift; sourceTree = "<group>"; };
 		66F8D18F2B88581D008C4F7C /* Icon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icon.swift; sourceTree = "<group>"; };
 		66F8D1922B894253008C4F7C /* Route.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
 		66F8D1952B898141008C4F7C /* LoadingAsyncImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingAsyncImage.swift; sourceTree = "<group>"; };
@@ -681,7 +683,8 @@
 		66F73D162EC0FD970093A4A6 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				66F73D172EC0FDAA0093A4A6 /* ChatPresentationController.swift */,
+				66F73D172EC0FDAA0093A4A6 /* ChatPresentableController.swift */,
+				66F73D1B2EC19CCE0093A4A6 /* PlaybackPresentableController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -895,6 +898,7 @@
 				66B5DD852B9FCBCC0054121D /* MatureStreamFilterView.swift in Sources */,
 				66AFA2E42CFCBF7600491D98 /* PlayerDurationSliderView.swift in Sources */,
 				66125F502B83B913002169B5 /* CategoryView.swift in Sources */,
+				66F73D1C2EC19CCE0093A4A6 /* PlaybackPresentableController.swift in Sources */,
 				66F8D1992B89A051008C4F7C /* SearchView.swift in Sources */,
 				66028DFF2B917AD800696071 /* PrivateMessageMock.swift in Sources */,
 				66C4BC332BCD97F000AA8732 /* SevenTVModels.swift in Sources */,
@@ -910,7 +914,7 @@
 				66125F662B84260D002169B5 /* UserMock.swift in Sources */,
 				6690EBA02BA6667B0093B18C /* ChatMessageModel.swift in Sources */,
 				6645AFEA2BA9153D0096BC03 /* Shortcuts.swift in Sources */,
-				66F73D182EC0FDAA0093A4A6 /* ChatPresentationController.swift in Sources */,
+				66F73D182EC0FDAA0093A4A6 /* ChatPresentableController.swift in Sources */,
 				66D11B6E2BF8F2C000DDD159 /* FrankerFaceZModels.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

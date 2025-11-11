@@ -8,20 +8,21 @@
 import SwiftUI
 
 struct PresentableTrackingViewModifier<T: PresentableControllerBase>: ViewModifier {
-    @StateObject private var presentableController: T
     @State private var token: PresenterToken?
 
+    let contentId: String
+    let factory: () -> T
     let withController: ((T) -> Void)?
 
-    init(contentId: String, factory: @escaping () -> T, withController: ((T) -> Void)?) {
-        self._presentableController = StateObject(wrappedValue: PresentableControllerRegistry.shared(for: T.self).controller(for: contentId, factory: factory) as! T)
-        self.withController = withController
+    var presentableController: T {
+        PresentableControllerRegistry.shared(for: T.self).controller(for: contentId, factory: factory)
     }
 
     func body(content: Content) -> some View {
         content
             .task {
                 if let withController = self.withController {
+                    // Allow view modifier to update its state based on current controller
                     withController(self.presentableController)
                 }
 

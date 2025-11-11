@@ -30,18 +30,33 @@ class SpecificPresentableControllerRegistry<T: PresentableControllerBase>: Prese
     private var storage: [String: T] = [:]
 
     @MainActor
+    var all: [T] {
+        Array(self.storage.values)
+    }
+
+    @MainActor
+    func controller(for id: String) -> T? {
+        self.storage[id]
+    }
+
+    @MainActor
     func controller(for id: String, factory: () -> T) -> T {
         if let existing = self.storage[id] {
             return existing
         }
 
+        print("Instantiating \(id)")
         let newOne = factory()
+        newOne.onDestroy = {
+            self.removeController(for: id)
+        }
         self.storage[id] = newOne
         return newOne
     }
 
     @MainActor
     func removeController(for id: String) {
+        print("Destroying \(id)")
         self.storage.removeValue(forKey: id)
     }
 }

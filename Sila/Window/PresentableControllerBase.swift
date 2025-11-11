@@ -13,6 +13,7 @@ open class PresentableControllerBase: ObservableObject {
     @Published private(set) var activeRoles: Set<PresentationRole> = []
 
     let contentId: String
+    var onDestroy: (() -> Void)? = nil
     private var manager: PresentableInternalManager!
 
     /// Tracks internal visibility state
@@ -59,6 +60,8 @@ open class PresentableControllerBase: ObservableObject {
             await self.willBecomeHidden()
             print("Did become hidden \(self.contentId)")
             await self.didBecomeHidden()
+            self.onDestroy?()
+            // TODO: Destroy controller
         }
     }
 }

@@ -12,66 +12,60 @@ actor PresentableInternalManager {
     typealias VisibilityCallback = (_ visible: Bool, _ roles: Set<PresentationRole>) -> Void
 
     private var presenters: [UUID: PresentationRole] = [:]
-    private var callback: VisibilityCallback
+    private var visibilityChangeCallback: VisibilityCallback
     private var stopDebounceMilliseconds: Int
 
-    // For debounce: store scheduled Task
     private var pendingStopTask: Task<Void, Never>? = nil
 
-    init(stopDebounceMilliseconds: Int = 200, callback: @escaping VisibilityCallback) {
-        self.callback = callback
+    init(stopDebounceMilliseconds: Int = 200, visibilityChangeCallback: @escaping VisibilityCallback) {
         self.stopDebounceMilliseconds = stopDebounceMilliseconds
+        self.visibilityChangeCallback = visibilityChangeCallback
     }
 
     func attach(role: PresentationRole) -> PresenterToken {
-        // create token, add presenter
         let id = UUID()
-        presenters[id] = role
-        // If we had a pending stop, cancel it because we're visible again
-        pendingStopTask?.cancel()
-        pendingStopTask = nil
-        // immediately notify state change
-        notifyIfChanged()
+        self.presenters[id] = role
+        // We're visible again, cancel any pending
+        self.pendingStopTask?.cancel()
+        self.pendingStopTask = nil
+        self.notifyIfChanged()
         return PresenterToken(id: id, role: role)
     }
 
     func detach(token: PresenterToken) {
-        presenters.removeValue(forKey: token.id)
-        // If presenters empty, schedule a debounced stop
-        if presenters.isEmpty {
-            // cancel previous pending (should be nil)
-            pendingStopTask?.cancel()
-            pendingStopTask = Task { [weak self] in
-                // sleep with cancellation support
+        self.presenters.removeValue(forKey: token.id)
+        if self.presenters.isEmpty {
+            // If no presenters, schedule stop
+            self.pendingStopTask?.cancel()
+            self.pendingStopTask = Task { [weak self] in
                 do {
                     try await Task.sleep(nanoseconds: UInt64(self?.stopDebounceMilliseconds ?? 200) * 1_000_000)
                 } catch {
-                    return // cancelled
+                    return
                 }
                 await self?.notifyIfChanged()
-                // clear pending
                 await self?.clearPending()
             }
         } else {
-            // still visible, notify immediately
-            notifyIfChanged()
+            // Still visible
+            self.notifyIfChanged()
         }
     }
 
     func updateRole(token: PresenterToken, newRole: PresentationRole) {
-        if presenters[token.id] != nil {
-            presenters[token.id] = newRole
-            notifyIfChanged()
+        if self.presenters[token.id] != nil {
+            self.presenters[token.id] = newRole
+            self.notifyIfChanged()
         }
     }
 
     private func clearPending() {
-        pendingStopTask = nil
+        self.pendingStopTask = nil
     }
 
     private func notifyIfChanged() {
-        let visible = !presenters.isEmpty
-        let roles = Set(presenters.values)
-        callback(visible, roles)
+        let visible = !self.presenters.isEmpty
+        let roles = Set(self.presenters.values)
+        self.visibilityChangeCallback(visible, roles)
     }
 }
