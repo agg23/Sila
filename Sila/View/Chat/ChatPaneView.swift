@@ -50,7 +50,7 @@ struct ChatPaneView: View {
                             .help("Pop Out")
                         }
                     } else {
-                        ToolbarItem(placement: .topBarLeading) {
+                        ToolbarItem(placement: .topBarTrailing) {
                             Button {
                                 self.dismissPane()
                             } label: {

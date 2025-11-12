@@ -32,7 +32,6 @@ struct Icon {
     static let dimming = "circle.lefthalf.striped.horizontal.inverse"
 
     static let close = "xmark"
-    static let popOut = "rectangle.portrait.and.arrow.right"
-    // TODO: Need icon
-    static let popIn = "xmark"
+    static let popOut = "list.bullet.rectangle.portrait"
+    static let popIn = "sidebar.right"
 }
