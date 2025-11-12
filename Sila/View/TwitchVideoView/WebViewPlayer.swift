@@ -29,7 +29,8 @@ struct TwitchEvent {
     let availableQualities: [VideoQuality]
 }
 
-struct VideoQuality {
+// Equatable is required for setting the availableQualities array. This prevents constant invalidation of the SwiftUI state
+struct VideoQuality: Equatable {
     let quality: String
     let name: String
 }
@@ -255,6 +256,7 @@ struct OnEventContinuation: Identifiable, Equatable {
         }
 
         self.quality = event.quality
+        // Equatable on VideoQuality prevents constant SwiftUI invalidation
         self.availableQualities = event.availableQualities.map({ quality in
             if quality.quality == "auto" {
                 VideoQuality(quality: quality.quality, name: "Automatic")
