@@ -47,6 +47,8 @@ struct PlayerOverlayControlsView: View {
                     Image(systemName: Icon.dimming)
                 }
             }
+            // .help() must be cached in some scenarios. Invalidate this view via .id() to rerender tooltip
+            .id(dimLabel)
             .help(dimLabel)
             .labelStyle(.iconOnly)
             .buttonBorderShape(.circle)

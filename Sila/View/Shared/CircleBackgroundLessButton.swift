@@ -32,6 +32,8 @@ struct CircleBackgroundLessButton: View {
                 Image(systemName: self.systemName, variableValue: self.variableValue)
             }
         }
+        // .help() must be cached in some scenarios. Invalidate this view via .id() to rerender tooltip
+        .id(self.tooltip)
         .help(self.tooltip)
         .labelStyle(.iconOnly)
         .buttonBorderShape(.circle)
