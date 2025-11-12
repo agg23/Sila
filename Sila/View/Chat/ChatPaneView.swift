@@ -61,8 +61,9 @@ struct ChatPaneView: View {
                     }
                 }
                 .navigationTitle(title)
+                // NavigationStack adds its own glass, so putting .background at its level doesn't work correctly
+                .background(Color(red: 24.0/255.0, green: 24.0/255.0, blue: 27.0/255.0))
         }
-        .glassBackgroundEffect(tint: Color(red: 24.0/255.0, green: 24.0/255.0, blue: 27.0/255.0))
     }
 }
 
