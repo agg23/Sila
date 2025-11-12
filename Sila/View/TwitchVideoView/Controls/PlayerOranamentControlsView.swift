@@ -54,7 +54,7 @@ struct PlayerOranamentControlsView: View {
                 if self.player.isPlaying {
                     self.player.pause()
                 } else {
-                    self.player.play()
+                    self.player.playAndMuteOthers(except: self.streamableVideo)
                 }
 
                 self.onInteraction?()

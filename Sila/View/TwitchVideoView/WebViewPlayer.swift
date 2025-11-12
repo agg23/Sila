@@ -34,7 +34,35 @@ struct VideoQuality {
     let name: String
 }
 
+struct OnEventContinuation: Identifiable, Equatable {
+    let id: UUID = UUID()
+    let continuation: CheckedContinuation<Bool, Never>
+    let predicate: (TwitchEvent) -> Bool
+
+    var timer: Timer? = nil
+
+    init(continuation: CheckedContinuation<Bool, Never>, predicate: @escaping (TwitchEvent) -> Bool) {
+        self.continuation = continuation
+        self.predicate = predicate
+
+        self.timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: false, block: { _ in
+            print("Timing out predicate")
+            continuation.resume(returning: false)
+        })
+    }
+
+    func success() {
+        self.continuation.resume(returning: true)
+    }
+
+    static func == (lhs: OnEventContinuation, rhs: OnEventContinuation) -> Bool {
+        lhs.id == rhs.id
+    }
+}
+
 @Observable class WebViewPlayer {
+    @ObservationIgnored var queuedContinuations: [OnEventContinuation] = []
+
     // Track video (VoD) status for quality hack (see below)
     var isVideo: Bool = false
 
@@ -65,10 +93,6 @@ struct VideoQuality {
         self.volume = SharedPlaybackSettings.getVolume()
         self.quality = SharedPlaybackSettings.getQuality()
 
-        NotificationCenter.default.addObserver(forName: .twitchMuteAll, object: nil, queue: nil) { notification in
-            print("Setting mute all")
-            self.setMute(true)
-        }
 
         let _ = withObservationTracking {
             self.volume
@@ -91,6 +115,20 @@ struct VideoQuality {
                 console.error(`Failed to play: ${e}`);
             }
         """)
+    }
+
+    func playAndMuteOthers(except streamableVideo: StreamableVideo) {
+        self.playAndMuteOthers(except: PlaybackPresentableController.contentId(for: streamableVideo))
+    }
+
+    func playAndMuteOthers(except contentId: String) {
+        Task {
+            await PlaybackPresentableController.muteAll(except: contentId)
+
+            await MainActor.run {
+                self.play()
+            }
+        }
     }
 
     func pause() {
@@ -132,18 +170,39 @@ struct VideoQuality {
         })
     }
 
-    func toggleMute() {
-        self.setMute(!self.muted)
+    func toggleMute() async -> Bool {
+        await self.setMute(!self.muted)
     }
 
-    func setMute(_ mute: Bool) {
-        self.webView?.evaluateJavaScript("""
+    func setMute(_ mute: Bool) async -> Bool {
+        await self.awaitJavaScriptContinuation("""
             try {
                 Twitch._player.setMuted(\(mute));
             } catch (e) {
                 console.error(`Failed to set muted: ${e}`);
             }
-        """)
+        """) { event in
+            event.muted == mute
+        }
+    }
+
+    func awaitJavaScriptContinuation(_ script: String, predicate: @escaping (TwitchEvent) -> Bool) async -> Bool {
+        var onEventContinuation: OnEventContinuation? = nil
+        let result = await withCheckedContinuation { continuation in
+            Task {
+                await MainActor.run {
+                    self.webView?.evaluateJavaScript(script, completionHandler: nil)
+                }
+            }
+
+            let newContinuation = OnEventContinuation(continuation: continuation, predicate: predicate)
+            self.queuedContinuations.append(newContinuation)
+            onEventContinuation = newContinuation
+        }
+
+        // Continuation completed, clean up
+        self.queuedContinuations.removeAll { $0 == onEventContinuation }
+        return result
     }
 
     func setVolume(_ volume: Double) {
@@ -210,6 +269,12 @@ struct VideoQuality {
             if let maxQuality = self.availableQualities.filter({ $0.quality != "auto" }).first {
                 self.maxVideoQuality = maxQuality
                 self.setQuality(maxQuality.quality)
+            }
+        }
+
+        for continuation in self.queuedContinuations {
+            if continuation.predicate(event) {
+                continuation.success()
             }
         }
 

@@ -34,7 +34,6 @@ struct SilaAppApp: App {
     var body: some Scene {
         WindowGroup(for: String.self) { $id in
             MainWindowView()
-                .mainWindow()
                 // This is the default window size of the launching animation
                 .frame(width: 1280.0, height: 720.0)
                 // For some reason we crash if we put this environment on the window
@@ -49,7 +48,6 @@ struct SilaAppApp: App {
 
         WindowGroup(id: Window.stream, for: Twitch.Stream.self) { $stream in
             TwitchStreamVideoView(stream: stream)
-                .playbackWindow(for: stream)
                 .environment(self.authController)
                 // Prevent reopening the app from spawning this window
                 // Closing the main window, then closing all video windows will open the main

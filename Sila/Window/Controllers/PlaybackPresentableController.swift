@@ -7,10 +7,14 @@
 
 import Foundation
 
-final class PlaybackPresentableController: PresentableControllerBase {
+final class PlaybackPresentableController: PresentableControllerBase, Identifiable {
+    var id: String {
+        self.contentId
+    }
+
     var isMuted: Bool = false
 
-    var onMute: (() -> Void)? = nil
+    var onMute: (() async -> Void)? = nil
 
     static func contentId(for stream: StreamableVideo) -> String {
         "stream-\(stream.id)"
@@ -18,14 +22,22 @@ final class PlaybackPresentableController: PresentableControllerBase {
 
     static func muteAll(except exceptContentId: String? = nil) async {
         print("Sending mute to all windows")
-        await MainActor.run {
-            for controller in PresentableControllerRegistry.shared(for: Self.self).all {
-                if controller.contentId == exceptContentId {
-                    continue
-                }
+        let _ = await MainActor.run {
+            Task {
+                for controller in PresentableControllerRegistry.shared(for: Self.self).all {
+                    if controller.contentId == exceptContentId {
+                        continue
+                    }
 
-                controller.onMute?()
+                    await controller.onMute?()
+                }
             }
         }
+    }
+}
+
+extension PlaybackPresentableController: Equatable {
+    static func == (lhs: PlaybackPresentableController, rhs: PlaybackPresentableController) -> Bool {
+        lhs.id == rhs.id
     }
 }

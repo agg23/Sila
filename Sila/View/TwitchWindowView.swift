@@ -12,12 +12,22 @@ struct TwitchWindowView: View {
     @AppStorage(Setting.smallBorderRadius) var smallBorderRadius: Bool = false
     @AppStorage(Setting.dimSurroundings) var dimSurroundings: Bool = false
 
+    @State private var presentableController: PlaybackPresentableController? = nil
     @State private var controlVisibility = Visibility.visible
 
     let streamableVideo: StreamableVideo
 
+    var contentId: String {
+        PlaybackPresentableController.contentId(for: self.streamableVideo)
+    }
+
     var body: some View {
-        TwitchContentView(controlVisibility: self.$controlVisibility, streamableVideo: self.streamableVideo)
+        TwitchContentView(controlVisibility: self.$controlVisibility, presentableController: self.$presentableController, streamableVideo: self.streamableVideo)
+            .presentableTracking(contentId: self.contentId, factory: {
+                PlaybackPresentableController(contentId: self.contentId)
+            }, withController: { controller in
+                self.presentableController = controller
+            })
             .preferredSurroundingsEffect(self.dimSurroundings ? .systemDark : nil)
             // Controlling with the ornament overlay keeps the grabber completely in sync
             .persistentSystemOverlays(self.controlVisibility)
@@ -31,23 +41,44 @@ struct TwitchContentView: View {
 
     @State private var player = WebViewPlayer()
 
-    @State private var delayLoading = !WindowController.shared.checkAllMuted()
+    // TODO: Implement
+//    @State private var delayLoading = !WindowController.shared.checkAllMuted()
+    @State private var delayLoading = false
     @State private var delayTimer: Timer?
     @Binding var controlVisibility: Visibility
 
+    @Binding var presentableController: PlaybackPresentableController?
     let streamableVideo: StreamableVideo
+
+    var contentId: String {
+        PlaybackPresentableController.contentId(for: self.streamableVideo)
+    }
 
     var body: some View {
         TwitchVideoView(controlVisibility: self.$controlVisibility, streamableVideo: self.streamableVideo, delayLoading: self.delayLoading, player: self.$player)
             // Set aspect ratio and enforce uniform resizing
             // This is on an inner view to prevent breaking .persistentSystemOverlays() modification
             .windowGeometryPreferences(minimumSize: CGSize(width: 160.0, height: 90.0), resizingRestrictions: .uniform)
+            .onChange(of: self.presentableController, { _, _ in
+                // When we gain a PresentableController, set up system and send mute
+                print("Setting onMute")
+                self.presentableController?.onMute = {
+                    print("Started mute")
+                    let _ = await self.player.setMute(true)
+                    print("Mute completed")
+                }
+
+                Task {
+                    await PlaybackPresentableController.muteAll(except: self.contentId)
+                }
+            })
             .onAppear {
                 if self.delayLoading {
                     self.delayTimer?.invalidate()
                     self.delayTimer = Timer.scheduledTimer(withTimeInterval: 2, repeats: false, block: { _ in
                         // If time has passed and we didn't allow loading, something probably went wrong
                         // Make sure we don't freeze here
+                        print("Delay loading timed out. Starting page load")
                         self.delayLoading = false
                     })
                 }
@@ -58,20 +89,13 @@ struct TwitchContentView: View {
                     self.player.setIsVideo(false)
                 }
             }
+            .onDisappear {
+                print("Clearing onMute")
+                self.presentableController?.onMute = nil
+            }
             .onChange(of: self.player.muted, { _, newValue in
-                WindowController.shared.setPlaybackMuted(with: self.streamableVideo.id(), muted: newValue)
-            })
-            .onReceive(WindowController.shared.allMuteSubject, perform: { allMuted in
-                guard self.delayLoading else {
-                    return
-                }
-
-                print("Delaying loading")
-
-                if allMuted {
-                    // We're muted and can safely start playback
-                    print("Unmuting")
-                    self.delayLoading = false
+                if let controller = self.presentableController {
+                    controller.isMuted = newValue
                 }
             })
             .onReceive(NotificationCenter.default.publisher(for: .twitchLogOut), perform: { _ in
