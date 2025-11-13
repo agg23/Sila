@@ -78,6 +78,8 @@ struct TwitchVideoView: View {
                             }
                             // Calibrated for a 400 width at default window size
                             .frame(width: geometry.size.width * 0.3125, height: geometry.size.height)
+                            // TODO: Experiment with rotation
+//                            .rotation3DEffect(.degrees(-30), axis: .y, anchor: .leading)
                         }
                     }
                 }
