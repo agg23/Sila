@@ -19,9 +19,10 @@ struct ChatView: View {
 
     let channelName: String
     let userId: String
+    let isWindow: Bool
 
     var contentId: String {
-        "chat-\(self.userId)"
+        ChatPresentableController.contentId(for: self.userId)
     }
 
     // Forsen
@@ -33,8 +34,8 @@ struct ChatView: View {
                 ChatListView(chatModel: chatModel)
             }
         }
-        .presentableTracking(contentId: self.contentId, factory: {
-            return ChatPresentableController(contentId: self.contentId, chatModel: ChatRegistry.shared.model(for: channelName, with: userId))
+        .presentableTracking(contentId: self.contentId, role: self.isWindow ? .standalone : .embedded, factory: {
+            ChatPresentableController(contentId: self.contentId, chatModel: ChatRegistry.shared.model(for: channelName, with: userId))
         }) { (controller: ChatPresentableController) in
             self.chatModel = controller.chatModel
         }

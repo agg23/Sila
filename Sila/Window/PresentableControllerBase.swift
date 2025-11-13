@@ -21,11 +21,15 @@ open class PresentableControllerBase: ObservableObject {
 
     public init(contentId: String) {
         self.contentId = contentId
-        self.manager = PresentableInternalManager { [weak self] visible, roles in
+        self.manager = PresentableInternalManager(visibilityChangeCallback: { [weak self] visible in
             Task { @MainActor in
-                await self?.handleVisibilityChange(visible: visible, roles: roles)
+                await self?.handleVisibilityChange(visible: visible)
             }
-        }
+        }, activeRoleCallback: { [weak self] roles in
+            Task { @MainActor in
+                self?.handleRolesChange(roles: roles)
+            }
+        })
     }
 
     func attach(role: PresentationRole) async -> PresenterToken {
@@ -46,9 +50,8 @@ open class PresentableControllerBase: ObservableObject {
     open func didBecomeHidden() async {}
 
     @MainActor
-    private func handleVisibilityChange(visible: Bool, roles: Set<PresentationRole>) async {
+    private func handleVisibilityChange(visible: Bool) async {
         self.isVisible = visible
-        self.activeRoles = roles
 
         if visible && !self.lastTriggeredVisible {
             self.lastTriggeredVisible = true
@@ -63,5 +66,10 @@ open class PresentableControllerBase: ObservableObject {
             self.onDestroy?()
             // TODO: Destroy controller
         }
+    }
+
+    @MainActor
+    private func handleRolesChange(roles: Set<PresentationRole>) {
+        self.activeRoles = roles
     }
 }

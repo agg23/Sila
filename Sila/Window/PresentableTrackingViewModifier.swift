@@ -11,6 +11,7 @@ struct PresentableTrackingViewModifier<T: PresentableControllerBase>: ViewModifi
     @State private var token: PresenterToken?
 
     let contentId: String
+    let role: PresentationRole
     let factory: () -> T
     let withController: ((T) -> Void)?
 
@@ -27,12 +28,13 @@ struct PresentableTrackingViewModifier<T: PresentableControllerBase>: ViewModifi
                 }
 
                 if let token = self.token {
-                    await self.presentableController.updateRole(token: token, newRole: .embedded)
+                    await self.presentableController.updateRole(token: token, newRole: self.role)
                 } else {
-                    self.token = await self.presentableController.attach(role: .embedded)
+                    self.token = await self.presentableController.attach(role: self.role)
                 }
             }
             .onDisappear {
+                print("On disappear")
                 if let token = self.token {
                     Task {
                         await self.presentableController.detach(token: token)
@@ -44,7 +46,7 @@ struct PresentableTrackingViewModifier<T: PresentableControllerBase>: ViewModifi
 }
 
 extension View {
-    func presentableTracking<T: PresentableControllerBase>(contentId: String, factory: @escaping () -> T, withController: ((T) -> Void)? = nil) -> some View {
-        self.modifier(PresentableTrackingViewModifier<T>(contentId: contentId, factory: factory, withController: withController))
+    func presentableTracking<T: PresentableControllerBase>(contentId: String, role: PresentationRole, factory: @escaping () -> T, withController: ((T) -> Void)? = nil) -> some View {
+        self.modifier(PresentableTrackingViewModifier<T>(contentId: contentId, role: role, factory: factory, withController: withController))
     }
 }

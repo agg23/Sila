@@ -28,7 +28,7 @@ struct ChatPaneView: View {
         let title = self.title ?? "Chat"
 
         NavigationStack {
-            ChatView(channelName: self.channelName, userId: self.userId)
+            ChatView(channelName: self.channelName, userId: self.userId, isWindow: self.isWindow)
                 .toolbar {
                     if !isWindow {
                         ToolbarItem(placement: .topBarLeading) {
@@ -42,7 +42,10 @@ struct ChatPaneView: View {
 
                         ToolbarItem(placement: .topBarTrailing) {
                             Button {
-                                self.openWindow(id: Window.chat, value: ChatWindowModel(channelName: self.channelName, userId: self.userId, title: title))
+                                let presentableController = PresentableControllerRegistry.shared(for: ChatPresentableController.self).controller(for: ChatPresentableController.contentId(for: self.userId))
+                                let model = ChatWindowModel(channelName: self.channelName, userId: self.userId, title: title)
+                                presentableController?.chatWindowModel = model
+                                self.openWindow(id: Window.chat, value: model)
                                 self.dismissPane()
                             } label: {
                                 Label("Pop Out", systemImage: Icon.popOut)
@@ -77,7 +80,7 @@ struct ChatPaneWindow: View {
     var body: some View {
         ChatPaneView(channelName: self.channelName, userId: self.userId, title: self.title, isWindow: true) {
             WindowController.shared.popoutChatSubject.send(self.userId)
-            dismissWindow(id: Window.chat, value: ChatWindowModel(channelName: self.channelName, userId: self.userId, title: self.title))
+            self.dismissWindow(id: Window.chat, value: ChatWindowModel(channelName: self.channelName, userId: self.userId, title: self.title))
         }
     }
 }

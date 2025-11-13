@@ -9,8 +9,13 @@ import Foundation
 
 final class ChatPresentableController: PresentableControllerBase {
     let chatModel: ChatModel
+    var chatWindowModel: ChatWindowModel?
 
-    var task: Task<Void, Never>?
+    private var task: Task<Void, Never>?
+
+    static func contentId(for userId: String) -> String {
+        "chat-\(userId)"
+    }
 
     init(contentId: String, chatModel: ChatModel) {
         self.chatModel = chatModel

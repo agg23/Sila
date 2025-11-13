@@ -9,17 +9,20 @@ import Foundation
 
 /// Internal actor that manages presenters and debounced stop/start callback.
 actor PresentableInternalManager {
-    typealias VisibilityCallback = (_ visible: Bool, _ roles: Set<PresentationRole>) -> Void
+    typealias VisibilityCallback = (_ visible: Bool) -> Void
+    typealias ActiveRoleCallback = (_ roles: Set<PresentationRole>) -> Void
 
     private var presenters: [UUID: PresentationRole] = [:]
     private var visibilityChangeCallback: VisibilityCallback
+    private var activeRoleChangeCallback: ActiveRoleCallback
     private var stopDebounceMilliseconds: Int
 
     private var pendingStopTask: Task<Void, Never>? = nil
 
-    init(stopDebounceMilliseconds: Int = 200, visibilityChangeCallback: @escaping VisibilityCallback) {
+    init(stopDebounceMilliseconds: Int = 200, visibilityChangeCallback: @escaping VisibilityCallback, activeRoleCallback: @escaping ActiveRoleCallback) {
         self.stopDebounceMilliseconds = stopDebounceMilliseconds
         self.visibilityChangeCallback = visibilityChangeCallback
+        self.activeRoleChangeCallback = activeRoleCallback
     }
 
     func attach(role: PresentationRole) -> PresenterToken {
@@ -28,12 +31,15 @@ actor PresentableInternalManager {
         // We're visible again, cancel any pending
         self.pendingStopTask?.cancel()
         self.pendingStopTask = nil
-        self.notifyIfChanged()
+        self.notifyRolesIfChanged()
+        self.notifyVisibilityIfChanged()
         return PresenterToken(id: id, role: role)
     }
 
     func detach(token: PresenterToken) {
         self.presenters.removeValue(forKey: token.id)
+        self.notifyRolesIfChanged()
+
         if self.presenters.isEmpty {
             // If no presenters, schedule stop
             self.pendingStopTask?.cancel()
@@ -43,19 +49,19 @@ actor PresentableInternalManager {
                 } catch {
                     return
                 }
-                await self?.notifyIfChanged()
+                await self?.notifyVisibilityIfChanged()
                 await self?.clearPending()
             }
         } else {
             // Still visible
-            self.notifyIfChanged()
+            self.notifyVisibilityIfChanged()
         }
     }
 
     func updateRole(token: PresenterToken, newRole: PresentationRole) {
         if self.presenters[token.id] != nil {
             self.presenters[token.id] = newRole
-            self.notifyIfChanged()
+            self.notifyVisibilityIfChanged()
         }
     }
 
@@ -63,9 +69,11 @@ actor PresentableInternalManager {
         self.pendingStopTask = nil
     }
 
-    private func notifyIfChanged() {
-        let visible = !self.presenters.isEmpty
-        let roles = Set(self.presenters.values)
-        self.visibilityChangeCallback(visible, roles)
+    private func notifyVisibilityIfChanged() {
+        self.visibilityChangeCallback(!self.presenters.isEmpty)
+    }
+
+    private func notifyRolesIfChanged() {
+        self.activeRoleChangeCallback(Set(self.presenters.values))
     }
 }

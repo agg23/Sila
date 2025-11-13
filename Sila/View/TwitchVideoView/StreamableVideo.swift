@@ -19,4 +19,31 @@ enum StreamableVideo: Equatable {
             return video.id
         }
     }
+
+    var userId: String {
+        switch self {
+        case .stream(let stream):
+            return stream.userId
+        case .video(let video):
+            return video.userId
+        }
+    }
+
+    var userName: String {
+        switch self {
+        case .stream(let stream):
+            return stream.userName
+        case .video(let video):
+            return video.userName
+        }
+    }
+
+    var title: String {
+        switch self {
+        case .stream(let stream):
+            return stream.title
+        case .video(let video):
+            return video.title
+        }
+    }
 }

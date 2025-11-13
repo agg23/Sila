@@ -10,6 +10,8 @@ import Twitch
 import JunoUI
 
 struct PlayerOranamentControlsView: View {
+    @Environment(\.dismissWindow) private var dismissWindow
+
     let player: WebViewPlayer
 
     let streamableVideo: StreamableVideo
@@ -17,9 +19,20 @@ struct PlayerOranamentControlsView: View {
     @Binding var chatVisibility: Visibility
 
     @State private var durationSliderPreventClose: Bool = false
+    @ObservedObject private var chatHandle: PresentableHandle<ChatPresentableController>
 
     let onInteraction: (() -> Void)?
     let activeChanged: ((Bool) -> Void)?
+
+    init(player: WebViewPlayer, streamableVideo: StreamableVideo, chatVisibility: Binding<Visibility>, onInteraction: (() -> Void)? = nil, activeChanged: ((Bool) -> Void)? = nil) {
+        self.player = player
+        self.streamableVideo = streamableVideo
+        self._chatVisibility = chatVisibility
+        self.onInteraction = onInteraction
+        self.activeChanged = activeChanged
+        let contentId = ChatPresentableController.contentId(for: streamableVideo.userId)
+        self._chatHandle = ObservedObject(wrappedValue: PresentableControllerRegistry.shared(for: ChatPresentableController.self).handle(for: contentId))
+    }
 
     var body: some View {
         Group {
@@ -89,10 +102,16 @@ struct PlayerOranamentControlsView: View {
                 .help("Quality")
             }
 
-            CircleBackgroundLessButton(systemName: Icon.chat, tooltip: self.chatVisibility == .visible ? "Hide Chat" : "Show Chat") {
+            // Only use standalone (window) chatHandle property, otherwise use local chatVisibility setting to allow rapid toggling
+            let isChatOpen = self.chatVisibility == .visible || self.chatHandle.hasStandalone
+
+            CircleBackgroundLessButton(systemName: Icon.chat, tooltip: isChatOpen ? "Hide Chat" : "Show Chat") {
                 withAnimation {
-                    if self.chatVisibility == .visible {
+                    if isChatOpen {
                         self.chatVisibility = .hidden
+                        if let chatWindowModel = self.chatHandle.controller?.chatWindowModel {
+                            self.dismissWindow(id: Window.chat, value: chatWindowModel)
+                        }
                     } else {
                         self.chatVisibility = .visible
                     }

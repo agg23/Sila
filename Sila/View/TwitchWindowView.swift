@@ -23,7 +23,7 @@ struct TwitchWindowView: View {
 
     var body: some View {
         TwitchContentView(controlVisibility: self.$controlVisibility, presentableController: self.$presentableController, streamableVideo: self.streamableVideo)
-            .presentableTracking(contentId: self.contentId, factory: {
+            .presentableTracking(contentId: self.contentId, role: .standalone, factory: {
                 PlaybackPresentableController(contentId: self.contentId)
             }, withController: { controller in
                 self.presentableController = controller
