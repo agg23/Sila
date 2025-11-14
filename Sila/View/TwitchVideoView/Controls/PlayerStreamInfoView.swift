@@ -16,7 +16,7 @@ struct PlayerStreamInfoView: View {
 
     var body: some View {
         DataView(loader: self.$loader, task: { api, _ in
-            let task = self.createTask(requestStream: false, channelId: self.userId())
+            let task = self.createTask(requestStream: false, channelId: self.streamableVideo.userId)
             return try await task(api)
         }, content: { user, stream in
             PlayerStreamInfoContentWrapperView(streamableVideo: stream ?? self.streamableVideo, user: user)
@@ -61,15 +61,6 @@ struct PlayerStreamInfoView: View {
 
                 return (users.first, nil)
             }
-        }
-    }
-
-    func userId() -> String {
-        switch self.streamableVideo {
-        case .stream(let stream):
-            return stream.userID
-        case .video(let video):
-            return video.userID
         }
     }
 }
