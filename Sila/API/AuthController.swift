@@ -48,12 +48,11 @@ import WebKit
         if let oauthToken = oauthToken, let user = user {
             // We're logged in. Create authed Helix instance
             // Won't throw
-            let helix = try! Helix(authentication: .init(oAuth: oauthToken, clientID: AuthController.CLIENT_ID, userId: user.id), urlSession: self.session)
-            self.status = .user(user: user, api: helix)
+            let client = TwitchClient(authentication: .init(oAuth: oauthToken, clientID: AuthController.CLIENT_ID, userID: user.id, userLogin: user.username), urlSession: self.session)
+            self.status = .user(user: user, api: client)
         } else if let publicToken = publicToken {
-            // Public instance. Make sure we don't set user so we don't have permission issues
-            let helix = try! Helix(authentication: .init(oAuth: publicToken, clientID: AuthController.CLIENT_ID, userId: ""), urlSession: self.session)
-            self.status = .publicLoggedOut(api: helix)
+            let client = Sila.createPublicClient(with: publicToken, session: self.session)
+            self.status = .publicLoggedOut(api: client)
         } else {
             // No auth at all
             self.status = .none
@@ -67,8 +66,8 @@ import WebKit
 
     func setLoggedInCredentials(withToken token: String, authUser: AuthUser) {
         // Helix creation can not throw because we set all of the cred values
-        let helix = try! Helix(authentication: TwitchCredentials(oAuth: token, clientID: AuthController.CLIENT_ID, userId: authUser.id), urlSession: self.session)
-        self.status = .user(user: authUser, api: helix)
+        let client = TwitchClient(authentication: TwitchCredentials(oAuth: token, clientID: AuthController.CLIENT_ID, userID: authUser.id, userLogin: authUser.username), urlSession: self.session)
+        self.status = .user(user: authUser, api: client)
 
         self.updateUserStore(token: token, authUser: authUser)
     }
@@ -88,9 +87,8 @@ import WebKit
         let publicToken = KeychainWrapper.default.string(forKey: AuthController.PUBLIC_KEYCHAIN_KEY)
 
         if let publicToken = publicToken {
-            // Public instance. Make sure we don't set user so we don't have permission issues
-            let helix = try! Helix(authentication: .init(oAuth: publicToken, clientID: AuthController.CLIENT_ID, userId: ""), urlSession: self.session)
-            self.status = .publicLoggedOut(api: helix)
+            let client = self.createPublicClient(with: publicToken)
+            self.status = .publicLoggedOut(api: client)
         } else {
             // No auth at all
             self.status = .none
@@ -130,6 +128,10 @@ import WebKit
         }
     }
 
+    private func createPublicClient(with token: String) -> TwitchClient {
+        Sila.createPublicClient(with: token, session: self.session)
+    }
+
     private func requestPublicToken() async throws {
         // Already authorized
         if self.isAuthorized() {
@@ -144,8 +146,8 @@ import WebKit
         }
 
         // Public instance. Make sure we don't set user so we don't have permission issues
-        let helix = try! Helix(authentication: TwitchCredentials(oAuth: token, clientID: AuthController.CLIENT_ID, userId: ""), urlSession: self.session)
-        self.status = .publicLoggedOut(api: helix)
+        let client = self.createPublicClient(with: token)
+        self.status = .publicLoggedOut(api: client)
         self.updatePublicStore(token: token)
     }
 
@@ -167,16 +169,16 @@ import WebKit
         do {
             (data, response) = try await URLSession.shared.data(for: request)
         } catch {
-            throw HelixError.invalidResponse(rawResponse: error.localizedDescription)
+            throw HelixError.networkError(wrapped: error)
         }
 
         guard let response = response as? HTTPURLResponse else {
-            throw HelixError.invalidResponse(rawResponse: "Response is not HTTPURLResponse")
+            throw HelixError.noDataInResponse
         }
 
         if response.statusCode != 200 {
             let rawResponse = String(decoding: data, as: UTF8.self)
-            throw HelixError.invalidErrorResponse(status: response.statusCode, rawResponse: rawResponse)
+            throw HelixError.parsingErrorFailed(status: response.statusCode, responseData: rawResponse.data(using: .utf8) ?? Data())
         }
 
         do {
@@ -184,12 +186,10 @@ import WebKit
                 return accessToken
             }
         } catch {
-            let rawResponse = String(decoding: data, as: UTF8.self)
-            throw HelixError.invalidErrorResponse(status: response.statusCode, rawResponse: "Error: \(error.localizedDescription). Data: \(rawResponse)")
+            throw HelixError.networkError(wrapped: error)
         }
 
-        let rawResponse = String(decoding: data, as: UTF8.self)
-        throw HelixError.invalidErrorResponse(status: response.statusCode, rawResponse: rawResponse)
+        throw HelixError.parsingResponseFailed(responseData: data)
     }
 
     private func updateUserStore(token: String?, authUser: AuthUser?) {
@@ -215,4 +215,9 @@ import WebKit
             KeychainWrapper.default.removeObject(forKey: AuthController.PUBLIC_KEYCHAIN_KEY)
         }
     }
+}
+
+private func createPublicClient(with token: String, session: URLSession) -> TwitchClient {
+    // Public instance. Make sure we don't set user so we don't have permission issues
+    TwitchClient(authentication: .init(oAuth: token, clientID: AuthController.CLIENT_ID, userID: "", userLogin: ""), urlSession: session)
 }

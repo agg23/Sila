@@ -46,12 +46,12 @@ struct PlayerStreamInfoView: View {
         .clipShape(.rect(cornerRadius: 14))
     }
 
-    func createTask(requestStream: Bool = false, channelId: String) -> (Helix) async throws -> (User?, StreamableVideo?) {
+    func createTask(requestStream: Bool = false, channelId: String) -> (TwitchClient) async throws -> (User?, StreamableVideo?) {
         return { api in
-            async let usersAsync = await api.getUsers(userIDs: [channelId])
+            async let usersAsync = await api.helix(endpoint: .getUsers(ids: [channelId]))
 
             if requestStream {
-                async let streamsAsync = await api.getStreams(userIDs: [channelId])
+                async let streamsAsync = await api.helix(endpoint: .getStreams(userIDs: [channelId]))
 
                 let (users, streams) = try await (usersAsync, streamsAsync)
 
@@ -67,9 +67,9 @@ struct PlayerStreamInfoView: View {
     func userId() -> String {
         switch self.streamableVideo {
         case .stream(let stream):
-            return stream.userId
+            return stream.userID
         case .video(let video):
-            return video.userId
+            return video.userID
         }
     }
 }

@@ -19,7 +19,7 @@ struct PopularStreamsIntent: AppIntent {
     func perform() async throws -> some IntentResult & ReturnsValue<[String]> {
         let api = try AuthShortcut.getAPI(self.authController)
 
-        let (streams, _) = try await api.getStreams(limit: 100)
+        let (streams, _) = try await api.helix(endpoint: .getStreams(limit: 100))
 
         return .result(value: streams.map({ $0.userLogin }))
     }

@@ -30,14 +30,14 @@ struct PopularView: View {
         }
     }
 
-    func fetchStreams(api: Helix, language: String) async throws -> ([Twitch.Stream], String?) {
-        let filterLanguages = language == "all" ? nil : [language]
+    func fetchStreams(api: TwitchClient, language: String) async throws -> ([Twitch.Stream], String?) {
+        let filterLanguages = language == "all" ? [] : [language]
 
-        let streams = try await api.getStreams(languages: filterLanguages, limit: 100)
+        let streams = try await api.helix(endpoint: .getStreams(languages: filterLanguages, limit: 100))
 
-        self.existingIds = Set(streams.streams.map({ $0.id }))
+        self.existingIds = Set(streams.0.map({ $0.id }))
 
-        return (streams.streams, streams.cursor)
+        return (streams.0, streams.1)
     }
 
     func onPaginationThresholdMet(language: String) async {
@@ -47,9 +47,9 @@ struct PopularView: View {
                 return data
             }
 
-            let filterLanguages = language == "all" ? nil : [language]
+            let filterLanguages = language == "all" ? [] : [language]
 
-            let (newData, cursor) = try await apiAndUser.0.getStreams(languages: filterLanguages, limit: 100, after: originalCursor)
+            let (newData, cursor) = try await apiAndUser.0.helix(endpoint: .getStreams(languages: filterLanguages, limit: 100, after: originalCursor))
 
             // Prevent duplicates from appearing, due to the list resorting while being fetched
             let newStreams = newData.filter({ !self.existingIds.contains($0.id) })

@@ -8,7 +8,7 @@
 import Foundation
 import Twitch
 
-extension Twitch.Video: Hashable {
+extension Twitch.Video: @retroactive Hashable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine("video\(self.id)")
     }

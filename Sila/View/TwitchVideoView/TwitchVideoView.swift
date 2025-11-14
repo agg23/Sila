@@ -71,7 +71,7 @@ struct TwitchVideoView: View {
                         HStack {
                             // This is the gap between the main window and our ornament
                             Color.clear.frame(width: self.ornamentSpacing)
-                            ChatPaneView(channelName: stream.userLogin, userId: stream.userId, title: stream.userName, isWindow: false) {
+                            ChatPaneView(channelName: stream.userLogin, userId: stream.userID, title: stream.userName, isWindow: false) {
                                 withAnimation {
                                     self.chatVisibility = .hidden
                                 }
@@ -107,10 +107,10 @@ struct TwitchVideoView: View {
                 switch self.streamableVideo {
                 case .stream(let stream):
                     channel = stream.userName
-                    channelId = stream.userId
+                    channelId = stream.userID
                 case .video(let video):
                     channel = video.userName
-                    channelId = video.userId
+                    channelId = video.userID
                 }
 
                 self.player.channelId = channelId

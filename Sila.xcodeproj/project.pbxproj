@@ -74,6 +74,7 @@
 		6690EBA42BA73C2B0093B18C /* Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6690EBA32BA73C2B0093B18C /* Language.swift */; };
 		6690EBA62BA73CEB0093B18C /* LanguageFilterPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6690EBA52BA73CEB0093B18C /* LanguageFilterPickerView.swift */; };
 		6690EBA82BA78C810093B18C /* RefreshableScrollGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6690EBA72BA78C810093B18C /* RefreshableScrollGridView.swift */; };
+		66A54E5A2EC7B9AA0000DA46 /* Twitch in Frameworks */ = {isa = PBXBuildFile; productRef = 66A54E592EC7B9AA0000DA46 /* Twitch */; };
 		66A5ADB52B96DA160025EF75 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A5ADB42B96DA160025EF75 /* SettingsView.swift */; };
 		66A5ADB82B96DAA20025EF75 /* LicensesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A5ADB72B96DAA20025EF75 /* LicensesView.swift */; };
 		66A5ADBB2B97E98E0025EF75 /* Licenses.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 66A5ADBA2B97E98E0025EF75 /* Licenses.xcstrings */; };
@@ -124,7 +125,6 @@
 		66F4E4252B811B6C008C565D /* CloseButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E4242B811B6C008C565D /* CloseButtonView.swift */; };
 		66F4E4282B812932008C565D /* OAuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E4272B812932008C565D /* OAuthView.swift */; };
 		66F4E42C2B812A32008C565D /* AuthController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E42B2B812A32008C565D /* AuthController.swift */; };
-		66F4E4302B8132F5008C565D /* Twitch in Frameworks */ = {isa = PBXBuildFile; productRef = 66F4E42F2B8132F5008C565D /* Twitch */; };
 		66F4E4342B813A1F008C565D /* FollowedStreamsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E4332B813A1F008C565D /* FollowedStreamsView.swift */; };
 		66F4E43D2B818499008C565D /* DataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E43C2B818499008C565D /* DataView.swift */; };
 		66F73D0F2EC0F1C00093A4A6 /* PresentableTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F73D0E2EC0F1C00093A4A6 /* PresentableTypes.swift */; };
@@ -134,11 +134,13 @@
 		66F73D182EC0FDAA0093A4A6 /* ChatPresentableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F73D172EC0FDAA0093A4A6 /* ChatPresentableController.swift */; };
 		66F73D1A2EC100F50093A4A6 /* PresentableTrackingViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F73D192EC100F50093A4A6 /* PresentableTrackingViewModifier.swift */; };
 		66F73D1C2EC19CCE0093A4A6 /* PlaybackPresentableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F73D1B2EC19CCE0093A4A6 /* PlaybackPresentableController.swift */; };
+		66F73D6D2EC6D4FA0093A4A6 /* Twitch in Frameworks */ = {isa = PBXBuildFile; productRef = 66F73D6C2EC6D4FA0093A4A6 /* Twitch */; };
 		66F8D1902B88581D008C4F7C /* Icon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F8D18F2B88581D008C4F7C /* Icon.swift */; };
 		66F8D1932B894253008C4F7C /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F8D1922B894253008C4F7C /* Route.swift */; };
 		66F8D1962B898141008C4F7C /* LoadingAsyncImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F8D1952B898141008C4F7C /* LoadingAsyncImage.swift */; };
 		66F8D1992B89A051008C4F7C /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F8D1982B89A051008C4F7C /* SearchView.swift */; };
 		66F8D1A02B8A8F4B008C4F7C /* ChannelMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F8D19F2B8A8F4B008C4F7C /* ChannelMock.swift */; };
+		66FD913D2EC6D58A00BFCBCC /* Twitch in Frameworks */ = {isa = PBXBuildFile; productRef = 66FD913C2EC6D58A00BFCBCC /* Twitch */; };
 		68A872C52BACBB070031FCD4 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A872C42BACBB070031FCD4 /* View.swift */; };
 /* End PBXBuildFile section */
 
@@ -279,9 +281,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				66E102192B8262AC007A44D4 /* KeychainWrapper in Frameworks */,
+				66F73D6D2EC6D4FA0093A4A6 /* Twitch in Frameworks */,
 				663E38092B9226D3002E0530 /* NukeUI in Frameworks */,
-				66F4E4302B8132F5008C565D /* Twitch in Frameworks */,
+				66FD913D2EC6D58A00BFCBCC /* Twitch in Frameworks */,
 				663E38072B9226D3002E0530 /* Nuke in Frameworks */,
+				66A54E5A2EC7B9AA0000DA46 /* Twitch in Frameworks */,
 				66D11B582BF2DE3800DDD159 /* AsyncAnimatedImageUI in Frameworks */,
 				66364FC82B8BA49A005180B8 /* JunoUI in Frameworks */,
 				66D11B6C2BF81FF200DDD159 /* AsyncAnimatedImageUI in Frameworks */,
@@ -715,7 +719,6 @@
 			);
 			name = Sila;
 			packageProductDependencies = (
-				66F4E42F2B8132F5008C565D /* Twitch */,
 				66E102182B8262AC007A44D4 /* KeychainWrapper */,
 				66364FC72B8BA49A005180B8 /* JunoUI */,
 				663E38062B9226D3002E0530 /* Nuke */,
@@ -723,6 +726,9 @@
 				66D11B572BF2DE3800DDD159 /* AsyncAnimatedImageUI */,
 				66D11B662BF5B51000DDD159 /* AsyncAnimatedImageUI */,
 				66D11B6B2BF81FF200DDD159 /* AsyncAnimatedImageUI */,
+				66F73D6C2EC6D4FA0093A4A6 /* Twitch */,
+				66FD913C2EC6D58A00BFCBCC /* Twitch */,
+				66A54E592EC7B9AA0000DA46 /* Twitch */,
 			);
 			productName = Sila;
 			productReference = 663B72F32B6DB8E60031D661 /* Sila.app */;
@@ -753,11 +759,11 @@
 			);
 			mainGroup = 663B72EA2B6DB8E60031D661;
 			packageReferences = (
-				66F4E42E2B8132F5008C565D /* XCRemoteSwiftPackageReference "swift-twitch-client" */,
 				66E102172B8262AC007A44D4 /* XCRemoteSwiftPackageReference "KeychainWrapper" */,
 				66364FC62B8BA499005180B8 /* XCRemoteSwiftPackageReference "JunoSlider" */,
 				663E38052B9226D3002E0530 /* XCRemoteSwiftPackageReference "Nuke" */,
 				66D11B6A2BF81FF200DDD159 /* XCRemoteSwiftPackageReference "AsyncAnimatedImage" */,
+				66A54E582EC7B9AA0000DA46 /* XCRemoteSwiftPackageReference "swift-twitch-client" */,
 			);
 			productRefGroup = 663B72F42B6DB8E60031D661 /* Products */;
 			projectDirPath = "";
@@ -1139,6 +1145,14 @@
 				minimumVersion = 12.4.0;
 			};
 		};
+		66A54E582EC7B9AA0000DA46 /* XCRemoteSwiftPackageReference "swift-twitch-client" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/agg23/swift-twitch-client";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 		66D11B6A2BF81FF200DDD159 /* XCRemoteSwiftPackageReference "AsyncAnimatedImage" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/agg23/AsyncAnimatedImage.git";
@@ -1153,14 +1167,6 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 1.2.1;
-			};
-		};
-		66F4E42E2B8132F5008C565D /* XCRemoteSwiftPackageReference "swift-twitch-client" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/agg23/swift-twitch-client";
-			requirement = {
-				branch = main;
-				kind = branch;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -1181,6 +1187,11 @@
 			package = 663E38052B9226D3002E0530 /* XCRemoteSwiftPackageReference "Nuke" */;
 			productName = NukeUI;
 		};
+		66A54E592EC7B9AA0000DA46 /* Twitch */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 66A54E582EC7B9AA0000DA46 /* XCRemoteSwiftPackageReference "swift-twitch-client" */;
+			productName = Twitch;
+		};
 		66D11B572BF2DE3800DDD159 /* AsyncAnimatedImageUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = AsyncAnimatedImageUI;
@@ -1199,9 +1210,12 @@
 			package = 66E102172B8262AC007A44D4 /* XCRemoteSwiftPackageReference "KeychainWrapper" */;
 			productName = KeychainWrapper;
 		};
-		66F4E42F2B8132F5008C565D /* Twitch */ = {
+		66F73D6C2EC6D4FA0093A4A6 /* Twitch */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 66F4E42E2B8132F5008C565D /* XCRemoteSwiftPackageReference "swift-twitch-client" */;
+			productName = Twitch;
+		};
+		66FD913C2EC6D58A00BFCBCC /* Twitch */ = {
+			isa = XCSwiftPackageProductDependency;
 			productName = Twitch;
 		};
 /* End XCSwiftPackageProductDependency section */

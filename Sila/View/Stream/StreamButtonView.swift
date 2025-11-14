@@ -43,7 +43,7 @@ struct StreamButtonView: View {
             }
         } contextMenu: {
             let channelButton = Button {
-                self.router.pushToActiveTab(route: .channel(user: .id(stream.userId)))
+                self.router.pushToActiveTab(route: .channel(user: .id(stream.userID)))
             } label: {
                 Label("View Channel", systemImage: Icon.channel)
             }

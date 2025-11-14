@@ -11,7 +11,7 @@ import Twitch
 import TwitchIRC
 
 struct Connection {
-    let chatClient: ChatClient
+    let chatClient: TwitchIRCClient
     let task: Task<(), Never>
 }
 
@@ -42,11 +42,14 @@ struct Connection {
 
     func connect() async {
         print("Opening IRC connection")
-        let client = ChatClient(.anonymous)
+        guard let client = try? await TwitchIRCClient(.anonymous, urlSession: URLSession.shared) else {
+            print("Could not create IRC client")
+            return
+        }
+
         let task = Task {
             do {
-                let stream = try await client.connect()
-
+                let stream = await client.stream()
                 try await client.join(to: self.channelName)
 
                 for try await message in stream {
@@ -80,7 +83,9 @@ struct Connection {
     func disconnect() {
         print("Chat disconnect")
         self.connection?.task.cancel()
-        self.connection?.chatClient.disconnect()
+        Task {
+            try? await self.connection?.chatClient.part(from: self.channelName)
+        }
         self.connection = nil
 
         var insertDivider = true

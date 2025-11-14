@@ -39,7 +39,7 @@ struct FollowedStreamsView: View {
                 // If we have no user, we're unauthenticated and this is a buffered task
                 return ([], nil)
             }
-            return try await api.getFollowedStreams(limit: 100)
+            return try await api.helix(endpoint: .getFollowedStreams(limit: 100))
         }, noAuthMessage: "your followed streams", noAuthSystemImage: Icon.following) { (streams, _) in
             if streams.isEmpty {
                 EmptyDataView(title: "No Livestreams", systemImage: Icon.following, message: "live followed streams") {
@@ -59,11 +59,11 @@ struct FollowedStreamsView: View {
     var channels: some View {
         // TODO: Does not support pagination, but I believe will fetch all 100 channels (probably all anyone has)
         AuthroizedStandardDataView(loader: self.$channelsLoader, task: { api, user in
-            let (_, channels, _) = try await api.getFollowedChannels(limit: 100)
+            let response = try await api.helix(endpoint: .getFollowedChannels(limit: 100))
 
-            let broadcasterIds = channels.map({$0.broadcasterId})
+            let broadcasterIDs = response.follows.map({$0.broadcasterID})
 
-            let users = try await api.getUsers(userIDs: broadcasterIds)
+            let users = try await api.helix(endpoint: .getUsers(ids: broadcasterIDs))
             return users
         }, noAuthMessage: "your followed channels", noAuthSystemImage: Icon.following) { channels in
             if channels.isEmpty {
@@ -86,7 +86,7 @@ struct FollowedStreamsView: View {
                 return data
             }
 
-            let (newData, cursor) = try await apiAndUser.0.getFollowedStreams(limit: 100, after: originalCusor)
+            let (newData, cursor) = try await apiAndUser.0.helix(endpoint: .getFollowedStreams(limit: 100, after: originalCusor))
 
             return (data.0 + newData, cursor)
         }

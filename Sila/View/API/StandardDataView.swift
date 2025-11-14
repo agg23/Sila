@@ -10,7 +10,7 @@ import Twitch
 
 struct StandardDataView<T, Content: View>: View {
     let loader: Binding<StandardDataLoader<T>>
-    let task: (_: Helix, _: AuthUser?) async throws -> T
+    let task: (_: TwitchClient, _: AuthUser?) async throws -> T
 
     @ViewBuilder let content: (_: T) -> Content
 
@@ -42,7 +42,7 @@ struct AuthroizedStandardDataView<T, Content: View>: View {
     @Environment(AuthController.self) private var authController
 
     let loader: Binding<StandardDataLoader<T>>
-    let task: (_: Helix, _: AuthUser?) async throws -> T
+    let task: (_: TwitchClient, _: AuthUser?) async throws -> T
 
     let noAuthMessage: String
     let noAuthSystemImage: String

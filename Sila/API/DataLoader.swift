@@ -17,7 +17,7 @@ enum Status<T> {
     case error(Error)
 }
 
-typealias StandardDataLoader<T> = DataLoader<T, (Helix, AuthUser?), AuthStatus>
+typealias StandardDataLoader<T> = DataLoader<T, (TwitchClient, AuthUser?), AuthStatus>
 
 @Observable class DataLoader<T, DataAugment, Changable: Equatable> {
     var status: Status<T> = .idle

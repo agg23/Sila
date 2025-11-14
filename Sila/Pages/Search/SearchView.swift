@@ -37,8 +37,8 @@ struct SearchView: View {
                         return ([], [])
                     }
 
-                    async let (categories, _) = try await apiAndUser.0.searchCategories(for: self.query, limit: 18)
-                    async let (channels, _) = try await apiAndUser.0.searchChannels(for: self.query, liveOnly: true, limit: 18)
+                    async let (categories, _) = try await apiAndUser.0.helix(endpoint: .searchCategories(for: self.query, limit: 18))
+                    async let (channels, _) = try await apiAndUser.0.helix(endpoint: .searchChannels(for: self.query, liveOnly: true, limit: 18))
                     return try await (categories, channels)
                 }
             }
@@ -99,7 +99,7 @@ struct SearchListView: View {
                                     return
                                 }
 
-                                let (streams, _) = try await api.getStreams(userLogins: [channel.login])
+                                let (streams, _) = try await api.helix(endpoint: .getStreams(userLogins: [channel.login]))
 
                                 guard let stream = streams.first else {
                                     return

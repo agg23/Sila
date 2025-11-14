@@ -119,7 +119,7 @@ struct MainWindowView: View {
         Task {
             let api = try AuthShortcut.getAPI(self.authController)
 
-            let (streams, _) = try await api.getStreams(userLogins: [channel])
+            let (streams, _) = try await api.helix(endpoint: .getStreams(userLogins: [channel]))
 
             guard streams.count > 0 else {
                 print("Channel \"\(channel)\" is not live.")

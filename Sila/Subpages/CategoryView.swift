@@ -34,12 +34,12 @@ struct CategoryView: View {
 //        .navigationTitlePlaceholder()
     }
 
-    func fetchData(on api: Helix, overwriting: Bool, language: String, using cursor: String? = nil) async throws -> ([Twitch.Stream], Game, String?) {
-        let filterLanguages = language == "all" ? nil : [language]
+    func fetchData(on api: TwitchClient, overwriting: Bool, language: String, using cursor: String? = nil) async throws -> ([Twitch.Stream], Game, String?) {
+        let filterLanguages = language == "all" ? [] : [language]
 
         switch self.category {
         case .game(let game):
-            let (streams, cursor) = try await api.getStreams(gameIDs: [game.id], languages: filterLanguages, after: cursor)
+            let (streams, cursor) = try await api.helix(endpoint: .getStreams(gameIDs: [game.id], languages: filterLanguages, after: cursor))
 
             if overwriting {
                 self.existingIds = Set(streams.map({ $0.id }))
@@ -52,12 +52,12 @@ struct CategoryView: View {
                 return (newStreams, game, cursor)
             }
         case .id(let id):
-            async let (streamsAsync, cursorAsync) = try await api.getStreams(gameIDs: [id], languages: filterLanguages, after: cursor)
-            async let gameAsync = try await api.getGames(gameIDs: [id])
+            async let (streamsAsync, cursorAsync) = try await api.helix(endpoint: .getStreams(gameIDs: [id], languages: filterLanguages, after: cursor))
+            async let gameAsync = try await api.helix(endpoint: .getGames(gameIDs: [id]))
             let (streams, games, cursor) = try await (streamsAsync, gameAsync, cursorAsync)
 
             guard games.count > 0 else {
-                throw HelixError.requestFailed(error: "Could not find game", status: 200, message: "")
+                throw HelixError.twitchError(name: "Could not find game", status: 200, message: "")
             }
 
             if overwriting {

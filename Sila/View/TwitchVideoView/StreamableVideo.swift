@@ -23,9 +23,9 @@ enum StreamableVideo: Equatable {
     var userId: String {
         switch self {
         case .stream(let stream):
-            return stream.userId
+            return stream.userID
         case .video(let video):
-            return video.userId
+            return video.userID
         }
     }
 

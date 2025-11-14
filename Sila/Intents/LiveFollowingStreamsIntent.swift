@@ -23,7 +23,7 @@ struct LiveFollowingStreamsIntent: AppIntent {
             throw IntentError.message("Please log in to view live following channels.")
         }
 
-        let (followedChannels, _) = try await api.getFollowedStreams(limit: 100)
+        let (followedChannels, _) = try await api.helix(endpoint: .getFollowedStreams(limit: 100))
 
         return .result(value: followedChannels.sorted(by: { a, b in
             a.viewerCount > b.viewerCount

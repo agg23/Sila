@@ -26,7 +26,7 @@ struct CategoryStreamsIntent: AppIntent {
     func perform() async throws -> some IntentResult & ReturnsValue<[String]> {
         let api = try AuthShortcut.getAPI(self.authController)
 
-        let (categories, _) = try await api.searchCategories(for: self.category)
+        let (categories, _) = try await api.helix(endpoint: .searchCategories(for: self.category))
 
         guard categories.count > 0 else {
             throw IntentError.message("Could not find category \"\(self.category)\"")
@@ -34,7 +34,7 @@ struct CategoryStreamsIntent: AppIntent {
 
         let category = categories[0]
 
-        let (streams, _) = try await api.getStreams(gameIDs: [category.id], limit: 100)
+        let (streams, _) = try await api.helix(endpoint: .getStreams(gameIDs: [category.id], limit: 100))
 
         return .result(value: streams.map({ $0.userLogin }))
     }

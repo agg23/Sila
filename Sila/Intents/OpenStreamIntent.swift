@@ -27,7 +27,7 @@ struct OpenStreamIntent: AppIntent {
     func perform() async throws -> some IntentResult & OpensIntent {
         let api = try AuthShortcut.getAPI(self.authController)
 
-        let (streams, _) = try await api.getStreams(userLogins: [self.channel])
+        let (streams, _) = try await api.helix(endpoint: .getStreams(userLogins: [self.channel]))
 
         guard streams.count > 0 else {
             throw IntentError.message("Channel \"\(self.channel)\" is not live.")

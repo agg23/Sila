@@ -14,7 +14,7 @@ struct CategoryListView: View {
 
     var body: some View {
         StandardDataView(loader: self.$loader) { api, user in
-            let (streams, cursor) = try await api.getTopGames(limit: 100)
+            let (streams, cursor) = try await api.helix(endpoint: .getTopGames(limit: 100))
 
             self.existingIds = Set(streams.map({ $0.id }))
 
@@ -44,13 +44,13 @@ struct CategoryListView: View {
                 return data
             }
 
-            let newData = try await apiAndUser.0.getTopGames(limit: 100, after: originalCursor)
+            let newData = try await apiAndUser.0.helix(endpoint: .getTopGames(limit: 100, after: originalCursor))
 
             // Prevent duplicates from appearing, due to the list resorting while being fetched
-            let newStreams = newData.games.filter({ !self.existingIds.contains($0.id) })
+            let newStreams = newData.0.filter({ !self.existingIds.contains($0.id) })
             self.existingIds.formUnion(newStreams.map({ $0.id }))
 
-            return (data.0 + newStreams, newData.cursor)
+            return (data.0 + newStreams, newData.1)
         }
     }
 }

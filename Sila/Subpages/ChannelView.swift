@@ -17,17 +17,17 @@ struct ChannelView: View {
         StandardDataView(loader: self.$loader) { api, _ in
             switch self.channel {
             case .user(let user):
-                let (streams, _) = try await api.getStreams(userIDs: [user.id])
+                let (streams, _) = try await api.helix(endpoint: .getStreams(userIDs: [user.id]))
 
                 return (user, streams.first)
             case .id(let id):
-                async let usersTask = api.getUsers(userIDs: [id])
-                async let (streamsTask, _) = api.getStreams(userIDs: [id])
+                async let usersTask = api.helix(endpoint: .getUsers(ids: [id]))
+                async let (streamsTask, _) = api.helix(endpoint: .getStreams(userIDs: [id]))
 
                 let (users, streams) = try await (usersTask, streamsTask)
 
                 guard users.count > 0 else {
-                    throw HelixError.requestFailed(error: "Could not fetch user", status: 200, message: "")
+                    throw HelixError.twitchError(name: "Could not fetch user", status: 200, message: "")
                 }
 
                 return (users[0], streams.first)
@@ -71,7 +71,7 @@ struct ChannelViewContent: View {
             .padding()
             // TODO: Add "VoDs" title or similar to lower section
             AuthroizedStandardDataView(loader: self.$vodLoader, task: { api, _ in
-                return try await api.getVideosByUserId(self.channelUser.id)
+                return try await api.helix(endpoint: .getVideos(userID: self.channelUser.id))
             }, noAuthMessage: "this channel's VoDs", noAuthSystemImage: Icon.channel) { videos, _ in
                 RefreshableScrollGridView(loader: self.vodLoader) {
                     VODGridView(channel: self.channelUser, videos: videos, onPaginationThresholdMet: self.onPaginationThresholdMet)
@@ -97,7 +97,7 @@ struct ChannelViewContent: View {
                 return data
             }
 
-            let newData = try await apiAndUser.0.getVideosByUserId(self.channelUser.id, after: originalCursor)
+            let newData = try await apiAndUser.0.helix(endpoint: .getVideos(id: self.channelUser.id, after: originalCursor))
             return (data.0 + newData.0, newData.1)
         }
     }

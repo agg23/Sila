@@ -78,8 +78,8 @@ private struct RecentChannelsSection: View {
 
             let userLogins = self.recentsStore.recentChannels.map { $0.userLogin }
             let userLoginsWithoutImages = self.recentsStore.recentChannels.filter { $0.profileImageUrl == nil }.map { $0.userLogin }
-            async let streams = try? await api.getStreams(userLogins: userLogins)
-            async let users = !userLoginsWithoutImages.isEmpty ? try? await api.getUsers(userIDs: [], userLogins: userLoginsWithoutImages) : nil
+            async let streams = try? await api.helix(endpoint: .getStreams(userLogins: userLogins))
+            async let users = !userLoginsWithoutImages.isEmpty ? try? await api.helix(endpoint: .getUsers(ids: [], names: userLoginsWithoutImages)) : nil
 
             if let (streams, _) = await streams {
                 var statuses: [String: ChannelStatus] = [:]

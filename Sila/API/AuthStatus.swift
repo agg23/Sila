@@ -10,13 +10,13 @@ import Twitch
 
 enum AuthStatus: Equatable {
     /// User is logged in
-    case user(user: AuthUser, api: Helix)
+    case user(user: AuthUser, api: TwitchClient)
     /// No user is logged in, but with have public token
-    case publicLoggedOut(api: Helix)
+    case publicLoggedOut(api: TwitchClient)
     /// No access to Twitch API
     case none
 
-    func api() -> Helix? {
+    func api() -> TwitchClient? {
         guard let (api, _) = apiAndUser() else {
             return nil
         }
@@ -32,7 +32,7 @@ enum AuthStatus: Equatable {
         return user
     }
 
-    func apiAndUser() -> (Helix, AuthUser?)? {
+    func apiAndUser() -> (TwitchClient, AuthUser?)? {
         switch self {
         case .user(let user, let api):
             return (api, user)

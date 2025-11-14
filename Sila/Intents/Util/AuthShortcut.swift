@@ -8,7 +8,7 @@
 import Twitch
 
 struct AuthShortcut {
-    static func getAPI(_ authController: AuthController) throws -> Helix {
+    static func getAPI(_ authController: AuthController) throws -> TwitchClient {
         switch authController.status {
         case .user(_, let api):
             return api

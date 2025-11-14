@@ -12,7 +12,7 @@ struct DataView<T, Content: View, Loading: View, ErrorView: View>: View {
     @Environment(AuthController.self) private var authController
 
     let loader: Binding<StandardDataLoader<T>>
-    let task: (_: Helix, _: AuthUser?) async throws -> T
+    let task: (_: TwitchClient, _: AuthUser?) async throws -> T
 
     @ViewBuilder let content: (_: T) -> Content
     @ViewBuilder let loading: (_: T?) -> Loading
@@ -41,11 +41,11 @@ struct DataView<T, Content: View, Loading: View, ErrorView: View>: View {
                         } catch let error as HelixError {
                             // This is ugly
                             switch error {
-                            case .invalidErrorResponse(status: let status, rawResponse: _):
+                            case .twitchError(name: _, status: let status, message: _):
                                 if status == 401 || status == 403 {
                                     self.authController.requestReauth()
                                 }
-                            case .requestFailed(error: _, status: let status, message: _):
+                            case .parsingErrorFailed(status: let status, responseData: _):
                                 if status == 401 || status == 403 {
                                     self.authController.requestReauth()
                                 }
