@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ChatPaneView: View {
+struct ChatContentView: View {
     @Environment(\.openWindow) private var openWindow
 
     let channelName: String
@@ -28,7 +28,7 @@ struct ChatPaneView: View {
         let title = self.title ?? "Chat"
 
         NavigationStack {
-            ChatView(channelName: self.channelName, userId: self.userId, isWindow: self.isWindow)
+            ChatListView(channelName: self.channelName, userId: self.userId, isWindow: self.isWindow)
                 .toolbar {
                     if !isWindow {
                         ToolbarItem(placement: .topBarLeading) {
@@ -78,7 +78,7 @@ struct ChatPaneWindow: View {
     let title: String
 
     var body: some View {
-        ChatPaneView(channelName: self.channelName, userId: self.userId, title: self.title, isWindow: true) {
+        ChatContentView(channelName: self.channelName, userId: self.userId, title: self.title, isWindow: true) {
             WindowController.shared.popoutChatSubject.send(self.userId)
             self.dismissWindow(id: Window.chat, value: ChatWindowModel(channelName: self.channelName, userId: self.userId, title: self.title))
         }
@@ -86,7 +86,7 @@ struct ChatPaneWindow: View {
 }
 
 #Preview {
-    ChatPaneView(channelName: "barbarousking", userId: "56865374", title: "BarbarousKing", isWindow: false) {
+    ChatContentView(channelName: "barbarousking", userId: "56865374", title: "BarbarousKing", isWindow: false) {
         print("Dismiss")
     }
 }

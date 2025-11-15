@@ -1,5 +1,5 @@
 //
-//  ChatView.swift
+//  ChatListView.swift
 //  VisionTwitch
 //
 //  Created by Adam Gastineau on 2/29/24.
@@ -11,7 +11,7 @@ import AsyncAnimatedImageUI
 import Twitch
 import TwitchIRC
 
-struct ChatView: View {
+struct ChatListView: View {
     @State private var chatModel: ChatModel?
 
     @State private var toggle = true
@@ -31,7 +31,7 @@ struct ChatView: View {
     var body: some View {
         VStack {
             if let chatModel = self.chatModel {
-                ChatListView(chatModel: chatModel)
+                ChatListContentView(chatModel: chatModel)
             }
         }
         .presentableTracking(contentId: self.contentId, role: self.isWindow ? .standalone : .embedded, factory: {
@@ -71,7 +71,7 @@ struct ChatView: View {
     }
 }
 
-struct ChatListView: View {
+private struct ChatListContentView: View {
     private let scrollViewCoordinateSpace = "scrollViewCoordinateSpace"
     private let bottomRowId = "bottomRow"
 
@@ -98,7 +98,7 @@ struct ChatListView: View {
                     switch entry {
                     case .message(let message):
                         ChatMessage(message: message, cachedColors: self.chatModel.cachedColors)
-                            .listRowInsets(ChatListView.rowInset)
+                            .listRowInsets(ChatListContentView.rowInset)
                             .listRowSeparator(.hidden)
                             .padding(.vertical, 2)
                     case .divider(let date):
@@ -106,7 +106,7 @@ struct ChatListView: View {
                             .frame(maxWidth: .infinity, alignment: .center)
                             .foregroundColor(.secondary)
                             .multilineTextAlignment(.center)
-                            .listRowInsets(ChatListView.dividerInset)
+                            .listRowInsets(ChatListContentView.dividerInset)
                             // Use list separator at the bottom of the row as a psuedo-Divider
                             .listRowSeparator(.visible)
                     }
@@ -116,7 +116,7 @@ struct ChatListView: View {
                     // As of visionOS 26, a non-zero height is required for onAppear to fire
                     // Use an even count to improve the alignment of the text
                     .frame(height: 2, alignment: .bottom)
-                    .listRowInsets(ChatListView.bottomInset)
+                    .listRowInsets(ChatListContentView.bottomInset)
                     .listRowSeparator(.hidden)
                     // Explicit ID for scrollToBottom()
                     .id(bottomRowId)
@@ -212,7 +212,7 @@ struct ChatListView: View {
     // MoonMoon
     let chatModel = ChatModel(channelName: "foo", userId: "bar")
     chatModel.entries = PRIVATEMESSAGE_LIST_MOCK().map({ .message(ChatMessageModel(message: $0, userId: "121059319")) })
-    return ChatListView(chatModel: chatModel)
+    return ChatListContentView(chatModel: chatModel)
         .frame(width: 400)
         .glassBackgroundEffect()
 }

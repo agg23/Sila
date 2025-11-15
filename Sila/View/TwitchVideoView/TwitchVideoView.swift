@@ -71,7 +71,7 @@ struct TwitchVideoView: View {
                         HStack {
                             // This is the gap between the main window and our ornament
                             Color.clear.frame(width: self.ornamentSpacing)
-                            ChatPaneView(channelName: stream.userLogin, userId: stream.userID, title: stream.userName, isWindow: false) {
+                            ChatContentView(channelName: stream.userLogin, userId: stream.userID, title: stream.userName, isWindow: false) {
                                 withAnimation {
                                     self.chatVisibility = .hidden
                                 }
