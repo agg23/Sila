@@ -28,8 +28,7 @@ struct AttributedStringBuilder {
 
             attributedString.addAttribute(.link, value: url, range: match.range)
 
-            // TODO: Add better link color (maybe Twitch color)
-            attributedString.addAttribute(.foregroundColor, value: UIColor.purple, range: match.range)
+            attributedString.addAttribute(.foregroundColor, value: UIColor.twitchLinkPurple, range: match.range)
         }
 
         return AttributedString(attributedString)
