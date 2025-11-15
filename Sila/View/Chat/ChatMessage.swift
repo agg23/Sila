@@ -34,8 +34,8 @@ struct ChatMessage: View {
             Text(": ") +
             self.message.chunks.reduce(Text("")) { existingText, chunk in
                 switch chunk {
-                case .text(let string):
-                    return existingText + Text(string)
+                case .text(attributed: let attributed, string: let string):
+                    return existingText + renderAttributedText(attributed, string: string)
                 case .image(let url):
                     return existingText + Text("\(AsyncAnimatedImage(url: url) ?? Image(uiImage: transparentEmoteImage))")
                         .baselineOffset(-8.5)
@@ -51,6 +51,14 @@ struct ChatMessage: View {
             AnimatedImageCache.shared.onDisappear(for: self.message.emoteURLs)
         }
     }
+}
+
+func renderAttributedText(_ attributed: AttributedString?, string: String) -> Text {
+    guard let attributed = attributed else {
+        return Text(string)
+    }
+
+    return Text(attributed)
 }
 
 #Preview {

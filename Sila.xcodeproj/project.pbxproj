@@ -75,6 +75,7 @@
 		6690EBA62BA73CEB0093B18C /* LanguageFilterPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6690EBA52BA73CEB0093B18C /* LanguageFilterPickerView.swift */; };
 		6690EBA82BA78C810093B18C /* RefreshableScrollGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6690EBA72BA78C810093B18C /* RefreshableScrollGridView.swift */; };
 		66A54E5A2EC7B9AA0000DA46 /* Twitch in Frameworks */ = {isa = PBXBuildFile; productRef = 66A54E592EC7B9AA0000DA46 /* Twitch */; };
+		66A54E5C2EC843470000DA46 /* AttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A54E5B2EC843470000DA46 /* AttributedString.swift */; };
 		66A5ADB52B96DA160025EF75 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A5ADB42B96DA160025EF75 /* SettingsView.swift */; };
 		66A5ADB82B96DAA20025EF75 /* LicensesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A5ADB72B96DAA20025EF75 /* LicensesView.swift */; };
 		66A5ADBB2B97E98E0025EF75 /* Licenses.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 66A5ADBA2B97E98E0025EF75 /* Licenses.xcstrings */; };
@@ -212,6 +213,7 @@
 		6690EBA32BA73C2B0093B18C /* Language.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Language.swift; sourceTree = "<group>"; };
 		6690EBA52BA73CEB0093B18C /* LanguageFilterPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageFilterPickerView.swift; sourceTree = "<group>"; };
 		6690EBA72BA78C810093B18C /* RefreshableScrollGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshableScrollGridView.swift; sourceTree = "<group>"; };
+		66A54E5B2EC843470000DA46 /* AttributedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedString.swift; sourceTree = "<group>"; };
 		66A5ADB42B96DA160025EF75 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		66A5ADB72B96DAA20025EF75 /* LicensesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicensesView.swift; sourceTree = "<group>"; };
 		66A5ADBA2B97E98E0025EF75 /* Licenses.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = Licenses.xcstrings; path = Sila/Licenses.xcstrings; sourceTree = SOURCE_ROOT; };
@@ -690,6 +692,7 @@
 		66F8D18E2B88580D008C4F7C /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				66A54E5B2EC843470000DA46 /* AttributedString.swift */,
 				66891FF72B9A9E72000C0D92 /* Color.swift */,
 				660BD00E2EAF0EB200E88BAF /* Date.swift */,
 				66F8D18F2B88581D008C4F7C /* Icon.swift */,
@@ -837,6 +840,7 @@
 				66F73D0F2EC0F1C00093A4A6 /* PresentableTypes.swift in Sources */,
 				66F8D1A02B8A8F4B008C4F7C /* ChannelMock.swift in Sources */,
 				66F8D1932B894253008C4F7C /* Route.swift in Sources */,
+				66A54E5C2EC843470000DA46 /* AttributedString.swift in Sources */,
 				66A5ADC12B9949C40025EF75 /* EmptyContentView.swift in Sources */,
 				66E1022C2B82A592007A44D4 /* StreamGridView.swift in Sources */,
 				66C4BC382BCD9C1400AA8732 /* Emote.swift in Sources */,

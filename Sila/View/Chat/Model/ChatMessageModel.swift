@@ -54,7 +54,7 @@ class ChatMessageModel {
 }
 
 enum AnimatedMessageChunk {
-    case text(String)
+    case text(attributed: AttributedString?, string: String)
     case image(URL)
 }
 
@@ -90,12 +90,12 @@ private func buildChunks(from message: PrivateMessage, userId: String) -> ([Anim
 
     // Final segment
     if (startIndex.utf16Offset(in: string) != string.count) {
-        let prefixString = string[startIndex..<string.endIndex]
-        chunks.append(.text(String(prefixString)))
+        let prefixString = String(string[startIndex..<string.endIndex])
+        chunks.append(.text(attributed: AttributedStringBuilder().buildLinkString(from: prefixString), string: prefixString))
     }
 
     chunks = chunks.flatMap { chunk in
-        if case .text(let string) = chunk {
+        if case .text(attributed: _, string: let string) = chunk {
             // String chunk
             let splitString = string.split(separator: /\s+/)
 
@@ -115,8 +115,8 @@ private func buildChunks(from message: PrivateMessage, userId: String) -> ([Anim
                 // Replace this chunk with innerChunks
                 // Final segment
                 if (startIndex.utf16Offset(in: string) != string.count) {
-                    let prefixString = string[startIndex..<string.endIndex]
-                    innerChunks.append(.text(String(prefixString)))
+                    let prefixString = String(string[startIndex..<string.endIndex])
+                    innerChunks.append(.text(attributed: nil, string: prefixString))
                 }
 
                 return innerChunks
@@ -130,10 +130,10 @@ private func buildChunks(from message: PrivateMessage, userId: String) -> ([Anim
 }
 
 private func extractEmoteSection(string: String, startIndex: String.Index, emoteStartIndex: String.Index, emoteUrl: URL, chunks: inout [AnimatedMessageChunk], emoteUrls: inout [URL]) {
-    let prefixString = string[startIndex..<emoteStartIndex]
+    let prefixString = String(string[startIndex..<emoteStartIndex])
 
     if prefixString.count > 0 {
-        chunks.append(.text(String(prefixString)))
+        chunks.append(.text(attributed: nil, string: prefixString))
     }
 
     chunks.append(.image(emoteUrl))
