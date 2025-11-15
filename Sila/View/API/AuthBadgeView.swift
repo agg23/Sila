@@ -14,8 +14,7 @@ struct AuthBadgeView: View {
     var body: some View {
         Menu("Account", systemImage: "person.fill") {
             if let authUser = self.authController.status.user() {
-                Button("Logged In: \(authUser.username)") {}
-                    .disabled(/*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
+                Text("Logged In: \(authUser.username)")
                 Button("Log Out") {
                     self.authController.logOut()
                 }
