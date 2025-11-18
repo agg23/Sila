@@ -25,6 +25,9 @@ final class ChatPresentableController: PresentableControllerBase {
     override func didBecomeHidden() async {
         self.task?.cancel()
         self.task = nil
+
+        // If for some reason it's still alive, kill the connection
+        self.chatModel.disconnect()
     }
 
     override func didBecomeVisible() async {
