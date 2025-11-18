@@ -11,13 +11,13 @@ import WebKit
 
 struct TwitchVideoView: View {
     let controlsTimerDuration = 3.0
-    let ornamentSpacing = 8.0
+    static let ornamentSpacing = 8.0
 
     @State private var loading = true
 
     @Binding var controlVisibility: Visibility
     @State private var controlVisibilityTimer: Timer?
-    @State private var chatVisibility = Visibility.hidden
+    @State private var chatVisible = false
 
     @State private var preventClose = false
 
@@ -63,32 +63,42 @@ struct TwitchVideoView: View {
             .onTapGesture {
                 self.toggleVisibility()
             }
-            .ornament(visibility: self.chatVisibility, attachmentAnchor: .scene(.trailing), contentAlignment: .leading) {
-                // Make sure we don't start loading chat while offscreen
-                if self.chatVisibility != .hidden {
-                    // TODO: Handle VoDs
-                    if case .stream(let stream) = self.streamableVideo {
-                        HStack {
-                            // This is the gap between the main window and our ornament
-                            Color.clear.frame(width: self.ornamentSpacing)
-                            ChatContentView(channelName: stream.userLogin, userId: stream.userID, title: stream.userName, isWindow: false) {
-                                withAnimation {
-                                    self.chatVisibility = .hidden
+            // .center is used so the ornament isn't cut off at the edge (or a little past the edge) of the window
+            // This would break the appearance animation
+            .ornament(attachmentAnchor: .scene(.trailing), contentAlignment: .center) {
+                // Calibrated for a 400 width at default window size
+                let chatWidth = geometry.size.width * 0.3125
+                let contentWidth = TwitchVideoView.ornamentSpacing + chatWidth
+
+                HStack {
+                    // Gap covering the left side of the ornament (over the video), plus some extra for the ornament spacing
+                    Color.clear
+                        .frame(width: contentWidth + 40)
+
+                    // Ornament automatically applies an animation when resizing the view. Thus we always display a clear view and just animate in chat
+                    Group {
+                        if self.chatVisible {
+                            // TODO: Handle VoDs
+                            if case .stream(let stream) = self.streamableVideo {
+                                ChatContentView(channelName: stream.userLogin, userId: stream.userID, title: stream.userName, isWindow: false) {
+                                    withChatAnimation {
+                                        self.chatVisible = false
+                                    }
                                 }
                             }
-                            // Calibrated for a 400 width at default window size
-                            .frame(width: geometry.size.width * 0.3125, height: geometry.size.height)
-                            // TODO: Experiment with rotation
-//                            .rotation3DEffect(.degrees(-30), axis: .y, anchor: .leading)
+                        } else {
+                            Color.clear
                         }
                     }
+                    .frame(width: chatWidth, height: geometry.size.height)
+                    .transition(.chatTranstion(contentWidth: contentWidth))
                 }
             }
             .ornament(visibility: self.controlVisibility, attachmentAnchor: .scene(.bottom), contentAlignment: .top) {
                 VStack {
                     // Add spacing between main window and PlayerControlsView to allow for the window resizer
-                    Color.clear.frame(height: self.ornamentSpacing)
-                    PlayerOranamentControlsView(player: self.player, streamableVideo: self.streamableVideo, chatVisibility: self.$chatVisibility) {
+                    Color.clear.frame(height: TwitchVideoView.ornamentSpacing)
+                    PlayerOranamentControlsView(player: self.player, streamableVideo: self.streamableVideo, chatVisible: self.$chatVisible) {
                         self.onControlInteraction()
                     } activeChanged: { isActive in
                         if isActive {
@@ -121,7 +131,7 @@ struct TwitchVideoView: View {
             .onReceive(WindowController.shared.popoutChatSubject, perform: { popoutUserId in
                 if popoutUserId == self.player.channelId {
                     withAnimation {
-                        self.chatVisibility = .visible
+                        self.chatVisible = true
                     }
                 }
             })

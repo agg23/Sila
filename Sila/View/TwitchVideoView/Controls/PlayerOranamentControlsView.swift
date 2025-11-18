@@ -16,7 +16,7 @@ struct PlayerOranamentControlsView: View {
 
     let streamableVideo: StreamableVideo
 
-    @Binding var chatVisibility: Visibility
+    @Binding var chatVisible: Bool
 
     @State private var durationSliderPreventClose: Bool = false
     @ObservedObject private var chatHandle: PresentableHandle<ChatPresentableController>
@@ -24,10 +24,10 @@ struct PlayerOranamentControlsView: View {
     let onInteraction: (() -> Void)?
     let activeChanged: ((Bool) -> Void)?
 
-    init(player: WebViewPlayer, streamableVideo: StreamableVideo, chatVisibility: Binding<Visibility>, onInteraction: (() -> Void)? = nil, activeChanged: ((Bool) -> Void)? = nil) {
+    init(player: WebViewPlayer, streamableVideo: StreamableVideo, chatVisible: Binding<Bool>, onInteraction: (() -> Void)? = nil, activeChanged: ((Bool) -> Void)? = nil) {
         self.player = player
         self.streamableVideo = streamableVideo
-        self._chatVisibility = chatVisibility
+        self._chatVisible = chatVisible
         self.onInteraction = onInteraction
         self.activeChanged = activeChanged
         let contentId = ChatPresentableController.contentId(for: streamableVideo.userId)
@@ -103,17 +103,17 @@ struct PlayerOranamentControlsView: View {
             }
 
             // Only use standalone (window) chatHandle property, otherwise use local chatVisibility setting to allow rapid toggling
-            let isChatOpen = self.chatVisibility == .visible || self.chatHandle.hasStandalone
+            let isChatOpen = self.chatVisible || self.chatHandle.hasStandalone
 
             CircleBackgroundLessButton(systemName: Icon.chat, tooltip: isChatOpen ? "Hide Chat" : "Show Chat") {
-                withAnimation {
+                withChatAnimation {
                     if isChatOpen {
-                        self.chatVisibility = .hidden
+                        self.chatVisible = false
                         if let chatWindowModel = self.chatHandle.controller?.chatWindowModel {
                             self.dismissWindow(id: Window.chat, value: chatWindowModel)
                         }
                     } else {
-                        self.chatVisibility = .visible
+                        self.chatVisible = true
                     }
                 }
                 self.onInteraction?()
@@ -147,7 +147,7 @@ private func previewPlayer(_ isVideo: Bool = false) -> WebViewPlayer {
 }
 
 #Preview("Basic") {
-    PlayerOranamentControlsView(player: previewPlayer(), streamableVideo: .stream(STREAM_MOCK()), chatVisibility: .constant(.hidden)) {
+    PlayerOranamentControlsView(player: previewPlayer(), streamableVideo: .stream(STREAM_MOCK()), chatVisible: .constant(false)) {
 
     } activeChanged: { _ in
 
@@ -158,7 +158,7 @@ private func previewPlayer(_ isVideo: Bool = false) -> WebViewPlayer {
 #Preview("On Window") {
     Rectangle()
         .ornament(attachmentAnchor: .scene(.bottom)) {
-            PlayerOranamentControlsView(player: previewPlayer(), streamableVideo: .stream(STREAM_MOCK()), chatVisibility: .constant(.visible)) {
+            PlayerOranamentControlsView(player: previewPlayer(), streamableVideo: .stream(STREAM_MOCK()), chatVisible: .constant(true)) {
 
             } activeChanged: { _ in
 
@@ -171,7 +171,7 @@ private func previewPlayer(_ isVideo: Bool = false) -> WebViewPlayer {
 #Preview("On Window - VoD") {
     Rectangle()
         .ornament(attachmentAnchor: .scene(.bottom)) {
-            PlayerOranamentControlsView(player: previewPlayer(true), streamableVideo: .video(VIDEO_MOCK()), chatVisibility: .constant(.visible)) {
+            PlayerOranamentControlsView(player: previewPlayer(true), streamableVideo: .video(VIDEO_MOCK()), chatVisible: .constant(true)) {
 
             } activeChanged: { _ in
 
