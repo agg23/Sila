@@ -41,6 +41,13 @@ struct Connection {
     }
 
     func connect() async {
+        if let connection = self.connection {
+            if !connection.task.isCancelled {
+                print("Attempted connection when IRC already opened")
+                return
+            }
+        }
+
         print("Opening IRC connection")
         guard let client = try? await TwitchIRCClient(.anonymous, urlSession: URLSession.shared) else {
             print("Could not create IRC client")
