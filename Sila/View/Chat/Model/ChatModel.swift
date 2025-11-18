@@ -88,10 +88,14 @@ struct Connection {
     }
 
     func disconnect() {
+        guard let connection = self.connection else {
+            return
+        }
+
         print("Chat disconnect")
-        self.connection?.task.cancel()
+        connection.task.cancel()
         Task {
-            try? await self.connection?.chatClient.part(from: self.channelName)
+            try? await connection.chatClient.part(from: self.channelName)
         }
         self.connection = nil
 

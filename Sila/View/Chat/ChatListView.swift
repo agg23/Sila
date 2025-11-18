@@ -92,6 +92,7 @@ private struct ChatListContentView: View {
     }
 
     var body: some View {
+        // .scrollPosition does not function with List as of visionOS 26
         ScrollViewReader { proxy in
             List {
                 ForEach(self.chatModel.entries) { entry in
@@ -158,6 +159,9 @@ private struct ChatListContentView: View {
                     .padding(20)
                 }
             }
+            .onAppear {
+                self.queueScrollToBottom(proxy)
+            }
             .onDisappear {
                 // Clear all active emotes
                 AnimatedImageCache.shared.flush()
@@ -203,7 +207,7 @@ private struct ChatListContentView: View {
             self.pendingScrollRequest = nil
             // Force scrollAtBottom now so any future changes will auto scroll regardless of SwiftUI's visibility state
             self.scrollAtBottom = true
-            proxy.scrollTo(bottomRowId, anchor: .bottom)
+            proxy.scrollTo(self.bottomRowId, anchor: .bottom)
         }
     }
 }
