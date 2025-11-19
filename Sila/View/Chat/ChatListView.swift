@@ -96,21 +96,24 @@ private struct ChatListContentView: View {
         ScrollViewReader { proxy in
             List {
                 ForEach(self.chatModel.entries) { entry in
-                    switch entry {
-                    case .message(let message):
-                        ChatMessage(message: message, cachedColors: self.chatModel.cachedColors)
-                            .listRowInsets(ChatListContentView.rowInset)
-                            .listRowSeparator(.hidden)
-                            .padding(.vertical, 2)
-                    case .divider(let date):
-                        Text("Reconnected at \(TimeFormatter.shared.string(from: date))")
-                            .frame(maxWidth: .infinity, alignment: .center)
-                            .foregroundColor(.secondary)
-                            .multilineTextAlignment(.center)
-                            .listRowInsets(ChatListContentView.dividerInset)
+                    Group {
+                        switch entry {
+                        case .message(let message):
+                            ChatMessage(message: message, cachedColors: self.chatModel.cachedColors)
+                                .listRowInsets(ChatListContentView.rowInset)
+                                .listRowSeparator(.hidden)
+                                .padding(.vertical, 2)
+                        case .divider(let date):
+                            Text("Reconnected at \(TimeFormatter.shared.string(from: date))")
+                                .frame(maxWidth: .infinity, alignment: .center)
+                                .foregroundColor(.secondary)
+                                .multilineTextAlignment(.center)
+                                .listRowInsets(ChatListContentView.dividerInset)
                             // Use list separator at the bottom of the row as a psuedo-Divider
-                            .listRowSeparator(.visible)
+                                .listRowSeparator(.visible)
+                        }
                     }
+                    .padding(.horizontal, 20)
                 }
 
                 Color.clear
