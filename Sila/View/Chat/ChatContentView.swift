@@ -30,6 +30,12 @@ struct ChatContentView: View {
         NavigationStack {
             ChatListView(channelName: self.channelName, userId: self.userId, isWindow: self.isWindow)
                 .toolbar {
+                    ToolbarItem(placement: .principal) {
+                        Text(title)
+                            .font(.title)
+                            .frame(maxWidth: .infinity, alignment: .center)
+                    }
+
                     if !isWindow {
                         ToolbarItem(placement: .topBarLeading) {
                             Button {
@@ -63,7 +69,6 @@ struct ChatContentView: View {
                         }
                     }
                 }
-                .navigationTitle(title)
                 // NavigationStack adds its own glass, so putting .background at its level doesn't work correctly
                 .background(Color(red: 24.0/255.0, green: 24.0/255.0, blue: 27.0/255.0))
         }
