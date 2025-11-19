@@ -28,32 +28,33 @@ struct ChatMessage: View {
     let cachedColors: CachedColors
 
     var body: some View {
-        Group {
-            Text(self.message.message.displayName)
-                .foregroundStyle(Color(self.cachedColors.get(hexColor: self.message.message.color))) +
-            Text(": ") +
-            self.message.chunks.reduce(Text("")) { existingText, chunk in
-                switch chunk {
-                case .text(attributed: let attributed, string: let string):
-                    return existingText + renderAttributedText(attributed, string: string)
-                case .image(let url):
-                    return existingText + Text("\(AsyncAnimatedImage(url: url) ?? Image(uiImage: transparentEmoteImage))")
-                        .baselineOffset(-8.5)
-                }
+        let displayName = Text(self.message.message.displayName)
+            .foregroundStyle(Color(self.cachedColors.get(hexColor: self.message.message.color)))
+
+        let chunks = self.message.chunks.reduce(Text("")) { existingText, chunk in
+            switch chunk {
+            case .text(attributed: let attributed, string: let string):
+                return Text("\(existingText)\(renderAttributedText(attributed, string: string))")
+            case .image(let url):
+                let imageText = Text("\(AsyncAnimatedImage(url: url) ?? Image(uiImage: transparentEmoteImage))").baselineOffset(-8.5)
+                return Text("\(existingText)\(imageText)")
             }
         }
-        .drawingGroup()
-        .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .leading)
-        .onAppear {
-            AnimatedImageCache.shared.onAppear(for: self.message.emoteURLs)
-        }
-        .onDisappear {
-            AnimatedImageCache.shared.onDisappear(for: self.message.emoteURLs)
-        }
+
+        Text("\(displayName): \(chunks)")
+            // TODO: This drawingGroup probably isn't necessary
+            .drawingGroup()
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .onAppear {
+                AnimatedImageCache.shared.onAppear(for: self.message.emoteURLs)
+            }
+            .onDisappear {
+                AnimatedImageCache.shared.onDisappear(for: self.message.emoteURLs)
+            }
     }
 }
 
-func renderAttributedText(_ attributed: AttributedString?, string: String) -> Text {
+private func renderAttributedText(_ attributed: AttributedString?, string: String) -> Text {
     guard let attributed = attributed else {
         return Text(string)
     }
