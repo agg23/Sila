@@ -99,7 +99,7 @@ private struct ChatListContentView: View {
                     Group {
                         switch entry {
                         case .message(let message):
-                            ChatMessage(message: message, cachedColors: self.chatModel.cachedColors)
+                            ChatMessageView(message: message, cachedColors: self.chatModel.cachedColors)
                                 .listRowInsets(ChatListContentView.rowInset)
                                 .listRowSeparator(.hidden)
                                 .padding(.vertical, 2)

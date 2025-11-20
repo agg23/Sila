@@ -14,6 +14,7 @@
 		66028DF92B91798C00696071 /* ChatListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66028DF82B91798C00696071 /* ChatListView.swift */; };
 		66028DFF2B917AD800696071 /* PrivateMessageMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66028DFE2B917AD800696071 /* PrivateMessageMock.swift */; };
 		66028E022B917CD200696071 /* PrivateMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66028E012B917CD200696071 /* PrivateMessage.swift */; };
+		660A6D0F2ECFB031006F9831 /* AsyncAnimatedImageUI in Frameworks */ = {isa = PBXBuildFile; productRef = 660A6D0E2ECFB031006F9831 /* AsyncAnimatedImageUI */; };
 		660AFF6C2B93A9A60003186E /* ChatContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660AFF6B2B93A9A60003186E /* ChatContentView.swift */; };
 		660BD00F2EAF0EB200E88BAF /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660BD00E2EAF0EB200E88BAF /* Date.swift */; };
 		660BD0112EB06DEB00E88BAF /* RuntimeTimelineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660BD0102EB06DEB00E88BAF /* RuntimeTimelineView.swift */; };
@@ -66,7 +67,7 @@
 		666E97E92B8D7085008EE950 /* EmptyDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 666E97E82B8D7085008EE950 /* EmptyDataView.swift */; };
 		6672D37C2B8C3F7B00E9D0E9 /* NeedsLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6672D37B2B8C3F7B00E9D0E9 /* NeedsLoginView.swift */; };
 		6677BF702BC2160000C71CC5 /* LanguagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6677BF6F2BC2160000C71CC5 /* LanguagePickerView.swift */; };
-		66891FF62B9A9590000C0D92 /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66891FF52B9A9590000C0D92 /* ChatMessage.swift */; };
+		66891FF62B9A9590000C0D92 /* ChatMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66891FF52B9A9590000C0D92 /* ChatMessageView.swift */; };
 		66891FF82B9A9E72000C0D92 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66891FF72B9A9E72000C0D92 /* Color.swift */; };
 		66891FFB2B9AA058000C0D92 /* View+BackgroundTint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66891FFA2B9AA058000C0D92 /* View+BackgroundTint.swift */; };
 		6690EBA02BA6667B0093B18C /* ChatMessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6690EB9F2BA6667B0093B18C /* ChatMessageModel.swift */; };
@@ -81,6 +82,7 @@
 		66A5ADBB2B97E98E0025EF75 /* Licenses.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 66A5ADBA2B97E98E0025EF75 /* Licenses.xcstrings */; };
 		66A5ADBE2B9933730025EF75 /* WindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A5ADBD2B9933730025EF75 /* WindowController.swift */; };
 		66A5ADC12B9949C40025EF75 /* EmptyContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A5ADC02B9949C40025EF75 /* EmptyContentView.swift */; };
+		66AC70822ECE5617000DA868 /* ChatTextRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AC70812ECE5617000DA868 /* ChatTextRenderer.swift */; };
 		66AFA2E42CFCBF7600491D98 /* PlayerDurationSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AFA2E32CFCBF7600491D98 /* PlayerDurationSliderView.swift */; };
 		66B5DD852B9FCBCC0054121D /* MatureStreamFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B5DD832B9FCBCC0054121D /* MatureStreamFilterView.swift */; };
 		66B5DD882B9FCC150054121D /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B5DD872B9FCC150054121D /* Setting.swift */; };
@@ -206,7 +208,7 @@
 		666E97E82B8D7085008EE950 /* EmptyDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyDataView.swift; sourceTree = "<group>"; };
 		6672D37B2B8C3F7B00E9D0E9 /* NeedsLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NeedsLoginView.swift; sourceTree = "<group>"; };
 		6677BF6F2BC2160000C71CC5 /* LanguagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguagePickerView.swift; sourceTree = "<group>"; };
-		66891FF52B9A9590000C0D92 /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
+		66891FF52B9A9590000C0D92 /* ChatMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessageView.swift; sourceTree = "<group>"; };
 		66891FF72B9A9E72000C0D92 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		66891FFA2B9AA058000C0D92 /* View+BackgroundTint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+BackgroundTint.swift"; sourceTree = "<group>"; };
 		6690EB9F2BA6667B0093B18C /* ChatMessageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessageModel.swift; sourceTree = "<group>"; };
@@ -220,6 +222,7 @@
 		66A5ADBA2B97E98E0025EF75 /* Licenses.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = Licenses.xcstrings; path = Sila/Licenses.xcstrings; sourceTree = SOURCE_ROOT; };
 		66A5ADBD2B9933730025EF75 /* WindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowController.swift; sourceTree = "<group>"; };
 		66A5ADC02B9949C40025EF75 /* EmptyContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyContentView.swift; sourceTree = "<group>"; };
+		66AC70812ECE5617000DA868 /* ChatTextRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatTextRenderer.swift; sourceTree = "<group>"; };
 		66AFA2E32CFCBF7600491D98 /* PlayerDurationSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerDurationSliderView.swift; sourceTree = "<group>"; };
 		66B5DD832B9FCBCC0054121D /* MatureStreamFilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatureStreamFilterView.swift; sourceTree = "<group>"; };
 		66B5DD872B9FCC150054121D /* Setting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
@@ -292,6 +295,7 @@
 				66A54E5A2EC7B9AA0000DA46 /* Twitch in Frameworks */,
 				66D11B582BF2DE3800DDD159 /* AsyncAnimatedImageUI in Frameworks */,
 				66364FC82B8BA49A005180B8 /* JunoUI in Frameworks */,
+				660A6D0F2ECFB031006F9831 /* AsyncAnimatedImageUI in Frameworks */,
 				66D11B6C2BF81FF200DDD159 /* AsyncAnimatedImageUI in Frameworks */,
 				66D11B672BF5B51000DDD159 /* AsyncAnimatedImageUI in Frameworks */,
 			);
@@ -386,10 +390,11 @@
 			isa = PBXGroup;
 			children = (
 				6690EB9E2BA6666B0093B18C /* Model */,
-				66891FF52B9A9590000C0D92 /* ChatMessage.swift */,
+				66CBD0E02ECB69DA007135BE /* ChatAnimation.swift */,
 				660AFF6B2B93A9A60003186E /* ChatContentView.swift */,
 				66028DF82B91798C00696071 /* ChatListView.swift */,
-				66CBD0E02ECB69DA007135BE /* ChatAnimation.swift */,
+				66891FF52B9A9590000C0D92 /* ChatMessageView.swift */,
+				66AC70812ECE5617000DA868 /* ChatTextRenderer.swift */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -735,6 +740,7 @@
 				66F73D6C2EC6D4FA0093A4A6 /* Twitch */,
 				66FD913C2EC6D58A00BFCBCC /* Twitch */,
 				66A54E592EC7B9AA0000DA46 /* Twitch */,
+				660A6D0E2ECFB031006F9831 /* AsyncAnimatedImageUI */,
 			);
 			productName = Sila;
 			productReference = 663B72F32B6DB8E60031D661 /* Sila.app */;
@@ -768,8 +774,8 @@
 				66E102172B8262AC007A44D4 /* XCRemoteSwiftPackageReference "KeychainWrapper" */,
 				66364FC62B8BA499005180B8 /* XCRemoteSwiftPackageReference "JunoSlider" */,
 				663E38052B9226D3002E0530 /* XCRemoteSwiftPackageReference "Nuke" */,
-				66D11B6A2BF81FF200DDD159 /* XCRemoteSwiftPackageReference "AsyncAnimatedImage" */,
 				66A54E582EC7B9AA0000DA46 /* XCRemoteSwiftPackageReference "swift-twitch-client" */,
+				660A6D0D2ECFB031006F9831 /* XCRemoteSwiftPackageReference "AsyncAnimatedImage" */,
 			);
 			productRefGroup = 663B72F42B6DB8E60031D661 /* Products */;
 			projectDirPath = "";
@@ -828,12 +834,13 @@
 				66F4E42C2B812A32008C565D /* AuthController.swift in Sources */,
 				66028E022B917CD200696071 /* PrivateMessage.swift in Sources */,
 				66C96BE42B8ECB660016A91B /* SharedStreamButtonView.swift in Sources */,
-				66891FF62B9A9590000C0D92 /* ChatMessage.swift in Sources */,
+				66891FF62B9A9590000C0D92 /* ChatMessageView.swift in Sources */,
 				66125F632B8425A7002169B5 /* ChannelGridView.swift in Sources */,
 				66E1023F2B82D8AF007A44D4 /* CategoryButtonView.swift in Sources */,
 				66F105A52BA4B3DF006B7ADE /* Task.swift in Sources */,
 				66364FBD2B8AF629005180B8 /* CircleBackgroundLessButton.swift in Sources */,
 				662535402B9E01D000EBD081 /* ChatModel.swift in Sources */,
+				66AC70822ECE5617000DA868 /* ChatTextRenderer.swift in Sources */,
 				66F73D132EC0F1EC0093A4A6 /* PresentableInternalManager.swift in Sources */,
 				66F4E4342B813A1F008C565D /* FollowedStreamsView.swift in Sources */,
 				66891FFB2B9AA058000C0D92 /* View+BackgroundTint.swift in Sources */,
@@ -1137,6 +1144,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		660A6D0D2ECFB031006F9831 /* XCRemoteSwiftPackageReference "AsyncAnimatedImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/agg23/AsyncAnimatedImage.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 		66364FC62B8BA499005180B8 /* XCRemoteSwiftPackageReference "JunoSlider" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/christianselig/JunoSlider.git";
@@ -1161,14 +1176,6 @@
 				kind = branch;
 			};
 		};
-		66D11B6A2BF81FF200DDD159 /* XCRemoteSwiftPackageReference "AsyncAnimatedImage" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/agg23/AsyncAnimatedImage.git";
-			requirement = {
-				branch = main;
-				kind = branch;
-			};
-		};
 		66E102172B8262AC007A44D4 /* XCRemoteSwiftPackageReference "KeychainWrapper" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/puretears/KeychainWrapper.git";
@@ -1180,6 +1187,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		660A6D0E2ECFB031006F9831 /* AsyncAnimatedImageUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 660A6D0D2ECFB031006F9831 /* XCRemoteSwiftPackageReference "AsyncAnimatedImage" */;
+			productName = AsyncAnimatedImageUI;
+		};
 		66364FC72B8BA49A005180B8 /* JunoUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 66364FC62B8BA499005180B8 /* XCRemoteSwiftPackageReference "JunoSlider" */;
@@ -1210,7 +1222,6 @@
 		};
 		66D11B6B2BF81FF200DDD159 /* AsyncAnimatedImageUI */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 66D11B6A2BF81FF200DDD159 /* XCRemoteSwiftPackageReference "AsyncAnimatedImage" */;
 			productName = AsyncAnimatedImageUI;
 		};
 		66E102182B8262AC007A44D4 /* KeychainWrapper */ = {
