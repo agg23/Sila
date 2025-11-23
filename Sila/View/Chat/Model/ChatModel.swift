@@ -25,19 +25,16 @@ struct Connection {
     // Used to track the third party emotes relevant to this model
     @ObservationIgnored let userId: String
 
-    // Events indicate the chat should be scrolled to the bottom. Once it reaches the bottom,
-    // the necessary REMOVE_COUNT chat entries from the beginning of the log should be pruned
-    @ObservationIgnored let queuePruneWhenAtBottom = PassthroughSubject<(), Never>()
+    @ObservationIgnored let didPrune = PassthroughSubject<(), Never>()
     @ObservationIgnored let cachedColors = CachedColors()
 
     @ObservationIgnored private var connection: Connection? = nil
 
-    var entries: [ChatLogEntryModel]
+    var entries: [ChatLogEntryModel] = []
 
     init(channelName: String, userId: String) {
         self.channelName = channelName
         self.userId = userId
-        self.entries = []
     }
 
     func connect() async {
@@ -119,17 +116,11 @@ struct Connection {
     @MainActor
     func appendChatMessage(_ message: PrivateMessage, userId: String) {
         if self.entries.count >= ChatModel.MESSAGE_LIMIT {
-            self.queuePruneWhenAtBottom.send(())
+            print("Removing chat messages")
+            self.entries.removeFirst(ChatModel.REMOVE_COUNT)
+            self.didPrune.send(())
         }
 
         self.entries.append(.message(ChatMessageModel(message: message, userId: userId)))
-    }
-
-    @MainActor
-    func pruneChatMessagesOverLimit() {
-        if self.entries.count >= ChatModel.MESSAGE_LIMIT {
-            print("Removing chat messages")
-            self.entries.removeFirst(ChatModel.REMOVE_COUNT)
-        }
     }
 }
