@@ -12,11 +12,11 @@ struct StandardDataView<T, Content: View>: View {
     let loader: Binding<StandardDataLoader<T>>
     let task: (_: TwitchClient, _: AuthUser?) async throws -> T
 
-    @ViewBuilder let content: (_: T) -> Content
+    @ViewBuilder let content: (_: T, _: RefreshToken) -> Content
 
     var body: some View {
-        DataView(loader: self.loader, task: self.task, content: { data in
-            self.content(data)
+        DataView(loader: self.loader, task: self.task, content: { data, refreshToken in
+            self.content(data, refreshToken)
         }) { _ in
             // Vertically center loading spinner with NavigationStack safe area
             ZStack {
@@ -47,7 +47,7 @@ struct AuthroizedStandardDataView<T, Content: View>: View {
     let noAuthMessage: String
     let noAuthSystemImage: String
 
-    @ViewBuilder let content: (_: T) -> Content
+    @ViewBuilder let content: (_: T, _: RefreshToken) -> Content
 
     var body: some View {
         if self.authController.isAuthorized() {

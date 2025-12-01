@@ -14,28 +14,29 @@ struct DataView<T, Content: View, Loading: View, ErrorView: View>: View {
     let loader: Binding<StandardDataLoader<T>>
     let task: (_: TwitchClient, _: AuthUser?) async throws -> T
 
-    @ViewBuilder let content: (_: T) -> Content
+    @ViewBuilder let content: (_: T, _: RefreshToken) -> Content
     @ViewBuilder let loading: (_: T?) -> Loading
     @ViewBuilder let error: (_: Error?) -> ErrorView
 
     var body: some View {
         if let apiAndUser = self.authController.status.apiAndUser() {
+            let loader = self.loader.wrappedValue
+
             Group {
-                switch self.loader.wrappedValue.status {
+                switch loader.status {
                 case .loading(let data):
                     self.loading(data)
                 case .idle:
                     self.loading(nil)
                 case .finished(let data), .loadingMore(let data):
-                    self.content(data)
+                    self.content(data, loader.refreshToken)
                 case .error(let error):
                     self.error(error)
                 }
             }
             .task(id: self.authController.status, {
                 do {
-                    try await self.loader.wrappedValue.loadIfNecessary(task: { (api, user) in
-                        // We have some auth info, run the task
+                    try await loader.loadIfNecessary(task: { (api, user) in
                         do {
                             return try await self.task(api, user)
                         } catch let error as HelixError {

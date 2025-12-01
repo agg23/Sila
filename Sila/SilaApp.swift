@@ -8,6 +8,7 @@
 import SwiftUI
 import AppIntents
 import Twitch
+import Nuke
 
 @main
 struct SilaAppApp: App {
@@ -25,6 +26,9 @@ struct SilaAppApp: App {
         AppDependencyManager.shared.add(dependency: router)
 
         Shortcuts.updateAppShortcutParameters()
+
+        // Make sure our thumbnails expire from the memory Nuke cache
+        ImageCache.shared.ttl = 120
 
         Task {
             await EmoteController.shared.fetchGlobalEmotes()

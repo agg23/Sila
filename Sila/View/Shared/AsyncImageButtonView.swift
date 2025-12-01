@@ -18,8 +18,9 @@ struct AsyncImageButtonView<Content: View, ImageOverlay: View, ContextMenu: View
     @ViewBuilder let imageOverlay: (() -> ImageOverlay)?
     @ViewBuilder let contextMenu: (() -> ContextMenu)?
     let overlayAlignment: Alignment?
+    let refreshToken: RefreshToken?
 
-    init(imageUrl: URL? = nil, aspectRatio: CGFloat, overlayAlignment: Alignment? = nil, action: @escaping () -> Void, content: @escaping () -> Content, imageOverlay: @escaping () -> ImageOverlay, contextMenu: @escaping () -> ContextMenu) {
+    init(imageUrl: URL? = nil, aspectRatio: CGFloat, overlayAlignment: Alignment? = nil, refreshToken: RefreshToken? = nil, action: @escaping () -> Void, content: @escaping () -> Content, imageOverlay: @escaping () -> ImageOverlay, contextMenu: @escaping () -> ContextMenu) {
         self.imageUrl = imageUrl
         self.aspectRatio = aspectRatio
         self.action = action
@@ -27,6 +28,7 @@ struct AsyncImageButtonView<Content: View, ImageOverlay: View, ContextMenu: View
         self.imageOverlay = imageOverlay
         self.contextMenu = contextMenu
         self.overlayAlignment = overlayAlignment
+        self.refreshToken = refreshToken
     }
 
     var body: some View {
@@ -34,7 +36,7 @@ struct AsyncImageButtonView<Content: View, ImageOverlay: View, ContextMenu: View
             self.action()
         } label: {
             VStack {
-                LoadingAsyncImage(imageUrl: self.imageUrl, aspectRatio: self.aspectRatio)
+                LoadingAsyncImage(imageUrl: self.imageUrl, aspectRatio: self.aspectRatio, refreshToken: self.refreshToken)
                     .overlay(alignment: self.overlayAlignment ?? .center) {
                         self.imageOverlay?()
                     }
@@ -56,7 +58,7 @@ struct AsyncImageButtonView<Content: View, ImageOverlay: View, ContextMenu: View
 }
 
 extension AsyncImageButtonView where ImageOverlay == EmptyView {
-    init(imageUrl: URL? = nil, aspectRatio: CGFloat, action: @escaping () -> Void, content: @escaping () -> Content, contextMenu: @escaping () -> ContextMenu) {
+    init(imageUrl: URL? = nil, aspectRatio: CGFloat, refreshToken: RefreshToken? = nil, action: @escaping () -> Void, content: @escaping () -> Content, contextMenu: @escaping () -> ContextMenu) {
         self.imageUrl = imageUrl
         self.aspectRatio = aspectRatio
         self.action = action
@@ -66,11 +68,12 @@ extension AsyncImageButtonView where ImageOverlay == EmptyView {
         }
         self.contextMenu = contextMenu
         self.overlayAlignment = nil
+        self.refreshToken = refreshToken
     }
 }
 
 extension AsyncImageButtonView where ImageOverlay == EmptyView, ContextMenu == EmptyView {
-    init(imageUrl: URL? = nil, aspectRatio: CGFloat, action: @escaping () -> Void, content: @escaping () -> Content) {
+    init(imageUrl: URL? = nil, aspectRatio: CGFloat, refreshToken: RefreshToken? = nil, action: @escaping () -> Void, content: @escaping () -> Content) {
         self.imageUrl = imageUrl
         self.aspectRatio = aspectRatio
         self.action = action
@@ -82,5 +85,6 @@ extension AsyncImageButtonView where ImageOverlay == EmptyView, ContextMenu == E
             EmptyView()
         }
         self.overlayAlignment = nil
+        self.refreshToken = refreshToken
     }
 }

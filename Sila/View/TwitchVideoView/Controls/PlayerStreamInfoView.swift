@@ -18,7 +18,8 @@ struct PlayerStreamInfoView: View {
         DataView(loader: self.$loader, task: { api, _ in
             let task = self.createTask(requestStream: false, channelId: self.streamableVideo.userId)
             return try await task(api)
-        }, content: { user, stream in
+        }, content: { data, _ in
+            let (user, stream) = data
             PlayerStreamInfoContentWrapperView(streamableVideo: stream ?? self.streamableVideo, user: user)
         }, loading: { data in
             PlayerStreamInfoContentWrapperView(streamableVideo: data?.1 ?? self.streamableVideo, user: data?.0)

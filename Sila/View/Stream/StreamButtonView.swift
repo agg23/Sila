@@ -16,12 +16,13 @@ struct StreamButtonView: View {
     @State private var initialRenderDate = Date.now
 
     let stream: Twitch.Stream
+    let refreshToken: RefreshToken?
 
     var body: some View {
         let title = !self.stream.title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? self.stream.title : self.stream.userName
         let gameName = !self.stream.gameName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? self.stream.gameName : "No Category"
 
-        SharedStreamButtonView(source: .stream(self.stream), displayUrl: self.stream.thumbnailURL, profileImageUrl: nil, preTitleLeft: gameName, title: title, subtitle: self.stream.userName) {
+        SharedStreamButtonView(source: .stream(self.stream), displayUrl: self.stream.thumbnailURL, profileImageUrl: nil, preTitleLeft: gameName, title: title, subtitle: self.stream.userName, refreshToken: self.refreshToken) {
             if self.stream.isMature {
                 Text("Mature")
                     .foregroundStyle(.primary)
@@ -126,7 +127,7 @@ struct StreamButtonView: View {
 
 #Preview {
     PreviewNavStack {
-        StreamButtonView(stream: STREAM_MOCK())
+        StreamButtonView(stream: STREAM_MOCK(), refreshToken: nil)
             .frame(width: 400, height: 340)
     }
 }

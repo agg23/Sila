@@ -24,8 +24,9 @@ struct CategoryView: View {
         }) { selectedLanguage in
             StandardDataView(loader: self.$loader) { api, _ in
                 try await self.fetchData(on: api, overwriting: true, language: selectedLanguage.wrappedValue)
-            } content: { streams, game, cursor in
-                CategoryViewContent(game: game, streams: streams, selectedLanguage: selectedLanguage, loader: self.loader) {
+            } content: { (data, refreshToken) in
+                let (streams, game, cursor) = data
+                CategoryViewContent(game: game, streams: streams, refreshToken: refreshToken, selectedLanguage: selectedLanguage, loader: self.loader) {
                     await self.onPaginationThresholdMet(language: selectedLanguage.wrappedValue)
                 }
             }
@@ -89,6 +90,7 @@ struct CategoryView: View {
 private struct CategoryViewContent: View {
     let game: Twitch.Game
     let streams: [Twitch.Stream]
+    let refreshToken: RefreshToken
 
     @Binding var selectedLanguage: String
 
@@ -105,7 +107,7 @@ private struct CategoryViewContent: View {
                 }
             } else {
                 RefreshableScrollGridView(loader: self.loader) {
-                    StreamGridView(streams: streams, onPaginationThresholdMet: self.onPaginationThresholdMet)
+                    StreamGridView(streams: streams, refreshToken: refreshToken, onPaginationThresholdMet: self.onPaginationThresholdMet)
                 }
             }
         }
@@ -123,7 +125,7 @@ private struct CategoryViewContent: View {
 
 #Preview {
     TabPage(title: "Category", systemImage: "foo", tab: .categories) {
-        CategoryViewContent(game: CATEGORY_MOCK(), streams: STREAMS_LIST_MOCK(), selectedLanguage: .constant("en"), loader: StandardDataLoader()) {}
+        CategoryViewContent(game: CATEGORY_MOCK(), streams: STREAMS_LIST_MOCK(), refreshToken: UUID(), selectedLanguage: .constant("en"), loader: StandardDataLoader()) {}
     }
     .environment(Router())
 }

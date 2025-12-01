@@ -22,8 +22,8 @@ struct PopularView: View {
         }) { selectedLanguage in
             StandardDataView(loader: self.$loader) { api, _ in
                 try await fetchStreams(api: api, language: selectedLanguage.wrappedValue)
-            } content: { streams, _ in
-                PopularContentView(streams: streams, selectedLanguage: selectedLanguage, loader: self.loader) {
+            } content: { data, refreshToken in
+                PopularContentView(streams: data.0, selectedLanguage: selectedLanguage, loader: self.loader, refreshToken: refreshToken) {
                     await self.onPaginationThresholdMet(language: selectedLanguage.wrappedValue)
                 }
             }
@@ -66,6 +66,7 @@ private struct PopularContentView: View {
     @Binding var selectedLanguage: String
 
     let loader: StandardDataLoader<([Twitch.Stream], String?)>
+    let refreshToken: RefreshToken
     let onPaginationThresholdMet: () async -> Void
 
     var body: some View {
@@ -78,7 +79,7 @@ private struct PopularContentView: View {
                 }
             } else {
                 RefreshableScrollGridView(loader: self.loader) {
-                    StreamGridView(streams: streams, onPaginationThresholdMet: self.onPaginationThresholdMet)
+                    StreamGridView(streams: streams, refreshToken: self.refreshToken, onPaginationThresholdMet: self.onPaginationThresholdMet)
                 }
             }
         }
@@ -95,7 +96,7 @@ private struct PopularContentView: View {
 
 #Preview {
     TabPage(title: "Popular", systemImage: "star", tab: .popular, content: {
-        PopularContentView(streams: STREAMS_LIST_MOCK(), selectedLanguage: .constant("en"), loader: StandardDataLoader<([Twitch.Stream], String?)>()) {
+        PopularContentView(streams: STREAMS_LIST_MOCK(), selectedLanguage: .constant("en"), loader: StandardDataLoader<([Twitch.Stream], String?)>(), refreshToken: UUID()) {
 
         }
     })
@@ -104,7 +105,7 @@ private struct PopularContentView: View {
 
 #Preview {
     TabPage(title: "Popular", systemImage: "star", tab: .popular, content: {
-        PopularContentView(streams: [], selectedLanguage: .constant("en"), loader: StandardDataLoader<([Twitch.Stream], String?)>()) {
+        PopularContentView(streams: [], selectedLanguage: .constant("en"), loader: StandardDataLoader<([Twitch.Stream], String?)>(), refreshToken: UUID()) {
 
         }
     })

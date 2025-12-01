@@ -19,7 +19,8 @@ struct CategoryListView: View {
             self.existingIds = Set(streams.map({ $0.id }))
 
             return (streams, cursor)
-        } content: { categories, _ in
+        } content: { data, refreshToken in
+            let (categories, _) = data
             if categories.isEmpty {
                 EmptyDataView(title: "No Categories", systemImage: Icon.category, message: "categories") {
                     Task {
@@ -28,7 +29,7 @@ struct CategoryListView: View {
                 }
             } else {
                 RefreshableScrollGridView(loader: self.loader) {
-                    CategoryGridView(categories: categories, onPaginationThresholdMet: self.onPaginationThresholdMet)
+                    CategoryGridView(categories: categories, refreshToken: refreshToken, onPaginationThresholdMet: self.onPaginationThresholdMet)
                 }
             }
         }

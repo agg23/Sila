@@ -32,7 +32,8 @@ struct ChannelView: View {
 
                 return (users[0], streams.first)
             }
-        } content: { (user, stream) in
+        } content: { (data, _) in
+            let (user, stream) = data
             ChannelViewContent(channelUser: user, stream: stream)
         }
     }
@@ -74,7 +75,7 @@ struct ChannelViewContent: View {
                 return try await api.helix(endpoint: .getVideos(userID: self.channelUser.id))
             }, noAuthMessage: "this channel's VoDs", noAuthSystemImage: Icon.channel) { videos, _ in
                 RefreshableScrollGridView(loader: self.vodLoader) {
-                    VODGridView(channel: self.channelUser, videos: videos, onPaginationThresholdMet: self.onPaginationThresholdMet)
+                    VODGridView(channel: self.channelUser, videos: videos.0, onPaginationThresholdMet: self.onPaginationThresholdMet)
                 }
             }
             // Make profile image be pushed to the top

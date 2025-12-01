@@ -10,11 +10,13 @@ import Twitch
 
 struct CategoryGridView: View {
     let categories: [Twitch.Game]
+    let refreshToken: RefreshToken
 
     let onPaginationThresholdMet: (() async -> Void)?
 
-    internal init(categories: [Game], onPaginationThresholdMet: (() async -> Void)? = nil) {
+    internal init(categories: [Game], refreshToken: RefreshToken, onPaginationThresholdMet: (() async -> Void)? = nil) {
         self.categories = categories
+        self.refreshToken = refreshToken
         self.onPaginationThresholdMet = onPaginationThresholdMet
     }
 
@@ -28,7 +30,7 @@ struct CategoryGridView: View {
             GridItem(spacing: 16)
         ], spacing: 16){
             ForEach(self.categories, id: \.id) { category in
-                CategoryButtonView(category: category)
+                CategoryButtonView(category: category, refreshToken: self.refreshToken)
             }
 
             Color.clear.task {
@@ -40,6 +42,6 @@ struct CategoryGridView: View {
 
 #Preview {
     PreviewNavStack {
-        CategoryGridView(categories: CATEGORY_LIST_MOCK())
+        CategoryGridView(categories: CATEGORY_LIST_MOCK(), refreshToken: UUID())
     }
 }

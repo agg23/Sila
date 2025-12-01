@@ -11,6 +11,13 @@ import NukeUI
 struct LoadingAsyncImage: View {
     let imageUrl: URL?
     let aspectRatio: CGFloat
+    let refreshToken: RefreshToken?
+
+    init(imageUrl: URL?, aspectRatio: CGFloat, refreshToken: RefreshToken? = nil) {
+        self.imageUrl = imageUrl
+        self.aspectRatio = aspectRatio
+        self.refreshToken = refreshToken
+    }
 
     var body: some View {
         LazyImage(url: self.imageUrl) { state in
@@ -23,5 +30,6 @@ struct LoadingAsyncImage: View {
             }
         }
         .aspectRatio(self.aspectRatio, contentMode: .fit)
+        .id(self.refreshToken)
     }
 }

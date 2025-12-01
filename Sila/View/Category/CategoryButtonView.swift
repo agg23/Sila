@@ -12,9 +12,10 @@ struct CategoryButtonView: View {
     @Environment(Router.self) private var router
 
     let category: Twitch.Game
+    let refreshToken: RefreshToken
 
     var body: some View {
-        AsyncImageButtonView(imageUrl: buildImageUrl(using: self.category), aspectRatio: 0.75) {
+        AsyncImageButtonView(imageUrl: buildImageUrl(using: self.category), aspectRatio: 0.75, refreshToken: self.refreshToken) {
             self.router.pushToActiveTab(route: .category(game: GameWrapper.game(self.category)))
         } content: {
             VStack(alignment: .leading) {
@@ -36,5 +37,5 @@ struct CategoryButtonView: View {
 }
 
 #Preview {
-    CategoryButtonView(category: CATEGORY_MOCK())
+    CategoryButtonView(category: CATEGORY_MOCK(), refreshToken: UUID())
 }

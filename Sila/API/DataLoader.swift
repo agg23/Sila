@@ -17,6 +17,8 @@ enum Status<T> {
     case error(Error)
 }
 
+typealias RefreshToken = UUID
+
 typealias StandardDataLoader<T> = DataLoader<T, (TwitchClient, AuthUser?), AuthStatus>
 
 @Observable class DataLoader<T, DataAugment, Changable: Equatable> {
@@ -26,6 +28,7 @@ typealias StandardDataLoader<T> = DataLoader<T, (TwitchClient, AuthUser?), AuthS
     @ObservationIgnored private var task: ((_: DataAugment) async throws -> T)? = nil
     @ObservationIgnored private var dataAugment: DataAugment? = nil
     @ObservationIgnored private var runningTask: Task<Status<T>, Error>? = nil
+    @ObservationIgnored var refreshToken = UUID()
 
     func loadIfNecessary(task: @escaping (_: DataAugment) async throws -> T, dataAugment: DataAugment, onChange: Changable? = nil) async throws {
         self.task = task
@@ -158,6 +161,8 @@ typealias StandardDataLoader<T> = DataLoader<T, (TwitchClient, AuthUser?), AuthS
             if !preventLoadingState {
                 self.status = .loading(existingData)
             }
+
+            self.refreshToken = UUID()
 
             let result = try await Status<T>.finished(task(dataAugment))
 

@@ -40,7 +40,8 @@ struct FollowedStreamsView: View {
                 return ([], nil)
             }
             return try await api.helix(endpoint: .getFollowedStreams(limit: 100))
-        }, noAuthMessage: "your followed streams", noAuthSystemImage: Icon.following) { (streams, _) in
+        }, noAuthMessage: "your followed streams", noAuthSystemImage: Icon.following) { (streamTuple, refreshToken) in
+            let streams = streamTuple.0
             if streams.isEmpty {
                 EmptyDataView(title: "No Livestreams", systemImage: Icon.following, message: "live followed streams") {
                     Task {
@@ -49,7 +50,7 @@ struct FollowedStreamsView: View {
                 }
             } else {
                 RefreshableScrollGridView(loader: self.liveStreamsLoader) {
-                    StreamGridView(streams: streams, onPaginationThresholdMet: self.onPaginationThresholdMet)
+                    StreamGridView(streams: streams, refreshToken: refreshToken, onPaginationThresholdMet: self.onPaginationThresholdMet)
                 }
             }
         }
@@ -65,7 +66,7 @@ struct FollowedStreamsView: View {
 
             let users = try await api.helix(endpoint: .getUsers(ids: broadcasterIDs))
             return users
-        }, noAuthMessage: "your followed channels", noAuthSystemImage: Icon.following) { channels in
+        }, noAuthMessage: "your followed channels", noAuthSystemImage: Icon.following) { channels, _  in
             if channels.isEmpty {
                 EmptyDataView(title: "No Followed Channels", systemImage: Icon.following, message: "followed channels") {
                     Task {

@@ -21,7 +21,8 @@ struct SearchView: View {
         StandardDataView(loader: self.$loader) { api, _ in
             // Dummy response. All data comes from onChange via the search text
             ([], [])
-        } content: { categories, channels in
+        } content: { categoriesAndChannels, _ in
+            let (categories, channels) = categoriesAndChannels
             SearchListView(channels: channels, categories: categories, query: self.query, onSelectHistoryItem: { selectedQuery in
                 self.query = selectedQuery
             })
