@@ -105,7 +105,7 @@ struct PlayerOranamentControlsView: View {
             // Only use standalone (window) chatHandle property, otherwise use local chatVisibility setting to allow rapid toggling
             let isChatOpen = self.chatVisible || self.chatHandle.hasStandalone
 
-            CircleBackgroundLessButton(systemName: Icon.chat, tooltip: isChatOpen ? "Hide Chat" : "Show Chat") {
+            CircleBackgroundLessButton(systemName: isChatOpen ? Icon.chatOpen : Icon.chat, tooltip: isChatOpen ? "Hide Chat" : "Show Chat") {
                 withChatAnimation {
                     if isChatOpen {
                         self.chatVisible = false

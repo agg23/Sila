@@ -27,6 +27,7 @@ struct Icon {
 
     static let quality = "tv"
     static let chat = "message"
+    static let chatOpen = "message.fill"
 
     static let refresh = "arrow.clockwise"
     static let dimming = "circle.lefthalf.striped.horizontal.inverse"
