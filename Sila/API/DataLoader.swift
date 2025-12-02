@@ -28,7 +28,8 @@ typealias StandardDataLoader<T> = DataLoader<T, (TwitchClient, AuthUser?), AuthS
     @ObservationIgnored private var task: ((_: DataAugment) async throws -> T)? = nil
     @ObservationIgnored private var dataAugment: DataAugment? = nil
     @ObservationIgnored private var runningTask: Task<Status<T>, Error>? = nil
-    @ObservationIgnored var refreshToken = UUID()
+    @ObservationIgnored private(set) var refreshToken = UUID()
+    @ObservationIgnored private(set) var lastUpdated: Date?
 
     func loadIfNecessary(task: @escaping (_: DataAugment) async throws -> T, dataAugment: DataAugment, onChange: Changable? = nil) async throws {
         self.task = task
@@ -53,9 +54,10 @@ typealias StandardDataLoader<T> = DataLoader<T, (TwitchClient, AuthUser?), AuthS
     }
 
     func refresh() async throws {
-        self.status = try await self.refreshWithRunningTask {
+        let status = try await self.refreshWithRunningTask {
             try await self.refreshDeferredData()
         }
+        self.set(status: status)
     }
 
     func completeCancel() {
@@ -64,9 +66,9 @@ typealias StandardDataLoader<T> = DataLoader<T, (TwitchClient, AuthUser?), AuthS
         switch self.status {
         case .loading(let data):
             if let data = data {
-                self.status = .finished(data)
+                self.set(status: .finished(data))
             } else {
-                self.status = .idle
+                self.set(status: .idle)
             }
         default:
             break
@@ -84,7 +86,7 @@ typealias StandardDataLoader<T> = DataLoader<T, (TwitchClient, AuthUser?), AuthS
             return
         }
 
-        self.status = newStatus
+        self.set(status: newStatus)
     }
 
     func requestMore(withGetter task: (_: T, _: DataAugment) async throws -> T) async {
@@ -94,14 +96,14 @@ typealias StandardDataLoader<T> = DataLoader<T, (TwitchClient, AuthUser?), AuthS
 
         switch self.status {
         case .finished(let data):
-            self.status = .loadingMore(data)
+            self.set(status: .loadingMore(data))
 
             do {
                 let newData = try await task(data, dataAugment)
 
-                self.status = .finished(newData)
+                self.set(status: .finished(newData))
             } catch {
-                self.status = .finished(data)
+                self.set(status: .finished(data))
                 return
             }
         default:
@@ -115,6 +117,13 @@ typealias StandardDataLoader<T> = DataLoader<T, (TwitchClient, AuthUser?), AuthS
         }
 
         return false
+    }
+
+    private func set(status: Status<T>) {
+        self.status = status
+        if case .finished(let data) = status {
+            self.lastUpdated = Date()
+        }
     }
 
     private func cancel() {
@@ -159,7 +168,7 @@ typealias StandardDataLoader<T> = DataLoader<T, (TwitchClient, AuthUser?), AuthS
             try Task.checkCancellation()
 
             if !preventLoadingState {
-                self.status = .loading(existingData)
+                self.set(status: .loading(existingData))
             }
 
             self.refreshToken = UUID()

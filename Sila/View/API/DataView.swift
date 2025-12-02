@@ -66,6 +66,20 @@ struct DataView<T, Content: View, Loading: View, ErrorView: View>: View {
                     print("Unknown task error occurred \(error)")
                 }
             })
+            .onActivePhase {
+                guard let lastUpdated = loader.lastUpdated else {
+                    return
+                }
+
+                // If data is over 5 minutes old when we regain active status, reload
+                // This is mainly to prevent showing days old data when someone puts on the headset
+                if lastUpdated.timeIntervalSinceNow < 5 * -60 {
+                    Task {
+                        print("Refreshing data after restore to active state")
+                        try? await loader.refresh()
+                    }
+                }
+            }
         } else {
             // Not authorized at all (login or public)
             self.error(nil)
