@@ -39,6 +39,16 @@ struct ChatListView: View {
         }) { (controller: ChatPresentableController) in
             self.chatModel = controller.chatModel
         }
+        .onActivePhase {
+            guard let chatModel = self.chatModel, chatModel.isVisible else {
+                return
+            }
+
+            Task {
+                print("Chat restored active")
+                await chatModel.connect()
+            }
+        }
 //                .task {
 //                    await EmoteController.shared.fetchUserEmotes(for: DEBUG_USER_ID)
 //

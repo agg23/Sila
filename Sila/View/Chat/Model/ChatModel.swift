@@ -30,6 +30,8 @@ struct Connection {
 
     @ObservationIgnored private var connection: Connection? = nil
 
+    @ObservationIgnored var isVisible: Bool = false
+
     var entries: [ChatLogEntryModel] = []
 
     init(channelName: String, userId: String) {

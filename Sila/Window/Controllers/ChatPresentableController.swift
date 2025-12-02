@@ -23,6 +23,8 @@ final class ChatPresentableController: PresentableControllerBase {
     }
 
     override func didBecomeHidden() async {
+        self.chatModel.isVisible = false
+
         self.task?.cancel()
         self.task = nil
 
@@ -31,6 +33,8 @@ final class ChatPresentableController: PresentableControllerBase {
     }
 
     override func didBecomeVisible() async {
+        self.chatModel.isVisible = true
+
         self.task = Task {
             await self.chatModel.connect()
         }
