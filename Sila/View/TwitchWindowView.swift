@@ -58,7 +58,7 @@ struct TwitchContentView: View {
         TwitchVideoView(controlVisibility: self.$controlVisibility, streamableVideo: self.streamableVideo, delayLoading: self.delayLoading, player: self.$player)
             // Set aspect ratio and enforce uniform resizing
             // This is on an inner view to prevent breaking .persistentSystemOverlays() modification
-            .windowGeometryPreferences(minimumSize: CGSize(width: 160.0, height: 90.0), resizingRestrictions: .uniform)
+            .windowGeometryPreferences(minimumSize: CGSize(width: 160.0 * 4, height: 90.0 * 4), resizingRestrictions: .uniform)
             .onChange(of: self.presentableController, { _, _ in
                 // When we gain a PresentableController, set up system and send mute
                 print("Setting onMute")

@@ -2,17 +2,39 @@
 //  View+WindowGeometryPreferences.swift
 //
 //  Created by Drew Olbrich on 1/30/24.
+//  Copyright © 2024 Lunar Skydiving LLC. All rights reserved.
+//
+//  MIT License
+//
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//
+//  The above copyright notice and this permission notice shall be included in all
+//  copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+//  SOFTWARE.
 //
 
 // This visionOS SwiftUI view modifier can be used to hide a window's resize
 // handles or to constrain a window's aspect ratio. See the documentation comments
 // below.
 
+// Taken from https://gist.github.com/drewolbrich/03460fc1bb71b9a821fff722f17ec977
+
 #if os(visionOS)
 
 import SwiftUI
 
-// Taken from https://gist.github.com/drewolbrich/03460fc1bb71b9a821fff722f17ec977
 extension View {
 
     // The following code declares the `windowGeometryPreferences` view modifier twice,
@@ -35,7 +57,7 @@ extension View {
     /// This view modifier may also be used to constrain the aspect ratio of view's
     /// window.
     ///
-    /// If you copy the user of `UIWindowScene/requestGeometryUpdate` from Apple's Happy
+    /// If you copy the use of `UIWindowScene/requestGeometryUpdate` from Apple's Happy
     /// Beam sample app, you may find that your code won't necessarily work as expected
     /// if your app has multiple windows. That's because the Happy Beam code always
     /// affects the first window group that it finds in the application, which may not
@@ -166,17 +188,25 @@ private struct WindowGeometryPreferencesView<Content>: UIViewControllerRepresent
         WindowGeometryPreferencesUIViewController(geometryPreferences: geometryPreferences, content: content)
     }
 
-    func updateUIViewController(_ uiViewController: WindowGeometryPreferencesUIViewController<Content>, context: Context) {
-        // Do nothing.
+    func updateUIViewController(_ windowGeometryPreferencesUIViewController: WindowGeometryPreferencesUIViewController<Content>, context: Context) {
+        windowGeometryPreferencesUIViewController.geometryPreferences = geometryPreferences
     }
 
 }
 
 private class WindowGeometryPreferencesUIViewController<Content>: UIViewController where Content: View {
 
-    let geometryPreferences: UIWindowScene.GeometryPreferences.Vision
+    var geometryPreferences: UIWindowScene.GeometryPreferences.Vision {
+        didSet {
+            windowGeometryPreferencesUIView?.geometryPreferences = geometryPreferences
+        }
+    }
 
     private let hostingController: UIHostingController<Content>
+
+    private var windowGeometryPreferencesUIView: WindowGeometryPreferencesUIView? {
+        return viewIfLoaded as? WindowGeometryPreferencesUIView
+    }
 
     init(geometryPreferences: UIWindowScene.GeometryPreferences.Vision, content: @escaping () -> Content) {
         self.geometryPreferences = geometryPreferences
@@ -204,7 +234,11 @@ private class WindowGeometryPreferencesUIViewController<Content>: UIViewControll
 
 private class WindowGeometryPreferencesUIView: UIView {
 
-    private let geometryPreferences: UIWindowScene.GeometryPreferences.Vision
+    var geometryPreferences: UIWindowScene.GeometryPreferences.Vision {
+        didSet {
+            requestGeometryUpdate(with: geometryPreferences)
+        }
+    }
 
     init(geometryPreferences: UIWindowScene.GeometryPreferences.Vision) {
         self.geometryPreferences = geometryPreferences
@@ -224,15 +258,19 @@ private class WindowGeometryPreferencesUIView: UIView {
         // and is subject to change in the future.
         RunLoop.main.perform {
             assert(self.window?.windowScene != nil)
-            self.window?.windowScene?.requestGeometryUpdate(self.geometryPreferences, errorHandler: { error in
-                // It's possible that `requestGeometryUpdate` may fail in a future version of
-                // visionOS. If that happens, check if an alternative to this view modifier has
-                // been added to SwiftUI and use it instead, or investigate more elaborate methods
-                // of detecting that the window scene has entered a state in which
-                // `requestGeometryUpdate` is guaranteed to succeed.
-                assertionFailure("Geometry update request failed: \(error)")
-            })
+            self.requestGeometryUpdate(with: self.geometryPreferences)
         }
+    }
+
+    private func requestGeometryUpdate(with geometryPreferences: UIWindowScene.GeometryPreferences) {
+        window?.windowScene?.requestGeometryUpdate(self.geometryPreferences, errorHandler: { error in
+            // It's possible that `requestGeometryUpdate` may fail in a future version of
+            // visionOS. If that happens, check if an alternative to this view modifier has
+            // been added to SwiftUI and use it instead, or investigate more elaborate methods
+            // of detecting that the window scene has entered a state in which
+            // `requestGeometryUpdate` is guaranteed to succeed.
+            assertionFailure("Geometry update request failed: \(error)")
+        })
     }
 
 }
