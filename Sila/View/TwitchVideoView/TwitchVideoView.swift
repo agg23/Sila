@@ -67,7 +67,7 @@ struct TwitchVideoView: View {
             // This would break the appearance animation
             .ornament(attachmentAnchor: .scene(.trailing), contentAlignment: .center) {
                 // Calibrated for a 400 width at default window size
-                let chatWidth = geometry.size.width * 0.3125
+                let chatWidth = max(geometry.size.width * 0.3125, 400)
                 let contentWidth = TwitchVideoView.ornamentSpacing + chatWidth
 
                 HStack {
