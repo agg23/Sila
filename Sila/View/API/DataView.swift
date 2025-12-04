@@ -58,7 +58,9 @@ struct DataView<T, Content: View, Loading: View, ErrorView: View>: View {
                         } catch {
                             throw error
                         }
-                    }, dataAugment: apiAndUser, onChange: self.authController.status)
+                    }, dataAugment: apiAndUser, changeState: self.authController.status) { oldStatus, newStatus in
+                        return oldStatus != newStatus || self.isDataStale()
+                    }
                 } catch is CancellationError {
                     print("Cancellation error")
                     self.loader.wrappedValue.completeCancel()
@@ -67,13 +69,9 @@ struct DataView<T, Content: View, Loading: View, ErrorView: View>: View {
                 }
             })
             .onActivePhase {
-                guard let lastUpdated = loader.lastUpdated else {
-                    return
-                }
-
-                // If data is over 5 minutes old when we regain active status, reload
+                // If data is stale when we regain active status, reload
                 // This is mainly to prevent showing days old data when someone puts on the headset
-                if lastUpdated.timeIntervalSinceNow < 5 * -60 {
+                if self.isDataStale() {
                     Task {
                         print("Refreshing data after restore to active state")
                         try? await loader.refresh()
@@ -84,5 +82,14 @@ struct DataView<T, Content: View, Loading: View, ErrorView: View>: View {
             // Not authorized at all (login or public)
             self.error(nil)
         }
+    }
+
+    func isDataStale() -> Bool {
+        guard let lastUpdated = self.loader.wrappedValue.lastUpdated else {
+            return false
+        }
+
+        // Refresh if data is over 5 minutes old
+        return lastUpdated.timeIntervalSinceNow < 5 * -60
     }
 }

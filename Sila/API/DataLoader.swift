@@ -31,21 +31,21 @@ typealias StandardDataLoader<T> = DataLoader<T, (TwitchClient, AuthUser?), AuthS
     @ObservationIgnored private(set) var refreshToken = UUID()
     @ObservationIgnored private(set) var lastUpdated: Date?
 
-    func loadIfNecessary(task: @escaping (_: DataAugment) async throws -> T, dataAugment: DataAugment, onChange: Changable? = nil) async throws {
+    func loadIfNecessary(task: @escaping (_: DataAugment) async throws -> T, dataAugment: DataAugment, changeState: Changable? = nil, changePredicate: (_ prevValue: Changable?, _ newValue: Changable?) -> Bool) async throws {
         self.task = task
         self.dataAugment = dataAugment
 
-        // Check changes before updating it (if in idle)
-        if onChange != nil && onChange != self.changable {
-            // We need to refresh
-            self.changable = onChange
+        // Check changes before updating it
+        if changePredicate(self.changable, changeState) {
+            self.changable = changeState
 
             try await self.refresh()
         } else {
+            // Only update changable if we're idle
             switch self.status {
             case .idle:
                 // Save changable for future updates
-                self.changable = onChange
+                self.changable = changeState
                 break
             default:
                 break
@@ -121,7 +121,7 @@ typealias StandardDataLoader<T> = DataLoader<T, (TwitchClient, AuthUser?), AuthS
 
     private func set(status: Status<T>) {
         self.status = status
-        if case .finished(let data) = status {
+        if case .finished(_) = status {
             self.lastUpdated = Date()
         }
     }
