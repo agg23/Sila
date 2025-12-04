@@ -95,6 +95,7 @@ private struct ChatListContentView: View {
     @State private var pendingScrollRequest: UUID? = nil
 
     @State private var scrollPosition = ScrollPosition(edge: .bottom)
+    @State private var isAtBottom = true
 
     let chatModel: ChatModel
 
@@ -134,7 +135,10 @@ private struct ChatListContentView: View {
                     // Use an even count to improve the alignment of the text
                     .frame(height: 2, alignment: .bottom)
                     .onAppear {
-                        self.scrollToBottom()
+                        self.isAtBottom = true
+                    }
+                    .onDisappear {
+                        self.isAtBottom = false
                     }
             }
             .scrollTargetLayout()
@@ -143,7 +147,7 @@ private struct ChatListContentView: View {
         // content will end up being vertically centered when it doesn't fill a full view height. Adding an anchor seems to fix that
         .scrollPosition(self.$scrollPosition, anchor: .bottom)
         .overlay(alignment: .bottomTrailing) {
-            if self.scrollPosition.edge != .bottom {
+            if self.scrollPosition.edge != .bottom && !self.isAtBottom {
                 Button("Scroll to Bottom", systemImage: "arrow.down") {
                     self.scrollToBottom()
                 }
@@ -158,6 +162,12 @@ private struct ChatListContentView: View {
         }
         .onReceive(self.chatModel.didPrune) { _ in
             self.scrollToBottom()
+        }
+        .onChange(of: self.chatModel.entries) {
+            if self.isAtBottom && self.scrollPosition.edge != .bottom {
+                // We can see the bottom detector, but are set to positionedByUser, so let's reset to the bottom scroll lock
+                self.scrollToBottom()
+            }
         }
     }
 
