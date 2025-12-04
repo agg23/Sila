@@ -35,6 +35,12 @@ struct StreamGridView: View {
             Color.clear
                 .frame(height: 1)
                 .onAppear {
+                    // If we don't have at least 12 streams on screen, we can't possibly have more data to fetch
+                    // This is just triggering on initial render. Don't do anything
+                    guard self.streams.count > 12 else {
+                        return
+                    }
+
                     guard let onPaginationThresholdMet = self.onPaginationThresholdMet else {
                         return
                     }
