@@ -139,7 +139,9 @@ private struct ChatListContentView: View {
             }
             .scrollTargetLayout()
         }
-        .scrollPosition(self.$scrollPosition)
+        // Even though we shouldn't need an anchor (and it shouldn't do anything when not scrolling to a view), the ScrollView
+        // content will end up being vertically centered when it doesn't fill a full view height. Adding an anchor seems to fix that
+        .scrollPosition(self.$scrollPosition, anchor: .bottom)
         .overlay(alignment: .bottomTrailing) {
             if self.scrollPosition.edge != .bottom {
                 Button("Scroll to Bottom", systemImage: "arrow.down") {
