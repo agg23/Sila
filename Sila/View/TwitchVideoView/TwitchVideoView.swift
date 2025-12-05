@@ -13,6 +13,8 @@ struct TwitchVideoView: View {
     let controlsTimerDuration = 3.0
     static let ornamentSpacing = 8.0
 
+    @Environment(AuthController.self) private var authController
+
     @State private var loading = true
 
     @Binding var controlVisibility: Visibility
@@ -24,6 +26,11 @@ struct TwitchVideoView: View {
     // Maintain a local volume value, which we update based on user input and the client
     // This must be located here, as locating in the overlay wipes the state
     @State private var volume: CGFloat = 0.5
+
+    @State private var liveUpdatedStream: StreamableVideo?
+    @State private var streamRefreshTask: Task<(), Never>?
+
+    let streamRefreshTimer = Timer.publish(every: 30, on: .main, in: .common).autoconnect()
 
     let streamableVideo: StreamableVideo
 
@@ -98,7 +105,7 @@ struct TwitchVideoView: View {
                 VStack {
                     // Add spacing between main window and PlayerControlsView to allow for the window resizer
                     Color.clear.frame(height: TwitchVideoView.ornamentSpacing)
-                    PlayerOranamentControlsView(player: self.player, streamableVideo: self.streamableVideo, chatVisible: self.$chatVisible) {
+                    PlayerOranamentControlsView(player: self.player, streamableVideo: self.liveUpdatedStream ?? self.streamableVideo, chatVisible: self.$chatVisible) {
                         self.onControlInteraction()
                     } activeChanged: { isActive in
                         if isActive {
@@ -110,6 +117,13 @@ struct TwitchVideoView: View {
                     }
                     .glassBackgroundEffect()
                 }
+            }
+            .onReceive(self.streamRefreshTimer) { _ in
+                guard let channelId = self.player.channelId else {
+                    return
+                }
+
+                self.fetchStreamData(channelId: channelId)
             }
             .task {
                 let channel: String
@@ -127,6 +141,8 @@ struct TwitchVideoView: View {
                 self.player.channel = channel
 
                 await EmoteController.shared.fetchUserEmotes(for: channelId)
+                
+                self.fetchStreamData(channelId: channelId)
             }
             .onReceive(WindowController.shared.popoutChatSubject, perform: { popoutUserId in
                 if popoutUserId == self.player.channelId {
@@ -192,6 +208,25 @@ struct TwitchVideoView: View {
         self.clearTimer()
         withAnimation {
             self.controlVisibility = .visible
+        }
+    }
+
+    private func fetchStreamData(channelId: String) {
+        self.streamRefreshTask?.cancel()
+
+        self.streamRefreshTask = Task {
+            guard let api = self.authController.status.api() else {
+                return
+            }
+
+            do {
+                let streams = try await api.helix(endpoint: .getStreams(userIDs: [channelId]))
+                self.liveUpdatedStream = streams.0.first.map { stream in .stream(stream) }
+            } catch {
+                print("Error fetching stream data: \(error)")
+            }
+
+            self.streamRefreshTask = nil
         }
     }
 }

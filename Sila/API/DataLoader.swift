@@ -89,6 +89,7 @@ typealias StandardDataLoader<T> = DataLoader<T, (TwitchClient, AuthUser?), AuthS
         self.set(status: newStatus)
     }
 
+    // TODO: This should be integrated into reload with an optional DataAugment arg
     func requestMore(withGetter task: (_: T, _: DataAugment) async throws -> T) async {
         guard let dataAugment = self.dataAugment else {
             fatalError("Incorrectly set up DataLoader")

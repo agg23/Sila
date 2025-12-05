@@ -9,59 +9,48 @@ import SwiftUI
 import Twitch
 
 struct PlayerStreamInfoView: View {
-    @State private var loader = StandardDataLoader<(User?, StreamableVideo?)>()
+    @State private var loader = StandardDataLoader<User?>()
+    @State private var refreshTask: Task<(), Never>?
 
     let player: WebViewPlayer
     let streamableVideo: StreamableVideo
 
     var body: some View {
         DataView(loader: self.$loader, task: { api, _ in
-            let task = self.createTask(requestStream: false, channelId: self.streamableVideo.userId)
-            return try await task(api)
-        }, content: { data, _ in
-            let (user, stream) = data
-            PlayerStreamInfoContentWrapperView(streamableVideo: stream ?? self.streamableVideo, user: user)
-        }, loading: { data in
-            PlayerStreamInfoContentWrapperView(streamableVideo: data?.1 ?? self.streamableVideo, user: data?.0)
+            let users = try await api.helix(endpoint: .getUsers(ids: [self.streamableVideo.userId]))
+            return users.first
+        }, content: { user, _ in
+            PlayerStreamInfoContentWrapperView(streamableVideo: self.streamableVideo, user: user)
+        }, loading: { user in
+            PlayerStreamInfoContentWrapperView(streamableVideo: self.streamableVideo, user: user as? User)
         }, error: { (_: Error?) in
             PlayerStreamInfoContentWrapperView(streamableVideo: self.streamableVideo, user: nil)
-        })
-        .onChange(of: self.player.channelId, { oldValue, newValue in
-            guard oldValue != nil, let newValue = newValue else {
-                // If we're changing from (or to) an empty value, ignore it
-                return
-            }
-
-            // TODO: Do we need to cancel this?
-            Task {
-                await self.loader.requestMore { _, apiAndUser in
-                    let task = self.createTask(requestStream: true, channelId: newValue)
-                    return try await task(apiAndUser.0)
-                }
-            }
         })
         .padding(6)
         .frame(width: 600, height: 80)
         .insetBackground()
         // 8 inner radius + 6 padding
         .clipShape(.rect(cornerRadius: 14))
+        .onChange(of: self.player.channelId, { oldValue, newValue in
+            guard oldValue != nil, let newValue = newValue else {
+                // If we're changing from (or to) an empty value, ignore it
+                return
+            }
+
+            self.requestState(channelId: newValue)
+        })
     }
 
-    func createTask(requestStream: Bool = false, channelId: String) -> (TwitchClient) async throws -> (User?, StreamableVideo?) {
-        return { api in
-            async let usersAsync = await api.helix(endpoint: .getUsers(ids: [channelId]))
+    private func requestState(channelId: String) {
+        self.refreshTask?.cancel()
 
-            if requestStream {
-                async let streamsAsync = await api.helix(endpoint: .getStreams(userIDs: [channelId]))
-
-                let (users, streams) = try await (usersAsync, streamsAsync)
-
-                return (users.first, streams.0.first.map({ stream in .stream(stream) }))
-            } else {
-                let users = try await usersAsync
-
-                return (users.first, nil)
+        self.refreshTask = Task {
+            await self.loader.requestMore { _, apiAndUser in
+                let users = try await apiAndUser.0.helix(endpoint: .getUsers(ids: [channelId]))
+                return users.first
             }
+
+            self.refreshTask = nil
         }
     }
 }
@@ -123,7 +112,7 @@ struct PlayerStreamInfoContentView: View {
 
                 Spacer()
 
-                if let viewerCount = viewerCount {
+                if let viewerCount = self.viewerCount {
                     ViewerCountView(viewerCount: viewerCount)
                 }
             }
