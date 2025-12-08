@@ -17,10 +17,21 @@ struct ChannelPosterTimelineEntry: TimelineEntry {
     let intent: ChannelPosterConfigurationIntent
     let context: TimelineProviderContext
 
-    enum State {
+    enum State: CustomStringConvertible {
         case data(ChannelPosterData)
         case noData(displayName: String)
         case unconfigured(isPreview: Bool)
+
+        var description: String {
+            switch self {
+            case .data(let data):
+                data.status.description
+            case .noData(displayName: let displayName):
+                "No data for \(displayName)"
+            case .unconfigured(isPreview: let isPreview):
+                isPreview ? "Unconfigured" : "Unconfigured (Preview)"
+            }
+        }
     }
 
     struct ChannelPosterData {
@@ -29,9 +40,18 @@ struct ChannelPosterTimelineEntry: TimelineEntry {
 
         var status: Status
 
-        enum Status {
+        enum Status: CustomStringConvertible {
             case online(_ gameName: String, startedAt: Date, viewerCount: Int)
             case offline
+
+            var description: String {
+                switch self {
+                case .online(let gameName, startedAt: let startedAt, viewerCount: let viewerCount):
+                    "Game: \(gameName), live at \(startedAt.description(with: .current)), viewer count \(viewerCount)"
+                case .offline:
+                    "Offline"
+                }
+            }
         }
     }
 }

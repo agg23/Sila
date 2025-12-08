@@ -9,6 +9,7 @@ import WidgetKit
 import SwiftUI
 import Twitch
 import UIImageColors
+import os.log
 
 struct ChannelPosterWidget: Widget {
     var body: some WidgetConfiguration {
@@ -45,7 +46,12 @@ fileprivate struct ChannelPosterTimelineProvider: AppIntentTimelineProvider {
 
     func timeline(for configuration: Intent, in context: Context) async -> Timeline<Entry> {
         let refreshTime = Calendar.current.date(byAdding: .minute, value: 5, to: .now)!
+
+        os_log(.debug, "Fetching data for ChannelPosterWidget: user \"\(configuration.selectedChannel?.loginName ?? "Unconfigured")\"")
         let entry = await self.snapshot(for: configuration, in: context)
+
+        os_log(.debug, "Fetched data for ChannelPosterWidget: user \"\(configuration.selectedChannel?.loginName ?? "Unconfigured")\", state: \(entry.state)")
+        os_log(.debug, "Scheduling next data fetch for ChannelPosterWidget: user \"\(configuration.selectedChannel?.loginName ?? "Unconfigured")\" at \(refreshTime.description(with: .current))")
 
         return Timeline(entries: [entry], policy: .after(refreshTime))
     }
