@@ -40,44 +40,63 @@ fileprivate struct ChannelPosterTimelineProvider: AppIntentTimelineProvider {
     }
 
     func snapshot(for configuration: Intent, in context: Context) async -> Entry {
-        let state = await self.fetchEntry(for: configuration, context: context)
+        let previewMessage = context.isPreview ? " (Preview)" : ""
+        os_log(.debug, "Fetching data for ChannelPosterWidget\(previewMessage): user \"\(configuration.selectedChannel?.loginName ?? "Unconfigured")\"")
+
+        let state: Entry.State = if let selectedChannel = configuration.selectedChannel {
+            await self.fetchEntry(selectedChannel)
+        } else if context.isPreview {
+            await self.fetchSnapshotEntry(for: configuration)
+        } else {
+            .unconfigured(isPreview: false)
+        }
+
+        os_log(.debug, "Fetched data for ChannelPosterWidget\(previewMessage): user \"\(configuration.selectedChannel?.loginName ?? "Unconfigured")\", state: \(state)")
+
         return ChannelPosterTimelineEntry(date: .now, state: state, intent: configuration, context: context)
     }
 
     func timeline(for configuration: Intent, in context: Context) async -> Timeline<Entry> {
         let refreshTime = Calendar.current.date(byAdding: .minute, value: 5, to: .now)!
 
-        os_log(.debug, "Fetching data for ChannelPosterWidget: user \"\(configuration.selectedChannel?.loginName ?? "Unconfigured")\"")
         let entry = await self.snapshot(for: configuration, in: context)
 
-        os_log(.debug, "Fetched data for ChannelPosterWidget: user \"\(configuration.selectedChannel?.loginName ?? "Unconfigured")\", state: \(entry.state)")
         os_log(.debug, "Scheduling next data fetch for ChannelPosterWidget: user \"\(configuration.selectedChannel?.loginName ?? "Unconfigured")\" at \(refreshTime.description(with: .current))")
 
         return Timeline(entries: [entry], policy: .after(refreshTime))
     }
 
-    private func fetchEntry(for configuration: ChannelPosterConfigurationIntent, context: TimelineProviderContext) async -> Entry.State {
-        // Preview must instantly return
-        if context.isPreview {
+    private func fetchSnapshotEntry(for configuration: ChannelPosterConfigurationIntent) async -> Entry.State {
+        // Choose random live followed channel, if it exists
+        guard let api = AuthController().status.api() else {
             return .unconfigured(isPreview: true)
         }
 
-        guard let selectedChannel = configuration.selectedChannel else {
+        guard let liveStreams = try? await api.helix(endpoint: .getFollowedStreams(limit: 10)),
+              let mostPopularStream = liveStreams.0.sorted(by: { $0.viewerCount > $1.viewerCount }).first else {
+            return .unconfigured(isPreview: true)
+        }
+
+        return await self.fetchEntry(ChannelOption(id: mostPopularStream.userID, displayName: mostPopularStream.userName, loginName: mostPopularStream.userLogin))
+    }
+
+    private func fetchEntry(_ channel: ChannelOption?) async -> Entry.State {
+        guard let channel = channel else {
             return .unconfigured(isPreview: false)
         }
 
         guard let api = AuthController().status.api() else {
-            return .noData(displayName: selectedChannel.displayName)
+            return .noData(displayName: channel.displayName)
         }
 
-        async let usersAsync = try api.helix(endpoint: .getUsers(ids: [selectedChannel.id]))
-        async let streamsAsync = try api.helix(endpoint: .getStreams(userIDs: [selectedChannel.id]))
+        async let usersAsync = try api.helix(endpoint: .getUsers(ids: [channel.id]))
+        async let streamsAsync = try api.helix(endpoint: .getStreams(userIDs: [channel.id]))
 
         do {
             let (users, streams) = await (try usersAsync, try streamsAsync)
 
             guard let user = users.first else {
-                return .noData(displayName: selectedChannel.displayName)
+                return .noData(displayName: channel.displayName)
             }
 
             let image = await fetchImage(from: user.profileImageUrl)
@@ -94,9 +113,9 @@ fileprivate struct ChannelPosterTimelineProvider: AppIntentTimelineProvider {
                 ChannelPosterTimelineEntry.ChannelPosterData.Status.offline
             }
 
-            return .data(ChannelPosterTimelineEntry.ChannelPosterData(displayName: selectedChannel.displayName, profileImage: profileImage, status: status))
+            return .data(ChannelPosterTimelineEntry.ChannelPosterData(displayName: channel.displayName, profileImage: profileImage, status: status))
         } catch {
-            return .noData(displayName: selectedChannel.displayName)
+            return .noData(displayName: channel.displayName)
         }
     }
 
