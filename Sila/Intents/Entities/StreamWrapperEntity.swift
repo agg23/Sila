@@ -28,5 +28,3 @@ struct StreamWrapperEntity: AppEntity {
         DisplayRepresentation(title: LocalizedStringResource(stringLiteral: self.stream.userName))
     }
 }
-
-extension Twitch.Stream: @unchecked Sendable {}

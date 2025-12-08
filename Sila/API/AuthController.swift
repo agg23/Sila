@@ -19,24 +19,13 @@ import WebKit
     static let CLIENT_SECRET = (Bundle.main.infoDictionary?["API_SECRET"] as! String).replacingOccurrences(of: "\"", with: "")
     static let REDIRECT_URL = "http://localhost"
 
-    private static let USER_USERDEFAULTS_KEY = "user_info"
-    private static let OAUTH_KEYCHAIN_KEY = "oauth_token"
-    private static let PUBLIC_KEYCHAIN_KEY = "public_token"
-
     var status: AuthStatus
     let requestReauthSubject: PassthroughSubject<(), Never>
 
     private let session: URLSession
 
     init() {
-        var user: AuthUser? = nil
-
-        if let authUserData = UserDefaults.standard.object(forKey: AuthController.USER_USERDEFAULTS_KEY) as? Data, let authUser = try? JSONDecoder().decode(AuthUser.self, from: authUserData) {
-            user = authUser
-        }
-
-        let oauthToken = KeychainWrapper.default.string(forKey: AuthController.OAUTH_KEYCHAIN_KEY)
-        let publicToken = KeychainWrapper.default.string(forKey: AuthController.PUBLIC_KEYCHAIN_KEY)
+        AppGroup.shared.migrateIfNecessary()
 
         self.requestReauthSubject = PassthroughSubject()
 
@@ -45,13 +34,13 @@ import WebKit
 
         self.session = URLSession(configuration: config)
 
-        if let oauthToken = oauthToken, let user = user {
+        if let oauthToken = AppGroup.shared.oauthToken, let user = AppGroup.shared.user {
             // We're logged in. Create authed Helix instance
             // Won't throw
             let client = TwitchClient(authentication: .init(oAuth: oauthToken, clientID: AuthController.CLIENT_ID, userID: user.id, userLogin: user.username), urlSession: self.session)
             self.status = .user(user: user, api: client)
-        } else if let publicToken = publicToken {
-            let client = Sila.createPublicClient(with: publicToken, session: self.session)
+        } else if let publicToken = AppGroup.shared.publicToken {
+            let client = sharedCreatePublicClient(with: publicToken, session: self.session)
             self.status = .publicLoggedOut(api: client)
         } else {
             // No auth at all
@@ -69,9 +58,10 @@ import WebKit
         let client = TwitchClient(authentication: TwitchCredentials(oAuth: token, clientID: AuthController.CLIENT_ID, userID: authUser.id, userLogin: authUser.username), urlSession: self.session)
         self.status = .user(user: authUser, api: client)
 
-        self.updateUserStore(token: token, authUser: authUser)
+        AppGroup.shared.updateUser(authUser, token: token)
     }
 
+    #if TARGET_Sila
     func logOut() {
         print("Logging out")
         // Clear cookies
@@ -84,7 +74,7 @@ import WebKit
             }
         }
 
-        let publicToken = KeychainWrapper.default.string(forKey: AuthController.PUBLIC_KEYCHAIN_KEY)
+        let publicToken = AppGroup.shared.publicToken
 
         if let publicToken = publicToken {
             let client = self.createPublicClient(with: publicToken)
@@ -94,11 +84,12 @@ import WebKit
             self.status = .none
         }
 
-        self.updateUserStore(token: nil, authUser: nil)
+        AppGroup.shared.updateUser(nil, token: nil)
 
         // Send event to cause streaming windows to close
         NotificationCenter.default.post(name: .twitchLogOut, object: nil, userInfo: nil)
     }
+    #endif
 
     func isAuthorized() -> Bool {
         switch self.status {
@@ -129,7 +120,7 @@ import WebKit
     }
 
     private func createPublicClient(with token: String) -> TwitchClient {
-        Sila.createPublicClient(with: token, session: self.session)
+        sharedCreatePublicClient(with: token, session: self.session)
     }
 
     private func requestPublicToken() async throws {
@@ -148,7 +139,7 @@ import WebKit
         // Public instance. Make sure we don't set user so we don't have permission issues
         let client = self.createPublicClient(with: token)
         self.status = .publicLoggedOut(api: client)
-        self.updatePublicStore(token: token)
+        AppGroup.shared.publicToken = token
     }
 
     private func fetchPublicToken() async throws -> String {
@@ -191,33 +182,9 @@ import WebKit
 
         throw HelixError.parsingResponseFailed(responseData: data)
     }
-
-    private func updateUserStore(token: String?, authUser: AuthUser?) {
-        if let authUser = authUser {
-            if let encoded = try? JSONEncoder().encode(authUser) {
-                UserDefaults.standard.setValue(encoded, forKey: AuthController.USER_USERDEFAULTS_KEY)
-            }
-        } else {
-            UserDefaults.standard.setValue(nil, forKey: AuthController.USER_USERDEFAULTS_KEY)
-        }
-
-        if let token = token {
-            KeychainWrapper.default.set(token, forKey: AuthController.OAUTH_KEYCHAIN_KEY)
-        } else {
-            KeychainWrapper.default.removeObject(forKey: AuthController.OAUTH_KEYCHAIN_KEY)
-        }
-    }
-
-    private func updatePublicStore(token: String?) {
-        if let token = token {
-            KeychainWrapper.default.set(token, forKey: AuthController.PUBLIC_KEYCHAIN_KEY)
-        } else {
-            KeychainWrapper.default.removeObject(forKey: AuthController.PUBLIC_KEYCHAIN_KEY)
-        }
-    }
 }
 
-private func createPublicClient(with token: String, session: URLSession) -> TwitchClient {
+private func sharedCreatePublicClient(with token: String, session: URLSession) -> TwitchClient {
     // Public instance. Make sure we don't set user so we don't have permission issues
     TwitchClient(authentication: .init(oAuth: token, clientID: AuthController.CLIENT_ID, userID: "", userLogin: ""), urlSession: session)
 }

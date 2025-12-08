@@ -68,6 +68,22 @@
 		6672D37C2B8C3F7B00E9D0E9 /* NeedsLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6672D37B2B8C3F7B00E9D0E9 /* NeedsLoginView.swift */; };
 		6677BF702BC2160000C71CC5 /* LanguagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6677BF6F2BC2160000C71CC5 /* LanguagePickerView.swift */; };
 		6685E3262EDE5A0300E1C20C /* OnActivePhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6685E3252EDE5A0300E1C20C /* OnActivePhase.swift */; };
+		6685E40D2EE3E99400E1C20C /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6685E40C2EE3E99400E1C20C /* WidgetKit.framework */; };
+		6685E40F2EE3E99400E1C20C /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6685E40E2EE3E99400E1C20C /* SwiftUI.framework */; };
+		6685E41C2EE3E99600E1C20C /* WidgetsExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 6685E40B2EE3E99400E1C20C /* WidgetsExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		6685E4292EE4A12700E1C20C /* AuthController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E42B2B812A32008C565D /* AuthController.swift */; };
+		6685E42B2EE4A17900E1C20C /* AppGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6685E42A2EE4A17900E1C20C /* AppGroup.swift */; };
+		6685E42C2EE4A17900E1C20C /* AppGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6685E42A2EE4A17900E1C20C /* AppGroup.swift */; };
+		6685E42D2EE4A18800E1C20C /* AuthStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E885A12B86D95C004B4B8D /* AuthStatus.swift */; };
+		6685E42F2EE4AB4800E1C20C /* Twitch in Frameworks */ = {isa = PBXBuildFile; productRef = 6685E42E2EE4AB4800E1C20C /* Twitch */; };
+		6685E4312EE4AB4E00E1C20C /* KeychainWrapper in Frameworks */ = {isa = PBXBuildFile; productRef = 6685E4302EE4AB4E00E1C20C /* KeychainWrapper */; };
+		6685E4592EE5EA5B00E1C20C /* ChannelPosterConfigurationIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6685E44C2EE5EA5B00E1C20C /* ChannelPosterConfigurationIntent.swift */; };
+		6685E45A2EE5EA5B00E1C20C /* SingleChannelQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6685E44E2EE5EA5B00E1C20C /* SingleChannelQuery.swift */; };
+		6685E45C2EE5EA5B00E1C20C /* ChannelPosterWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6685E4522EE5EA5B00E1C20C /* ChannelPosterWidget.swift */; };
+		6685E45D2EE5EA5B00E1C20C /* StreamListWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6685E4542EE5EA5B00E1C20C /* StreamListWidget.swift */; };
+		6685E45F2EE5EA5B00E1C20C /* WidgetsBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6685E4562EE5EA5B00E1C20C /* WidgetsBundle.swift */; };
+		6685E4602EE5EA5B00E1C20C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6685E4512EE5EA5B00E1C20C /* Assets.xcassets */; };
+		6685E4642EE5F3ED00E1C20C /* UIImageColors in Frameworks */ = {isa = PBXBuildFile; productRef = 6685E4632EE5F3ED00E1C20C /* UIImageColors */; };
 		66891FF62B9A9590000C0D92 /* ChatMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66891FF52B9A9590000C0D92 /* ChatMessageView.swift */; };
 		66891FF82B9A9E72000C0D92 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66891FF72B9A9E72000C0D92 /* Color.swift */; };
 		66891FFB2B9AA058000C0D92 /* View+BackgroundTint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66891FFA2B9AA058000C0D92 /* View+BackgroundTint.swift */; };
@@ -87,6 +103,9 @@
 		66AFA2E42CFCBF7600491D98 /* PlayerDurationSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AFA2E32CFCBF7600491D98 /* PlayerDurationSliderView.swift */; };
 		66B5DD852B9FCBCC0054121D /* MatureStreamFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B5DD832B9FCBCC0054121D /* MatureStreamFilterView.swift */; };
 		66B5DD882B9FCC150054121D /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B5DD872B9FCC150054121D /* Setting.swift */; };
+		66C09B972EE5FAFC0067E57B /* UIImageColors+Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C09B962EE5FAFC0067E57B /* UIImageColors+Default.swift */; };
+		66C09B9B2EE687820067E57B /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C09B9A2EE687820067E57B /* Types.swift */; };
+		66C09B9D2EE687B60067E57B /* ChannelPosterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C09B9C2EE687B60067E57B /* ChannelPosterView.swift */; };
 		66C4BC332BCD97F000AA8732 /* SevenTVModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C4BC322BCD97F000AA8732 /* SevenTVModels.swift */; };
 		66C4BC382BCD9C1400AA8732 /* Emote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C4BC372BCD9C1400AA8732 /* Emote.swift */; };
 		66C4BC3A2BCD9C9200AA8732 /* EmoteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C4BC392BCD9C9200AA8732 /* EmoteController.swift */; };
@@ -149,6 +168,30 @@
 		68A872C52BACBB070031FCD4 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A872C42BACBB070031FCD4 /* View.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		6685E41A2EE3E99600E1C20C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 663B72EB2B6DB8E60031D661 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6685E40A2EE3E99400E1C20C;
+			remoteInfo = WidgetsExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		6685E4212EE3E99600E1C20C /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				6685E41C2EE3E99600E1C20C /* WidgetsExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		6600E0842B8BB384003B2270 /* Stream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stream.swift; sourceTree = "<group>"; };
 		6600E0882B8BB5E8003B2270 /* PlayerStreamInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerStreamInfoView.swift; sourceTree = "<group>"; };
@@ -210,6 +253,19 @@
 		6672D37B2B8C3F7B00E9D0E9 /* NeedsLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NeedsLoginView.swift; sourceTree = "<group>"; };
 		6677BF6F2BC2160000C71CC5 /* LanguagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguagePickerView.swift; sourceTree = "<group>"; };
 		6685E3252EDE5A0300E1C20C /* OnActivePhase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnActivePhase.swift; sourceTree = "<group>"; };
+		6685E40B2EE3E99400E1C20C /* WidgetsExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WidgetsExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		6685E40C2EE3E99400E1C20C /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		6685E40E2EE3E99400E1C20C /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		6685E42A2EE4A17900E1C20C /* AppGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppGroup.swift; sourceTree = "<group>"; };
+		6685E4322EE4C4DB00E1C20C /* Sila.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Sila.entitlements; sourceTree = "<group>"; };
+		6685E44C2EE5EA5B00E1C20C /* ChannelPosterConfigurationIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelPosterConfigurationIntent.swift; sourceTree = "<group>"; };
+		6685E44E2EE5EA5B00E1C20C /* SingleChannelQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleChannelQuery.swift; sourceTree = "<group>"; };
+		6685E4512EE5EA5B00E1C20C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		6685E4522EE5EA5B00E1C20C /* ChannelPosterWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelPosterWidget.swift; sourceTree = "<group>"; };
+		6685E4532EE5EA5B00E1C20C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6685E4542EE5EA5B00E1C20C /* StreamListWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamListWidget.swift; sourceTree = "<group>"; };
+		6685E4562EE5EA5B00E1C20C /* WidgetsBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetsBundle.swift; sourceTree = "<group>"; };
+		6685E4572EE5EA5B00E1C20C /* WidgetsExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WidgetsExtension.entitlements; sourceTree = "<group>"; };
 		66891FF52B9A9590000C0D92 /* ChatMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessageView.swift; sourceTree = "<group>"; };
 		66891FF72B9A9E72000C0D92 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		66891FFA2B9AA058000C0D92 /* View+BackgroundTint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+BackgroundTint.swift"; sourceTree = "<group>"; };
@@ -228,6 +284,9 @@
 		66AFA2E32CFCBF7600491D98 /* PlayerDurationSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerDurationSliderView.swift; sourceTree = "<group>"; };
 		66B5DD832B9FCBCC0054121D /* MatureStreamFilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatureStreamFilterView.swift; sourceTree = "<group>"; };
 		66B5DD872B9FCC150054121D /* Setting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
+		66C09B962EE5FAFC0067E57B /* UIImageColors+Default.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageColors+Default.swift"; sourceTree = "<group>"; };
+		66C09B9A2EE687820067E57B /* Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Types.swift; sourceTree = "<group>"; };
+		66C09B9C2EE687B60067E57B /* ChannelPosterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelPosterView.swift; sourceTree = "<group>"; };
 		66C4BC322BCD97F000AA8732 /* SevenTVModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SevenTVModels.swift; sourceTree = "<group>"; };
 		66C4BC372BCD9C1400AA8732 /* Emote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Emote.swift; sourceTree = "<group>"; };
 		66C4BC392BCD9C9200AA8732 /* EmoteController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmoteController.swift; sourceTree = "<group>"; };
@@ -300,6 +359,18 @@
 				660A6D0F2ECFB031006F9831 /* AsyncAnimatedImageUI in Frameworks */,
 				66D11B6C2BF81FF200DDD159 /* AsyncAnimatedImageUI in Frameworks */,
 				66D11B672BF5B51000DDD159 /* AsyncAnimatedImageUI in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6685E4082EE3E99400E1C20C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6685E4312EE4AB4E00E1C20C /* KeychainWrapper in Frameworks */,
+				6685E4642EE5F3ED00E1C20C /* UIImageColors in Frameworks */,
+				6685E42F2EE4AB4800E1C20C /* Twitch in Frameworks */,
+				6685E40F2EE3E99400E1C20C /* SwiftUI.framework in Frameworks */,
+				6685E40D2EE3E99400E1C20C /* WidgetKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -407,6 +478,7 @@
 			children = (
 				663B72F52B6DB8E60031D661 /* Sila */,
 				662C4FE92B856F7100A84C7A /* Keys.xcconfig */,
+				6685E4582EE5EA5B00E1C20C /* Widgets */,
 				663B72F42B6DB8E60031D661 /* Products */,
 				663B732F2B6E06860031D661 /* Frameworks */,
 			);
@@ -416,6 +488,7 @@
 			isa = PBXGroup;
 			children = (
 				663B72F32B6DB8E60031D661 /* Sila.app */,
+				6685E40B2EE3E99400E1C20C /* WidgetsExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -423,6 +496,7 @@
 		663B72F52B6DB8E60031D661 /* Sila */ = {
 			isa = PBXGroup;
 			children = (
+				6685E4322EE4C4DB00E1C20C /* Sila.entitlements */,
 				66F4E42A2B812A1F008C565D /* API */,
 				663336922B75B7D40098D188 /* Extensions */,
 				6645AFDE2BA87C6F0096BC03 /* Intents */,
@@ -466,6 +540,8 @@
 		663B732F2B6E06860031D661 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6685E40C2EE3E99400E1C20C /* WidgetKit.framework */,
+				6685E40E2EE3E99400E1C20C /* SwiftUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -513,6 +589,28 @@
 			path = Util;
 			sourceTree = "<group>";
 		};
+		6685E44F2EE5EA5B00E1C20C /* Queries */ = {
+			isa = PBXGroup;
+			children = (
+				6685E44E2EE5EA5B00E1C20C /* SingleChannelQuery.swift */,
+			);
+			path = Queries;
+			sourceTree = "<group>";
+		};
+		6685E4582EE5EA5B00E1C20C /* Widgets */ = {
+			isa = PBXGroup;
+			children = (
+				66C09B9F2EE688AE0067E57B /* WidgetKinds */,
+				6685E44F2EE5EA5B00E1C20C /* Queries */,
+				66C09B952EE5FADE0067E57B /* Util */,
+				6685E4512EE5EA5B00E1C20C /* Assets.xcassets */,
+				6685E4532EE5EA5B00E1C20C /* Info.plist */,
+				6685E4562EE5EA5B00E1C20C /* WidgetsBundle.swift */,
+				6685E4572EE5EA5B00E1C20C /* WidgetsExtension.entitlements */,
+			);
+			path = Widgets;
+			sourceTree = "<group>";
+		};
 		6690EB9E2BA6666B0093B18C /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -524,6 +622,42 @@
 				66D11B512BF140C300DDD159 /* DebugChat.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		66C09B952EE5FADE0067E57B /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				66C09B962EE5FAFC0067E57B /* UIImageColors+Default.swift */,
+			);
+			path = Util;
+			sourceTree = "<group>";
+		};
+		66C09B982EE6875E0067E57B /* ChannelPoster */ = {
+			isa = PBXGroup;
+			children = (
+				6685E44C2EE5EA5B00E1C20C /* ChannelPosterConfigurationIntent.swift */,
+				6685E4522EE5EA5B00E1C20C /* ChannelPosterWidget.swift */,
+				66C09B9C2EE687B60067E57B /* ChannelPosterView.swift */,
+				66C09B9A2EE687820067E57B /* Types.swift */,
+			);
+			path = ChannelPoster;
+			sourceTree = "<group>";
+		};
+		66C09B9E2EE6889D0067E57B /* StreamList */ = {
+			isa = PBXGroup;
+			children = (
+				6685E4542EE5EA5B00E1C20C /* StreamListWidget.swift */,
+			);
+			path = StreamList;
+			sourceTree = "<group>";
+		};
+		66C09B9F2EE688AE0067E57B /* WidgetKinds */ = {
+			isa = PBXGroup;
+			children = (
+				66C09B982EE6875E0067E57B /* ChannelPoster */,
+				66C09B9E2EE6889D0067E57B /* StreamList */,
+			);
+			path = WidgetKinds;
 			sourceTree = "<group>";
 		};
 		66C4BC312BCD97E500AA8732 /* Chat */ = {
@@ -703,6 +837,7 @@
 		66F8D18E2B88580D008C4F7C /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				6685E42A2EE4A17900E1C20C /* AppGroup.swift */,
 				66A54E5B2EC843470000DA46 /* AttributedString.swift */,
 				66891FF72B9A9E72000C0D92 /* Color.swift */,
 				660BD00E2EAF0EB200E88BAF /* Date.swift */,
@@ -726,10 +861,12 @@
 				663B72EF2B6DB8E60031D661 /* Sources */,
 				663B72F02B6DB8E60031D661 /* Frameworks */,
 				663B72F12B6DB8E60031D661 /* Resources */,
+				6685E4212EE3E99600E1C20C /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				6685E41B2EE3E99600E1C20C /* PBXTargetDependency */,
 			);
 			name = Sila;
 			packageProductDependencies = (
@@ -749,6 +886,28 @@
 			productReference = 663B72F32B6DB8E60031D661 /* Sila.app */;
 			productType = "com.apple.product-type.application";
 		};
+		6685E40A2EE3E99400E1C20C /* WidgetsExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6685E41E2EE3E99600E1C20C /* Build configuration list for PBXNativeTarget "WidgetsExtension" */;
+			buildPhases = (
+				6685E4072EE3E99400E1C20C /* Sources */,
+				6685E4082EE3E99400E1C20C /* Frameworks */,
+				6685E4092EE3E99400E1C20C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = WidgetsExtension;
+			packageProductDependencies = (
+				6685E42E2EE4AB4800E1C20C /* Twitch */,
+				6685E4302EE4AB4E00E1C20C /* KeychainWrapper */,
+				6685E4632EE5F3ED00E1C20C /* UIImageColors */,
+			);
+			productName = WidgetsExtension;
+			productReference = 6685E40B2EE3E99400E1C20C /* WidgetsExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -756,11 +915,14 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1520;
-				LastUpgradeCheck = 1520;
+				LastSwiftUpdateCheck = 2600;
+				LastUpgradeCheck = 2600;
 				TargetAttributes = {
 					663B72F22B6DB8E60031D661 = {
 						CreatedOnToolsVersion = 15.2;
+					};
+					6685E40A2EE3E99400E1C20C = {
+						CreatedOnToolsVersion = 26.0.1;
 					};
 				};
 			};
@@ -779,12 +941,14 @@
 				663E38052B9226D3002E0530 /* XCRemoteSwiftPackageReference "Nuke" */,
 				66A54E582EC7B9AA0000DA46 /* XCRemoteSwiftPackageReference "swift-twitch-client" */,
 				660A6D0D2ECFB031006F9831 /* XCRemoteSwiftPackageReference "AsyncAnimatedImage" */,
+				6685E4622EE5F3ED00E1C20C /* XCRemoteSwiftPackageReference "UIImageColors" */,
 			);
 			productRefGroup = 663B72F42B6DB8E60031D661 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				663B72F22B6DB8E60031D661 /* Sila */,
+				6685E40A2EE3E99400E1C20C /* WidgetsExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -797,6 +961,14 @@
 				663B73032B6DB8E80031D661 /* Assets.xcassets in Resources */,
 				663B73062B6DB8E80031D661 /* Preview Assets.xcassets in Resources */,
 				66A5ADBB2B97E98E0025EF75 /* Licenses.xcstrings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6685E4092EE3E99400E1C20C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6685E4602EE5EA5B00E1C20C /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -923,6 +1095,7 @@
 				6690EBA42BA73C2B0093B18C /* Language.swift in Sources */,
 				66F4E4202B8118E9008C565D /* MainWindowView.swift in Sources */,
 				66F4E41D2B811788008C565D /* AuthBadgeView.swift in Sources */,
+				6685E42B2EE4A17900E1C20C /* AppGroup.swift in Sources */,
 				66CBD0E12ECB69DA007135BE /* ChatAnimation.swift in Sources */,
 				66125F5F2B83EF38002169B5 /* View+HighlightableButton.swift in Sources */,
 				6672D37C2B8C3F7B00E9D0E9 /* NeedsLoginView.swift in Sources */,
@@ -936,7 +1109,33 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		6685E4072EE3E99400E1C20C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6685E42D2EE4A18800E1C20C /* AuthStatus.swift in Sources */,
+				66C09B9D2EE687B60067E57B /* ChannelPosterView.swift in Sources */,
+				6685E4292EE4A12700E1C20C /* AuthController.swift in Sources */,
+				6685E42C2EE4A17900E1C20C /* AppGroup.swift in Sources */,
+				66C09B9B2EE687820067E57B /* Types.swift in Sources */,
+				6685E4592EE5EA5B00E1C20C /* ChannelPosterConfigurationIntent.swift in Sources */,
+				6685E45A2EE5EA5B00E1C20C /* SingleChannelQuery.swift in Sources */,
+				6685E45C2EE5EA5B00E1C20C /* ChannelPosterWidget.swift in Sources */,
+				66C09B972EE5FAFC0067E57B /* UIImageColors+Default.swift in Sources */,
+				6685E45D2EE5EA5B00E1C20C /* StreamListWidget.swift in Sources */,
+				6685E45F2EE5EA5B00E1C20C /* WidgetsBundle.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		6685E41B2EE3E99600E1C20C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6685E40A2EE3E99400E1C20C /* WidgetsExtension */;
+			targetProxy = 6685E41A2EE3E99600E1C20C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		663B73082B6DB8E80031D661 /* Debug */ = {
@@ -975,6 +1174,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 58JLRGUCJQ;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -997,6 +1197,7 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = xros;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				XROS_DEPLOYMENT_TARGET = 1.0;
@@ -1039,6 +1240,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 58JLRGUCJQ;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -1054,6 +1256,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = xros;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				VALIDATE_PRODUCT = YES;
 				XROS_DEPLOYMENT_TARGET = 1.0;
@@ -1065,15 +1268,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Sila/Sila.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Sila/Preview Content\"";
-				DEVELOPMENT_TEAM = 58JLRGUCJQ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "$(TARGET_NAME)/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Sila for Twitch";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1084,7 +1288,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "xros xrsimulator";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited) VOD_ENABLED";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited) VOD_ENABLED TARGET_$(TARGET_NAME:c99extidentifier)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
@@ -1097,15 +1301,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Sila/Sila.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Sila/Preview Content\"";
-				DEVELOPMENT_TEAM = 58JLRGUCJQ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "$(TARGET_NAME)/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Sila for Twitch";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1116,10 +1321,78 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "xros xrsimulator";
-				"SWIFT_ACTIVE_COMPILATION_CONDITIONS[arch=*]" = VOD_ENABLED;
+				"SWIFT_ACTIVE_COMPILATION_CONDITIONS[arch=*]" = "VOD_ENABLED TARGET_$(TARGET_NAME:c99extidentifier)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
+				XROS_DEPLOYMENT_TARGET = 26.0;
+			};
+			name = Release;
+		};
+		6685E41F2EE3E99600E1C20C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = Widgets/WidgetsExtension.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Widgets/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Widgets;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = im.agg.Sila.Widgets;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "xros xrsimulator";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG TARGET_$(TARGET_NAME:c99extidentifier)";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 7;
+				XROS_DEPLOYMENT_TARGET = 26.0;
+			};
+			name = Debug;
+		};
+		6685E4202EE3E99600E1C20C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = Widgets/WidgetsExtension.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Widgets/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Widgets;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = im.agg.Sila.Widgets;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "xros xrsimulator";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "TARGET_$(TARGET_NAME:c99extidentifier)";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 7;
 				XROS_DEPLOYMENT_TARGET = 26.0;
 			};
 			name = Release;
@@ -1141,6 +1414,15 @@
 			buildConfigurations = (
 				663B730B2B6DB8E80031D661 /* Debug */,
 				663B730C2B6DB8E80031D661 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6685E41E2EE3E99600E1C20C /* Build configuration list for PBXNativeTarget "WidgetsExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6685E41F2EE3E99600E1C20C /* Debug */,
+				6685E4202EE3E99600E1C20C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1170,6 +1452,14 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 12.4.0;
+			};
+		};
+		6685E4622EE5F3ED00E1C20C /* XCRemoteSwiftPackageReference "UIImageColors" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/jathu/UIImageColors.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.2.0;
 			};
 		};
 		66A54E582EC7B9AA0000DA46 /* XCRemoteSwiftPackageReference "swift-twitch-client" */ = {
@@ -1210,6 +1500,21 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 663E38052B9226D3002E0530 /* XCRemoteSwiftPackageReference "Nuke" */;
 			productName = NukeUI;
+		};
+		6685E42E2EE4AB4800E1C20C /* Twitch */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 66A54E582EC7B9AA0000DA46 /* XCRemoteSwiftPackageReference "swift-twitch-client" */;
+			productName = Twitch;
+		};
+		6685E4302EE4AB4E00E1C20C /* KeychainWrapper */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 66E102172B8262AC007A44D4 /* XCRemoteSwiftPackageReference "KeychainWrapper" */;
+			productName = KeychainWrapper;
+		};
+		6685E4632EE5F3ED00E1C20C /* UIImageColors */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6685E4622EE5F3ED00E1C20C /* XCRemoteSwiftPackageReference "UIImageColors" */;
+			productName = UIImageColors;
 		};
 		66A54E592EC7B9AA0000DA46 /* Twitch */ = {
 			isa = XCSwiftPackageProductDependency;
