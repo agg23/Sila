@@ -94,7 +94,7 @@ struct ProfilePoster: View {
                         .foregroundStyle(Color(cgColor: self.image.colors.primary.cgColor))
                 }
 
-                Text(self.gameName)
+                Text(self.gameName.isEmpty ? "Live" : self.gameName)
                     .lineLimit(1)
                     .minimumScaleFactor(0.5)
                     .font(self.isSmall ? .title3 : .title2)
