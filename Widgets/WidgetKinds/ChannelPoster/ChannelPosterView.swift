@@ -43,8 +43,6 @@ struct ChannelPosterView: View {
 }
 
 struct ProfilePoster: View {
-    let textBottomPadding = 8.0
-
     let displayName: String
 
     let state: State
@@ -79,11 +77,13 @@ struct ProfilePoster: View {
     }
 
     var body: some View {
-        VStack(spacing: 4) {
+        VStack(spacing: 0) {
             Image(uiImage: self.image.image)
                 .resizable()
                 .aspectRatio(1.0, contentMode: .fit)
-                .clipShape(.rect(topLeadingRadius: 0, bottomLeadingRadius: 8, bottomTrailingRadius: 8, topTrailingRadius: 0))
+                // Outer widget border radius is 24
+                .clipShape(.rect(cornerRadius: 24 - 12))
+                .padding(.bottom, 8)
 
             VStack {
                 if self.displayChannelName {
@@ -100,14 +100,11 @@ struct ProfilePoster: View {
                     .font(self.isSmall ? .title3 : .title2)
                     .foregroundStyle(Color(cgColor: self.image.colors.secondary.cgColor))
             }
-            .padding(.top,
-                     !self.isSmall ? 16 :
-                     !self.displayChannelName ? self.textBottomPadding : 0)
             .padding(.horizontal, 16)
 
             Spacer(minLength: 0)
         }
-        .padding(.bottom, self.textBottomPadding)
+        .padding(12)
         .opacity(self.isOnline ? 1.0 : 0.7)
         .containerBackground(Color(cgColor: self.image.colors.background.cgColor), for: .widget)
     }
