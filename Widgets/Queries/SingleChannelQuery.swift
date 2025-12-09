@@ -107,7 +107,7 @@ struct ChannelOptionListQuery: EntityStringQuery {
             let response = try await api.helix(endpoint: .getFollowedChannels(limit: 100))
 
             return [.randomFollowed] + response.follows.sorted {
-                $0.broadcasterName < $1.broadcasterName
+                $0.broadcasterName.lowercased() < $1.broadcasterName.lowercased()
             }.map {
                 .literal(id: $0.broadcasterID, displayName: $0.broadcasterName, loginName: $0.broadcasterLogin)
             }
