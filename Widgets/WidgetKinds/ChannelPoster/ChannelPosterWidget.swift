@@ -23,6 +23,8 @@ struct ChannelPosterWidget: Widget {
             ChannelPosterView(entry: entry)
                 .widgetURL(url)
         }
+        .configurationDisplayName("Channel Poster")
+        .description("Displays the current live status of a selected or random followed Twitch channel.")
         // Small square, large square, portrait
         .supportedFamilies([.systemSmall, .systemLarge, .systemExtraLargePortrait])
         // The image has glare without using .paper
