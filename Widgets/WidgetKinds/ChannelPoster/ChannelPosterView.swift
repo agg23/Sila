@@ -24,25 +24,21 @@ struct ChannelPosterView: View {
                     .offline
                 }
 
-                ProfilePoster(displayName: data.displayName, state: state, image: data.profileImage, widgetFamily: self.entry.context.family, displayChannelName: self.entry.intent.displayChannelName)
+                ProfilePoster(loginName: data.loginName, displayName: data.displayName, state: state, image: data.profileImage, widgetFamily: self.entry.context.family, displayChannelName: self.entry.intent.displayChannelName)
             case .noData(let displayName):
+                // TODO: Finish this
                 VStack {
                     Text("Unable to fetch \(displayName)")
                 }
-            case .unconfigured(isPreview: let isPreview):
-                let (displayName, gameName) = if isPreview {
-                    ("Sila", "Watching streams")
-                } else {
-                    ("No channel", "")
-                }
-
-                ProfilePoster(displayName: displayName, state: .online(gameName: gameName), image: ProfileImage.unfetched, widgetFamily: self.entry.context.family, displayChannelName: true)
+            case .unconfigured:
+                ProfilePoster(loginName: nil, displayName: "Sila", state: .online(gameName: "Watching streams"), image: ProfileImage.unfetched, widgetFamily: self.entry.context.family, displayChannelName: true)
             }
         }
     }
 }
 
 struct ProfilePoster: View {
+    let loginName: String?
     let displayName: String
 
     let state: State
@@ -77,6 +73,12 @@ struct ProfilePoster: View {
     }
 
     var body: some View {
+        let url: URL? = if let loginName = self.loginName {
+            URL(string: "sila://watch?stream=\(loginName)")
+        } else {
+            nil
+        }
+
         VStack(spacing: 0) {
             Image(uiImage: self.image.image)
                 .resizable()
@@ -107,6 +109,7 @@ struct ProfilePoster: View {
         .padding(12)
         .opacity(self.isOnline ? 1.0 : 0.7)
         .containerBackground(Color(cgColor: self.image.colors.background.cgColor), for: .widget)
+        .widgetURL(url)
     }
 
     enum State {

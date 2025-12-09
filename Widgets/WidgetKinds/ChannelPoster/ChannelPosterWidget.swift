@@ -10,21 +10,15 @@ import SwiftUI
 import Twitch
 import UIImageColors
 import os.log
+import AppIntents
 
 struct ChannelPosterWidget: Widget {
     var body: some WidgetConfiguration {
         AppIntentConfiguration(kind: "ChannelPosterWidget", intent: ChannelPosterConfigurationIntent.self, provider: ChannelPosterTimelineProvider()) { entry in
-            let url: URL? = if let channel = entry.intent.selectedChannel {
-                URL(string: "sila://watch?stream=\(channel.loginName)")
-            } else {
-                nil
-            }
-
             ChannelPosterView(entry: entry)
-                .widgetURL(url)
         }
-        .configurationDisplayName("Channel Poster")
-        .description("Displays the current live status of a selected or random followed Twitch channel.")
+        .configurationDisplayName(ChannelPosterConfigurationIntent.title)
+        .description(ChannelPosterConfigurationIntent.description?.descriptionText ?? "")
         // Small square, large square, portrait
         .supportedFamilies([.systemSmall, .systemLarge, .systemExtraLargePortrait])
         // The image has glare without using .paper
@@ -38,22 +32,20 @@ fileprivate struct ChannelPosterTimelineProvider: AppIntentTimelineProvider {
     typealias Intent = ChannelPosterConfigurationIntent
 
     func placeholder(in context: Context) -> Entry {
-        ChannelPosterTimelineEntry(date: .now, state: .unconfigured(isPreview: true), intent: ChannelPosterConfigurationIntent(), context: context)
+        ChannelPosterTimelineEntry(date: .now, state: .unconfigured, intent: ChannelPosterConfigurationIntent(), context: context)
     }
 
     func snapshot(for configuration: Intent, in context: Context) async -> Entry {
         let previewMessage = context.isPreview ? " (Preview)" : ""
-        os_log(.debug, "Fetching data for ChannelPosterWidget\(previewMessage): user \"\(configuration.selectedChannel?.loginName ?? "Unconfigured")\"")
+        os_log(.debug, "Fetching data for ChannelPosterWidget\(previewMessage): user \"\(configuration.selectedChannel.debugName)\"")
 
-        let state: Entry.State = if let selectedChannel = configuration.selectedChannel {
-            await self.fetchEntry(selectedChannel)
-        } else if context.isPreview {
-            await self.fetchSnapshotEntry(for: configuration)
+        let state = if let channel = configuration.selectedChannel.channel {
+            await self.fetchEntry(channel)
         } else {
-            .unconfigured(isPreview: false)
+            await self.fetchSnapshotEntry(for: configuration)
         }
 
-        os_log(.debug, "Fetched data for ChannelPosterWidget\(previewMessage): user \"\(configuration.selectedChannel?.loginName ?? "Unconfigured")\", state: \(state)")
+        os_log(.debug, "Fetched data for ChannelPosterWidget\(previewMessage): user \"\(configuration.selectedChannel.debugName)\", state: \(state)")
 
         return ChannelPosterTimelineEntry(date: .now, state: state, intent: configuration, context: context)
     }
@@ -63,7 +55,7 @@ fileprivate struct ChannelPosterTimelineProvider: AppIntentTimelineProvider {
 
         let entry = await self.snapshot(for: configuration, in: context)
 
-        os_log(.debug, "Scheduling next data fetch for ChannelPosterWidget: user \"\(configuration.selectedChannel?.loginName ?? "Unconfigured")\" at \(refreshTime.description(with: .current))")
+        os_log(.debug, "Scheduling next data fetch for ChannelPosterWidget: user \"\(configuration.selectedChannel.debugName)\" at \(refreshTime.description(with: .current))")
 
         return Timeline(entries: [entry], policy: .after(refreshTime))
     }
@@ -71,22 +63,18 @@ fileprivate struct ChannelPosterTimelineProvider: AppIntentTimelineProvider {
     private func fetchSnapshotEntry(for configuration: ChannelPosterConfigurationIntent) async -> Entry.State {
         // Choose random live followed channel, if it exists
         guard let api = AuthController().status.api() else {
-            return .unconfigured(isPreview: true)
+            return .unconfigured
         }
 
         guard let liveStreams = try? await api.helix(endpoint: .getFollowedStreams(limit: 10)),
               let mostPopularStream = liveStreams.0.sorted(by: { $0.viewerCount > $1.viewerCount }).first else {
-            return .unconfigured(isPreview: true)
+            return .unconfigured
         }
 
-        return await self.fetchEntry(ChannelOption(id: mostPopularStream.userID, displayName: mostPopularStream.userName, loginName: mostPopularStream.userLogin))
+        return await self.fetchEntry(CurrentChannel(id: mostPopularStream.userID, displayName: mostPopularStream.userName, loginName: mostPopularStream.userLogin))
     }
 
-    private func fetchEntry(_ channel: ChannelOption?) async -> Entry.State {
-        guard let channel = channel else {
-            return .unconfigured(isPreview: false)
-        }
-
+    private func fetchEntry(_ channel: CurrentChannel) async -> Entry.State {
         guard let api = AuthController().status.api() else {
             return .noData(displayName: channel.displayName)
         }
@@ -115,7 +103,7 @@ fileprivate struct ChannelPosterTimelineProvider: AppIntentTimelineProvider {
                 ChannelPosterTimelineEntry.ChannelPosterData.Status.offline
             }
 
-            return .data(ChannelPosterTimelineEntry.ChannelPosterData(displayName: channel.displayName, profileImage: profileImage, status: status))
+            return .data(ChannelPosterTimelineEntry.ChannelPosterData(loginName: channel.loginName, displayName: channel.displayName, profileImage: profileImage, status: status))
         } catch {
             return .noData(displayName: channel.displayName)
         }

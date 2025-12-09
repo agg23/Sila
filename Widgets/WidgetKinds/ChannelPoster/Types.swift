@@ -20,7 +20,7 @@ struct ChannelPosterTimelineEntry: TimelineEntry {
     enum State: CustomStringConvertible {
         case data(ChannelPosterData)
         case noData(displayName: String)
-        case unconfigured(isPreview: Bool)
+        case unconfigured
 
         var description: String {
             switch self {
@@ -28,13 +28,14 @@ struct ChannelPosterTimelineEntry: TimelineEntry {
                 data.status.description
             case .noData(displayName: let displayName):
                 "No data for \(displayName)"
-            case .unconfigured(isPreview: let isPreview):
-                isPreview ? "Unconfigured" : "Unconfigured (Preview)"
+            case .unconfigured:
+                "Unconfigured"
             }
         }
     }
 
     struct ChannelPosterData {
+        var loginName: String
         var displayName: String
         var profileImage: ProfileImage
 

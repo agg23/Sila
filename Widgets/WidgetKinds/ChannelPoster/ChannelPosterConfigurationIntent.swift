@@ -11,10 +11,10 @@ import Twitch
 
 struct ChannelPosterConfigurationIntent: WidgetConfigurationIntent, Copyable {
     static var title: LocalizedStringResource { "Channel Poster" }
-    static var description: IntentDescription? { "Displays a poster for a Twitch channel" }
+    static var description: IntentDescription? { "Displays the current live status of a Twitch channel." }
 
-    @Parameter(title: "Channel")
-    var selectedChannel: ChannelOption?
+    @Parameter(title: "Channel", default: .randomFollowed)
+    var selectedChannel: ChannelOption
 
     @Parameter(title: "Show Channel Name", default: true)
     var displayChannelName: Bool
