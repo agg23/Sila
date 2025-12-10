@@ -8,7 +8,10 @@
 import AppIntents
 import Twitch
 
-enum ChannelOption: AppEntity {
+// Enums need to be Codable even though there isn't a compile time error for this
+// Not providing it has failures of the form:
+// Error getting AppIntent from LNAction: AppIntent has missing parameter value for 'selectedChannel'. You may need to set a default value in the initializer of your @Parameter, or using the default method on your Query.
+enum ChannelOption: AppEntity, Codable {
     case randomFollowed
     case literal(id: String, displayName: String, loginName: String)
 
@@ -93,9 +96,13 @@ struct ChannelOptionListQuery: EntityStringQuery {
             return []
         }
 
-        let (channels, _) = try await api.helix(endpoint: .searchChannels(for: string))
+        do {
+            let (channels, _) = try await api.helix(endpoint: .searchChannels(for: string))
 
-        return [.randomFollowed] + channels.map { .literal(id: $0.id, displayName: $0.name, loginName: $0.login) }
+            return [.randomFollowed] + channels.map { .literal(id: $0.id, displayName: $0.name, loginName: $0.login) }
+        } catch {
+            throw WidgetError.networkError
+        }
     }
 
     func suggestedEntities() async throws -> [ChannelOption] {
@@ -103,18 +110,22 @@ struct ChannelOptionListQuery: EntityStringQuery {
             return []
         }
 
-        if self.authController.isAuthorized() {
-            let response = try await api.helix(endpoint: .getFollowedChannels(limit: 100))
+        do {
+            if self.authController.isAuthorized() {
+                let response = try await api.helix(endpoint: .getFollowedChannels(limit: 100))
 
-            return [.randomFollowed] + response.follows.sorted {
-                $0.broadcasterName.lowercased() < $1.broadcasterName.lowercased()
-            }.map {
-                .literal(id: $0.broadcasterID, displayName: $0.broadcasterName, loginName: $0.broadcasterLogin)
+                return [.randomFollowed] + response.follows.sorted {
+                    $0.broadcasterName.lowercased() < $1.broadcasterName.lowercased()
+                }.map {
+                    .literal(id: $0.broadcasterID, displayName: $0.broadcasterName, loginName: $0.broadcasterLogin)
+                }
+            } else {
+                let (streams, _) = try await api.helix(endpoint: .getStreams(limit: 20))
+
+                return [.randomFollowed] + streams.map { .literal(id: $0.id, displayName: $0.userName, loginName: $0.userLogin) }
             }
-        } else {
-            let (streams, _) = try await api.helix(endpoint: .getStreams(limit: 20))
-
-            return [.randomFollowed] + streams.map { .literal(id: $0.id, displayName: $0.userName, loginName: $0.userLogin) }
+        } catch {
+            throw WidgetError.networkError
         }
     }
 }

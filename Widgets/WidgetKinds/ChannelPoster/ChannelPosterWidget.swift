@@ -36,6 +36,36 @@ fileprivate struct ChannelPosterTimelineProvider: AppIntentTimelineProvider {
     }
 
     func snapshot(for configuration: Intent, in context: Context) async -> Entry {
+        guard let snapshotEntry = await self.generateEntry(for: configuration, in: context) else {
+            // We could not build an entry, say we're not configured
+            return .init(date: .now, state: .unconfigured, intent: configuration, context: context)
+        }
+
+        return snapshotEntry
+    }
+
+    func timeline(for configuration: Intent, in context: Context) async -> Timeline<Entry> {
+        let refreshTime = Calendar.current.date(byAdding: .minute, value: 5, to: .now)!
+
+        let entry = await self.generateEntry(for: configuration, in: context)
+
+        os_log(.debug, "Scheduling next data fetch for ChannelPosterWidget: user \"\(configuration.selectedChannel.debugName)\" at \(refreshTime.description(with: .current))")
+
+        let entries: [Entry] = if let entry = entry {
+            if case .noData(displayName: _) = entry.state {
+                []
+            } else {
+                [entry]
+            }
+        } else {
+            // We failed to fetch an entry, so don't update the widget
+            []
+        }
+
+        return Timeline(entries: entries, policy: .after(refreshTime))
+    }
+
+    private func generateEntry(for configuration: ChannelPosterConfigurationIntent, in context: Context) async -> Entry? {
         let previewMessage = context.isPreview ? " (Preview)" : ""
         os_log(.debug, "Fetching data for ChannelPosterWidget\(previewMessage): user \"\(configuration.selectedChannel.debugName)\"")
 
@@ -45,22 +75,16 @@ fileprivate struct ChannelPosterTimelineProvider: AppIntentTimelineProvider {
             await self.fetchSnapshotEntry(for: configuration)
         }
 
-        os_log(.debug, "Fetched data for ChannelPosterWidget\(previewMessage): user \"\(configuration.selectedChannel.debugName)\", state: \(state)")
+        os_log(.debug, "Fetched data for ChannelPosterWidget\(previewMessage): user \"\(configuration.selectedChannel.debugName)\", state: \(state?.description ?? "nil")")
 
-        return ChannelPosterTimelineEntry(date: .now, state: state, intent: configuration, context: context)
+        if let state = state {
+            return ChannelPosterTimelineEntry(date: .now, state: state, intent: configuration, context: context)
+        } else {
+            return nil
+        }
     }
 
-    func timeline(for configuration: Intent, in context: Context) async -> Timeline<Entry> {
-        let refreshTime = Calendar.current.date(byAdding: .minute, value: 5, to: .now)!
-
-        let entry = await self.snapshot(for: configuration, in: context)
-
-        os_log(.debug, "Scheduling next data fetch for ChannelPosterWidget: user \"\(configuration.selectedChannel.debugName)\" at \(refreshTime.description(with: .current))")
-
-        return Timeline(entries: [entry], policy: .after(refreshTime))
-    }
-
-    private func fetchSnapshotEntry(for configuration: ChannelPosterConfigurationIntent) async -> Entry.State {
+    private func fetchSnapshotEntry(for configuration: ChannelPosterConfigurationIntent) async -> Entry.State? {
         // Choose random live followed channel, if it exists
         guard let api = AuthController().status.api() else {
             return .unconfigured
@@ -68,7 +92,7 @@ fileprivate struct ChannelPosterTimelineProvider: AppIntentTimelineProvider {
 
         guard let liveStreams = try? await api.helix(endpoint: .getFollowedStreams(limit: 10)),
               let mostPopularStream = liveStreams.0.sorted(by: { $0.viewerCount > $1.viewerCount }).first else {
-            return .unconfigured
+            return nil
         }
 
         return await self.fetchEntry(CurrentChannel(id: mostPopularStream.userID, displayName: mostPopularStream.userName, loginName: mostPopularStream.userLogin))
