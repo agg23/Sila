@@ -82,6 +82,7 @@ struct ProfilePoster: View {
         VStack(spacing: 0) {
             Image(uiImage: self.image.image)
                 .resizable()
+                .widgetAccentedRenderingMode(.fullColor)
                 .aspectRatio(1.0, contentMode: .fit)
                 // Outer widget border radius is 24
                 .clipShape(.rect(cornerRadius: 24 - 12))
