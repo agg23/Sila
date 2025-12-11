@@ -1,38 +1,23 @@
 //
-//  ChannelPosterWidget.swift
+//  ChannelTimelineProvider.swift
 //  WidgetsExtension
 //
-//  Created by Adam Gastineau on 12/6/25.
+//  Created by Adam Gastineau on 12/10/25.
 //
 
-import WidgetKit
-import SwiftUI
-import Twitch
-import UIImageColors
 import os.log
+import UIKit
+import WidgetKit
 import AppIntents
+import UIImageColors
+import Twitch
 
-struct ChannelPosterWidget: Widget {
-    var body: some WidgetConfiguration {
-        AppIntentConfiguration(kind: "ChannelPosterWidget", intent: ChannelPosterConfigurationIntent.self, provider: ChannelPosterTimelineProvider()) { entry in
-            ChannelPosterView(entry: entry)
-        }
-        .configurationDisplayName(ChannelPosterConfigurationIntent.title)
-        .description(ChannelPosterConfigurationIntent.description?.descriptionText ?? "")
-        // Small square, large square, portrait
-        .supportedFamilies([.systemSmall, .systemLarge, .systemExtraLargePortrait])
-        // The image has glare without using .paper
-        .widgetTexture(.paper)
-        .contentMarginsDisabled()
-    }
-}
-
-fileprivate struct ChannelPosterTimelineProvider: AppIntentTimelineProvider {
-    typealias Entry = ChannelPosterTimelineEntry
-    typealias Intent = ChannelPosterConfigurationIntent
+struct ChannelTimelineProvider<T: ChannelConfigurationIntent>: AppIntentTimelineProvider {
+    typealias Entry = ChannelTimelineEntry<T>
+    typealias Intent = T
 
     func placeholder(in context: Context) -> Entry {
-        ChannelPosterTimelineEntry(date: .now, state: .unconfigured, intent: ChannelPosterConfigurationIntent(), context: context)
+        ChannelTimelineEntry(date: .now, state: .unconfigured, intent: T(), context: context)
     }
 
     func snapshot(for configuration: Intent, in context: Context) async -> Entry {
@@ -65,7 +50,7 @@ fileprivate struct ChannelPosterTimelineProvider: AppIntentTimelineProvider {
         return Timeline(entries: entries, policy: .after(refreshTime))
     }
 
-    private func generateEntry(for configuration: ChannelPosterConfigurationIntent, in context: Context) async -> Entry? {
+    private func generateEntry(for configuration: T, in context: Context) async -> Entry? {
         let previewMessage = context.isPreview ? " (Preview)" : ""
         os_log(.debug, "Fetching data for ChannelPosterWidget\(previewMessage): user \"\(configuration.selectedChannel.debugName)\"")
 
@@ -78,13 +63,13 @@ fileprivate struct ChannelPosterTimelineProvider: AppIntentTimelineProvider {
         os_log(.debug, "Fetched data for ChannelPosterWidget\(previewMessage): user \"\(configuration.selectedChannel.debugName)\", state: \(state?.description ?? "nil")")
 
         if let state = state {
-            return ChannelPosterTimelineEntry(date: .now, state: state, intent: configuration, context: context)
+            return ChannelTimelineEntry(date: .now, state: state, intent: configuration, context: context)
         } else {
             return nil
         }
     }
 
-    private func fetchSnapshotEntry(for configuration: ChannelPosterConfigurationIntent) async -> Entry.State? {
+    private func fetchSnapshotEntry(for configuration: T) async -> Entry.State? {
         // Choose random live followed channel, if it exists
         guard let api = AuthController().status.api() else {
             return .unconfigured
@@ -122,12 +107,12 @@ fileprivate struct ChannelPosterTimelineProvider: AppIntentTimelineProvider {
             }
 
             let status = if let stream = streams.0.first {
-                ChannelPosterTimelineEntry.ChannelPosterData.Status.online(stream.gameName, startedAt: stream.startedAt, viewerCount: stream.viewerCount)
+                ChannelTimelineEntry<T>.ChannelPosterData.Status.online(stream.gameName, startedAt: stream.startedAt, viewerCount: stream.viewerCount)
             } else {
-                ChannelPosterTimelineEntry.ChannelPosterData.Status.offline
+                ChannelTimelineEntry<T>.ChannelPosterData.Status.offline
             }
 
-            return .data(ChannelPosterTimelineEntry.ChannelPosterData(loginName: channel.loginName, displayName: channel.displayName, profileImage: profileImage, status: status))
+            return .data(ChannelTimelineEntry.ChannelPosterData(loginName: channel.loginName, displayName: channel.displayName, profileImage: profileImage, status: status))
         } catch {
             return .noData(displayName: channel.displayName)
         }

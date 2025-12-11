@@ -1,5 +1,5 @@
 //
-//  ChannelPosterView.swift
+//  SingleChannelView.swift
 //  WidgetsExtension
 //
 //  Created by Adam Gastineau on 12/7/25.
@@ -9,14 +9,14 @@ import SwiftUI
 import WidgetKit
 import UIImageColors
 
-struct ChannelPosterView: View {
-    let entry: ChannelPosterTimelineEntry
+struct SingleChannelView<T: ChannelConfigurationIntent>: View {
+    let entry: ChannelTimelineEntry<T>
 
     var body: some View {
         Group {
             switch self.entry.state {
             case .data(let data):
-                let state: ProfilePoster.State = switch data.status {
+                let state: ProfileStatusView.State = switch data.status {
                 case .online(let gameName, _, _):
                     // TODO: Implement live stream info
                     .online(gameName: gameName)
@@ -24,20 +24,17 @@ struct ChannelPosterView: View {
                     .offline
                 }
 
-                ProfilePoster(loginName: data.loginName, displayName: data.displayName, state: state, image: data.profileImage, widgetFamily: self.entry.context.family, displayChannelName: self.entry.intent.displayChannelName)
+                ProfileStatusView(loginName: data.loginName, displayName: data.displayName, state: state, image: data.profileImage, widgetFamily: self.entry.context.family, displayChannelName: self.entry.intent.displayChannelName)
             case .noData(let displayName):
-                // TODO: Finish this
-                VStack {
-                    Text("Unable to fetch \(displayName)")
-                }
+                ProfileStatusView(loginName: nil, displayName: displayName, state: .offline, image: ProfileImage.unfetched, widgetFamily: self.entry.context.family, displayChannelName: true)
             case .unconfigured:
-                ProfilePoster(loginName: nil, displayName: "Sila", state: .online(gameName: "Watching streams"), image: ProfileImage.unfetched, widgetFamily: self.entry.context.family, displayChannelName: true)
+                ProfileStatusView(loginName: nil, displayName: "Sila", state: .online(gameName: "Watching streams"), image: ProfileImage.unfetched, widgetFamily: self.entry.context.family, displayChannelName: true)
             }
         }
     }
 }
 
-struct ProfilePoster: View {
+struct ProfileStatusView: View {
     let loginName: String?
     let displayName: String
 

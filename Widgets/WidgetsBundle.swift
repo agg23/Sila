@@ -13,6 +13,7 @@ struct WidgetsBundle: WidgetBundle {
     @WidgetBundleBuilder
     var body: some Widget {
 //        StreamListWidget()
+        SingleChannelWidget()
         ChannelPosterWidget()
     }
 }

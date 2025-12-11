@@ -9,12 +9,12 @@ import UIKit
 import UIImageColors
 import WidgetKit
 
-struct ChannelPosterTimelineEntry: TimelineEntry {
+struct ChannelTimelineEntry<T: ChannelConfigurationIntent>: TimelineEntry {
     let date: Date
 
     let state: State
 
-    let intent: ChannelPosterConfigurationIntent
+    let intent: T
     let context: TimelineProviderContext
 
     enum State: CustomStringConvertible {
