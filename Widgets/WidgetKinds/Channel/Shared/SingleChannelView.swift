@@ -100,7 +100,6 @@ struct ProfileStatusView: View {
                     .font(self.isSmall ? .title3 : .title2)
                     .foregroundStyle(Color(cgColor: self.image.colors.secondary.cgColor))
             }
-            .padding(.horizontal, 16)
 
             Spacer(minLength: 0)
         }
