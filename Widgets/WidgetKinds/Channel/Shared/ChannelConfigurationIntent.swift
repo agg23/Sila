@@ -29,7 +29,7 @@ struct ChannelPosterConfigurationIntent: ChannelConfigurationIntent {
 }
 
 struct SingleChannelConfigurationIntent: ChannelConfigurationIntent {
-    static var title: LocalizedStringResource { "Single Channel" }
+    static var title: LocalizedStringResource { "Channel Status" }
     static var description: IntentDescription? { "Displays the current live status of a Twitch channel." }
 
     @Parameter(title: "Channel", default: .randomFollowed)
