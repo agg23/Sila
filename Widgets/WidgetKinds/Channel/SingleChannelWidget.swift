@@ -17,8 +17,8 @@ struct SingleChannelWidget: Widget {
         ChannelWidgetConfiguration(
             kind: "SingleChannelWidget",
             intentType: SingleChannelConfigurationIntent.self,
-            // Small square and large square
-            supportedFamilies: [.systemSmall, .systemLarge]
+            // Small square, ~2:1 short/wide rectange, and large square
+            supportedFamilies: [.systemSmall, .systemMedium, .systemLarge]
         )
     }
 }

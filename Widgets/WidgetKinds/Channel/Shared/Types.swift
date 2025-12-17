@@ -42,12 +42,12 @@ struct ChannelTimelineEntry<T: ChannelConfigurationIntent>: TimelineEntry {
         var status: Status
 
         enum Status: CustomStringConvertible {
-            case online(_ gameName: String, startedAt: Date, viewerCount: Int)
+            case online(_ gameName: String, streamTitle: String, startedAt: Date, viewerCount: Int)
             case offline
 
             var description: String {
                 switch self {
-                case .online(let gameName, startedAt: let startedAt, viewerCount: let viewerCount):
+                case .online(let gameName, streamTitle: _, startedAt: let startedAt, viewerCount: let viewerCount):
                     "Game: \(gameName), live at \(startedAt.description(with: .current)), viewer count \(viewerCount)"
                 case .offline:
                     "Offline"

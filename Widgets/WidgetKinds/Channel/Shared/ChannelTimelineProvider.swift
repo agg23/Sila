@@ -107,7 +107,7 @@ struct ChannelTimelineProvider<T: ChannelConfigurationIntent>: AppIntentTimeline
             }
 
             let status = if let stream = streams.0.first {
-                ChannelTimelineEntry<T>.ChannelPosterData.Status.online(stream.gameName, startedAt: stream.startedAt, viewerCount: stream.viewerCount)
+                ChannelTimelineEntry<T>.ChannelPosterData.Status.online(stream.gameName, streamTitle: stream.title, startedAt: stream.startedAt, viewerCount: stream.viewerCount)
             } else {
                 ChannelTimelineEntry<T>.ChannelPosterData.Status.offline
             }
