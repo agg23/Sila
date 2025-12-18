@@ -84,5 +84,14 @@ struct SilaAppApp: App {
         }
         .defaultSize(CGSize(width: 400.0, height: 720.0))
         .defaultLaunchBehavior(.suppressed)
+
+        ImmersiveSpace(id: Window.followerStream, for: StreamableVideo.self) { $streamableVideo in
+            FollowerImmersiveView(streamableVideo: $streamableVideo.wrappedValue)
+                .environment(self.authController)
+        } defaultValue: {
+            // TODO: Replace with actual value
+            .stream(STREAM_MOCK())
+        }
+        .immersionStyle(selection: .constant(.mixed), in: .mixed)
     }
 }

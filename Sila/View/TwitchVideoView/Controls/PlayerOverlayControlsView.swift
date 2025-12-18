@@ -8,54 +8,43 @@
 import SwiftUI
 
 struct PlayerOverlayControlsView: View {
+    @Environment(\.openImmersiveSpace) private var openImmersiveSpace
+    @Environment(\.dismissWindow) private var dismissWindow
+
     @AppStorage(Setting.dimSurroundings) var dimSurroundings: Bool = false
 
     @State private var volumePreventClose = false
 
-    @Binding var player: WebViewPlayer
+    @Bindable var player: WebViewPlayer
     @Binding var volume: CGFloat
+
+    let streamableVideo: StreamableVideo
 
     let onInteraction: () -> Void
     let activeChanged: (Bool) -> Void
 
     var body: some View {
-        HStack {
-            Button {
+        HStack(spacing: 20) {
+            PlayerOverlayButtonView(label: "Reload", icon: Icon.refresh) {
                 self.player.reload()
                 self.onInteraction()
-            } label: {
-                Label {
-                    Text("Reload")
-                } icon: {
-                    Image(systemName: Icon.refresh)
-                }
             }
-            .help("Reload")
-            .labelStyle(.iconOnly)
-            .buttonBorderShape(.circle)
-            .controlSize(.large)
 
             let dimLabel = "\(self.dimSurroundings ? "Undim" : "Dim") Surroundings"
 
-            Button {
+            PlayerOverlayButtonView(label: dimLabel, icon: Icon.dimming) {
                 self.dimSurroundings.toggle()
                 self.onInteraction()
-            } label: {
-                Label {
-                    Text(dimLabel)
-                } icon: {
-                    Image(systemName: Icon.dimming)
-                }
             }
-            // .help() must be cached in some scenarios. Invalidate this view via .id() to rerender tooltip
-            .id(dimLabel)
-            .help(dimLabel)
-            .labelStyle(.iconOnly)
-            .buttonBorderShape(.circle)
-            .controlSize(.large)
-            .padding(.leading)
 
             Spacer()
+
+            PlayerOverlayButtonView(label: "Lock to Head", icon: "arrow.up.right.bottomleft.rectangle") {
+                Task {
+                    await self.openImmersiveSpace(id: Window.followerStream, value: self.streamableVideo)
+                    self.dismissWindow()
+                }
+            }
 
             VolumeSlider(volume: self.$volume, isActive: self.$volumePreventClose)
                 .onChange(of: self.volume) { _, newValue in

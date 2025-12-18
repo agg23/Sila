@@ -47,7 +47,7 @@ class SpecificPresentableControllerRegistry<T: PresentableControllerBase>: Prese
     func controller(for id: String, factory: () -> T) -> T {
         if let existing = self.storage[id] {
             return existing
-    }
+        }
 
         print("Instantiating \(id)")
         let newOne = factory()

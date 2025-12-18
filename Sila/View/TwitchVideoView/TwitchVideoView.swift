@@ -37,7 +37,7 @@ struct TwitchVideoView: View {
     /// Allow delaying of loading Twitch content to provide time for all other players to mute, allowing concurrent playback
     let delayLoading: Bool
 
-    @Binding var player: WebViewPlayer
+    @Bindable var player: WebViewPlayer
 
     var body: some View {
         GeometryReader { geometry in
@@ -47,16 +47,16 @@ struct TwitchVideoView: View {
 
     @ViewBuilder
     func content(_ geometry: GeometryProxy) -> some View {
-        TwitchWebView(player: self.player, streamableVideo: self.streamableVideo, loading: self.$loading, delayLoading: self.delayLoading)
+        TwitchWebView(player: self.player, streamableVideo: self.streamableVideo, delayLoading: self.delayLoading)
             .overlay {
-                if self.loading || self.delayLoading {
+                if self.player.loading || self.delayLoading {
                     ProgressView()
                         .controlSize(.large)
                 }
             }
             .overlay(alignment: .topTrailing) {
                 if self.controlVisibility == .visible {
-                    PlayerOverlayControlsView(player: self.$player, volume: self.$volume, onInteraction: self.onControlInteraction) { isActive in
+                    PlayerOverlayControlsView(player: self.player, volume: self.$volume, streamableVideo: self.streamableVideo, onInteraction: self.onControlInteraction) { isActive in
                         if isActive {
                             print("Controls are active")
                             self.forceVisibility()
@@ -232,7 +232,5 @@ struct TwitchVideoView: View {
 }
 
 #Preview {
-    @State var player = WebViewPlayer()
-
-    return TwitchVideoView(controlVisibility: .constant(.hidden), streamableVideo: .stream(STREAM_MOCK()), delayLoading: false, player: $player)
+    TwitchVideoView(controlVisibility: .constant(.hidden), streamableVideo: .stream(STREAM_MOCK()), delayLoading: false, player: WebViewPlayer())
 }

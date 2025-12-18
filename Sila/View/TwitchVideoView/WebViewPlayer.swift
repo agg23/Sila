@@ -75,6 +75,7 @@ struct OnEventContinuation: Identifiable, Equatable {
     var seekDebounceTimer: Timer?
     var seekDebounceTime: Double
 
+    var loading: Bool = false
     var muted: Bool = true
     var volume: Double = 0.0
 
@@ -84,7 +85,7 @@ struct OnEventContinuation: Identifiable, Equatable {
     var availableQualities: [VideoQuality] = []
     var maxVideoQuality: VideoQuality?
 
-    weak var webView: WKWebView?
+    var webView: WKWebView?
 
     init() {
         self.currentTime = 0.0

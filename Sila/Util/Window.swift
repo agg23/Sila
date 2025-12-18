@@ -11,4 +11,5 @@ struct Window {
     static let stream = "stream"
     static let vod = "vod"
     static let chat = "chat"
+    static let followerStream = "immersiveFollowerStream"
 }

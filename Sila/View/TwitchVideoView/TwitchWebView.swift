@@ -15,17 +15,24 @@ struct TwitchWebView: UIViewRepresentable {
 
     let streamableVideo: StreamableVideo
 
-    let webView: WKWebView
     let player: WebViewPlayer
 
-    let loading: Binding<Bool>?
     let delayLoading: Bool
 
-    init(player: WebViewPlayer, streamableVideo: StreamableVideo, loading: Binding<Bool>, delayLoading: Bool = false) {
+    init(player: WebViewPlayer, streamableVideo: StreamableVideo, delayLoading: Bool = false) {
         self.player = player
         self.streamableVideo = streamableVideo
-        self.loading = loading
         self.delayLoading = delayLoading
+    }
+
+    func makeCoordinator() -> TwitchWebViewCoordinator {
+        TwitchWebViewCoordinator(player: self.player, lastVideo: self.streamableVideo, lastDelayLoading: self.delayLoading)
+    }
+
+    func makeUIView(context: Context) -> WKWebView {
+        if let webView = self.player.webView {
+            return webView
+        }
 
         // Using the Twitch embed API would prevent ads from playing "normally" and using the user's auth;
         // the user wouldn't count as a viewer of the stream
@@ -160,40 +167,34 @@ struct TwitchWebView: UIViewRepresentable {
         // Enable Airplay support (doesn't work)
         configuration.allowsAirPlayForMediaPlayback = true
 
-        self.webView = WKWebView(frame: .zero, configuration: configuration)
+        let webView = WKWebView(frame: .zero, configuration: configuration)
 
-        self.webView.isOpaque = false
-        self.webView.scrollView.backgroundColor = .clear
+        webView.isOpaque = false
+        webView.scrollView.backgroundColor = .clear
 
         // Disable all interaction with WKWebView
-        for subview in self.webView.scrollView.subviews {
+        for subview in webView.scrollView.subviews {
             subview.isUserInteractionEnabled = false
         }
-    }
 
-    func makeCoordinator() -> TwitchWebViewCoordinator {
-        TwitchWebViewCoordinator(player: self.player, webView: self.webView, loading: self.loading, lastVideo: self.streamableVideo, lastDelayLoading: self.delayLoading)
-    }
-
-    func makeUIView(context: Context) -> WKWebView {
         #if DEBUG
-        self.webView.isInspectable = true
+        webView.isInspectable = true
         #endif
-        self.webView.uiDelegate = context.coordinator
-        self.webView.navigationDelegate = context.coordinator
+        webView.uiDelegate = context.coordinator
+        webView.navigationDelegate = context.coordinator
 
-        self.webView.configuration.userContentController.add(context.coordinator, name: "twitch")
+        webView.configuration.userContentController.add(context.coordinator, name: "twitch")
 
         if !self.delayLoading {
-            self.loadContent(self.webView)
+            self.loadContent(webView)
         }
 
-        return self.webView
+        self.player.webView = webView
+
+        return webView
     }
 
     func updateUIView(_ uiView: WKWebView, context: Context) {
-        self.player.webView = uiView
-
         guard self.streamableVideo != context.coordinator.lastVideo || self.delayLoading != context.coordinator.lastDelayLoading else {
             // Nothing to do
             return
@@ -218,9 +219,7 @@ struct TwitchWebView: UIViewRepresentable {
             urlVideoSegment = "video=\(video.id)"
         }
 
-        DispatchQueue.main.async {
-            self.loading?.wrappedValue = true
-        }
+        self.player.loading = true
 
         let url = "https://player.twitch.tv/?\(urlVideoSegment)&parent=twitch.tv&quality=\(self.player.quality)&volume=\(self.player.volume)&controls=false&autoplay=true&muted=false&player=popout"
         webView.load(URLRequest(url: URL(string: url)!))
@@ -229,8 +228,6 @@ struct TwitchWebView: UIViewRepresentable {
 
 class TwitchWebViewCoordinator: NSObject, WKUIDelegate, WKNavigationDelegate, WKScriptMessageHandler {
     weak var player: WebViewPlayer?
-    weak var webView: WKWebView?
-    let loading: Binding<Bool>?
 
     var lastStatus: PlaybackStatus = .idle
     var retriedPlayCount = 0
@@ -238,10 +235,8 @@ class TwitchWebViewCoordinator: NSObject, WKUIDelegate, WKNavigationDelegate, WK
     var lastVideo: StreamableVideo
     var lastDelayLoading: Bool
 
-    init(player: WebViewPlayer, webView: WKWebView, loading: Binding<Bool>?, lastVideo: StreamableVideo, lastDelayLoading: Bool){
+    init(player: WebViewPlayer, lastVideo: StreamableVideo, lastDelayLoading: Bool){
         self.player = player
-        self.webView = webView
-        self.loading = loading
         self.lastVideo = lastVideo
         self.lastDelayLoading = lastDelayLoading
     }
@@ -299,8 +294,6 @@ class TwitchWebViewCoordinator: NSObject, WKUIDelegate, WKNavigationDelegate, WK
                 }
             });
         """)
-
-
 
         // Click on the fullscreen mute popup
         // Taken from https://stackoverflow.com/a/61511955
@@ -448,24 +441,18 @@ class TwitchWebViewCoordinator: NSObject, WKUIDelegate, WKNavigationDelegate, WK
                     self.retriedPlayCount = 0
                     self.player?.reload()
 
-                    DispatchQueue.main.async {
-                        self.loading?.wrappedValue = true
-                    }
+                    self.player?.loading = true
                 }
             } else if status != .buffering  {
                 // Not idle, not buffering
                 // Complete loading
-                DispatchQueue.main.async {
-                    self.loading?.wrappedValue = false
-                }
+                self.player?.loading = false
 
                 self.retriedPlayCount = 0
             }
         } else if status == .buffering {
             // lastStatus is not buffering
-            DispatchQueue.main.async {
-                self.loading?.wrappedValue = true
-            }
+            self.player?.loading = true
         }
 
         self.lastStatus = status
@@ -475,5 +462,5 @@ class TwitchWebViewCoordinator: NSObject, WKUIDelegate, WKNavigationDelegate, WK
 }
 
 #Preview {
-    TwitchWebView(player: WebViewPlayer(), streamableVideo: .stream(STREAM_MOCK()), loading: .constant(false))
+    TwitchWebView(player: WebViewPlayer(), streamableVideo: .stream(STREAM_MOCK()))
 }

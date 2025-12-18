@@ -8,6 +8,8 @@
 import Foundation
 
 final class PlaybackPresentableController: PresentableControllerBase, Identifiable {
+    let model: WebViewPlayer
+
     var id: String {
         self.contentId
     }
@@ -15,6 +17,11 @@ final class PlaybackPresentableController: PresentableControllerBase, Identifiab
     var isMuted: Bool = false
 
     var onMute: (() async -> Void)? = nil
+
+    init(contentId: String, model: WebViewPlayer) {
+        self.model = model
+        super.init(contentId: contentId)
+    }
 
     static func contentId(for stream: StreamableVideo) -> String {
         "stream-\(stream.id)"

@@ -143,6 +143,8 @@
 		66E102422B82D94E007A44D4 /* AsyncImageButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E102412B82D94D007A44D4 /* AsyncImageButtonView.swift */; };
 		66E102462B82E3E8007A44D4 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E102452B82E3E8007A44D4 /* Router.swift */; };
 		66E102492B82E496007A44D4 /* NavStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E102482B82E496007A44D4 /* NavStack.swift */; };
+		66E823E42EF1088100784FF4 /* PlayerOverlayButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E823E32EF1088100784FF4 /* PlayerOverlayButtonView.swift */; };
+		66E823E62EF10B5500784FF4 /* FollowerImmersiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E823E52EF10B5500784FF4 /* FollowerImmersiveView.swift */; };
 		66E8859F2B86C646004B4B8D /* DataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E8859E2B86C646004B4B8D /* DataLoader.swift */; };
 		66E885A22B86D95C004B4B8D /* AuthStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E885A12B86D95C004B4B8D /* AuthStatus.swift */; };
 		66E885A82B8821D9004B4B8D /* StandardDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E885A72B8821D9004B4B8D /* StandardDataView.swift */; };
@@ -325,6 +327,8 @@
 		66E102412B82D94D007A44D4 /* AsyncImageButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncImageButtonView.swift; sourceTree = "<group>"; };
 		66E102452B82E3E8007A44D4 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		66E102482B82E496007A44D4 /* NavStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavStack.swift; sourceTree = "<group>"; };
+		66E823E32EF1088100784FF4 /* PlayerOverlayButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerOverlayButtonView.swift; sourceTree = "<group>"; };
+		66E823E52EF10B5500784FF4 /* FollowerImmersiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowerImmersiveView.swift; sourceTree = "<group>"; };
 		66E8859E2B86C646004B4B8D /* DataLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataLoader.swift; sourceTree = "<group>"; };
 		66E885A12B86D95C004B4B8D /* AuthStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthStatus.swift; sourceTree = "<group>"; };
 		66E885A72B8821D9004B4B8D /* StandardDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandardDataView.swift; sourceTree = "<group>"; };
@@ -400,11 +404,12 @@
 		6600E0872B8BB5AF003B2270 /* Controls */ = {
 			isa = PBXGroup;
 			children = (
+				66AFA2E32CFCBF7600491D98 /* PlayerDurationSliderView.swift */,
 				660F73A42B745D710011FD65 /* PlayerOranamentControlsView.swift */,
+				66E823E32EF1088100784FF4 /* PlayerOverlayButtonView.swift */,
 				6648435D2C0B6B7B00F1427C /* PlayerOverlayControlsView.swift */,
 				6600E0882B8BB5E8003B2270 /* PlayerStreamInfoView.swift */,
 				66DF455C2B8BA645006C1D99 /* VolumeSlider.swift */,
-				66AFA2E32CFCBF7600491D98 /* PlayerDurationSliderView.swift */,
 			);
 			path = Controls;
 			sourceTree = "<group>";
@@ -612,6 +617,7 @@
 		66789ABC2EEA7A6300803BB4 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				66789AC62EEB8CF900803BB4 /* View */,
 				6685E44C2EE5EA5B00E1C20C /* ChannelConfigurationIntent.swift */,
 				66789ABD2EEA7A9200803BB4 /* ChannelTimelineProvider.swift */,
 				66789AC12EEA7E6F00803BB4 /* ChannelWidgetConfiguration.swift */,
@@ -799,6 +805,7 @@
 				663B73252B6DBA7F0031D661 /* TwitchVideoView */,
 				6600E08E2B8BC0E0003B2270 /* ViewModifiers */,
 				66C96BD92B8EB1AB0016A91B /* VOD */,
+				66E823E52EF10B5500784FF4 /* FollowerImmersiveView.swift */,
 				66F4E41F2B8118E9008C565D /* MainWindowView.swift */,
 				66E1021D2B8273B0007A44D4 /* TwitchWindowView.swift */,
 			);
@@ -1045,6 +1052,7 @@
 				66E1023F2B82D8AF007A44D4 /* CategoryButtonView.swift in Sources */,
 				66F105A52BA4B3DF006B7ADE /* Task.swift in Sources */,
 				66364FBD2B8AF629005180B8 /* CircleBackgroundLessButton.swift in Sources */,
+				66E823E62EF10B5500784FF4 /* FollowerImmersiveView.swift in Sources */,
 				662535402B9E01D000EBD081 /* ChatModel.swift in Sources */,
 				66AC70822ECE5617000DA868 /* ChatTextRenderer.swift in Sources */,
 				66F73D132EC0F1EC0093A4A6 /* PresentableInternalManager.swift in Sources */,
@@ -1103,6 +1111,7 @@
 				66F4E4282B812932008C565D /* OAuthView.swift in Sources */,
 				66F73D1A2EC100F50093A4A6 /* PresentableTrackingViewModifier.swift in Sources */,
 				66E102292B82988A007A44D4 /* PopularView.swift in Sources */,
+				66E823E42EF1088100784FF4 /* PlayerOverlayButtonView.swift in Sources */,
 				660BD0262EBB0BEE00E88BAF /* StreamButtonStyle.swift in Sources */,
 				6666F34D2BAA6688009D5A29 /* PopularStreamsIntent.swift in Sources */,
 				66125F6F2B842F82002169B5 /* ChannelView.swift in Sources */,
