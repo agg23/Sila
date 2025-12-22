@@ -30,6 +30,9 @@ struct SilaAppApp: App {
         // Make sure our thumbnails expire from the memory Nuke cache
         ImageCache.shared.ttl = 120
 
+        LazyFollowComponent.registerComponent()
+        LazyFollowSystem.registerSystem()
+
         Task {
             await EmoteController.shared.fetchGlobalEmotes()
         }
