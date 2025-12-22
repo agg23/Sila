@@ -48,6 +48,10 @@ class LazyFollowSystem: System {
         let deviceXZ = SIMD2<Float>(deviceTransform.translation.x, deviceTransform.translation.z)
         let now = CACurrentMediaTime()
         
+        // We explicitly exclude pitch and roll
+        let yawOnlyRotation = simd_quatf(angle: -deviceYaw, axis: SIMD3<Float>(0, 1, 0))
+        var yawOnlyTransform = Transform(rotation: yawOnlyRotation, translation: deviceTransform.translation)
+        
         for entity in context.entities(matching: Self.query, updatingSystemWhen: .rendering) {
             guard var component = entity.components[LazyFollowComponent.self] else {
                 continue
@@ -68,12 +72,10 @@ class LazyFollowSystem: System {
             
             // Initialize
             if !component.isInitialized {
-                var adjustedTransform = deviceTransform
-                // For some reason the simulator's translation in Y is very wrong
                 #if targetEnvironment(simulator)
-                adjustedTransform.translation.y += component.simulatorHeightOffset
+                yawOnlyTransform.translation.y += component.simulatorHeightOffset
                 #endif
-                entity.transform = adjustedTransform
+                entity.transform = yawOnlyTransform
                 component.lastYaw = deviceYaw
                 component.lastPositionXZ = deviceXZ
                 component.isInitialized = true
@@ -86,11 +88,10 @@ class LazyFollowSystem: System {
             let translationDist = length(deviceXZ - component.lastPositionXZ)
             
             if abs(yawDiff) > component.rotationThreshold || translationDist > component.translationThreshold {
-                var adjustedTransform = deviceTransform
                 #if targetEnvironment(simulator)
-                adjustedTransform.translation.y += component.simulatorHeightOffset
+                yawOnlyTransform.translation.y += component.simulatorHeightOffset
                 #endif
-                entity.move(to: adjustedTransform, relativeTo: nil, duration: 0.5, timingFunction: .easeInOut)
+                entity.move(to: yawOnlyTransform, relativeTo: nil, duration: 0.5, timingFunction: .easeInOut)
                 component.lastYaw = deviceYaw
                 component.lastPositionXZ = deviceXZ
                 component.isAnimating = true
