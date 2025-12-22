@@ -130,9 +130,8 @@ struct FollowerImmersiveView: View {
 private struct FollowerImmersiveRealityView: View {
     static let GrabberAttachmentId: String = "GrabberAttachment"
     
-    /// Offset from follower root (in root's local space)
-    /// (0, 0, -1.7) = 1.7m in front of where root is
-    static let contentOffset: SIMD3<Float> = SIMD3<Float>(0, 0, -1.7)
+    /// Distance from follower root to content (sphere radius)
+    static let sphereRadius: Float = 1.7
 
     @Bindable var playerModel: WebViewPlayer
 
@@ -142,13 +141,14 @@ private struct FollowerImmersiveRealityView: View {
     @State private var windowEntity: Entity = Entity()
 
     @State private var isDragging = false
-    @State private var dragStartPosition: SIMD3<Float> = .zero
+    /// Current offset from follower root (point on sphere in local space)
+    @State private var currentOffset: SIMD3<Float> = SIMD3<Float>(0, 0, -sphereRadius)
 
     var body: some View {
         RealityView { content, attachments in
             content.add(self.followerRoot)
             
-            self.windowEntity.position = Self.contentOffset
+            self.windowEntity.position = self.currentOffset
             self.followerRoot.addChild(self.windowEntity)
 
             if let attachment = attachments.entity(for: Self.GrabberAttachmentId) {
@@ -157,6 +157,7 @@ private struct FollowerImmersiveRealityView: View {
                 attachment.components.set(CollisionComponent(shapes: [.generateBox(width: 2 * bounds.max.x, height: 2 * bounds.max.y, depth: 0.05)]))
                 attachment.components.set(InputTargetComponent())
                 attachment.components.set(HoverEffectComponent(.highlight(.init(color: .white, opacityFunction: .mask))))
+                attachment.components.set(BillboardComponent())
 
                 self.windowEntity.addChild(attachment)
             }
@@ -176,7 +177,6 @@ private struct FollowerImmersiveRealityView: View {
                 .onChanged({ value in
                     if !self.isDragging {
                         self.isDragging = true
-                        self.dragStartPosition = self.windowEntity.position
                         
                         if var component = self.followerRoot.components[LazyFollowComponent.self] {
                             component.isDragging = true
@@ -184,13 +184,22 @@ private struct FollowerImmersiveRealityView: View {
                         }
                     }
 
-                    let currentPos = value.convert(value.location3D, from: .global, to: .scene)
-                    let startPos = value.convert(value.startLocation3D, from: .global, to: .scene)
-                    let delta = SIMD3<Float>(currentPos - startPos)
+                    let dragWorldPosition = value.convert(value.location3D, from: .global, to: .scene)
+                    let dragStartWorldPosition = value.convert(value.startLocation3D, from: .global, to: .scene)
+                    let dragDelta = SIMD3<Float>(dragWorldPosition - dragStartWorldPosition)
                     
-                    self.windowEntity.position = self.dragStartPosition + delta
+                    // Transform world delta into follower root's local space
+                    let localDelta = self.followerRoot.convert(direction: dragDelta, from: nil)
+                    
+                    // Project onto sphere
+                    let newPosition = self.currentOffset + localDelta
+                    let direction = normalize(newPosition)
+                    self.windowEntity.position = direction * Self.sphereRadius
                 })
                 .onEnded({ value in
+                    // Save the final position as the new base offset
+                    self.currentOffset = self.windowEntity.position
+                    
                     if var component = self.followerRoot.components[LazyFollowComponent.self] {
                         component.isDragging = false
                         self.followerRoot.components[LazyFollowComponent.self] = component
