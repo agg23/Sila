@@ -14,31 +14,38 @@ import ARKit
 struct LazyFollowComponent: Component {
     var rotationThreshold: Float = 0.52     // ~30°
     var translationThreshold: Float = 0.6   // ~2ft
+    var stationaryThreshold: Float = 0.005  // Yaw change per frame to consider "stationary"
+    var followSpeed: Float = 8.0            // Lerp speed when following
     var simulatorHeightOffset: Float = 1.3
     
     var lastYaw: Float = 0
     var lastPositionXZ: SIMD2<Float> = .zero
     var isInitialized = false
     var isDragging = false
-    var isAnimating = false
-    var animationEndTime: Double = 0
+    var isFollowing = false                 // Currently tracking head (vs stationary)
+    var previousDeviceYaw: Float = 0        // For detecting when head stops moving
+    
+    // Current device state (updated every frame by system)
+    var currentDeviceYaw: Float = 0
+    var currentDeviceXZ: SIMD2<Float> = .zero
+    var currentDeviceTransform: Transform = Transform.identity
 }
 
 @MainActor
 class LazyFollowSystem: System {
     static let query = EntityQuery(where: .has(LazyFollowComponent.self))
     
-    private static let arSession = ARKitSession()
-    private static let worldTracking = WorldTrackingProvider()
+    private let arSession = ARKitSession()
+    private let worldTracking = WorldTrackingProvider()
 
     required init(scene: RealityKit.Scene) {
         Task {
-            try? await Self.arSession.run([Self.worldTracking])
+            try? await self.arSession.run([self.worldTracking])
         }
     }
     
     func update(context: SceneUpdateContext) {
-        guard let anchor = Self.worldTracking.queryDeviceAnchor(atTimestamp: CACurrentMediaTime()) else {
+        guard let anchor = self.worldTracking.queryDeviceAnchor(atTimestamp: CACurrentMediaTime()) else {
             return
         }
 
@@ -46,58 +53,81 @@ class LazyFollowSystem: System {
         let forward = deviceTransform.rotation.act(SIMD3<Float>(0, 0, -1))
         let deviceYaw = atan2(forward.x, -forward.z)
         let deviceXZ = SIMD2<Float>(deviceTransform.translation.x, deviceTransform.translation.z)
-        let now = CACurrentMediaTime()
+        let deltaTime = Float(context.deltaTime)
         
         // We explicitly exclude pitch and roll
         let yawOnlyRotation = simd_quatf(angle: -deviceYaw, axis: SIMD3<Float>(0, 1, 0))
-        var yawOnlyTransform = Transform(rotation: yawOnlyRotation, translation: deviceTransform.translation)
+        var targetTransform = Transform(rotation: yawOnlyRotation, translation: deviceTransform.translation)
         
         for entity in context.entities(matching: Self.query, updatingSystemWhen: .rendering) {
             guard var component = entity.components[LazyFollowComponent.self] else {
                 continue
             }
+            
+            #if targetEnvironment(simulator)
+            targetTransform.translation.y += component.simulatorHeightOffset
+            #endif
+            
+            // Store current device state in component for access outside system
+            component.currentDeviceYaw = deviceYaw
+            component.currentDeviceXZ = deviceXZ
+            component.currentDeviceTransform = targetTransform
 
             if component.isDragging {
-                continue
-            }
-
-            if component.isAnimating && now >= component.animationEndTime {
-                component.isAnimating = false
-            }
-
-            if component.isAnimating {
+                component.previousDeviceYaw = deviceYaw
                 entity.components[LazyFollowComponent.self] = component
                 continue
             }
             
             // Initialize
             if !component.isInitialized {
-                #if targetEnvironment(simulator)
-                yawOnlyTransform.translation.y += component.simulatorHeightOffset
-                #endif
-                entity.transform = yawOnlyTransform
+                entity.transform = targetTransform
                 component.lastYaw = deviceYaw
                 component.lastPositionXZ = deviceXZ
+                component.previousDeviceYaw = deviceYaw
                 component.isInitialized = true
                 entity.components[LazyFollowComponent.self] = component
                 continue
             }
             
-            // Check thresholds
-            let yawDiff = atan2(sin(deviceYaw - component.lastYaw), cos(deviceYaw - component.lastYaw))
-            let translationDist = length(deviceXZ - component.lastPositionXZ)
+            // Check if head is moving
+            let yawDeltaThisFrame = abs(atan2(sin(deviceYaw - component.previousDeviceYaw), cos(deviceYaw - component.previousDeviceYaw)))
+            let headIsStationary = yawDeltaThisFrame < component.stationaryThreshold
             
-            if abs(yawDiff) > component.rotationThreshold || translationDist > component.translationThreshold {
-                #if targetEnvironment(simulator)
-                yawOnlyTransform.translation.y += component.simulatorHeightOffset
-                #endif
-                entity.move(to: yawOnlyTransform, relativeTo: nil, duration: 0.5, timingFunction: .easeInOut)
-                component.lastYaw = deviceYaw
-                component.lastPositionXZ = deviceXZ
-                component.isAnimating = true
-                component.animationEndTime = now + 0.5
+            if component.isFollowing {
+                // Smoothly follow the head
+                let currentTranslation = entity.transform.translation
+                let currentRotation = entity.transform.rotation
+                
+                let t = min(1.0, component.followSpeed * deltaTime)
+                let newTranslation = mix(currentTranslation, targetTransform.translation, t: t)
+                let newRotation = simd_slerp(currentRotation, targetTransform.rotation, t)
+                
+                entity.transform = Transform(rotation: newRotation, translation: newTranslation)
+                
+                // Check if we've caught up to the target
+                let dotProduct = abs(simd_dot(currentRotation.vector, targetTransform.rotation.vector))
+                let rotationDiff = acos(min(1.0, dotProduct)) * 2.0
+                let translationDiff = length(currentTranslation - targetTransform.translation)
+                let caughtUp = rotationDiff < 0.01 && translationDiff < 0.01
+                
+                // Stop following when head is stationary AND we've caught up
+                if headIsStationary && caughtUp {
+                    component.isFollowing = false
+                    component.lastYaw = deviceYaw
+                    component.lastPositionXZ = deviceXZ
+                }
+            } else {
+                // Stationary mode - check thresholds
+                let yawDiff = atan2(sin(deviceYaw - component.lastYaw), cos(deviceYaw - component.lastYaw))
+                let translationDist = length(deviceXZ - component.lastPositionXZ)
+                
+                if abs(yawDiff) > component.rotationThreshold || translationDist > component.translationThreshold {
+                    component.isFollowing = true
+                }
             }
             
+            component.previousDeviceYaw = deviceYaw
             entity.components[LazyFollowComponent.self] = component
         }
     }
@@ -180,7 +210,12 @@ private struct FollowerImmersiveRealityView: View {
                         self.isDragging = true
                         
                         if var component = self.followerRoot.components[LazyFollowComponent.self] {
+                            // Snap followerRoot to device transform so dragging is calculated relative to this transform
+                            self.followerRoot.transform = component.currentDeviceTransform
                             component.isDragging = true
+                            component.lastYaw = component.currentDeviceYaw
+                            component.lastPositionXZ = component.currentDeviceXZ
+                            component.isFollowing = false
                             self.followerRoot.components[LazyFollowComponent.self] = component
                         }
                     }
