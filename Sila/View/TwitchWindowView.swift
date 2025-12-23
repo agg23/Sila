@@ -35,7 +35,7 @@ struct TwitchWindowView: View {
         .preferredSurroundingsEffect(self.dimSurroundings ? .systemDark : nil)
         // Controlling with the ornament overlay keeps the grabber completely in sync
         .persistentSystemOverlays(self.controlVisibility)
-        .glassBackgroundEffect(in: RoundedRectangle(cornerRadius: self.smallBorderRadius ? 24.0 : 56.0))
+        .glassBackgroundEffect(in: RoundedRectangle(cornerRadius: self.smallBorderRadius ? 24.0 : 48.0))
     }
 }
 
