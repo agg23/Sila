@@ -163,6 +163,9 @@ private struct FollowerImmersiveRealityView: View {
     
     /// Distance from follower root to content (sphere radius)
     static let sphereRadius: Float = 1.7
+    
+    /// Maximum angle from forward that the view can be placed (~30°)
+    static let maxOffsetAngle: Float = 0.52
 
     @Bindable var playerModel: WebViewPlayer
 
@@ -229,21 +232,43 @@ private struct FollowerImmersiveRealityView: View {
                     
                     // Project onto sphere
                     let newPosition = self.currentOffset + localDelta
-                    let direction = normalize(newPosition)
-                    self.windowEntity.position = direction * Self.sphereRadius
-                })
-                .onEnded({ value in
-                    // Save the final position as the new base offset
-                    self.currentOffset = self.windowEntity.position
+                    var direction = normalize(newPosition)
                     
-                    if var component = self.followerRoot.components[LazyFollowComponent.self] {
-                        component.isDragging = false
-                        self.followerRoot.components[LazyFollowComponent.self] = component
+                    // Clamp to max angle during drag
+                    let forward = SIMD3<Float>(0, 0, -1)
+                    let angle = acos(max(-1, min(1, dot(direction, forward))))
+                    if angle > Self.maxOffsetAngle {
+                        let directionXY = SIMD2<Float>(direction.x, direction.y)
+                        let directionXYLength = length(directionXY)
+                        if directionXYLength > 0.001 {
+                            let normalizedXY = directionXY / directionXYLength
+                            let maxXY = sin(Self.maxOffsetAngle)
+                            let clampedZ = -cos(Self.maxOffsetAngle)
+                            direction = normalize(SIMD3<Float>(normalizedXY.x * maxXY, normalizedXY.y * maxXY, clampedZ))
+                        }
                     }
                     
-                    self.isDragging = false
+                    self.windowEntity.position = direction * Self.sphereRadius
+                })
+                .onEnded({ _ in
+                    self.finishDrag()
                 })
         )
+    }
+    
+    private func finishDrag() {
+        guard self.isDragging else {
+            return
+        }
+        
+        self.currentOffset = self.windowEntity.position
+        
+        if var component = self.followerRoot.components[LazyFollowComponent.self] {
+            component.isDragging = false
+            self.followerRoot.components[LazyFollowComponent.self] = component
+        }
+        
+        self.isDragging = false
     }
 }
 
