@@ -145,6 +145,7 @@
 		66E102492B82E496007A44D4 /* NavStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E102482B82E496007A44D4 /* NavStack.swift */; };
 		66E823E42EF1088100784FF4 /* PlayerOverlayButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E823E32EF1088100784FF4 /* PlayerOverlayButtonView.swift */; };
 		66E823E62EF10B5500784FF4 /* FollowerImmersiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E823E52EF10B5500784FF4 /* FollowerImmersiveView.swift */; };
+		66E8241C2EF50FE200784FF4 /* ImmersiveGrabberControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E8241B2EF50FE200784FF4 /* ImmersiveGrabberControlsView.swift */; };
 		66E8859F2B86C646004B4B8D /* DataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E8859E2B86C646004B4B8D /* DataLoader.swift */; };
 		66E885A22B86D95C004B4B8D /* AuthStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E885A12B86D95C004B4B8D /* AuthStatus.swift */; };
 		66E885A82B8821D9004B4B8D /* StandardDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E885A72B8821D9004B4B8D /* StandardDataView.swift */; };
@@ -329,6 +330,7 @@
 		66E102482B82E496007A44D4 /* NavStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavStack.swift; sourceTree = "<group>"; };
 		66E823E32EF1088100784FF4 /* PlayerOverlayButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerOverlayButtonView.swift; sourceTree = "<group>"; };
 		66E823E52EF10B5500784FF4 /* FollowerImmersiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowerImmersiveView.swift; sourceTree = "<group>"; };
+		66E8241B2EF50FE200784FF4 /* ImmersiveGrabberControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImmersiveGrabberControlsView.swift; sourceTree = "<group>"; };
 		66E8859E2B86C646004B4B8D /* DataLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataLoader.swift; sourceTree = "<group>"; };
 		66E885A12B86D95C004B4B8D /* AuthStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthStatus.swift; sourceTree = "<group>"; };
 		66E885A72B8821D9004B4B8D /* StandardDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandardDataView.swift; sourceTree = "<group>"; };
@@ -770,6 +772,14 @@
 			path = Navigation;
 			sourceTree = "<group>";
 		};
+		66E8241A2EF50FD000784FF4 /* Immersive */ = {
+			isa = PBXGroup;
+			children = (
+				66E8241B2EF50FE200784FF4 /* ImmersiveGrabberControlsView.swift */,
+			);
+			path = Immersive;
+			sourceTree = "<group>";
+		};
 		66F4E4142B802916008C565D /* OAuth */ = {
 			isa = PBXGroup;
 			children = (
@@ -799,6 +809,7 @@
 				66E102372B82D7FC007A44D4 /* Category */,
 				66125F612B84255D002169B5 /* Channel */,
 				66364FC22B8B9A97005180B8 /* Chat */,
+				66E8241A2EF50FD000784FF4 /* Immersive */,
 				66E102442B82E3D4007A44D4 /* Navigation */,
 				66F4E4232B811B5F008C565D /* Shared */,
 				66E102202B829332007A44D4 /* Stream */,
@@ -1110,6 +1121,7 @@
 				66C96BED2B900E7F0016A91B /* StreamableVideo.swift in Sources */,
 				66F4E4282B812932008C565D /* OAuthView.swift in Sources */,
 				66F73D1A2EC100F50093A4A6 /* PresentableTrackingViewModifier.swift in Sources */,
+				66E8241C2EF50FE200784FF4 /* ImmersiveGrabberControlsView.swift in Sources */,
 				66E102292B82988A007A44D4 /* PopularView.swift in Sources */,
 				66E823E42EF1088100784FF4 /* PlayerOverlayButtonView.swift in Sources */,
 				660BD0262EBB0BEE00E88BAF /* StreamButtonStyle.swift in Sources */,
