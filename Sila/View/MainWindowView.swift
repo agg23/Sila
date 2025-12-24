@@ -77,6 +77,15 @@ struct MainWindowView: View {
                         .animation(.easeInOut(duration: 0.2))
                     )
                     .zIndex(1)
+                    // Dismiss any open video when we close the window
+                    .onChange(of: self.scene) { _, newValue in
+                        switch newValue {
+                        case .background, .inactive:
+                            self.router.activeVideo = nil
+                        default:
+                            break
+                        }
+                    }
             }
         }
         // Located at root of main window, as each of the tabs can be rendered at the same time
