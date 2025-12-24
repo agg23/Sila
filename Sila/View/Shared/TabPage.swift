@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct TabPage<Content: View>: View {
+    @Environment(Router.self) private var router
+    @Environment(\.disablePrimaryOrnaments) private var disablePrimaryOrnaments
+
     let title: String
     let systemImage: String
     let tab: SelectedTab
@@ -36,6 +39,7 @@ struct TabPage<Content: View>: View {
                             }
                     }
                 })
+                .toolbar(self.disablePrimaryOrnaments ? .hidden : .automatic, for: .tabBar)
         }
         .tabItem {
             Label(self.title, systemImage: self.systemImage)

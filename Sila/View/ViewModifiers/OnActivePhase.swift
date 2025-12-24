@@ -14,7 +14,7 @@ private struct OnActivePhase: ViewModifier {
 
     func body(content: Content) -> some View {
         content
-            .onChange(of: self.scenePhase) { _, newValue in
+            .onChange(of: self.scenePhase, initial: true) { _, newValue in
                 if newValue == .active {
                     self.onActive()
                 }

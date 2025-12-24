@@ -95,19 +95,19 @@ private struct PopularContentView: View {
 }
 
 #Preview {
-    TabPage(title: "Popular", systemImage: "star", tab: .popular, content: {
+    TabPage(title: "Popular", systemImage: "star", tab: .popular) {
         PopularContentView(streams: STREAMS_LIST_MOCK(), selectedLanguage: .constant("en"), loader: StandardDataLoader<([Twitch.Stream], String?)>(), refreshToken: UUID()) {
 
         }
-    })
+    }
     .environment(Router())
 }
 
 #Preview {
-    TabPage(title: "Popular", systemImage: "star", tab: .popular, content: {
+    TabPage(title: "Popular", systemImage: "star", tab: .popular) {
         PopularContentView(streams: [], selectedLanguage: .constant("en"), loader: StandardDataLoader<([Twitch.Stream], String?)>(), refreshToken: UUID()) {
 
         }
-    })
+    }
     .environment(Router())
 }

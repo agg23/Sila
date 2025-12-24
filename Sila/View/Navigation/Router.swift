@@ -23,7 +23,8 @@ enum SelectedTab {
         Binding(get: { self.tab }, set: { self.tab = $0 })
     }
 
-    var bufferedWindowOpen: ExternalWindow?
+    var bufferedWindowOpen: StreamableVideo?
+    var activeVideo: StreamableVideo?
 
     func pathForActiveTab() -> [Route] {
         self.path(for: self.tab)
@@ -50,7 +51,7 @@ enum SelectedTab {
         self.path[self.tab]?.append(route)
     }
 
-    func push(window: ExternalWindow) {
-        self.bufferedWindowOpen = window
+    func bufferOpenWindow(_ video: StreamableVideo) {
+        self.bufferedWindowOpen = video
     }
 }

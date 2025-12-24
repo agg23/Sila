@@ -48,6 +48,7 @@ struct SilaAppApp: App {
             // TODO: This doesn't work for some reason
             return "main"
         }
+        .windowStyle(.plain)
         .windowResizability(.contentSize)
 
         WindowGroup(id: Window.stream, for: Twitch.Stream.self) { $stream in

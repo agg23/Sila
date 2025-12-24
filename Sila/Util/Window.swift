@@ -12,4 +12,7 @@ struct Window {
     static let vod = "vod"
     static let chat = "chat"
     static let followerStream = "immersiveFollowerStream"
+
+    static let smallWindowCornerRadius = 24.0
+    static let largeWindowCornerRadius = 48.0
 }

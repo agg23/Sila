@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct PlayerOverlayControlsView: View {
+    @Environment(Router.self) private var router
+
     @Environment(\.openImmersiveSpace) private var openImmersiveSpace
     @Environment(\.dismissWindow) private var dismissWindow
 
@@ -25,6 +27,10 @@ struct PlayerOverlayControlsView: View {
 
     var body: some View {
         HStack(spacing: 20) {
+            PlayerOverlayButtonView(label: "Back", icon: Icon.back) {
+                self.router.activeVideo = nil
+            }
+
             PlayerOverlayButtonView(label: "Reload", icon: Icon.refresh) {
                 self.player.reload()
                 self.onInteraction()

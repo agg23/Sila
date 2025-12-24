@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct OrnamentPickerTabView<LeftContent: View, RightContent: View>: View {
+    @Environment(\.disablePrimaryOrnaments) private var disablePrimaryOrnaments
+
     @State private var leftActive = true
 
     let leftTitle: String
@@ -27,7 +29,7 @@ struct OrnamentPickerTabView<LeftContent: View, RightContent: View>: View {
         // Prevent the displayed views from animating
         .animation(nil, value: self.leftActive)
         .tabViewStyle(.page(indexDisplayMode: .never))
-        .ornament(attachmentAnchor: .scene(.bottom)) {
+        .ornament(visibility: self.disablePrimaryOrnaments ? .hidden : .automatic, attachmentAnchor: .scene(.bottom)) {
             Ornament(leftTitle: self.leftTitle, rightTitle: self.rightTitle, leftActive: $leftActive)
         }
     }

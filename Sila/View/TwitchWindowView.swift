@@ -10,7 +10,6 @@ import Twitch
 
 struct TwitchWindowView: View {
     @AppStorage(Setting.smallBorderRadius) var smallBorderRadius: Bool = false
-    @AppStorage(Setting.dimSurroundings) var dimSurroundings: Bool = false
 
     @State private var presentableController: PlaybackPresentableController? = nil
     @State private var controlVisibility = Visibility.visible
@@ -24,7 +23,7 @@ struct TwitchWindowView: View {
     var body: some View {
         VStack {
             if let presentableController = self.presentableController {
-                TwitchContentView(controlVisibility: self.$controlVisibility, presentableController: presentableController, streamableVideo: self.streamableVideo)
+                TwitchContentView(controlVisibility: self.$controlVisibility, player: presentableController.model, streamableVideo: self.streamableVideo, isStandaloneWindow: true)
             }
         }
         .presentableTracking(contentId: self.contentId, role: .standalone, factory: {
@@ -32,16 +31,16 @@ struct TwitchWindowView: View {
         }, withController: { controller in
             self.presentableController = controller
         })
-        .preferredSurroundingsEffect(self.dimSurroundings ? .systemDark : nil)
-        // Controlling with the ornament overlay keeps the grabber completely in sync
-        .persistentSystemOverlays(self.controlVisibility)
-        .glassBackgroundEffect(in: RoundedRectangle(cornerRadius: self.smallBorderRadius ? 24.0 : 48.0))
+        .roundedBackground(.glass)
     }
 }
 
 struct TwitchContentView: View {
+    @AppStorage(Setting.dimSurroundings) var dimSurroundings: Bool = false
+
     @Environment(\.scenePhase) private var scene
     @Environment(\.dismissWindow) private var dismissWindow
+    @Environment(\.dismiss) private var dismissNavView
 
     // TODO: Implement
 //    @State private var delayLoading = !WindowController.shared.checkAllMuted()
@@ -49,18 +48,24 @@ struct TwitchContentView: View {
     @State private var delayTimer: Timer?
     @Binding var controlVisibility: Visibility
 
-    let presentableController: PlaybackPresentableController
+//    let presentableController: PlaybackPresentableController
+    let player: WebViewPlayer
     let streamableVideo: StreamableVideo
+    let isStandaloneWindow: Bool
 
     var contentId: String {
         PlaybackPresentableController.contentId(for: self.streamableVideo)
     }
 
     var body: some View {
-        TwitchVideoView(controlVisibility: self.$controlVisibility, streamableVideo: self.streamableVideo, delayLoading: self.delayLoading, player: self.presentableController.model)
+        TwitchVideoView(controlVisibility: self.$controlVisibility, streamableVideo: self.streamableVideo, delayLoading: self.delayLoading, player: self.player)
             // Set aspect ratio and enforce uniform resizing
             // This is on an inner view to prevent breaking .persistentSystemOverlays() modification
-            .windowGeometryPreferences(minimumSize: CGSize(width: 160.0 * 4, height: 90.0 * 4), resizingRestrictions: .uniform)
+            // TODO: Do something about this on embedded views
+//            .windowGeometryPreferences(minimumSize: CGSize(width: 160.0 * 4, height: 90.0 * 4), resizingRestrictions: .uniform)
+            .preferredSurroundingsEffect(self.dimSurroundings ? .systemDark : nil)
+            // Controlling with the ornament overlay keeps the grabber completely in sync
+            .persistentSystemOverlays(self.controlVisibility)
             // TODO: Rewrite after windowing changes
 //            .onChange(of: self.presentableController, { _, _ in
 //                // When we gain a PresentableController, set up system and send mute
@@ -87,9 +92,9 @@ struct TwitchContentView: View {
                 }
 
                 if case .video(_) = self.streamableVideo {
-                    self.presentableController.model.setIsVideo(true)
+                    self.player.setIsVideo(true)
                 } else {
-                    self.presentableController.model.setIsVideo(false)
+                    self.player.setIsVideo(false)
                 }
             }
             // TODO: Rewrite after windowing changes
@@ -103,7 +108,11 @@ struct TwitchContentView: View {
 //                }
 //            })
             .onReceive(NotificationCenter.default.publisher(for: .twitchLogOut), perform: { _ in
-                dismissWindow()
+                if self.isStandaloneWindow {
+                    self.dismissWindow()
+                } else {
+                    self.dismissNavView()
+                }
             })
     }
 }

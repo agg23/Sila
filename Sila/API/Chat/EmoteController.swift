@@ -52,6 +52,7 @@ class EmoteController {
     }
 
     func fetchUserEmotes(for userId: String) async {
+        // TODO: Needs sync to main thread?
         self.userToEmotes[userId] = [:]
 
         async let sevenTV: Void = self.fetchSevenTVUserEmotes(for: userId)

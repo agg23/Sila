@@ -72,6 +72,7 @@
 		66789AC22EEA7E6F00803BB4 /* ChannelWidgetConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66789AC12EEA7E6F00803BB4 /* ChannelWidgetConfiguration.swift */; };
 		66789AC52EEA809F00803BB4 /* SingleChannelWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66789AC42EEA809F00803BB4 /* SingleChannelWidget.swift */; };
 		66789ACB2EEB8D3D00803BB4 /* ProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66789ACA2EEB8D3D00803BB4 /* ProfileImageView.swift */; };
+		667A36172EFAE28F007CE58D /* TwitchEmbeddedContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667A36162EFAE28F007CE58D /* TwitchEmbeddedContentView.swift */; };
 		6685E3262EDE5A0300E1C20C /* OnActivePhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6685E3252EDE5A0300E1C20C /* OnActivePhase.swift */; };
 		6685E40D2EE3E99400E1C20C /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6685E40C2EE3E99400E1C20C /* WidgetKit.framework */; };
 		6685E40F2EE3E99400E1C20C /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6685E40E2EE3E99400E1C20C /* SwiftUI.framework */; };
@@ -97,6 +98,8 @@
 		6690EBA42BA73C2B0093B18C /* Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6690EBA32BA73C2B0093B18C /* Language.swift */; };
 		6690EBA62BA73CEB0093B18C /* LanguageFilterPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6690EBA52BA73CEB0093B18C /* LanguageFilterPickerView.swift */; };
 		6690EBA82BA78C810093B18C /* RefreshableScrollGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6690EBA72BA78C810093B18C /* RefreshableScrollGridView.swift */; };
+		6697AEC12EFB9DCC00218B93 /* RoundedBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6697AEC02EFB9DCC00218B93 /* RoundedBackground.swift */; };
+		6697AEC42EFC350200218B93 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6697AEC32EFC350200218B93 /* Environment.swift */; };
 		66A54E5A2EC7B9AA0000DA46 /* Twitch in Frameworks */ = {isa = PBXBuildFile; productRef = 66A54E592EC7B9AA0000DA46 /* Twitch */; };
 		66A54E5C2EC843470000DA46 /* AttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A54E5B2EC843470000DA46 /* AttributedString.swift */; };
 		66A5ADB52B96DA160025EF75 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A5ADB42B96DA160025EF75 /* SettingsView.swift */; };
@@ -264,6 +267,7 @@
 		66789AC12EEA7E6F00803BB4 /* ChannelWidgetConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelWidgetConfiguration.swift; sourceTree = "<group>"; };
 		66789AC42EEA809F00803BB4 /* SingleChannelWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleChannelWidget.swift; sourceTree = "<group>"; };
 		66789ACA2EEB8D3D00803BB4 /* ProfileImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageView.swift; sourceTree = "<group>"; };
+		667A36162EFAE28F007CE58D /* TwitchEmbeddedContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitchEmbeddedContentView.swift; sourceTree = "<group>"; };
 		6685E3252EDE5A0300E1C20C /* OnActivePhase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnActivePhase.swift; sourceTree = "<group>"; };
 		6685E40B2EE3E99400E1C20C /* WidgetsExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WidgetsExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		6685E40C2EE3E99400E1C20C /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
@@ -286,6 +290,8 @@
 		6690EBA32BA73C2B0093B18C /* Language.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Language.swift; sourceTree = "<group>"; };
 		6690EBA52BA73CEB0093B18C /* LanguageFilterPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageFilterPickerView.swift; sourceTree = "<group>"; };
 		6690EBA72BA78C810093B18C /* RefreshableScrollGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshableScrollGridView.swift; sourceTree = "<group>"; };
+		6697AEC02EFB9DCC00218B93 /* RoundedBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedBackground.swift; sourceTree = "<group>"; };
+		6697AEC32EFC350200218B93 /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		66A54E5B2EC843470000DA46 /* AttributedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedString.swift; sourceTree = "<group>"; };
 		66A5ADB42B96DA160025EF75 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		66A5ADB72B96DAA20025EF75 /* LicensesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicensesView.swift; sourceTree = "<group>"; };
@@ -419,6 +425,7 @@
 			children = (
 				6600E08F2B8BC0FD003B2270 /* InsetBackground.swift */,
 				6685E3252EDE5A0300E1C20C /* OnActivePhase.swift */,
+				6697AEC02EFB9DCC00218B93 /* RoundedBackground.swift */,
 				660BD0252EBB0BEE00E88BAF /* StreamButtonStyle.swift */,
 			);
 			path = ViewModifiers;
@@ -545,6 +552,7 @@
 				660F73A12B7446D70011FD65 /* WebViewPlayer.swift */,
 				6614CD4C2B94FDA400A3EE17 /* SharedPlaybackSettings.swift */,
 				66C96BEC2B900E7F0016A91B /* StreamableVideo.swift */,
+				667A36162EFAE28F007CE58D /* TwitchEmbeddedContentView.swift */,
 				663B73262B6DBA8E0031D661 /* TwitchWebView.swift */,
 				663B73222B6DB9A30031D661 /* TwitchVideoView.swift */,
 				66F4E40E2B7D8FD3008C565D /* Twitch+Notification.swift */,
@@ -878,6 +886,7 @@
 				66A54E5B2EC843470000DA46 /* AttributedString.swift */,
 				66891FF72B9A9E72000C0D92 /* Color.swift */,
 				660BD00E2EAF0EB200E88BAF /* Date.swift */,
+				6697AEC32EFC350200218B93 /* Environment.swift */,
 				66F8D18F2B88581D008C4F7C /* Icon.swift */,
 				6690EBA32BA73C2B0093B18C /* Language.swift */,
 				660BD01B2EB6394E00E88BAF /* RecentsStore.swift */,
@@ -1072,6 +1081,7 @@
 				66C96BE12B8EC4510016A91B /* VODButtonView.swift in Sources */,
 				66E102352B82D788007A44D4 /* CategoryMock.swift in Sources */,
 				6690EBA82BA78C810093B18C /* RefreshableScrollGridView.swift in Sources */,
+				6697AEC12EFB9DCC00218B93 /* RoundedBackground.swift in Sources */,
 				666E97E92B8D7085008EE950 /* EmptyDataView.swift in Sources */,
 				66C96BDE2B8EC2D10016A91B /* VideoMock.swift in Sources */,
 				66125F692B84279A002169B5 /* ChannelButtonView.swift in Sources */,
@@ -1088,6 +1098,7 @@
 				66E102122B82515A007A44D4 /* TagView.swift in Sources */,
 				66F8D1962B898141008C4F7C /* LoadingAsyncImage.swift in Sources */,
 				6666F3532BAA7335009D5A29 /* StreamWrapperQuery.swift in Sources */,
+				6697AEC42EFC350200218B93 /* Environment.swift in Sources */,
 				66A5ADB52B96DA160025EF75 /* SettingsView.swift in Sources */,
 				660BD0242EB7950F00E88BAF /* ProfileImage.swift in Sources */,
 				66E102462B82E3E8007A44D4 /* Router.swift in Sources */,
@@ -1137,6 +1148,7 @@
 				6685E42B2EE4A17900E1C20C /* AppGroup.swift in Sources */,
 				66CBD0E12ECB69DA007135BE /* ChatAnimation.swift in Sources */,
 				66125F5F2B83EF38002169B5 /* View+HighlightableButton.swift in Sources */,
+				667A36172EFAE28F007CE58D /* TwitchEmbeddedContentView.swift in Sources */,
 				6672D37C2B8C3F7B00E9D0E9 /* NeedsLoginView.swift in Sources */,
 				66E8859F2B86C646004B4B8D /* DataLoader.swift in Sources */,
 				66E885A82B8821D9004B4B8D /* StandardDataView.swift in Sources */,

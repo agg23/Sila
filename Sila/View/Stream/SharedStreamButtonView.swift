@@ -8,17 +8,12 @@
 import SwiftUI
 import Twitch
 
-enum StreamOrVideo {
-    case stream(_: Twitch.Stream)
-    case video(_: Video)
-}
-
 struct SharedStreamButtonView<PreTitleRight: View, ImageOverlay: View, ContextMenu: View>: View {
     @Environment(Router.self) private var router
     @Environment(\.openWindow) private var openWindow
     @Environment(AuthController.self) private var authController
 
-    let source: StreamOrVideo
+    let source: StreamableVideo
 
     let displayUrl: String
     let profileImageUrl: String?
@@ -34,7 +29,7 @@ struct SharedStreamButtonView<PreTitleRight: View, ImageOverlay: View, ContextMe
     @ViewBuilder let imageOverlay: () -> ImageOverlay
     @ViewBuilder let contextMenu: () -> ContextMenu
 
-    init(source: StreamOrVideo, displayUrl: String, profileImageUrl: String?, preTitleLeft: String, title: String, subtitle: String, refreshToken: RefreshToken? = nil, @ViewBuilder preTitleRight: @escaping () -> PreTitleRight, @ViewBuilder imageOverlay: @escaping () -> ImageOverlay, @ViewBuilder contextMenu: @escaping () -> ContextMenu) {
+    init(source: StreamableVideo, displayUrl: String, profileImageUrl: String?, preTitleLeft: String, title: String, subtitle: String, refreshToken: RefreshToken? = nil, @ViewBuilder preTitleRight: @escaping () -> PreTitleRight, @ViewBuilder imageOverlay: @escaping () -> ImageOverlay, @ViewBuilder contextMenu: @escaping () -> ContextMenu) {
         self.source = source
         self.displayUrl = displayUrl
         self.profileImageUrl = profileImageUrl
@@ -49,12 +44,14 @@ struct SharedStreamButtonView<PreTitleRight: View, ImageOverlay: View, ContextMe
 
     var body: some View {
         AsyncImageButtonView(imageUrl: buildImageUrl(using: self.displayUrl), aspectRatio: 16.0/9.0, overlayAlignment: .bottomTrailing, refreshToken: self.refreshToken) {
-            switch self.source {
-            case .stream(let stream):
-                StreamOpener.openStream(stream: stream, openWindow: self.openWindow, profileImageUrl: self.profileImageUrl)
-            case .video(let video):
-                openWindow(id: Window.vod, value: video)
-            }
+//            self.router.pushToActiveTab(route: .video(self.source))
+            self.router.activeVideo = self.source
+//            switch self.source {
+//            case .stream(let stream):
+//                StreamOpener.openStream(stream: stream, openWindow: self.openWindow, profileImageUrl: self.profileImageUrl)
+//            case .video(let video):
+//                openWindow(id: Window.vod, value: video)
+//            }
         } content: {
             VStack(alignment: .leading) {
                 HStack {
@@ -96,7 +93,7 @@ struct SharedStreamButtonView<PreTitleRight: View, ImageOverlay: View, ContextMe
 }
 
 extension SharedStreamButtonView where PreTitleRight == EmptyView, ImageOverlay == EmptyView, ContextMenu == EmptyView {
-    init(source: StreamOrVideo, displayUrl: String, profileImageUrl: String?, preTitleLeft: String, title: String, subtitle: String, refreshToken: RefreshToken? = nil) {
+    init(source: StreamableVideo, displayUrl: String, profileImageUrl: String?, preTitleLeft: String, title: String, subtitle: String, refreshToken: RefreshToken? = nil) {
         self.source = source
         self.displayUrl = displayUrl
         self.profileImageUrl = profileImageUrl

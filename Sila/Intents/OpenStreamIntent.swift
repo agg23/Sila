@@ -34,7 +34,7 @@ struct OpenStreamIntent: AppIntent {
         }
 
         let stream = streams[0]
-        self.router.push(window: .stream(stream))
+        self.router.bufferOpenWindow(.stream(stream))
 
         return .result(opensIntent: OpenApp())
     }

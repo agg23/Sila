@@ -9,6 +9,8 @@ import SwiftUI
 import Twitch
 
 struct MainWindowView: View {
+    @Environment(\.openImmersiveSpace) private var openImmersiveSpace
+
     @Environment(\.openWindow) private var openWindow
     @Environment(\.dismissWindow) private var dismissWindow
     @Environment(\.scenePhase) private var scene
@@ -20,35 +22,62 @@ struct MainWindowView: View {
     @State private var showOauth = false
 
     var body: some View {
-        TabView(selection: self.router.tabBinding) {
-            TabPage(title: "Following", systemImage: Icon.following, tab: .following) {
-                FollowedStreamsView()
-                    .toolbar {
-                        defaultToolbar()
-                    }
+        let hasActiveVideo = self.router.activeVideo != nil
+
+        ZStack {
+            TabView(selection: self.router.tabBinding) {
+                TabPage(title: "Following", systemImage: Icon.following, tab: .following) {
+                    FollowedStreamsView()
+                        .toolbar {
+                            defaultToolbar()
+                        }
+                }
+
+                TabPage(title: "Popular", systemImage: Icon.popular, tab: .popular) {
+                    PopularView()
+                        .toolbar(hasActiveVideo ? .hidden : .automatic, for: .tabBar)
+                }
+
+                TabPage(title: "Categories", systemImage: Icon.category, tab: .categories) {
+                    CategoryListView()
+                        .toolbar(hasActiveVideo ? .hidden : .automatic, for: .tabBar)
+                }
+
+                TabPage(title: "Search", systemImage: Icon.search, tab: .search) {
+                    SearchView()
+                        .toolbar {
+                            defaultToolbar()
+                        }
+                        .toolbar(hasActiveVideo ? .hidden : .automatic, for: .tabBar)
+                }
+
+                TabPage(title: "Settings", systemImage: Icon.settings, tab: .settings) {
+                    SettingsView()
+                        .toolbar {
+                            defaultToolbar()
+                        }
+                        .toolbar(hasActiveVideo ? .hidden : .automatic, for: .tabBar)
+                }
             }
+            .environment(\.disablePrimaryOrnaments, hasActiveVideo)
+            .roundedBackground(.glass)
+            .scaleEffect(hasActiveVideo ? 0.8 : 1.0)
+            .opacity(hasActiveVideo ? 0.3 : 1.0)
+            .offset(z: hasActiveVideo ? -100 : 0)
+            .blur(radius: hasActiveVideo ? 10 : 0)
+            .animation(.easeInOut(duration: 0.2), value: hasActiveVideo)
 
-            TabPage(title: "Popular", systemImage: Icon.popular, tab: .popular, content: {
-                PopularView()
-            })
-
-            TabPage(title: "Categories", systemImage: Icon.category, tab: .categories, content: {
-                CategoryListView()
-            })
-
-            TabPage(title: "Search", systemImage: Icon.search, tab: .search) {
-                SearchView()
-                    .toolbar {
-                        defaultToolbar()
-                    }
+            if let activeVideo = self.router.activeVideo {
+                TwitchEmbeddedContentView(streamableVideo: activeVideo)
+                    .transition(
+                        .asymmetric(
+                            insertion: .scale(scale: 0.5).combined(with: .opacity),
+                            removal: .scale(scale: 0.8).combined(with: .opacity)
+                        )
+                        .animation(.easeInOut(duration: 0.2))
+                    )
+                    .zIndex(1)
             }
-
-            TabPage(title: "Settings", systemImage: Icon.settings, tab: .settings, content: {
-                SettingsView()
-                    .toolbar {
-                        defaultToolbar()
-                    }
-            })
         }
         // Located at root of main window, as each of the tabs can be rendered at the same time
         .onChange(of: self.router.bufferedWindowOpen, initial: true, { _, newValue in
@@ -61,7 +90,7 @@ struct MainWindowView: View {
             switch window {
             case .stream(let stream):
                 openWindow(id: Window.stream, value: stream)
-            case .vod(let video):
+            case .video(let video):
                 openWindow(id: Window.vod, value: video)
             }
         })
