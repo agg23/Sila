@@ -36,17 +36,15 @@ struct SilaAppApp: App {
     }
 
     var body: some Scene {
-        WindowGroup(for: String.self) { $id in
+        WindowGroup(for: WindowModel.self) { model in
             MainWindowView()
                 // This is the default window size of the launching animation
                 .frame(width: 1280.0, height: 720.0)
                 // For some reason we crash if we put this environment on the window
-                .environment(self.router)
+                .environment(model.wrappedValue.router)
                 .environment(self.authController)
         } defaultValue: {
-            // Set default value so there's a shared ID we can use to reuse the window
-            // TODO: This doesn't work for some reason
-            return "main"
+            WindowModel(router: self.router)
         }
         .windowStyle(.plain)
         .windowResizability(.contentSize)

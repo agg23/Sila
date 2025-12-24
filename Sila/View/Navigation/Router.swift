@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-enum SelectedTab {
+enum SelectedTab: Equatable, Codable {
     case following
     case popular
     case categories
@@ -15,7 +15,7 @@ enum SelectedTab {
     case settings
 }
 
-@Observable final class Router: Sendable {
+@Observable final class Router: Equatable, Codable, Sendable {
     var tab: SelectedTab = .following
     var path: [SelectedTab: [Route]] = [:]
 
@@ -25,6 +25,37 @@ enum SelectedTab {
 
     var bufferedWindowOpen: StreamableVideo?
     var activeVideo: StreamableVideo?
+
+    init() {
+
+    }
+
+    init(from router: Router) {
+        self.tab = router.tab
+        self.path = self.path
+
+        self.bufferedWindowOpen = router.bufferedWindowOpen
+        self.activeVideo = router.activeVideo
+    }
+
+    init(from decoder: any Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        self.tab = try values.decode(SelectedTab.self, forKey: .tab)
+        // We only need the current tab when serializing
+        let tabPath = try values.decode([Route].self, forKey: .path)
+        self.path = [self.tab: tabPath]
+
+        self.bufferedWindowOpen = try values.decode(Optional<StreamableVideo>.self, forKey: .bufferedWindowOpen)
+        self.activeVideo = try values.decode(Optional<StreamableVideo>.self, forKey: .activeVideo)
+    }
+
+    func encode(to encoder: any Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(self.tab, forKey: .tab)
+        try container.encode(self.pathForActiveTab(), forKey: .path)
+        try container.encode(self.bufferedWindowOpen, forKey: .bufferedWindowOpen)
+        try container.encode(self.activeVideo, forKey: .activeVideo)
+    }
 
     func pathForActiveTab() -> [Route] {
         self.path(for: self.tab)
@@ -53,5 +84,29 @@ enum SelectedTab {
 
     func bufferOpenWindow(_ video: StreamableVideo) {
         self.bufferedWindowOpen = video
+    }
+
+    static func == (lhs: Router, rhs: Router) -> Bool {
+        if lhs.tab != rhs.tab {
+            return false
+        }
+        if lhs.path != rhs.path {
+            return false
+        }
+        if lhs.bufferedWindowOpen != rhs.bufferedWindowOpen {
+            return false
+        }
+        if lhs.activeVideo != rhs.activeVideo {
+            return false
+        }
+
+        return true
+    }
+
+    enum CodingKeys: String, CodingKey {
+        case tab
+        case path
+        case bufferedWindowOpen
+        case activeVideo
     }
 }

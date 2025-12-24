@@ -25,6 +25,7 @@ struct MainWindowView: View {
         let hasActiveVideo = self.router.activeVideo != nil
 
         ZStack {
+            // TODO: For some reason all windows expand their TabView ornament on hover in any window
             TabView(selection: self.router.tabBinding) {
                 TabPage(title: "Following", systemImage: Icon.following, tab: .following) {
                     FollowedStreamsView()

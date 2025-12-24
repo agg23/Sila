@@ -16,6 +16,7 @@ struct Icon {
 
     static let account = "person.fill"
 
+    static let newWindow = "arrow.up.right.bottomleft.rectangle"
     static let channel = "play.tv"
 
     static let viewerCount = "record.circle"

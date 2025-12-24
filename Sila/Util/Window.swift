@@ -16,3 +16,18 @@ struct Window {
     static let smallWindowCornerRadius = 24.0
     static let largeWindowCornerRadius = 48.0
 }
+
+struct WindowModel: Hashable, Codable {
+    let id: UUID
+
+    let router: Router
+
+    init(router: Router?) {
+        self.id = UUID()
+        self.router = router ?? Router()
+    }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(self.id)
+    }
+}
