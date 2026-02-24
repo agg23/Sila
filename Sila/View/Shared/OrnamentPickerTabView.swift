@@ -28,10 +28,14 @@ struct OrnamentPickerTabView<LeftContent: View, RightContent: View>: View {
         }
         // Prevent the displayed views from animating
         .animation(nil, value: self.leftActive)
+        #if os(visionOS)
         .tabViewStyle(.page(indexDisplayMode: .never))
+        #endif
+        #if os(visionOS)
         .ornament(visibility: self.disablePrimaryOrnaments ? .hidden : .automatic, attachmentAnchor: .scene(.bottom)) {
             Ornament(leftTitle: self.leftTitle, rightTitle: self.rightTitle, leftActive: $leftActive)
         }
+        #endif
     }
 }
 
@@ -62,7 +66,11 @@ private struct Ornament: View {
             .highlightableButton(!self.leftActive)
         }
         .padding(8)
+        #if os(visionOS)
         .glassBackgroundEffect()
+        #else
+        .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 12))
+        #endif
     }
 }
 

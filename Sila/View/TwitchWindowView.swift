@@ -63,9 +63,11 @@ struct TwitchContentView: View {
             // This is on an inner view to prevent breaking .persistentSystemOverlays() modification
             // TODO: Do something about this on embedded views
 //            .windowGeometryPreferences(minimumSize: CGSize(width: 160.0 * 4, height: 90.0 * 4), resizingRestrictions: .uniform)
+            #if os(visionOS)
             .preferredSurroundingsEffect(self.dimSurroundings ? .systemDark : nil)
             // Controlling with the ornament overlay keeps the grabber completely in sync
             .persistentSystemOverlays(self.controlVisibility)
+            #endif
             // TODO: Rewrite after windowing changes
 //            .onChange(of: self.presentableController, { _, _ in
 //                // When we gain a PresentableController, set up system and send mute

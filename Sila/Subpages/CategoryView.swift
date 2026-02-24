@@ -113,7 +113,7 @@ private struct CategoryViewContent: View {
         }
         // .toolbar is here so it can be in the previews without networking
         .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
+            ToolbarItem(placement: defaultToolbarPlacement) {
                 LanguageFilterPickerView(language: self.$selectedLanguage)
             }
 

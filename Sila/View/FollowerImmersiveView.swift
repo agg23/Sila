@@ -5,6 +5,7 @@
 //  Created by Adam Gastineau on 12/15/25.
 //
 
+#if os(visionOS)
 import SwiftUI
 import RealityKit
 
@@ -88,3 +89,4 @@ extension Transform {
     static let bottomLeft = Transform(translation: .init(x: -xOffset, y: -yOffset, z: windowZDepth))
     static let bottomRight = Transform(translation: .init(x: xOffset, y: -yOffset, z: windowZDepth))
 }
+#endif

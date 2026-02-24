@@ -5,6 +5,7 @@
 //  Created by Adam Gastineau on 11/9/25.
 //
 
+#if !os(macOS)
 import Foundation
 
 final class ChatPresentableController: PresentableControllerBase {
@@ -40,3 +41,4 @@ final class ChatPresentableController: PresentableControllerBase {
         }
     }
 }
+#endif

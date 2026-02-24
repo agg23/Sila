@@ -84,6 +84,7 @@ private struct PopularContentView: View {
             }
         }
         // .toolbar is here so it can be in the previews without networking
+        #if !os(macOS)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 LanguageFilterPickerView(language: self.$selectedLanguage)
@@ -91,6 +92,7 @@ private struct PopularContentView: View {
 
             defaultToolbar()
         }
+        #endif
     }
 }
 

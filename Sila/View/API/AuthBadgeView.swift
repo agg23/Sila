@@ -32,10 +32,12 @@ struct AuthBadgeView: View {
 #Preview {
     NavigationStack {
         Text("hi")
+            #if !os(macOS)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     AuthBadgeView()
                 }
             }
+            #endif
     }
 }

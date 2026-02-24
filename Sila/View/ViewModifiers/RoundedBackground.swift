@@ -19,7 +19,11 @@ private struct RoundedBackground: ViewModifier {
         switch self.type {
         case .glass:
             content
+                #if os(visionOS)
                 .glassBackgroundEffect(in: clipShape)
+                #else
+                .background(.regularMaterial, in: clipShape)
+                #endif
         case .solid(let color):
             content
                 .background(color)

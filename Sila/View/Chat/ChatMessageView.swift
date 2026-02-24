@@ -5,6 +5,7 @@
 //  Created by Adam Gastineau on 3/7/24.
 //
 
+#if !os(macOS)
 import SwiftUI
 import AsyncAnimatedImageUI
 import TwitchIRC
@@ -141,3 +142,4 @@ private func renderAttributedText(_ attributed: AttributedString?, string: Strin
 
     return PreviewWrapper()
 }
+#endif

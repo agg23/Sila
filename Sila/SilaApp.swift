@@ -46,7 +46,9 @@ struct SilaAppApp: App {
         } defaultValue: {
             WindowModel(router: self.router)
         }
+        #if os(visionOS)
         .windowStyle(.plain)
+        #endif
         .windowResizability(.contentSize)
 
         WindowGroup(id: Window.stream, for: Twitch.Stream.self) { $stream in
@@ -62,8 +64,10 @@ struct SilaAppApp: App {
             STREAM_MOCK()
         }
         .defaultSize(CGSize(width: 1280.0, height: 720.0))
+        #if os(visionOS)
         .windowStyle(.plain)
         .defaultLaunchBehavior(.suppressed)
+        #endif
 
         #if VOD_ENABLED
         WindowGroup(id: Window.vod, for: Twitch.Video.self) { $video in
@@ -71,10 +75,13 @@ struct SilaAppApp: App {
                 .environment(self.authController)
         }
         .defaultSize(CGSize(width: 1280.0, height: 720.0))
+        #if os(visionOS)
         .windowStyle(.plain)
         .defaultLaunchBehavior(.suppressed)
         #endif
+        #endif
 
+        #if !os(macOS)
         WindowGroup(id: Window.chat, for: ChatWindowModel.self) { $chat in
             ChatPaneWindow(channelName: chat.channelName, userId: chat.userId, title: chat.title)
         } defaultValue: {
@@ -82,8 +89,12 @@ struct SilaAppApp: App {
             return ChatWindowModel(channelName: defaultUser.login, userId: defaultUser.id, title: defaultUser.displayName)
         }
         .defaultSize(CGSize(width: 400.0, height: 720.0))
+        #if os(visionOS)
         .defaultLaunchBehavior(.suppressed)
+        #endif
+        #endif
 
+        #if os(visionOS)
         ImmersiveSpace(id: Window.followerStream, for: StreamableVideo.self) { $streamableVideo in
             FollowerImmersiveView(streamableVideo: $streamableVideo.wrappedValue)
                 .environment(self.authController)
@@ -92,5 +103,6 @@ struct SilaAppApp: App {
             .stream(STREAM_MOCK())
         }
         .immersionStyle(selection: .constant(.mixed), in: .mixed)
+        #endif
     }
 }

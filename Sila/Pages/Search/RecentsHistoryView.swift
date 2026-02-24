@@ -51,7 +51,9 @@ private struct RecentChannelsSection: View {
                         self.recentsStore.clearSearchRecents()
                     }
                 })
+                #if !os(macOS)
                 .listRowSpacing(8)
+                #endif
             }
 
             if !self.recentsStore.recentChannels.isEmpty {

@@ -5,6 +5,7 @@
 //  Created by Adam Gastineau on 3/7/24.
 //
 
+#if !os(macOS)
 import UIKit
 
 extension UIColor {
@@ -33,3 +34,4 @@ extension UIColor {
 
     static let twitchLinkPurple = UIColor(red: 191.0 / 255.0, green: 148.0 / 255.0, blue: 255.0 / 255.0, alpha: 1.0)
 }
+#endif

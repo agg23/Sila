@@ -10,7 +10,9 @@ import SwiftUI
 struct PlayerOverlayControlsView: View {
     @Environment(Router.self) private var router
 
+    #if os(visionOS)
     @Environment(\.openImmersiveSpace) private var openImmersiveSpace
+    #endif
     @Environment(\.dismissWindow) private var dismissWindow
 
     @AppStorage(Setting.dimSurroundings) var dimSurroundings: Bool = false
@@ -45,13 +47,16 @@ struct PlayerOverlayControlsView: View {
 
             Spacer()
 
+            #if os(visionOS)
             PlayerOverlayButtonView(label: "Lock to Head", icon: "arrow.up.right.bottomleft.rectangle") {
                 Task {
                     await self.openImmersiveSpace(id: Window.followerStream, value: self.streamableVideo)
                     self.dismissWindow()
                 }
             }
+            #endif
 
+            #if !os(macOS)
             VolumeSlider(volume: self.$volume, isActive: self.$volumePreventClose)
                 .onChange(of: self.volume) { _, newValue in
                     // Local volume has changed, either via UI slider, or by new client volume value
@@ -74,6 +79,7 @@ struct PlayerOverlayControlsView: View {
                 .onChange(of: self.volumePreventClose) { _, newValue in
                     self.activeChanged(newValue)
                 }
+            #endif
         }
     }
 }

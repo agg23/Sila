@@ -60,6 +60,8 @@ private struct ChatTransitionViewModifier: ViewModifier, Animatable {
             .scaleEffect(delayedInterpolation(Self.SCALE_DURATION, Self.MIN_SCALE, Self.MAX_SCALE))
             .opacity(interpolate(0.0, 1.0))
             .offset(x: interpolate(-self.contentWidth, 0))
+            #if os(visionOS)
             .offset(z: delayedInterpolation(Self.Z_DURATION, Self.MIN_Z, Self.MAX_Z))
+            #endif
     }
 }

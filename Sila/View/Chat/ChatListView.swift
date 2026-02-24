@@ -5,6 +5,7 @@
 //  Created by Adam Gastineau on 2/29/24.
 //
 
+#if !os(macOS)
 import SwiftUI
 import Combine
 import AsyncAnimatedImageUI
@@ -209,3 +210,4 @@ private struct ChatListContentView: View {
     .frame(width: 400)
     .glassBackgroundEffect()
 }
+#endif

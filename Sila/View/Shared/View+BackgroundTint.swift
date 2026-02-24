@@ -8,6 +8,7 @@
 import SwiftUI
 
 extension View {
+    #if os(visionOS)
     func glassBackgroundEffect(displayMode: GlassBackgroundDisplayMode = .always, tint: Color) -> some View {
         self
             .background {
@@ -27,4 +28,23 @@ extension View {
                     .frame(depth: 1)
             }
     }
+    #else
+    func glassBackgroundEffect(displayMode: Never? = nil, tint: Color) -> some View {
+        self
+            .background {
+                Rectangle()
+                    .fill(tint)
+                    .background(.regularMaterial)
+            }
+    }
+
+    func glassBackgroundEffect<S>(in shape: S, displayMode: Never? = nil, tint: Color) -> some View where S : InsettableShape {
+        self
+            .background {
+                Rectangle()
+                    .fill(tint)
+                    .background(.regularMaterial, in: shape)
+            }
+    }
+    #endif
 }

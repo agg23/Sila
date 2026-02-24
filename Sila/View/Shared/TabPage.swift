@@ -7,6 +7,14 @@
 
 import SwiftUI
 
+private var tabPageTitlePlacement: ToolbarItemPlacement {
+    #if os(macOS)
+    .automatic
+    #else
+    .topBarLeading
+    #endif
+}
+
 struct TabPage<Content: View>: View {
     @Environment(Router.self) private var router
     @Environment(\.disablePrimaryOrnaments) private var disablePrimaryOrnaments
@@ -23,7 +31,7 @@ struct TabPage<Content: View>: View {
                 // navigationTitle is very small on visionOS 2.0. Insert our own title instead
                 // TODO: This seems to be fixed in visionOS 26.0
                 .toolbar {
-                    ToolbarItem(placement: .topBarLeading) {
+                    ToolbarItem(placement: tabPageTitlePlacement) {
                         Text(self.title)
                             .font(.largeTitle)
                     }
@@ -39,7 +47,9 @@ struct TabPage<Content: View>: View {
                             }
                     }
                 })
+                #if !os(macOS)
                 .toolbar(self.disablePrimaryOrnaments ? .hidden : .automatic, for: .tabBar)
+                #endif
         }
         .tabItem {
             Label(self.title, systemImage: self.systemImage)

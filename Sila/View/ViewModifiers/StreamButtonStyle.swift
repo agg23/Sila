@@ -12,7 +12,9 @@ struct StreamButtonStyle: ButtonStyle {
 
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
+            #if os(visionOS)
             .hoverEffect()
+            #endif
             .clipShape(RoundedRectangle(cornerSize: CGSize(width: self.radius, height: self.radius)))
     }
 }

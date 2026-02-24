@@ -9,7 +9,9 @@ import SwiftUI
 import Twitch
 
 struct MainWindowView: View {
+    #if os(visionOS)
     @Environment(\.openImmersiveSpace) private var openImmersiveSpace
+    #endif
 
     @Environment(\.openWindow) private var openWindow
     @Environment(\.dismissWindow) private var dismissWindow
@@ -35,13 +37,17 @@ struct MainWindowView: View {
                 }
 
                 TabPage(title: "Popular", systemImage: Icon.popular, tab: .popular) {
-                    PopularView()
-                        .toolbar(hasActiveVideo ? .hidden : .automatic, for: .tabBar)
+                PopularView()
+                    #if !os(macOS)
+                    .toolbar(hasActiveVideo ? .hidden : .automatic, for: .tabBar)
+                    #endif
                 }
 
                 TabPage(title: "Categories", systemImage: Icon.category, tab: .categories) {
-                    CategoryListView()
-                        .toolbar(hasActiveVideo ? .hidden : .automatic, for: .tabBar)
+                CategoryListView()
+                    #if !os(macOS)
+                    .toolbar(hasActiveVideo ? .hidden : .automatic, for: .tabBar)
+                    #endif
                 }
 
                 TabPage(title: "Search", systemImage: Icon.search, tab: .search) {
@@ -49,7 +55,9 @@ struct MainWindowView: View {
                         .toolbar {
                             defaultToolbar()
                         }
-                        .toolbar(hasActiveVideo ? .hidden : .automatic, for: .tabBar)
+                    #if !os(macOS)
+                    .toolbar(hasActiveVideo ? .hidden : .automatic, for: .tabBar)
+                    #endif
                 }
 
                 TabPage(title: "Settings", systemImage: Icon.settings, tab: .settings) {
@@ -57,14 +65,18 @@ struct MainWindowView: View {
                         .toolbar {
                             defaultToolbar()
                         }
-                        .toolbar(hasActiveVideo ? .hidden : .automatic, for: .tabBar)
+                    #if !os(macOS)
+                    .toolbar(hasActiveVideo ? .hidden : .automatic, for: .tabBar)
+                    #endif
                 }
             }
             .environment(\.disablePrimaryOrnaments, hasActiveVideo)
             .roundedBackground(.glass)
             .scaleEffect(hasActiveVideo ? 0.8 : 1.0)
             .opacity(hasActiveVideo ? 0.3 : 1.0)
+            #if os(visionOS)
             .offset(z: hasActiveVideo ? -100 : 0)
+            #endif
             .blur(radius: hasActiveVideo ? 10 : 0)
             .animation(.easeInOut(duration: 0.2), value: hasActiveVideo)
 

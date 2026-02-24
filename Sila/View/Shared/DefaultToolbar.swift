@@ -8,7 +8,15 @@
 import SwiftUI
 
 func defaultToolbar() -> some ToolbarContent {
-    return ToolbarItem(placement: .topBarTrailing) {
+    return ToolbarItem(placement: defaultToolbarPlacement) {
         AuthBadgeView()
     }
+}
+
+var defaultToolbarPlacement: ToolbarItemPlacement {
+    #if os(macOS)
+    .automatic
+    #else
+    .topBarTrailing
+    #endif
 }
