@@ -5,6 +5,7 @@
 //  Created by Adam Gastineau on 10/28/25.
 //
 
+#if !os(macOS)
 import Foundation
 
 final class ChatRegistry {
@@ -22,3 +23,4 @@ final class ChatRegistry {
         return model
     }
 }
+#endif

@@ -72,6 +72,7 @@ struct TwitchVideoView: View {
             }
             // .center is used so the ornament isn't cut off at the edge (or a little past the edge) of the window
             // This would break the appearance animation
+            #if os(visionOS)
             .ornament(attachmentAnchor: .scene(.trailing), contentAlignment: .center) {
                 // Calibrated for a 400 width at default window size
                 let chatWidth = max(geometry.size.width * 0.3125, 400)
@@ -118,6 +119,7 @@ struct TwitchVideoView: View {
                     .glassBackgroundEffect()
                 }
             }
+            #endif
             .onReceive(self.streamRefreshTimer) { _ in
                 guard let channelId = self.player.channelId else {
                     return

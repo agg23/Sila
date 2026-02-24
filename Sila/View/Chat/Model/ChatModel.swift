@@ -5,6 +5,7 @@
 //  Created by Adam Gastineau on 3/10/24.
 //
 
+#if !os(macOS)
 import SwiftUI
 import Combine
 import Twitch
@@ -126,3 +127,4 @@ struct Connection {
         self.entries.append(.message(ChatMessageModel(message: message, userId: userId)))
     }
 }
+#endif

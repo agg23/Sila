@@ -14,7 +14,7 @@
 		66028DF92B91798C00696071 /* ChatListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66028DF82B91798C00696071 /* ChatListView.swift */; };
 		66028DFF2B917AD800696071 /* PrivateMessageMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66028DFE2B917AD800696071 /* PrivateMessageMock.swift */; };
 		66028E022B917CD200696071 /* PrivateMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66028E012B917CD200696071 /* PrivateMessage.swift */; };
-		660A6D0F2ECFB031006F9831 /* AsyncAnimatedImageUI in Frameworks */ = {isa = PBXBuildFile; productRef = 660A6D0E2ECFB031006F9831 /* AsyncAnimatedImageUI */; };
+		660A6D0F2ECFB031006F9831 /* AsyncAnimatedImageUI in Frameworks */ = {isa = PBXBuildFile; platformFilters = (xros, ); productRef = 660A6D0E2ECFB031006F9831 /* AsyncAnimatedImageUI */; };
 		660AFF6C2B93A9A60003186E /* ChatContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660AFF6B2B93A9A60003186E /* ChatContentView.swift */; };
 		660BD00F2EAF0EB200E88BAF /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660BD00E2EAF0EB200E88BAF /* Date.swift */; };
 		660BD0112EB06DEB00E88BAF /* RuntimeTimelineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660BD0102EB06DEB00E88BAF /* RuntimeTimelineView.swift */; };
@@ -43,7 +43,7 @@
 		663336942B75B7EA0098D188 /* View+WindowGeometryPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663336932B75B7EA0098D188 /* View+WindowGeometryPreferences.swift */; };
 		66364FBA2B8ABB9C005180B8 /* APIErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66364FB92B8ABB9C005180B8 /* APIErrorView.swift */; };
 		66364FBD2B8AF629005180B8 /* CircleBackgroundLessButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66364FBC2B8AF629005180B8 /* CircleBackgroundLessButton.swift */; };
-		66364FC82B8BA49A005180B8 /* JunoUI in Frameworks */ = {isa = PBXBuildFile; productRef = 66364FC72B8BA49A005180B8 /* JunoUI */; };
+		66364FC82B8BA49A005180B8 /* JunoUI in Frameworks */ = {isa = PBXBuildFile; platformFilters = (xros, ); productRef = 66364FC72B8BA49A005180B8 /* JunoUI */; };
 		663B72FB2B6DB8E60031D661 /* SilaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663B72FA2B6DB8E60031D661 /* SilaApp.swift */; };
 		663B73032B6DB8E80031D661 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 663B73022B6DB8E80031D661 /* Assets.xcassets */; };
 		663B73062B6DB8E80031D661 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 663B73052B6DB8E80031D661 /* Preview Assets.xcassets */; };
@@ -77,7 +77,7 @@
 		6685E3262EDE5A0300E1C20C /* OnActivePhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6685E3252EDE5A0300E1C20C /* OnActivePhase.swift */; };
 		6685E40D2EE3E99400E1C20C /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6685E40C2EE3E99400E1C20C /* WidgetKit.framework */; };
 		6685E40F2EE3E99400E1C20C /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6685E40E2EE3E99400E1C20C /* SwiftUI.framework */; };
-		6685E41C2EE3E99600E1C20C /* WidgetsExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 6685E40B2EE3E99400E1C20C /* WidgetsExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		6685E41C2EE3E99600E1C20C /* WidgetsExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 6685E40B2EE3E99400E1C20C /* WidgetsExtension.appex */; platformFilters = (xros, ); settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		6685E4292EE4A12700E1C20C /* AuthController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E42B2B812A32008C565D /* AuthController.swift */; };
 		6685E42B2EE4A17900E1C20C /* AppGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6685E42A2EE4A17900E1C20C /* AppGroup.swift */; };
 		6685E42C2EE4A17900E1C20C /* AppGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6685E42A2EE4A17900E1C20C /* AppGroup.swift */; };
@@ -125,10 +125,7 @@
 		66C96BED2B900E7F0016A91B /* StreamableVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C96BEC2B900E7F0016A91B /* StreamableVideo.swift */; };
 		66CBD0E12ECB69DA007135BE /* ChatAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CBD0E02ECB69DA007135BE /* ChatAnimation.swift */; };
 		66D11B522BF140C300DDD159 /* DebugChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D11B512BF140C300DDD159 /* DebugChat.swift */; };
-		66D11B582BF2DE3800DDD159 /* AsyncAnimatedImageUI in Frameworks */ = {isa = PBXBuildFile; productRef = 66D11B572BF2DE3800DDD159 /* AsyncAnimatedImageUI */; };
-		66D11B672BF5B51000DDD159 /* AsyncAnimatedImageUI in Frameworks */ = {isa = PBXBuildFile; productRef = 66D11B662BF5B51000DDD159 /* AsyncAnimatedImageUI */; };
 		66D11B692BF8165B00DDD159 /* BetterTTVModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D11B682BF8165B00DDD159 /* BetterTTVModels.swift */; };
-		66D11B6C2BF81FF200DDD159 /* AsyncAnimatedImageUI in Frameworks */ = {isa = PBXBuildFile; productRef = 66D11B6B2BF81FF200DDD159 /* AsyncAnimatedImageUI */; };
 		66D11B6E2BF8F2C000DDD159 /* FrankerFaceZModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D11B6D2BF8F2C000DDD159 /* FrankerFaceZModels.swift */; };
 		66DF455D2B8BA645006C1D99 /* VolumeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DF455C2B8BA645006C1D99 /* VolumeSlider.swift */; };
 		66E102122B82515A007A44D4 /* TagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E102112B82515A007A44D4 /* TagView.swift */; };
@@ -377,8 +374,6 @@
 				66D11B582BF2DE3800DDD159 /* AsyncAnimatedImageUI in Frameworks */,
 				66364FC82B8BA49A005180B8 /* JunoUI in Frameworks */,
 				660A6D0F2ECFB031006F9831 /* AsyncAnimatedImageUI in Frameworks */,
-				66D11B6C2BF81FF200DDD159 /* AsyncAnimatedImageUI in Frameworks */,
-				66D11B672BF5B51000DDD159 /* AsyncAnimatedImageUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -920,9 +915,6 @@
 				66364FC72B8BA49A005180B8 /* JunoUI */,
 				663E38062B9226D3002E0530 /* Nuke */,
 				663E38082B9226D3002E0530 /* NukeUI */,
-				66D11B572BF2DE3800DDD159 /* AsyncAnimatedImageUI */,
-				66D11B662BF5B51000DDD159 /* AsyncAnimatedImageUI */,
-				66D11B6B2BF81FF200DDD159 /* AsyncAnimatedImageUI */,
 				66F73D6C2EC6D4FA0093A4A6 /* Twitch */,
 				66FD913C2EC6D58A00BFCBCC /* Twitch */,
 				660A6D0E2ECFB031006F9831 /* AsyncAnimatedImageUI */,
@@ -1188,6 +1180,9 @@
 /* Begin PBXTargetDependency section */
 		6685E41B2EE3E99600E1C20C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
+			platformFilters = (
+				xros,
+			);
 			target = 6685E40A2EE3E99400E1C20C /* WidgetsExtension */;
 			targetProxy = 6685E41A2EE3E99600E1C20C /* PBXContainerItemProxy */;
 		};
@@ -1329,6 +1324,9 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Sila/Preview Content\"";
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "$(TARGET_NAME)/Info.plist";
@@ -1339,11 +1337,14 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 14.6;
 				MARKETING_VERSION = 1.2.3;
 				PRODUCT_BUNDLE_IDENTIFIER = im.agg.Sila;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SUPPORTED_PLATFORMS = "xros xrsimulator";
+				REGISTER_APP_GROUPS = YES;
+				SUPPORTED_PLATFORMS = "macosx xros xrsimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited) VOD_ENABLED TARGET_$(TARGET_NAME:c99extidentifier)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -1362,6 +1363,9 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Sila/Preview Content\"";
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "$(TARGET_NAME)/Info.plist";
@@ -1372,11 +1376,14 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 14.6;
 				MARKETING_VERSION = 1.2.3;
 				PRODUCT_BUNDLE_IDENTIFIER = im.agg.Sila;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SUPPORTED_PLATFORMS = "xros xrsimulator";
+				REGISTER_APP_GROUPS = YES;
+				SUPPORTED_PLATFORMS = "macosx xros xrsimulator";
+				SUPPORTS_MACCATALYST = NO;
 				"SWIFT_ACTIVE_COMPILATION_CONDITIONS[arch=*]" = "VOD_ENABLED TARGET_$(TARGET_NAME:c99extidentifier)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -1575,18 +1582,6 @@
 		66C8E46E2F782A6F00095195 /* Twitch */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Twitch;
-		};
-		66D11B572BF2DE3800DDD159 /* AsyncAnimatedImageUI */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = AsyncAnimatedImageUI;
-		};
-		66D11B662BF5B51000DDD159 /* AsyncAnimatedImageUI */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = AsyncAnimatedImageUI;
-		};
-		66D11B6B2BF81FF200DDD159 /* AsyncAnimatedImageUI */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = AsyncAnimatedImageUI;
 		};
 		66E102182B8262AC007A44D4 /* KeychainWrapper */ = {
 			isa = XCSwiftPackageProductDependency;

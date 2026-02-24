@@ -5,6 +5,7 @@
 //  Created by Adam Gastineau on 3/2/24.
 //
 
+#if !os(macOS)
 import SwiftUI
 
 struct ChatContentView: View {
@@ -95,3 +96,4 @@ struct ChatPaneWindow: View {
         print("Dismiss")
     }
 }
+#endif

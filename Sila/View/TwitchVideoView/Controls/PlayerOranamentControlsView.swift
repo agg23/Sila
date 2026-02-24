@@ -5,6 +5,7 @@
 //  Created by Adam Gastineau on 2/7/24.
 //
 
+#if !os(macOS)
 import SwiftUI
 import Twitch
 import JunoUI
@@ -180,4 +181,4 @@ private func previewPlayer(_ isVideo: Bool = false) -> WebViewPlayer {
         }
         .environment(AuthController())
 }
-
+#endif

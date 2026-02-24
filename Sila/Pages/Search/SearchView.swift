@@ -28,7 +28,11 @@ struct SearchView: View {
             })
         }
         // TODO: Maybe follow how Christian made a search bar https://christianselig.com/2024/03/recreating-visionos-search-bar/
+        #if os(macOS)
+        .searchable(text: self.$query, placement: .automatic)
+        #else
         .searchable(text: self.$query, placement: .navigationBarDrawer)
+        #endif
         .onChange(of: self.query) { oldValue, newValue in
             self.requestTask?.cancel()
 
