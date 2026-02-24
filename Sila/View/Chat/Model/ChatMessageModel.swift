@@ -5,6 +5,7 @@
 //  Created by Adam Gastineau on 3/16/24.
 //
 
+#if !os(macOS)
 import SwiftUI
 import AsyncAnimatedImageUI
 import TwitchIRC
@@ -143,3 +144,4 @@ private func extractEmoteSection(string: String, startIndex: String.Index, emote
 private func twitchEmoteUrl(from id: String) -> URL {
     URL(string: "https://static-cdn.jtvnw.net/emoticons/v2/\(id)/default/dark/1.0")!
 }
+#endif

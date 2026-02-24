@@ -5,6 +5,7 @@
 //  Created by Adam Gastineau on 11/14/25.
 //
 
+#if !os(macOS)
 import Foundation
 import UIKit
 
@@ -34,3 +35,4 @@ struct AttributedStringBuilder {
         return AttributedString(attributedString)
     }
 }
+#endif

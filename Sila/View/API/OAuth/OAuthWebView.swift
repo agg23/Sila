@@ -13,9 +13,13 @@ enum OAuthStatus {
     case failure
 }
 
-struct OAuthWebView: UIViewRepresentable {
-    typealias UIViewType = WKWebView
+#if canImport(UIKit)
+typealias OAuthWebViewRepresentable = UIViewRepresentable
+#else
+typealias OAuthWebViewRepresentable = NSViewRepresentable
+#endif
 
+struct OAuthWebView: OAuthWebViewRepresentable {
     let webView: WKWebView
     let setIsLoading: (_ status: Bool) -> Void
     let completed: (_ status: OAuthStatus) -> Void
@@ -70,13 +74,35 @@ struct OAuthWebView: UIViewRepresentable {
         OAuthWebViewCoordinator(webView: self.webView, setIsLoading: self.setIsLoading, completed: self.completed)
     }
 
+    #if canImport(UIKit)
     func makeUIView(context: Context) -> WKWebView {
+        makeWebView(context: context)
+    }
+
+    func updateUIView(_ uiView: WKWebView, context: Context) {
+        updateWebView(context: context)
+    }
+    #else
+    func makeNSView(context: Context) -> WKWebView {
+        makeWebView(context: context)
+    }
+
+    func updateNSView(_ nsView: WKWebView, context: Context) {
+        updateWebView(context: context)
+    }
+    #endif
+
+    private func makeWebView(context: Context) -> WKWebView {
         self.webView.isInspectable = true
         self.webView.uiDelegate = context.coordinator
         self.webView.navigationDelegate = context.coordinator
+        #if canImport(UIKit)
         self.webView.isOpaque = false
         // Match Twitch background color
         self.webView.scrollView.backgroundColor = UIColor(red: 14.0/255.0, green: 14.0/255.0, blue: 16.0/255.0, alpha: 1.0)
+        #else
+        self.webView.setValue(false, forKey: "drawsBackground")
+        #endif
 
         var oauthUrl = URL(string: "https://id.twitch.tv/oauth2/authorize")!
         oauthUrl.append(queryItems: [
@@ -90,7 +116,7 @@ struct OAuthWebView: UIViewRepresentable {
         return self.webView
     }
 
-    func updateUIView(_ uiView: WKWebView, context: Context) {
+    private func updateWebView(context: Context) {
         context.coordinator.webView = self.webView
         context.coordinator.completed = self.completed
     }

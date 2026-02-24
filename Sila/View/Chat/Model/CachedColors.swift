@@ -5,6 +5,7 @@
 //  Created by Adam Gastineau on 3/16/24.
 //
 
+#if !os(macOS)
 import UIKit
 
 @Observable class CachedColors {
@@ -21,3 +22,4 @@ import UIKit
         return newColor
     }
 }
+#endif

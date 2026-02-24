@@ -13,8 +13,14 @@ struct CloseButtonView: View {
     var body: some View {
         // Taken from https://old.reddit.com/r/SwiftUI/comments/okc2i9/what_is_the_best_way_to_achieve_this_xbutton_like/
         Button(action: self.action, label: {
+            #if os(macOS)
+            let color = NSColor.controlBackgroundColor
+            #else
+            let color = UIColor.secondarySystemBackground
+            #endif
+
             Circle()
-                .fill(Color(.secondarySystemBackground))
+                .fill(Color(color))
                 .frame(width: 32, height: 32)
                 .overlay(
                     Image(systemName: "xmark")

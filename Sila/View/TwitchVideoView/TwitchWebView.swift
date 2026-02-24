@@ -10,8 +10,13 @@ import WebKit
 
 // Any slowness observed with this opening is solely due to Xcode being connected to the app launch
 // Launching the app directly on device will result in instant loading of the web view
-struct TwitchWebView: UIViewRepresentable {
-    typealias UIViewType = WKWebView
+#if canImport(UIKit)
+typealias TwitchWebViewRepresentable = UIViewRepresentable
+#else
+typealias TwitchWebViewRepresentable = NSViewRepresentable
+#endif
+
+struct TwitchWebView: TwitchWebViewRepresentable {
 
     let streamableVideo: StreamableVideo
 
@@ -29,7 +34,25 @@ struct TwitchWebView: UIViewRepresentable {
         TwitchWebViewCoordinator(player: self.player, lastVideo: self.streamableVideo, lastDelayLoading: self.delayLoading)
     }
 
+    #if canImport(UIKit)
     func makeUIView(context: Context) -> WKWebView {
+        makeWebView(context: context)
+    }
+
+    func updateUIView(_ uiView: WKWebView, context: Context) {
+        updateWebView(uiView, context: context)
+    }
+    #else
+    func makeNSView(context: Context) -> WKWebView {
+        makeWebView(context: context)
+    }
+
+    func updateNSView(_ nsView: WKWebView, context: Context) {
+        updateWebView(nsView, context: context)
+    }
+    #endif
+
+    private func makeWebView(context: Context) -> WKWebView {
         if let webView = self.player.webView {
             return webView
         }
@@ -156,6 +179,7 @@ struct TwitchWebView: UIViewRepresentable {
         let configuration = WKWebViewConfiguration()
         configuration.userContentController = controller
 
+        #if canImport(UIKit)
         // Allow videos to not play in the native player
         configuration.allowsInlineMediaPlayback = true
 
@@ -163,12 +187,14 @@ struct TwitchWebView: UIViewRepresentable {
 
         // Disable selection of anything in WebView
         configuration.preferences.isTextInteractionEnabled = false
+        #endif
 
         // Enable Airplay support (doesn't work)
         configuration.allowsAirPlayForMediaPlayback = true
 
         let webView = WKWebView(frame: .zero, configuration: configuration)
 
+        #if canImport(UIKit)
         webView.isOpaque = false
         webView.scrollView.backgroundColor = .clear
 
@@ -176,6 +202,9 @@ struct TwitchWebView: UIViewRepresentable {
         for subview in webView.scrollView.subviews {
             subview.isUserInteractionEnabled = false
         }
+        #else
+        webView.setValue(false, forKey: "drawsBackground")
+        #endif
 
         #if DEBUG
         webView.isInspectable = true
@@ -194,7 +223,7 @@ struct TwitchWebView: UIViewRepresentable {
         return webView
     }
 
-    func updateUIView(_ uiView: WKWebView, context: Context) {
+    private func updateWebView(_ webView: WKWebView, context: Context) {
         guard self.streamableVideo != context.coordinator.lastVideo || self.delayLoading != context.coordinator.lastDelayLoading else {
             // Nothing to do
             return
@@ -204,7 +233,7 @@ struct TwitchWebView: UIViewRepresentable {
         context.coordinator.lastDelayLoading = self.delayLoading
 
         if !self.delayLoading {
-            self.loadContent(uiView)
+            self.loadContent(webView)
         }
     }
 

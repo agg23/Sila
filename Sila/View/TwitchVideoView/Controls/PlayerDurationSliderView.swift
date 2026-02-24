@@ -5,6 +5,7 @@
 //  Created by Adam Gastineau on 12/1/24.
 //
 
+#if !os(macOS)
 import SwiftUI
 import JunoUI
 
@@ -84,3 +85,4 @@ struct PlayerDurationSliderView: View {
 #Preview("Hours") {
     PlayerDurationSliderView(currentTime: .constant(10), duration: .constant(10000), isActive: .constant(false))
 }
+#endif

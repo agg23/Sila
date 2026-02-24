@@ -5,6 +5,7 @@
 //  Created by Adam Gastineau on 2/25/24.
 //
 
+#if !os(macOS)
 import SwiftUI
 import JunoUI
 
@@ -69,3 +70,4 @@ struct VolumeSlider: View {
 
     return VolumeSlider(volume: $volume, isActive: .constant(true))
 }
+#endif
