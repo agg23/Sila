@@ -115,7 +115,7 @@ extension SharedStreamButtonView where PreTitleRight == EmptyView, ImageOverlay 
 
 #Preview {
     PreviewNavStack {
-        SharedStreamButtonView(source: .stream(STREAM_MOCK()), displayUrl: STREAM_MOCK().thumbnailURL, profileImageUrl: CHANNEL_LIST_MOCK()[0].profilePictureURL, preTitleLeft: "Pretitle left", title: "Title", subtitle: "Subtitle", refreshToken: nil) {
+        SharedStreamButtonView(source: .stream(STREAM_MOCK()), displayUrl: STREAM_MOCK().thumbnailURL, profileImageUrl: CHANNEL_LIST_MOCK()[0].profileImageURL, preTitleLeft: "Pretitle left", title: "Title", subtitle: "Subtitle", refreshToken: nil) {
             Text("Pretitle right")
         } imageOverlay: {
             Text("This is on the image overlay")

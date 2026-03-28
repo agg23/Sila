@@ -8,7 +8,7 @@
 import Foundation
 import Twitch
 
-enum AuthStatus: Equatable {
+enum AuthStatus {
     /// User is logged in
     case user(user: AuthUser, api: TwitchClient)
     /// No user is logged in, but with have public token
@@ -40,6 +40,21 @@ enum AuthStatus: Equatable {
             return (api, nil)
         case .none:
             return nil
+        }
+    }
+}
+
+extension AuthStatus: Equatable {
+    public static func ==(lhs: Self, rhs: Self) -> Bool {
+        switch (lhs, rhs) {
+        case (.user(user: let lhsUser, api: _), .user(user: let rhsUser, api: _)):
+            return lhsUser == rhsUser
+        case (.publicLoggedOut, .publicLoggedOut):
+            return true
+        case (.none, .none):
+            return true
+        default:
+            return false
         }
     }
 }

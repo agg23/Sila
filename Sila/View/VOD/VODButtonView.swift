@@ -13,7 +13,7 @@ struct VODButtonView: View {
     let channel: Twitch.User
 
     var body: some View {
-        SharedStreamButtonView(source: .video(self.video), displayUrl: self.video.thumbnailUrl, profileImageUrl: self.channel.profileImageUrl, preTitleLeft: "", title: self.video.title, subtitle: self.video.userName)
+        SharedStreamButtonView(source: .video(self.video), displayUrl: self.video.thumbnailURL, profileImageUrl: self.channel.profileImageUrl, preTitleLeft: "", title: self.video.title, subtitle: self.video.userName)
     }
 }
 

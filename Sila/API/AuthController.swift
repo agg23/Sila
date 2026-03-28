@@ -164,7 +164,7 @@ import WebKit
         }
 
         guard let response = response as? HTTPURLResponse else {
-            throw HelixError.noDataInResponse
+            throw HelixError.noDataInResponse(responseData: data)
         }
 
         if response.statusCode != 200 {
