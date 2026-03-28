@@ -24,6 +24,15 @@ struct MainWindowView: View {
     @State private var showOauth = false
 
     var body: some View {
+        #if !os(macOS)
+        visionOSBody
+        #else
+        macOSBody
+        #endif
+    }
+
+    #if !os(macOS)
+    private var visionOSBody: some View {
         let hasActiveVideo = self.router.activeVideo != nil
 
         ZStack {
@@ -38,16 +47,12 @@ struct MainWindowView: View {
 
                 TabPage(title: "Popular", systemImage: Icon.popular, tab: .popular) {
                 PopularView()
-                    #if !os(macOS)
                     .toolbar(hasActiveVideo ? .hidden : .automatic, for: .tabBar)
-                    #endif
                 }
 
                 TabPage(title: "Categories", systemImage: Icon.category, tab: .categories) {
                 CategoryListView()
-                    #if !os(macOS)
                     .toolbar(hasActiveVideo ? .hidden : .automatic, for: .tabBar)
-                    #endif
                 }
 
                 TabPage(title: "Search", systemImage: Icon.search, tab: .search) {
@@ -55,9 +60,7 @@ struct MainWindowView: View {
                         .toolbar {
                             defaultToolbar()
                         }
-                    #if !os(macOS)
                     .toolbar(hasActiveVideo ? .hidden : .automatic, for: .tabBar)
-                    #endif
                 }
 
                 TabPage(title: "Settings", systemImage: Icon.settings, tab: .settings) {
@@ -65,9 +68,7 @@ struct MainWindowView: View {
                         .toolbar {
                             defaultToolbar()
                         }
-                    #if !os(macOS)
                     .toolbar(hasActiveVideo ? .hidden : .automatic, for: .tabBar)
-                    #endif
                 }
             }
             .environment(\.disablePrimaryOrnaments, hasActiveVideo)
@@ -101,69 +102,157 @@ struct MainWindowView: View {
                     }
             }
         }
-        // Located at root of main window, as each of the tabs can be rendered at the same time
-        .onChange(of: self.router.bufferedWindowOpen, initial: true, { _, newValue in
-            guard let window = newValue else {
+        .modifier(CommonMainWindowModifiers(router: self.router, authController: self.authController, openWindow: self.openWindow, showOauth: self.$showOauth))
+    }
+    #else
+    private var macOSBody: some View {
+        NavigationSplitView {
+            List(selection: self.router.tabBinding) {
+                Label("Following", systemImage: Icon.following)
+                    .tag(SelectedTab.following)
+                Label("Popular", systemImage: Icon.popular)
+                    .tag(SelectedTab.popular)
+                Label("Categories", systemImage: Icon.category)
+                    .tag(SelectedTab.categories)
+                Label("Search", systemImage: Icon.search)
+                    .tag(SelectedTab.search)
+                Label("Settings", systemImage: Icon.settings)
+                    .tag(SelectedTab.settings)
+            }
+            .navigationTitle("Sila")
+        } detail: {
+            NavigationStack(path: self.router.pathBinding(for: self.router.tab)) {
+                Group {
+                    switch self.router.tab {
+                    case .following:
+                        FollowedStreamsView()
+                            .navigationTitle("Following")
+                    case .popular:
+                        PopularView()
+                            .navigationTitle("Popular")
+                    case .categories:
+                        CategoryListView()
+                            .navigationTitle("Categories")
+                    case .search:
+                        SearchView()
+                            .navigationTitle("Search")
+                    case .settings:
+                        SettingsView()
+                            .navigationTitle("Settings")
+                    }
+                }
+                .toolbar {
+                    defaultToolbar()
+                }
+                .navigationDestination(for: Route.self) { route in
+                    switch route {
+                    case .category(game: let gameWrapper):
+                        CategoryView(category: gameWrapper)
+                    case .channel(user: let userWrapper):
+                        ChannelView(channel: userWrapper)
+                            .toolbar {
+                                defaultToolbar()
+                            }
+                    }
+                }
+            }
+        }
+        .modifier(CommonMainWindowModifiers(router: self.router, authController: self.authController, openWindow: self.openWindow, showOauth: self.$showOauth))
+    }
+    #endif
+
+    func open(stream channel: String) {
+        Task {
+            let api = try AuthShortcut.getAPI(self.authController)
+
+            let (streams, _) = try await api.helix(endpoint: .getStreams(userLogins: [channel]))
+
+            guard streams.count > 0 else {
+                print("Channel \"\(channel)\" is not live.")
                 return
             }
 
-            self.router.bufferedWindowOpen = nil
-
-            switch window {
-            case .stream(let stream):
+            let stream = streams[0]
+            DispatchQueue.main.async {
                 openWindow(id: Window.stream, value: stream)
-            case .video(let video):
-                openWindow(id: Window.vod, value: video)
             }
-        })
-        .onOpenURL { url in
-            guard let host = url.host else {
-                print("Malformed deeplink \(url)")
-                return
-            }
+        }
+    }
+}
 
-            var queryDict: [String: String] = [:]
+// MARK: - Common Modifiers
 
-            let queryItems = URLComponents(url: url, resolvingAgainstBaseURL: true)?.queryItems ?? []
-            queryItems.forEach { queryDict.updateValue($0.value?.lowercased() ?? "", forKey: $0.name.lowercased()) }
+private struct CommonMainWindowModifiers: ViewModifier {
+    let router: Router
+    let authController: AuthController
+    let openWindow: OpenWindowAction
+    @Binding var showOauth: Bool
 
-            switch host {
-            case "watch":
-                if let stream = queryDict["stream"] {
-                    // Launch stream
-                    self.open(stream: stream)
+    func body(content: Content) -> some View {
+        content
+            // Located at root of main window, as each of the tabs can be rendered at the same time
+            .onChange(of: self.router.bufferedWindowOpen, initial: true) { _, newValue in
+                guard let window = newValue else {
                     return
                 }
-                // TODO: Handle VoDs
-            case "following":
-                self.router.tab = .following
-                return
-            case "popular":
-                self.router.tab = .popular
-                return
-            case "categories":
-                self.router.tab = .categories
-                return
-            case "category":
-                if let id = queryDict["id"] {
-                    // Open particular category
+
+                self.router.bufferedWindowOpen = nil
+
+                switch window {
+                case .stream(let stream):
+                    openWindow(id: Window.stream, value: stream)
+                case .video(let video):
+                    openWindow(id: Window.vod, value: video)
+                }
+            }
+            .onOpenURL { url in
+                guard let host = url.host else {
+                    print("Malformed deeplink \(url)")
+                    return
+                }
+
+                var queryDict: [String: String] = [:]
+
+                let queryItems = URLComponents(url: url, resolvingAgainstBaseURL: true)?.queryItems ?? []
+                queryItems.forEach { queryDict.updateValue($0.value?.lowercased() ?? "", forKey: $0.name.lowercased()) }
+
+                switch host {
+                case "watch":
+                    if let stream = queryDict["stream"] {
+                        // Launch stream
+                        self.open(stream: stream)
+                        return
+                    }
+                    // TODO: Handle VoDs
+                case "following":
+                    self.router.tab = .following
+                    return
+                case "popular":
+                    self.router.tab = .popular
+                    return
+                case "categories":
                     self.router.tab = .categories
-                    self.router.pushToActiveTab(route: .category(game: .id(id)))
                     return
+                case "category":
+                    if let id = queryDict["id"] {
+                        // Open particular category
+                        self.router.tab = .categories
+                        self.router.pushToActiveTab(route: .category(game: .id(id)))
+                        return
+                    }
+                default:
+                    print("Unknown deeplink \(url)")
                 }
-            default:
-                print("Unknown deeplink \(url)")
-            }
 
-            print("Improperly handled deeplink \(url)")
-        }
-        .onReceive(self.authController.requestReauthSubject) { _ in
-            // We need to reauth
-            self.showOauth = true
-        }
-        .sheet(isPresented: $showOauth) {
-            OAuthView()
-        }
+                print("Improperly handled deeplink \(url)")
+            }
+            .onReceive(self.authController.requestReauthSubject) { _ in
+                // We need to reauth
+                self.showOauth = true
+            }
+            .sheet(isPresented: self.$showOauth) {
+                OAuthView()
+            }
     }
 
     func open(stream channel: String) {
