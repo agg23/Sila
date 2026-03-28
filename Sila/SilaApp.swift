@@ -38,8 +38,12 @@ struct SilaAppApp: App {
     var body: some Scene {
         WindowGroup(for: WindowModel.self) { model in
             MainWindowView()
+                #if os(macOS)
+                .frame(minWidth: 900, minHeight: 600)
+                #else
                 // This is the default window size of the launching animation
                 .frame(width: 1280.0, height: 720.0)
+                #endif
                 // For some reason we crash if we put this environment on the window
                 .environment(model.wrappedValue.router)
                 .environment(self.authController)
@@ -48,8 +52,8 @@ struct SilaAppApp: App {
         }
         #if os(visionOS)
         .windowStyle(.plain)
-        #endif
         .windowResizability(.contentSize)
+        #endif
 
         WindowGroup(id: Window.stream, for: Twitch.Stream.self) { $stream in
             TwitchStreamVideoView(stream: stream)
