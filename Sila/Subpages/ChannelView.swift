@@ -98,7 +98,7 @@ struct ChannelViewContent: View {
                 return data
             }
 
-            let newData = try await apiAndUser.0.helix(endpoint: .getVideos(id: self.channelUser.id, after: originalCursor))
+            let newData = try await apiAndUser.0.helix(endpoint: .getVideos(ids: [self.channelUser.id], after: originalCursor))
             return (data.0 + newData.0, newData.1)
         }
     }

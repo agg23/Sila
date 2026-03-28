@@ -92,7 +92,7 @@ struct SearchListView: View {
                 } else {
                     SearchGrid(items: self.channels) { channel in
                         SearchButton(title: channel.name, subtitle: channel.gameName, squareImage: {
-                            LoadingAsyncImage(imageUrl: URL(string: channel.profilePictureURL), aspectRatio: 1.0)
+                            LoadingAsyncImage(imageUrl: URL(string: channel.profileImageURL), aspectRatio: 1.0)
                                 .clipShape(.rect(cornerRadius: 8))
                         }) {
                             saveSearchQuery(self.query)
@@ -110,7 +110,7 @@ struct SearchListView: View {
                                     return
                                 }
 
-                                StreamOpener.openStream(stream: stream, openWindow: self.openWindow, profileImageUrl: channel.profilePictureURL)
+                                StreamOpener.openStream(stream: stream, openWindow: self.openWindow, profileImageUrl: channel.profileImageURL)
                             }
 
                         }
@@ -214,8 +214,8 @@ private struct SearchButton<ContentImage: View>: View {
 #Preview {
     let channel = CHANNEL_LIST_MOCK()[1]
 
-    return SearchButton(title: channel.name, subtitle: channel.gameName, squareImage: {
-        LoadingAsyncImage(imageUrl: URL(string: channel.profilePictureURL), aspectRatio: 1.0)
+    SearchButton(title: channel.name, subtitle: channel.gameName, squareImage: {
+        LoadingAsyncImage(imageUrl: URL(string: channel.profileImageURL), aspectRatio: 1.0)
             .clipShape(.rect(cornerRadius: 8))
     }) {
 

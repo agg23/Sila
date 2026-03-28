@@ -81,7 +81,6 @@
 		6685E42B2EE4A17900E1C20C /* AppGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6685E42A2EE4A17900E1C20C /* AppGroup.swift */; };
 		6685E42C2EE4A17900E1C20C /* AppGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6685E42A2EE4A17900E1C20C /* AppGroup.swift */; };
 		6685E42D2EE4A18800E1C20C /* AuthStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E885A12B86D95C004B4B8D /* AuthStatus.swift */; };
-		6685E42F2EE4AB4800E1C20C /* Twitch in Frameworks */ = {isa = PBXBuildFile; productRef = 6685E42E2EE4AB4800E1C20C /* Twitch */; };
 		6685E4312EE4AB4E00E1C20C /* KeychainWrapper in Frameworks */ = {isa = PBXBuildFile; productRef = 6685E4302EE4AB4E00E1C20C /* KeychainWrapper */; };
 		6685E4592EE5EA5B00E1C20C /* ChannelConfigurationIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6685E44C2EE5EA5B00E1C20C /* ChannelConfigurationIntent.swift */; };
 		6685E45A2EE5EA5B00E1C20C /* SingleChannelQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6685E44E2EE5EA5B00E1C20C /* SingleChannelQuery.swift */; };
@@ -100,7 +99,6 @@
 		6690EBA82BA78C810093B18C /* RefreshableScrollGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6690EBA72BA78C810093B18C /* RefreshableScrollGridView.swift */; };
 		6697AEC12EFB9DCC00218B93 /* RoundedBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6697AEC02EFB9DCC00218B93 /* RoundedBackground.swift */; };
 		6697AEC42EFC350200218B93 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6697AEC32EFC350200218B93 /* Environment.swift */; };
-		66A54E5A2EC7B9AA0000DA46 /* Twitch in Frameworks */ = {isa = PBXBuildFile; productRef = 66A54E592EC7B9AA0000DA46 /* Twitch */; };
 		66A54E5C2EC843470000DA46 /* AttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A54E5B2EC843470000DA46 /* AttributedString.swift */; };
 		66A5ADB52B96DA160025EF75 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A5ADB42B96DA160025EF75 /* SettingsView.swift */; };
 		66A5ADB82B96DAA20025EF75 /* LicensesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A5ADB72B96DAA20025EF75 /* LicensesView.swift */; };
@@ -117,6 +115,8 @@
 		66C4BC332BCD97F000AA8732 /* SevenTVModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C4BC322BCD97F000AA8732 /* SevenTVModels.swift */; };
 		66C4BC382BCD9C1400AA8732 /* Emote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C4BC372BCD9C1400AA8732 /* Emote.swift */; };
 		66C4BC3A2BCD9C9200AA8732 /* EmoteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C4BC392BCD9C9200AA8732 /* EmoteController.swift */; };
+		66C8E46F2F782A6F00095195 /* Twitch in Frameworks */ = {isa = PBXBuildFile; productRef = 66C8E46E2F782A6F00095195 /* Twitch */; };
+		66C8E4722F78349200095195 /* Twitch in Frameworks */ = {isa = PBXBuildFile; productRef = 66C8E4712F78349200095195 /* Twitch */; };
 		66C96BDB2B8EB1C00016A91B /* VODGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C96BDA2B8EB1C00016A91B /* VODGridView.swift */; };
 		66C96BDE2B8EC2D10016A91B /* VideoMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C96BDD2B8EC2D10016A91B /* VideoMock.swift */; };
 		66C96BE12B8EC4510016A91B /* VODButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C96BE02B8EC4510016A91B /* VODButtonView.swift */; };
@@ -366,11 +366,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				66E102192B8262AC007A44D4 /* KeychainWrapper in Frameworks */,
+				66C8E46F2F782A6F00095195 /* Twitch in Frameworks */,
 				66F73D6D2EC6D4FA0093A4A6 /* Twitch in Frameworks */,
+				66C8E4722F78349200095195 /* Twitch in Frameworks */,
 				663E38092B9226D3002E0530 /* NukeUI in Frameworks */,
 				66FD913D2EC6D58A00BFCBCC /* Twitch in Frameworks */,
 				663E38072B9226D3002E0530 /* Nuke in Frameworks */,
-				66A54E5A2EC7B9AA0000DA46 /* Twitch in Frameworks */,
 				66364FC82B8BA49A005180B8 /* JunoUI in Frameworks */,
 				660A6D0F2ECFB031006F9831 /* AsyncAnimatedImageUI in Frameworks */,
 			);
@@ -382,7 +383,6 @@
 			files = (
 				6685E4312EE4AB4E00E1C20C /* KeychainWrapper in Frameworks */,
 				6685E4642EE5F3ED00E1C20C /* UIImageColors in Frameworks */,
-				6685E42F2EE4AB4800E1C20C /* Twitch in Frameworks */,
 				6685E40F2EE3E99400E1C20C /* SwiftUI.framework in Frameworks */,
 				6685E40D2EE3E99400E1C20C /* WidgetKit.framework in Frameworks */,
 			);
@@ -916,8 +916,9 @@
 				663E38082B9226D3002E0530 /* NukeUI */,
 				66F73D6C2EC6D4FA0093A4A6 /* Twitch */,
 				66FD913C2EC6D58A00BFCBCC /* Twitch */,
-				66A54E592EC7B9AA0000DA46 /* Twitch */,
 				660A6D0E2ECFB031006F9831 /* AsyncAnimatedImageUI */,
+				66C8E46E2F782A6F00095195 /* Twitch */,
+				66C8E4712F78349200095195 /* Twitch */,
 			);
 			productName = Sila;
 			productReference = 663B72F32B6DB8E60031D661 /* Sila.app */;
@@ -937,7 +938,6 @@
 			);
 			name = WidgetsExtension;
 			packageProductDependencies = (
-				6685E42E2EE4AB4800E1C20C /* Twitch */,
 				6685E4302EE4AB4E00E1C20C /* KeychainWrapper */,
 				6685E4632EE5F3ED00E1C20C /* UIImageColors */,
 			);
@@ -976,9 +976,9 @@
 				66E102172B8262AC007A44D4 /* XCRemoteSwiftPackageReference "KeychainWrapper" */,
 				66364FC62B8BA499005180B8 /* XCRemoteSwiftPackageReference "JunoSlider" */,
 				663E38052B9226D3002E0530 /* XCRemoteSwiftPackageReference "Nuke" */,
-				66A54E582EC7B9AA0000DA46 /* XCRemoteSwiftPackageReference "swift-twitch-client" */,
 				660A6D0D2ECFB031006F9831 /* XCRemoteSwiftPackageReference "AsyncAnimatedImage" */,
 				6685E4622EE5F3ED00E1C20C /* XCRemoteSwiftPackageReference "UIImageColors" */,
+				66C8E4702F78349200095195 /* XCRemoteSwiftPackageReference "swift-twitch-client" */,
 			);
 			productRefGroup = 663B72F42B6DB8E60031D661 /* Products */;
 			projectDirPath = "";
@@ -1524,7 +1524,7 @@
 				minimumVersion = 2.2.0;
 			};
 		};
-		66A54E582EC7B9AA0000DA46 /* XCRemoteSwiftPackageReference "swift-twitch-client" */ = {
+		66C8E4702F78349200095195 /* XCRemoteSwiftPackageReference "swift-twitch-client" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/agg23/swift-twitch-client";
 			requirement = {
@@ -1563,11 +1563,6 @@
 			package = 663E38052B9226D3002E0530 /* XCRemoteSwiftPackageReference "Nuke" */;
 			productName = NukeUI;
 		};
-		6685E42E2EE4AB4800E1C20C /* Twitch */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 66A54E582EC7B9AA0000DA46 /* XCRemoteSwiftPackageReference "swift-twitch-client" */;
-			productName = Twitch;
-		};
 		6685E4302EE4AB4E00E1C20C /* KeychainWrapper */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 66E102172B8262AC007A44D4 /* XCRemoteSwiftPackageReference "KeychainWrapper" */;
@@ -1578,9 +1573,13 @@
 			package = 6685E4622EE5F3ED00E1C20C /* XCRemoteSwiftPackageReference "UIImageColors" */;
 			productName = UIImageColors;
 		};
-		66A54E592EC7B9AA0000DA46 /* Twitch */ = {
+		66C8E46E2F782A6F00095195 /* Twitch */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 66A54E582EC7B9AA0000DA46 /* XCRemoteSwiftPackageReference "swift-twitch-client" */;
+			productName = Twitch;
+		};
+		66C8E4712F78349200095195 /* Twitch */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 66C8E4702F78349200095195 /* XCRemoteSwiftPackageReference "swift-twitch-client" */;
 			productName = Twitch;
 		};
 		66E102182B8262AC007A44D4 /* KeychainWrapper */ = {
