@@ -10,6 +10,17 @@ static NSString * const TVPrivateWKWebViewConfigurationClassName = @"WKWebViewCo
 static NSString * const TVPrivateWKUserContentControllerClassName = @"WKUserContentController";
 static NSString * const TVPrivateWKUserScriptClassName = @"WKUserScript";
 
+static void normalizeViewLayout(UIView *view) {
+    view.userInteractionEnabled = NO;
+
+    view.clipsToBounds = YES;
+    view.layoutMargins = UIEdgeInsetsZero;
+    view.preservesSuperviewLayoutMargins = NO;
+    if ([view respondsToSelector:@selector(setInsetsLayoutMarginsFromSafeArea:)]) {
+        view.insetsLayoutMarginsFromSafeArea = NO;
+    }
+}
+
 @interface TVPrivateWebView ()
 
 @property (nullable, nonatomic, strong) id runtimeWebView;
@@ -29,6 +40,7 @@ static NSString * const TVPrivateWKUserScriptClassName = @"WKUserScript";
     self = [super initWithFrame:frame];
     if (self) {
         self.backgroundColor = UIColor.blackColor;
+        normalizeViewLayout(self);
         self.installedScriptMessageHandlerNames = [NSMutableSet set];
         [self prepareRuntimeIfNeeded];
     }
@@ -126,8 +138,7 @@ static NSString * const TVPrivateWKUserScriptClassName = @"WKUserScript";
     UIView *runtimeView = (UIView *)webViewObject;
     runtimeView.frame = self.bounds;
     runtimeView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    runtimeView.backgroundColor = UIColor.blackColor;
-    runtimeView.userInteractionEnabled = NO;
+    normalizeViewLayout(runtimeView);
 
     SEL setOpaqueSelector = NSSelectorFromString(@"setOpaque:");
     if ([webViewObject respondsToSelector:setOpaqueSelector]) {
@@ -138,10 +149,16 @@ static NSString * const TVPrivateWKUserScriptClassName = @"WKUserScript";
     if ([webViewObject respondsToSelector:scrollViewSelector]) {
         UIScrollView *scrollView = ((id (*)(id, SEL))objc_msgSend)(webViewObject, scrollViewSelector);
         scrollView.backgroundColor = UIColor.clearColor;
-        scrollView.userInteractionEnabled = NO;
+
+        normalizeViewLayout(scrollView);
+        scrollView.contentInset = UIEdgeInsetsZero;
+        scrollView.scrollIndicatorInsets = UIEdgeInsetsZero;
+        if ([scrollView respondsToSelector:@selector(setContentInsetAdjustmentBehavior:)]) {
+            scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+        }
 
         for (UIView *subview in scrollView.subviews) {
-            subview.userInteractionEnabled = NO;
+            normalizeViewLayout(subview);
         }
     }
 
