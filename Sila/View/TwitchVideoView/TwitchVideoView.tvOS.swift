@@ -41,7 +41,7 @@ struct TwitchVideoView: View {
             .overlay(alignment: .top) {
                 self.topOverlayControls
             }
-            .contentShape(Rectangle())
+            .ignoresSafeArea()
             .focusable(true)
             .focused(self.$focusTarget, equals: .playbackSurface)
             .onTapGesture {
