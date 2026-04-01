@@ -5,16 +5,15 @@
 //  Created by Adam Gastineau on 2/2/24.
 //
 
-#if !os(tvOS)
 import SwiftUI
 import Twitch
-import WebKit
 
 struct TwitchVideoView: View {
     let controlsTimerDuration = 3.0
     static let ornamentSpacing = 8.0
 
     @Environment(AuthController.self) private var authController
+    @Environment(Router.self) private var router
 
     @State private var loading = true
 
@@ -48,6 +47,12 @@ struct TwitchVideoView: View {
 
     @ViewBuilder
     func content(_ geometry: GeometryProxy) -> some View {
+        #if os(tvOS)
+        let controlOverlayAlignment: Alignment = .top
+        #else
+        let controlOverlayAlignment: Alignment = .topTrailing
+        #endif
+
         TwitchWebView(player: self.player, streamableVideo: self.streamableVideo, delayLoading: self.delayLoading)
             .overlay {
                 if self.player.loading || self.delayLoading {
@@ -55,7 +60,7 @@ struct TwitchVideoView: View {
                         .controlSize(.large)
                 }
             }
-            .overlay(alignment: .topTrailing) {
+            .overlay(alignment: controlOverlayAlignment) {
                 if self.controlVisibility == .visible {
                     PlayerOverlayControlsView(player: self.player, volume: self.$volume, streamableVideo: self.streamableVideo, onInteraction: self.onControlInteraction) { isActive in
                         if isActive {
@@ -65,15 +70,20 @@ struct TwitchVideoView: View {
                             self.resetTimer()
                         }
                     }
+                    #if !os(tvOS)
                     .padding([.horizontal, .top], 40)
+                    #endif
                 }
             }
             .onTapGesture {
                 self.toggleVisibility()
             }
+            #if os(tvOS)
+            .ignoresSafeArea()
+            .focusable(true)
+            #elseif os(visionOS)
             // .center is used so the ornament isn't cut off at the edge (or a little past the edge) of the window
             // This would break the appearance animation
-            #if os(visionOS)
             .ornament(attachmentAnchor: .scene(.trailing), contentAlignment: .center) {
                 // Calibrated for a 400 width at default window size
                 let chatWidth = max(geometry.size.width * 0.3125, 400)
@@ -121,6 +131,15 @@ struct TwitchVideoView: View {
                 }
             }
             #endif
+            .onTapGesture {
+                self.togglePlayback()
+            }
+            .onExitCommand {
+                self.router.dismissPlayback()
+            }
+            .onPlayPauseCommand {
+                self.togglePlayback()
+            }
             .onReceive(self.streamRefreshTimer) { _ in
                 guard let channelId = self.player.channelId else {
                     return
@@ -161,6 +180,16 @@ struct TwitchVideoView: View {
                     self.resetTimer()
                 }
             }
+    }
+
+    func togglePlayback() {
+        if self.player.isPlaying {
+            self.player.pause()
+        } else {
+            self.player.play()
+        }
+
+//        self.focusTarget = .playbackSurface
     }
 
     func onControlInteraction() {
@@ -237,4 +266,3 @@ struct TwitchVideoView: View {
 #Preview {
     TwitchVideoView(controlVisibility: .constant(.hidden), streamableVideo: .stream(STREAM_MOCK()), delayLoading: false, player: WebViewPlayer())
 }
-#endif

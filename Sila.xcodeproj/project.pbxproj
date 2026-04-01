@@ -92,8 +92,7 @@
 		66891FF62B9A9590000C0D92 /* ChatMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66891FF52B9A9590000C0D92 /* ChatMessageView.swift */; };
 		66891FF82B9A9E72000C0D92 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66891FF72B9A9E72000C0D92 /* Color.swift */; };
 		66891FFB2B9AA058000C0D92 /* View+BackgroundTint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66891FFA2B9AA058000C0D92 /* View+BackgroundTint.swift */; };
-		668D69912F7CC63000465F44 /* TwitchVideoView.Standard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668D698F2F7CC63000465F44 /* TwitchVideoView.Standard.swift */; platformFilters = (macos, xros, ); };
-		668D69922F7CC63000465F44 /* TwitchVideoView.tvOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668D69902F7CC63000465F44 /* TwitchVideoView.tvOS.swift */; platformFilters = (tvos, ); };
+		668D69912F7CC63000465F44 /* TwitchVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668D698F2F7CC63000465F44 /* TwitchVideoView.swift */; };
 		668D69952F7CC66200465F44 /* PlayerOverlayControlsView.tvOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668D69942F7CC66200465F44 /* PlayerOverlayControlsView.tvOS.swift */; platformFilters = (tvos, ); };
 		668D69962F7CC66200465F44 /* PlayerOverlayControlsView.Standard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668D69932F7CC66200465F44 /* PlayerOverlayControlsView.Standard.swift */; platformFilters = (macos, xros, ); };
 		6690EBA02BA6667B0093B18C /* ChatMessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6690EB9F2BA6667B0093B18C /* ChatMessageModel.swift */; };
@@ -277,8 +276,7 @@
 		66891FF52B9A9590000C0D92 /* ChatMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessageView.swift; sourceTree = "<group>"; };
 		66891FF72B9A9E72000C0D92 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		66891FFA2B9AA058000C0D92 /* View+BackgroundTint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+BackgroundTint.swift"; sourceTree = "<group>"; };
-		668D698F2F7CC63000465F44 /* TwitchVideoView.Standard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitchVideoView.Standard.swift; sourceTree = "<group>"; };
-		668D69902F7CC63000465F44 /* TwitchVideoView.tvOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitchVideoView.tvOS.swift; sourceTree = "<group>"; };
+		668D698F2F7CC63000465F44 /* TwitchVideoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitchVideoView.swift; sourceTree = "<group>"; };
 		668D69932F7CC66200465F44 /* PlayerOverlayControlsView.Standard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerOverlayControlsView.Standard.swift; sourceTree = "<group>"; };
 		668D69942F7CC66200465F44 /* PlayerOverlayControlsView.tvOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerOverlayControlsView.tvOS.swift; sourceTree = "<group>"; };
 		6690EB9F2BA6667B0093B18C /* ChatMessageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessageModel.swift; sourceTree = "<group>"; };
@@ -551,8 +549,7 @@
 				660F73A72F7999990011FD65 /* TVPrivateWebView.h */,
 				660F73A82F7999990011FD65 /* TVPrivateWebView.m */,
 				663B73262B6DBA8E0031D661 /* TwitchWebView.swift */,
-				668D698F2F7CC63000465F44 /* TwitchVideoView.Standard.swift */,
-				668D69902F7CC63000465F44 /* TwitchVideoView.tvOS.swift */,
+				668D698F2F7CC63000465F44 /* TwitchVideoView.swift */,
 				66F4E40E2B7D8FD3008C565D /* Twitch+Notification.swift */,
 			);
 			path = TwitchVideoView;
@@ -1043,8 +1040,7 @@
 				66F4E4252B811B6C008C565D /* CloseButtonView.swift in Sources */,
 				66F73D112EC0F1D80093A4A6 /* PresentableControllerBase.swift in Sources */,
 				66E102492B82E496007A44D4 /* NavStack.swift in Sources */,
-				668D69912F7CC63000465F44 /* TwitchVideoView.Standard.swift in Sources */,
-				668D69922F7CC63000465F44 /* TwitchVideoView.tvOS.swift in Sources */,
+				668D69912F7CC63000465F44 /* TwitchVideoView.swift in Sources */,
 				66125F592B83CE4E002169B5 /* DefaultToolbar.swift in Sources */,
 				66E885A22B86D95C004B4B8D /* AuthStatus.swift in Sources */,
 				660BD00F2EAF0EB200E88BAF /* Date.swift in Sources */,
