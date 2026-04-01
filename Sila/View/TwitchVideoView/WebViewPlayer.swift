@@ -7,7 +7,6 @@
 
 import Foundation
 import Combine
-import WebKit
 
 enum PlaybackStatus {
     case playing
@@ -33,6 +32,12 @@ struct TwitchEvent {
 struct VideoQuality: Equatable {
     let quality: String
     let name: String
+}
+
+protocol TwitchPlaybackBackend: AnyObject {
+    func evaluateJavaScript(_ script: String, completion: ((Any?, Error?) -> Void)?)
+    func reload()
+    func dispose()
 }
 
 struct OnEventContinuation: Identifiable, Equatable {
@@ -63,6 +68,7 @@ struct OnEventContinuation: Identifiable, Equatable {
 
 @Observable class WebViewPlayer {
     @ObservationIgnored var queuedContinuations: [OnEventContinuation] = []
+    @ObservationIgnored private(set) var backend: (any TwitchPlaybackBackend)?
 
     // Track video (VoD) status for quality hack (see below)
     var isVideo: Bool = false
@@ -85,8 +91,6 @@ struct OnEventContinuation: Identifiable, Equatable {
     var availableQualities: [VideoQuality] = []
     var maxVideoQuality: VideoQuality?
 
-    var webView: WKWebView?
-
     init() {
         self.currentTime = 0.0
         self.duration = 0.0
@@ -94,7 +98,6 @@ struct OnEventContinuation: Identifiable, Equatable {
 
         self.volume = SharedPlaybackSettings.getVolume()
         self.quality = SharedPlaybackSettings.getQuality()
-
 
         let _ = withObservationTracking {
             self.volume
@@ -109,8 +112,16 @@ struct OnEventContinuation: Identifiable, Equatable {
         }
     }
 
+    func attachBackend(_ backend: any TwitchPlaybackBackend) {
+        self.backend = backend
+    }
+
+    private func evaluateJavaScript(_ script: String, completion: ((Any?, Error?) -> Void)? = nil) {
+        self.backend?.evaluateJavaScript(script, completion: completion)
+    }
+
     func play() {
-        self.webView?.evaluateJavaScript("""
+        self.evaluateJavaScript("""
             try {
                 Twitch._player.play();
             } catch (e) {
@@ -134,7 +145,7 @@ struct OnEventContinuation: Identifiable, Equatable {
     }
 
     func pause() {
-        self.webView?.evaluateJavaScript("""
+        self.evaluateJavaScript("""
             try {
                 Twitch._player.pause();
             } catch (e) {
@@ -147,13 +158,13 @@ struct OnEventContinuation: Identifiable, Equatable {
         self.seekDebounceTime = time
         self.currentTime = time
 
-        if (self.seekDebounceTimer == nil) {
+        if self.seekDebounceTimer == nil {
             self.startSeekDebounceTimer()
         }
     }
 
     private func seekImmediate(_ time: Double) {
-        self.webView?.evaluateJavaScript("""
+        self.evaluateJavaScript("""
             try {
                 Twitch._player.seek(\(time));
             } catch (e) {
@@ -193,7 +204,7 @@ struct OnEventContinuation: Identifiable, Equatable {
         let result = await withCheckedContinuation { continuation in
             Task {
                 await MainActor.run {
-                    self.webView?.evaluateJavaScript(script, completionHandler: nil)
+                    self.evaluateJavaScript(script, completion: nil)
                 }
             }
 
@@ -208,7 +219,7 @@ struct OnEventContinuation: Identifiable, Equatable {
     }
 
     func setVolume(_ volume: Double) {
-        self.webView?.evaluateJavaScript("""
+        self.evaluateJavaScript("""
             try {
                 if (\(self.muted)) {
                     Twitch._player.setMuted(false);
@@ -222,7 +233,7 @@ struct OnEventContinuation: Identifiable, Equatable {
     }
 
     func setQuality(_ quality: String) {
-        self.webView?.evaluateJavaScript("""
+        self.evaluateJavaScript("""
             try {
                 Twitch._player.setQuality("\(quality)");
             } catch (e) {
@@ -232,7 +243,31 @@ struct OnEventContinuation: Identifiable, Equatable {
     }
 
     func reload() {
-        self.webView?.reload()
+        self.backend?.reload()
+    }
+
+    func dispose() {
+        self.seekDebounceTimer?.invalidate()
+        self.seekDebounceTimer = nil
+
+        for continuation in self.queuedContinuations {
+            continuation.timer?.invalidate()
+        }
+        self.queuedContinuations.removeAll()
+
+        let backend = self.backend
+        self.backend = nil
+
+        self.loading = false
+        self.status = .idle
+        self.currentTime = 0.0
+        self.duration = 0.0
+        self.channel = nil
+        self.channelId = nil
+        self.availableQualities = []
+        self.maxVideoQuality = nil
+
+        backend?.dispose()
     }
 
     func setIsVideo(_ isVideo: Bool) {

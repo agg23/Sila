@@ -36,6 +36,13 @@ struct SilaAppApp: App {
     }
 
     var body: some Scene {
+        #if os(tvOS)
+        WindowGroup {
+            MainWindowView()
+                .environment(self.router)
+                .environment(self.authController)
+        }
+        #else
         WindowGroup(for: WindowModel.self) { model in
             MainWindowView()
                 #if os(macOS)
@@ -85,7 +92,7 @@ struct SilaAppApp: App {
         #endif
         #endif
 
-        #if !os(macOS)
+        #if os(visionOS)
         WindowGroup(id: Window.chat, for: ChatWindowModel.self) { $chat in
             ChatPaneWindow(channelName: chat.channelName, userId: chat.userId, title: chat.title)
         } defaultValue: {
@@ -93,9 +100,7 @@ struct SilaAppApp: App {
             return ChatWindowModel(channelName: defaultUser.login, userId: defaultUser.id, title: defaultUser.displayName)
         }
         .defaultSize(CGSize(width: 400.0, height: 720.0))
-        #if os(visionOS)
         .defaultLaunchBehavior(.suppressed)
-        #endif
         #endif
 
         #if os(visionOS)
@@ -107,6 +112,7 @@ struct SilaAppApp: App {
             .stream(STREAM_MOCK())
         }
         .immersionStyle(selection: .constant(.mixed), in: .mixed)
+        #endif
         #endif
     }
 }

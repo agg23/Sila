@@ -5,7 +5,7 @@
 //  Created by Adam Gastineau on 3/10/24.
 //
 
-#if !os(macOS)
+#if os(visionOS)
 import SwiftUI
 import Combine
 import Twitch

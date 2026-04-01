@@ -38,8 +38,8 @@ struct LicensesView: View {
                 Text("All upstream projects are MIT licensed, with the following respective copyrights. The MIT license text is produced at the bottom for your convience.")
                     .frame(width: self.width)
 
-                GroupBox {
-                    Grid(alignment: .leading) {
+                Group {
+                    let inner = Grid(alignment: .leading) {
                         GridRow {
                             Text("Package")
                             Text("Copyright")
@@ -54,6 +54,19 @@ struct LicensesView: View {
                             }
                         }
                     }
+
+                    #if os(tvOS)
+                    VStack {
+                        inner
+                            .padding()
+                    }
+                    .background(.regularMaterial)
+                    .clipShape(.rect(cornerRadius: 16))
+                    #else
+                    GroupBox {
+                        inner
+                    }
+                    #endif
                 }
                 .frame(width: self.width)
                 .padding(.vertical)

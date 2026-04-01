@@ -7,14 +7,6 @@
 
 import SwiftUI
 
-private var tabPageTitlePlacement: ToolbarItemPlacement {
-    #if os(macOS)
-    .automatic
-    #else
-    .topBarLeading
-    #endif
-}
-
 struct TabPage<Content: View>: View {
     @Environment(Router.self) private var router
     @Environment(\.disablePrimaryOrnaments) private var disablePrimaryOrnaments
@@ -27,15 +19,7 @@ struct TabPage<Content: View>: View {
     var body: some View {
         NavStack(tab: self.tab) {
             self.content()
-//                .navigationTitle(self.title)
-                // navigationTitle is very small on visionOS 2.0. Insert our own title instead
-                // TODO: This seems to be fixed in visionOS 26.0
-                .toolbar {
-                    ToolbarItem(placement: tabPageTitlePlacement) {
-                        Text(self.title)
-                            .font(.largeTitle)
-                    }
-                }
+                .largeNavigationTitle(self.title)
                 .navigationDestination(for: Route.self, destination: { route in
                     switch route {
                     case .category(game: let gameWrapper):
@@ -45,6 +29,11 @@ struct TabPage<Content: View>: View {
                             .toolbar {
                                 defaultToolbar()
                             }
+                    case .playback(video: let video):
+                        TwitchEmbeddedContentView(streamableVideo: video)
+                            #if !os(macOS)
+                            .toolbar(.hidden, for: .tabBar)
+                            #endif
                     }
                 })
                 #if !os(macOS)

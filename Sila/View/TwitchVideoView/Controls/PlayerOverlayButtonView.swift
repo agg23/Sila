@@ -25,8 +25,16 @@ struct PlayerOverlayButtonView: View {
         // .help() must be cached in some scenarios. Invalidate this view via .id() to rerender tooltip
         .id(self.label)
         .help(self.label)
+        #if os(tvOS)
+        .font(.headline)
+        .labelStyle(.titleAndIcon)
+        .buttonStyle(.bordered)
+        .buttonBorderShape(.roundedRectangle(radius: 18))
+        .controlSize(.large)
+        #else
         .labelStyle(.iconOnly)
         .buttonBorderShape(.circle)
         .controlSize(.large)
+        #endif
     }
 }

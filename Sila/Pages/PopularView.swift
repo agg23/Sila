@@ -85,7 +85,11 @@ private struct PopularContentView: View {
         }
         // .toolbar is here so it can be in the previews without networking
         .toolbar {
-            #if !os(macOS)
+            #if os(tvOS)
+            ToolbarItem(placement: .topBarLeading) {
+                LanguageFilterPickerView(language: self.$selectedLanguage)
+            }
+            #elseif !os(macOS)
             ToolbarItem(placement: .topBarTrailing) {
                 LanguageFilterPickerView(language: self.$selectedLanguage)
             }

@@ -30,6 +30,8 @@ struct SearchView: View {
         // TODO: Maybe follow how Christian made a search bar https://christianselig.com/2024/03/recreating-visionos-search-bar/
         #if os(macOS)
         .searchable(text: self.$query, placement: .automatic)
+        #elseif os(tvOS)
+        .searchable(text: self.$query)
         #else
         .searchable(text: self.$query, placement: .navigationBarDrawer)
         #endif
@@ -69,7 +71,6 @@ private func saveSearchQuery(_ query: String) {
 }
 
 struct SearchListView: View {
-    @Environment(\.openWindow) private var openWindow
     @Environment(Router.self) private var router
     @Environment(AuthController.self) private var authController
 
@@ -110,7 +111,7 @@ struct SearchListView: View {
                                     return
                                 }
 
-                                StreamOpener.openStream(stream: stream, openWindow: self.openWindow, profileImageUrl: channel.profileImageURL)
+                                StreamOpener.openStream(stream: stream, router: self.router, profileImageUrl: channel.profileImageURL)
                             }
 
                         }
@@ -189,7 +190,11 @@ private struct SearchButton<ContentImage: View>: View {
             .cornerRadius(14)
         }
         .frame(height: 80)
+        #if os(tvOS)
+        .buttonStyle(.card)
+        #else
         .buttonStyle(.plain)
+        #endif
         // 8 inner radius + 6 padding
         .buttonBorderShape(.roundedRectangle(radius: 14))
     }

@@ -9,11 +9,25 @@ import SwiftUI
 import Twitch
 
 struct StreamGridView: View {
-    private static let columnSpacing: CGFloat = 16
+    #if os(tvOS)
+    private static let columnSpacing: CGFloat = 28
     private static let columns: [GridItem] = Array(
         repeating: GridItem(.flexible(), spacing: StreamGridView.columnSpacing, alignment: .top),
-        count: 4
+        count: 3
     )
+    #else
+    private static let columnSpacing: CGFloat = 16
+    private static let columns: [GridItem] = {
+        #if os(macOS)
+        [GridItem(.adaptive(minimum: 300), spacing: StreamGridView.columnSpacing, alignment: .top)]
+        #else
+        Array(
+            repeating: GridItem(.flexible(), spacing: StreamGridView.columnSpacing, alignment: .top),
+            count: 4
+        )
+        #endif
+    }()
+    #endif
 
     let streams: [Twitch.Stream]
 

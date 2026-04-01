@@ -6,22 +6,62 @@
 //
 
 import SwiftUI
+#if canImport(UIKit)
+import UIKit
+#else
+import AppKit
+#endif
+#if !os(tvOS)
 import WebKit
+#endif
+
+private let twitchScriptMessageHandlerName = "twitch"
+
+enum TwitchUserScriptInjectionTime {
+    case atDocumentStart
+    case atDocumentEnd
+}
+
+struct TwitchUserScriptSpec {
+    let source: String
+    let injectionTime: TwitchUserScriptInjectionTime
+    let forMainFrameOnly: Bool
+}
+
+@MainActor
+protocol InternalTwitchWebViewDelegate: AnyObject {
+    func internalWebViewDidFinishLoad(_ webView: any InternalTwitchWebView)
+    func internalWebViewDidReceiveScriptMessageBody(_ body: Any)
+}
+
+@MainActor
+protocol InternalTwitchWebView: AnyObject {
+    var platformView: TwitchWebViewPlatformView { get }
+
+    func installStartupScripts(_ scripts: [TwitchUserScriptSpec], messageHandlerName: String, delegate: any InternalTwitchWebViewDelegate)
+    func load(url: URL)
+    func evaluateJavaScript(_ script: String, completion: ((Any?, Error?) -> Void)?)
+    func reload()
+    func stopLoading()
+    func tearDownDelegates()
+    func removeScriptMessageHandler(named name: String)
+    func clearPage()
+    func removeFromSuperview()
+}
+
+#if canImport(UIKit)
+typealias TwitchWebViewRepresentable = UIViewRepresentable
+typealias TwitchWebViewPlatformView = UIView
+#else
+typealias TwitchWebViewRepresentable = NSViewRepresentable
+typealias TwitchWebViewPlatformView = NSView
+#endif
 
 // Any slowness observed with this opening is solely due to Xcode being connected to the app launch
 // Launching the app directly on device will result in instant loading of the web view
-#if canImport(UIKit)
-typealias TwitchWebViewRepresentable = UIViewRepresentable
-#else
-typealias TwitchWebViewRepresentable = NSViewRepresentable
-#endif
-
 struct TwitchWebView: TwitchWebViewRepresentable {
-
     let streamableVideo: StreamableVideo
-
     let player: WebViewPlayer
-
     let delayLoading: Bool
 
     init(player: WebViewPlayer, streamableVideo: StreamableVideo, delayLoading: Bool = false) {
@@ -30,233 +70,64 @@ struct TwitchWebView: TwitchWebViewRepresentable {
         self.delayLoading = delayLoading
     }
 
-    func makeCoordinator() -> TwitchWebViewCoordinator {
-        TwitchWebViewCoordinator(player: self.player, lastVideo: self.streamableVideo, lastDelayLoading: self.delayLoading)
+    func makeCoordinator() -> TwitchWebViewController {
+        TwitchWebViewController(player: self.player, lastVideo: self.streamableVideo, lastDelayLoading: self.delayLoading)
     }
 
     #if canImport(UIKit)
-    func makeUIView(context: Context) -> WKWebView {
-        makeWebView(context: context)
+    func makeUIView(context: Context) -> TwitchWebViewPlatformView {
+        self.makePlatformView(context: context)
     }
 
-    func updateUIView(_ uiView: WKWebView, context: Context) {
-        updateWebView(uiView, context: context)
+    func updateUIView(_ uiView: TwitchWebViewPlatformView, context: Context) {
+        self.updatePlatformView(context: context)
     }
     #else
-    func makeNSView(context: Context) -> WKWebView {
-        makeWebView(context: context)
+    func makeNSView(context: Context) -> TwitchWebViewPlatformView {
+        self.makePlatformView(context: context)
     }
 
-    func updateNSView(_ nsView: WKWebView, context: Context) {
-        updateWebView(nsView, context: context)
+    func updateNSView(_ nsView: TwitchWebViewPlatformView, context: Context) {
+        self.updatePlatformView(context: context)
     }
     #endif
 
-    private func makeWebView(context: Context) -> WKWebView {
-        if let webView = self.player.webView {
-            return webView
-        }
-
-        // Using the Twitch embed API would prevent ads from playing "normally" and using the user's auth;
-        // the user wouldn't count as a viewer of the stream
-        //
-        // Instead, we load the player.twitch.tv player directly with certain query params and inject the
-        // embed API in to control the player (surprisingly this works)
-        let overrideScript = WKUserScript(source: """
-            // Set custom window parent
-            window.parent = {
-              postMessage: (message, options) => {
-                window.postMessage(message, options);
-              }
-            }
-
-            window._addEventListener = window.addEventListener;
-            window.addEventListener = (type, listener, other) => {
-              console.log("Registration for", type);
-              window._addEventListener(type, (event) => {
-                if (event.type === "message") {
-                  if (event.data.namespace === "twitch-embed-player-proxy") {
-                    // The client sends eventName: "UPDATE_STATE" from the iframe to the host page. The command `message` listener
-                    // filters these out by checking for messages where the window is not the same as the parent. Due to our hacking,
-                    // they will not be the same, so it will constantly warn.
-                    // Instead, just ignore "UPDATE_STATE"
-                    if (event.data.eventName === "UPDATE_STATE") {
-                      window.webkit.messageHandlers.twitch.postMessage(event.data)
-                      return;
-                    }
-
-                    try {
-                        listener({
-                          type: "message",
-                          data: { eventName: event.data.eventName, params: event.data.params, namespace: "twitch-embed-player-proxy" },
-                          source: window.parent
-                        });
-                    } catch (e) {
-                        console.error(`Twitch event listener forwarding error: ${e}`);
-                    }
-
-                    return;
-                  }
-                }
-
-                listener(event);
-              }, other);
-            };
-            """, injectionTime: .atDocumentStart, forMainFrameOnly: true)
-
-        // Required to expose window.Twitch API to page. We use this to inject events. This is not part of the normal embedded player
-        let injectPlayerAPI = WKUserScript(source: """
-            const script = document.createElement("script");
-            script.src = "https://player.twitch.tv/js/embed/v1.js";
-
-            document.head.appendChild(script);
-        """, injectionTime: .atDocumentEnd, forMainFrameOnly: true)
-
-        let injectVideoGetter = WKUserScript(source: """
-            window.getVideoTag = () => {
-                const video = document.getElementsByTagName("video");
-
-                if (video.length < 1) {
-                    throw new Error("No video tag found");
-                }
-
-                return video;
-            };
-        """, injectionTime: .atDocumentEnd, forMainFrameOnly: false)
-
-//        let hideChromeScript = WKUserScript(source: """
-//            const style = document.createElement("style");
-//            style.textContent = `
-//              video ~ * {
-//                display: none;
-//              }
-//            `;
-//
-//            document.head.appendChild(style);
-//            """, injectionTime: .atDocumentEnd, forMainFrameOnly: false)
-
-        let hideLoadingAndDisclosureScript = WKUserScript(source: """
-            const style = document.createElement("style");
-            style.textContent = `
-              .tw-loading-spinner {
-                display: none !important;
-              }
-
-              #channel-player-disclosures {
-                display: none !important;
-              }
-
-              [data-a-target="content-classification-gate-overlay"] {
-                display: none !important;
-              }
-
-              .content-overlay-gate__content {
-                display: none !important;
-              }
-            `;
-
-            document.head.appendChild(style);
-            """, injectionTime: .atDocumentEnd, forMainFrameOnly: false)
-
-        let disableZoomScript = WKUserScript(source: """
-            var meta = document.createElement('meta');
-            meta.name = 'viewport';
-            meta.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no';
-            var head = document.getElementsByTagName('head')[0];
-            head.appendChild(meta);
-        """, injectionTime: .atDocumentEnd, forMainFrameOnly: false)
-
-        // One final script is injected after everything else has loaded in webView(:didFinish:)
-        let controller = WKUserContentController()
-        controller.addUserScript(overrideScript)
-        controller.addUserScript(injectPlayerAPI)
-        controller.addUserScript(injectVideoGetter)
-        // TODO: It seems like hiding the Chrome is breaking the video playback somehow
-//        controller.addUserScript(hideChromeScript)
-        controller.addUserScript(hideLoadingAndDisclosureScript)
-        controller.addUserScript(disableZoomScript)
-
-        let configuration = WKWebViewConfiguration()
-        configuration.userContentController = controller
-
-        #if canImport(UIKit)
-        // Allow videos to not play in the native player
-        configuration.allowsInlineMediaPlayback = true
-
-        configuration.mediaTypesRequiringUserActionForPlayback = []
-
-        // Disable selection of anything in WebView
-        configuration.preferences.isTextInteractionEnabled = false
-        #endif
-
-        // Enable Airplay support (doesn't work)
-        configuration.allowsAirPlayForMediaPlayback = true
-
-        let webView = WKWebView(frame: .zero, configuration: configuration)
-
-        #if canImport(UIKit)
-        webView.isOpaque = false
-        webView.scrollView.backgroundColor = .clear
-
-        // Disable all interaction with WKWebView
-        for subview in webView.scrollView.subviews {
-            subview.isUserInteractionEnabled = false
-        }
-        #else
-        webView.setValue(false, forKey: "drawsBackground")
-        #endif
-
-        #if DEBUG
-        webView.isInspectable = true
-        #endif
-        webView.uiDelegate = context.coordinator
-        webView.navigationDelegate = context.coordinator
-
-        webView.configuration.userContentController.add(context.coordinator, name: "twitch")
+    private func makePlatformView(context: Context) -> TwitchWebViewPlatformView {
+        let webView = self.makeInternalWebView()
+        context.coordinator.attach(webView: webView)
+        self.player.attachBackend(context.coordinator)
 
         if !self.delayLoading {
-            self.loadContent(webView)
+            context.coordinator.loadContent(for: self.streamableVideo)
         }
 
-        self.player.webView = webView
-
-        return webView
+        return webView.platformView
     }
 
-    private func updateWebView(_ webView: WKWebView, context: Context) {
-        guard self.streamableVideo != context.coordinator.lastVideo || self.delayLoading != context.coordinator.lastDelayLoading else {
-            // Nothing to do
+    private func updatePlatformView(context: Context) {
+        guard context.coordinator.update(streamableVideo: self.streamableVideo, delayLoading: self.delayLoading) else {
             return
         }
 
-        context.coordinator.lastVideo = self.streamableVideo
-        context.coordinator.lastDelayLoading = self.delayLoading
-
         if !self.delayLoading {
-            self.loadContent(webView)
+            context.coordinator.loadContent(for: self.streamableVideo)
         }
     }
 
-    private func loadContent(_ webView: WKWebView) {
-        // Also supports quality=auto&volume=0.39&muted=false
-        var urlVideoSegment: String
-        switch self.streamableVideo {
-        case .stream(let stream):
-            // userLogin instead of userName as their userName may not be in Roman characters
-            urlVideoSegment = "channel=\(stream.userLogin)"
-        case .video(let video):
-            urlVideoSegment = "video=\(video.id)"
-        }
-
-        self.player.loading = true
-
-        let url = "https://player.twitch.tv/?\(urlVideoSegment)&parent=twitch.tv&quality=\(self.player.quality)&volume=\(self.player.volume)&controls=false&autoplay=true&muted=false&player=popout"
-        webView.load(URLRequest(url: URL(string: url)!))
+    private func makeInternalWebView() -> any InternalTwitchWebView {
+        #if os(tvOS)
+        TVPrivateTwitchWebViewAdapter()
+        #else
+        WKTwitchWebViewAdapter()
+        #endif
     }
 }
 
-class TwitchWebViewCoordinator: NSObject, WKUIDelegate, WKNavigationDelegate, WKScriptMessageHandler {
+@MainActor
+final class TwitchWebViewController: NSObject, TwitchPlaybackBackend, InternalTwitchWebViewDelegate {
     weak var player: WebViewPlayer?
+
+    private var webView: (any InternalTwitchWebView)?
 
     var lastStatus: PlaybackStatus = .idle
     var retriedPlayCount = 0
@@ -264,155 +135,77 @@ class TwitchWebViewCoordinator: NSObject, WKUIDelegate, WKNavigationDelegate, WK
     var lastVideo: StreamableVideo
     var lastDelayLoading: Bool
 
-    init(player: WebViewPlayer, lastVideo: StreamableVideo, lastDelayLoading: Bool){
+    init(player: WebViewPlayer, lastVideo: StreamableVideo, lastDelayLoading: Bool) {
         self.player = player
         self.lastVideo = lastVideo
         self.lastDelayLoading = lastDelayLoading
     }
 
-    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        // Page has loaded. Inject last step of script
-        webView.evaluateJavaScript("""
-            // Inject all known content restrictions into localStorage
-            // This must run before the client is started
-            const existingContentRestrictions = localStorage.getItem("content-classification-labels-acknowledged");
-            const loggedIn = existingContentRestrictions?.loggedIn ?? {};
-            const loggedOut = existingContentRestrictions?.loggedOut ?? {};
-
-            const contentRestrictionTime = Date.now();
-            const newContentRestrictions = {
-                SexualThemes: contentRestrictionTime,
-                ViolentGraphic: contentRestrictionTime,
-                DrugsIntoxication: contentRestrictionTime,
-                Gambling: contentRestrictionTime
-            };
-            localStorage.setItem("content-classification-labels-acknowledged", JSON.stringify({
-                loggedIn: {
-                    ...loggedIn,
-                    ...newContentRestrictions,
-                },
-                loggedOut: {
-                    ...loggedOut,
-                    ...newContentRestrictions,
-                },
-            }));
-
-            // Setup Twitch client
-            // Calling this, rather than treating it as a constructor, creates the _player object
-            // This will throw an error
-            try {
-                console.log("Creating Twitch _player object");
-                Twitch.Player();
-            } catch {
-
-            }
-
-            // Mark video as in current window
-            Twitch._player._embedWindow = window;
-        
-            console.log("Waiting for Twitch ready");
-
-            window.addEventListener("message", (event) => {
-                if (event.data.eventName === "ready") {
-                    console.log("Twitch client ready");
-                    // TODO: Does this actually do anything?
-                    Twitch._player.play();
-                    // Twitch._player.setMute(false);
-                    window.getVideoTag().muted = false;
-                    console.log("Twitch._player", Twitch._player);
-                }
-            });
-        """)
-
-        // Click on the fullscreen mute popup
-        // Taken from https://stackoverflow.com/a/61511955
-        webView.evaluateJavaScript("""
-            const waitForElm = (selector) => {
-                return new Promise(resolve => {
-                    if (document.querySelector(selector)) {
-                        return resolve(document.querySelector(selector));
-                    }
-
-                    const observer = new MutationObserver(_mutations => {
-                        if (document.querySelector(selector)) {
-                            observer.disconnect();
-                            resolve(document.querySelector(selector));
-                        }
-                    });
-
-                    // If you get "parameter 1 is not of type 'Node'" error, see https://stackoverflow.com/a/77855838/492336
-                    observer.observe(document.body, {
-                        childList: true,
-                        subtree: true
-                    });
-                });
-            }
-
-            // Bypass content restriction screen
-            waitForElm("#channel-player-gate").then(gate => {
-                const buttons = gate?.getElementsByTagName("button");
-
-                if (buttons?.length > 0) {
-                    console.log("Bypassing content restriction");
-                    buttons[0].click();
-                }
-            });
-
-            // Click on the fullscreen mute popup
-            // Taken from https://stackoverflow.com/a/61511955
-            waitForElm(".click-to-unmute__container").then(element => {
-                console.log("Found click to unmute");
-                element.click();
-            });
-        """)
-
-        // TODO: Vision doesn't seem to let you AirPlay
-//        webView.evaluateJavaScript("""
-//            (() => {
-//                const video = document.getElementsByTagName("video");
-//
-//                if (video.length < 1) {
-//                    console.error("No video tag found");
-//                    return;
-//                }
-//
-//                video[0].addEventListener("webkitplaybacktargetavailabilitychanged", () => {
-//                    console.log("Showing picker");
-//                    video[0].webkitShowPlaybackTargetPicker();
-//                });
-//            });
-//        """)
+    func attach(webView: any InternalTwitchWebView) {
+        self.webView = webView
+        webView.installStartupScripts(Self.startupScripts, messageHandlerName: twitchScriptMessageHandlerName, delegate: self)
     }
 
-//     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
-//        self.parent.reload()
-//    }
-//    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-//        print(navigationAction.request.url, navigationAction.navigationType)
-//        if let url = navigationAction.request.url,
-//            navigationAction.navigationType == .other {
-//
-//            // Check if the URL matches the one you want to modify
-//            if url.deletingLastPathComponent().absoluteString == "https://usher.ttvnw.net/api/channel/hls" {
-//                // Modify the URL if needed
-//                let modifiedURL = url.absoluteURL
-//                print(modifiedURL.query())
-//                let modifiedRequest = URLRequest(url: modifiedURL)
-//
-//                // Load the modified request
-//                webView.load(modifiedRequest)
-//
-//                // Cancel the original request
-//                decisionHandler(.cancel)
-//                return
-//            }
-//        }
-//
-//        // Allow the request to proceed unchanged
-//        decisionHandler(.allow)
-//    }
-    func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        let body = message.body as! NSDictionary
+    @discardableResult
+    func update(streamableVideo: StreamableVideo, delayLoading: Bool) -> Bool {
+        guard streamableVideo != self.lastVideo || delayLoading != self.lastDelayLoading else {
+            return false
+        }
+
+        self.lastVideo = streamableVideo
+        self.lastDelayLoading = delayLoading
+        return true
+    }
+
+    func loadContent(for streamableVideo: StreamableVideo) {
+        var urlVideoSegment: String
+        switch streamableVideo {
+        case .stream(let stream):
+            // userLogin instead of userName as their userName may not be in Roman characters
+            urlVideoSegment = "channel=\(stream.userLogin)"
+        case .video(let video):
+            urlVideoSegment = "video=\(video.id)"
+        }
+
+        self.player?.loading = true
+
+        let quality = self.player?.quality ?? "auto"
+        let volume = self.player?.volume ?? 0.5
+        let url = URL(string: "https://player.twitch.tv/?\(urlVideoSegment)&parent=twitch.tv&quality=\(quality)&volume=\(volume)&controls=false&autoplay=true&muted=false&player=popout")!
+        self.webView?.load(url: url)
+    }
+
+    func evaluateJavaScript(_ script: String, completion: ((Any?, Error?) -> Void)?) {
+        self.webView?.evaluateJavaScript(script, completion: completion)
+    }
+
+    func reload() {
+        self.webView?.reload()
+    }
+
+    func dispose() {
+        self.webView?.evaluateJavaScript(#"""
+            try {
+                Twitch._player.pause();
+            } catch (e) {
+                console.error(`Failed to pause during cleanup: ${e}`);
+            }
+        """#, completion: nil)
+        self.webView?.stopLoading()
+        self.webView?.tearDownDelegates()
+        self.webView?.removeScriptMessageHandler(named: twitchScriptMessageHandlerName)
+        self.webView?.clearPage()
+        self.webView?.removeFromSuperview()
+        self.webView = nil
+    }
+
+    func internalWebViewDidFinishLoad(_ webView: any InternalTwitchWebView) {
+        webView.evaluateJavaScript(Self.playerBootstrapScript, completion: nil)
+        webView.evaluateJavaScript(Self.clickToUnmuteScript, completion: nil)
+    }
+
+    func internalWebViewDidReceiveScriptMessageBody(_ body: Any) {
+        let body = body as! NSDictionary
         let params = body["params"] as? NSDictionary ?? [:]
 
         // Playback info
@@ -488,7 +281,308 @@ class TwitchWebViewCoordinator: NSObject, WKUIDelegate, WKNavigationDelegate, WK
 
         self.player?.applyEvent(TwitchEvent(currentTime: currentTime.doubleValue, duration: duration.doubleValue, muted: muted, playback: status, volume: volume.doubleValue, channelId: channelId, channel: channelName, quality: quality, availableQualities: qualities))
     }
+
+    private static var startupScripts: [TwitchUserScriptSpec] {
+        [
+            TwitchUserScriptSpec(source: #"""
+                // Set custom window parent
+                window.parent = {
+                  postMessage: (message, options) => {
+                    window.postMessage(message, options);
+                  }
+                }
+
+                window._addEventListener = window.addEventListener;
+                window.addEventListener = (type, listener, other) => {
+                  console.log("Registration for", type);
+                  window._addEventListener(type, (event) => {
+                    if (event.type === "message") {
+                      if (event.data.namespace === "twitch-embed-player-proxy") {
+                        // The client sends eventName: "UPDATE_STATE" from the iframe to the host page. The command `message` listener
+                        // filters these out by checking for messages where the window is not the same as the parent. Due to our hacking,
+                        // they will not be the same, so it will constantly warn.
+                        // Instead, just ignore "UPDATE_STATE"
+                        if (event.data.eventName === "UPDATE_STATE") {
+                          window.webkit.messageHandlers.twitch.postMessage(event.data)
+                          return;
+                        }
+
+                        try {
+                            listener({
+                              type: "message",
+                              data: { eventName: event.data.eventName, params: event.data.params, namespace: "twitch-embed-player-proxy" },
+                              source: window.parent
+                            });
+                        } catch (e) {
+                            console.error(`Twitch event listener forwarding error: ${e}`);
+                        }
+
+                        return;
+                      }
+                    }
+
+                    listener(event);
+                  }, other);
+                };
+                """#, injectionTime: .atDocumentStart, forMainFrameOnly: true),
+            TwitchUserScriptSpec(source: #"""
+                const script = document.createElement("script");
+                script.src = "https://player.twitch.tv/js/embed/v1.js";
+
+                document.head.appendChild(script);
+                """#, injectionTime: .atDocumentEnd, forMainFrameOnly: true),
+            TwitchUserScriptSpec(source: #"""
+                window.getVideoTag = () => {
+                    const video = document.getElementsByTagName("video");
+
+                    if (video.length < 1) {
+                        throw new Error("No video tag found");
+                    }
+
+                    return video;
+                };
+                """#, injectionTime: .atDocumentEnd, forMainFrameOnly: false),
+            TwitchUserScriptSpec(source: #"""
+                const style = document.createElement("style");
+                style.textContent = `
+                  .tw-loading-spinner {
+                    display: none !important;
+                  }
+
+                  #channel-player-disclosures {
+                    display: none !important;
+                  }
+
+                  [data-a-target="content-classification-gate-overlay"] {
+                    display: none !important;
+                  }
+
+                  .content-overlay-gate__content {
+                    display: none !important;
+                  }
+                `;
+
+                document.head.appendChild(style);
+                """#, injectionTime: .atDocumentEnd, forMainFrameOnly: false),
+            TwitchUserScriptSpec(source: #"""
+                var meta = document.createElement('meta');
+                meta.name = 'viewport';
+                meta.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no';
+                var head = document.getElementsByTagName('head')[0];
+                head.appendChild(meta);
+                """#, injectionTime: .atDocumentEnd, forMainFrameOnly: false),
+        ]
+    }
+
+    private static let playerBootstrapScript = #"""
+        // Inject all known content restrictions into localStorage
+        // This must run before the client is started
+        const existingContentRestrictions = localStorage.getItem("content-classification-labels-acknowledged");
+        const loggedIn = existingContentRestrictions?.loggedIn ?? {};
+        const loggedOut = existingContentRestrictions?.loggedOut ?? {};
+
+        const contentRestrictionTime = Date.now();
+        const newContentRestrictions = {
+            SexualThemes: contentRestrictionTime,
+            ViolentGraphic: contentRestrictionTime,
+            DrugsIntoxication: contentRestrictionTime,
+            Gambling: contentRestrictionTime
+        };
+        localStorage.setItem("content-classification-labels-acknowledged", JSON.stringify({
+            loggedIn: {
+                ...loggedIn,
+                ...newContentRestrictions,
+            },
+            loggedOut: {
+                ...loggedOut,
+                ...newContentRestrictions,
+            },
+        }));
+
+        // Setup Twitch client
+        // Calling this, rather than treating it as a constructor, creates the _player object
+        // This will throw an error
+        try {
+            console.log("Creating Twitch _player object");
+            Twitch.Player();
+        } catch {
+
+        }
+
+        // Mark video as in current window
+        Twitch._player._embedWindow = window;
+
+        console.log("Waiting for Twitch ready");
+
+        window.addEventListener("message", (event) => {
+            if (event.data.eventName === "ready") {
+                console.log("Twitch client ready");
+                // TODO: Does this actually do anything?
+                Twitch._player.play();
+                // Twitch._player.setMute(false);
+                window.getVideoTag().muted = false;
+                console.log("Twitch._player", Twitch._player);
+            }
+        });
+        """#
+
+    private static let clickToUnmuteScript = #"""
+        const waitForElm = (selector) => {
+            return new Promise(resolve => {
+                if (document.querySelector(selector)) {
+                    return resolve(document.querySelector(selector));
+                }
+
+                const observer = new MutationObserver(_mutations => {
+                    if (document.querySelector(selector)) {
+                        observer.disconnect();
+                        resolve(document.querySelector(selector));
+                    }
+                });
+
+                // If you get "parameter 1 is not of type 'Node'" error, see https://stackoverflow.com/a/77855838/492336
+                observer.observe(document.body, {
+                    childList: true,
+                    subtree: true
+                });
+            });
+        }
+
+        // Bypass content restriction screen
+        waitForElm("#channel-player-gate").then(gate => {
+            const buttons = gate?.getElementsByTagName("button");
+
+            if (buttons?.length > 0) {
+                console.log("Bypassing content restriction");
+                buttons[0].click();
+            }
+        });
+
+        // Click on the fullscreen mute popup
+        // Taken from https://stackoverflow.com/a/61511955
+        waitForElm(".click-to-unmute__container").then(element => {
+            console.log("Found click to unmute");
+            element.click();
+        });
+        """#
 }
+
+#if !os(tvOS)
+final class WKTwitchWebViewAdapter: NSObject, InternalTwitchWebView, WKUIDelegate, WKNavigationDelegate, WKScriptMessageHandler {
+    weak var delegate: (any InternalTwitchWebViewDelegate)?
+
+    let webView: WKWebView
+
+    override init() {
+        self.webView = Self.makeConfiguredWebView()
+        super.init()
+        self.webView.uiDelegate = self
+        self.webView.navigationDelegate = self
+    }
+
+    var platformView: TwitchWebViewPlatformView {
+        self.webView
+    }
+
+    private static func makeConfiguredWebView() -> WKWebView {
+        let configuration = WKWebViewConfiguration()
+        configuration.userContentController = WKUserContentController()
+
+        #if canImport(UIKit)
+        // Allow videos to not play in the native player
+        configuration.allowsInlineMediaPlayback = true
+
+        configuration.mediaTypesRequiringUserActionForPlayback = []
+
+        // Disable selection of anything in WebView
+        configuration.preferences.isTextInteractionEnabled = false
+        #endif
+
+        // Enable Airplay support (doesn't work)
+        configuration.allowsAirPlayForMediaPlayback = true
+
+        let webView = WKWebView(frame: .zero, configuration: configuration)
+
+        #if canImport(UIKit)
+        webView.isOpaque = false
+        webView.scrollView.backgroundColor = .clear
+
+        // Disable all interaction with WKWebView
+        for subview in webView.scrollView.subviews {
+            subview.isUserInteractionEnabled = false
+        }
+        #else
+        webView.setValue(false, forKey: "drawsBackground")
+        #endif
+
+        #if DEBUG
+        webView.isInspectable = true
+        #endif
+
+        return webView
+    }
+
+    func installStartupScripts(_ scripts: [TwitchUserScriptSpec], messageHandlerName: String, delegate: any InternalTwitchWebViewDelegate) {
+        self.delegate = delegate
+
+        let controller = self.webView.configuration.userContentController
+        for script in scripts {
+            let injectionTime: WKUserScriptInjectionTime
+            switch script.injectionTime {
+            case .atDocumentStart:
+                injectionTime = .atDocumentStart
+            case .atDocumentEnd:
+                injectionTime = .atDocumentEnd
+            }
+
+            controller.addUserScript(WKUserScript(source: script.source, injectionTime: injectionTime, forMainFrameOnly: script.forMainFrameOnly))
+        }
+
+        controller.add(self, name: messageHandlerName)
+    }
+
+    func load(url: URL) {
+        self.webView.load(URLRequest(url: url))
+    }
+
+    func evaluateJavaScript(_ script: String, completion: ((Any?, Error?) -> Void)?) {
+        self.webView.evaluateJavaScript(script, completionHandler: completion)
+    }
+
+    func reload() {
+        self.webView.reload()
+    }
+
+    func stopLoading() {
+        self.webView.stopLoading()
+    }
+
+    func tearDownDelegates() {
+        self.webView.navigationDelegate = nil
+        self.webView.uiDelegate = nil
+    }
+
+    func removeScriptMessageHandler(named name: String) {
+        self.webView.configuration.userContentController.removeScriptMessageHandler(forName: name)
+    }
+
+    func clearPage() {
+        self.webView.loadHTMLString("", baseURL: nil)
+    }
+
+    func removeFromSuperview() {
+        self.webView.removeFromSuperview()
+    }
+
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        self.delegate?.internalWebViewDidFinishLoad(self)
+    }
+
+    func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+        self.delegate?.internalWebViewDidReceiveScriptMessageBody(message.body)
+    }
+}
+#endif
 
 #Preview {
     TwitchWebView(player: WebViewPlayer(), streamableVideo: .stream(STREAM_MOCK()))

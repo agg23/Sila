@@ -10,15 +10,15 @@ extension View {
 extension View {
     /// navigationTitle is very small on visionOS 2.0. Insert our own title instead
     func largeNavigationTitle(_ title: String) -> some View {
-        #if os(macOS)
-        self.navigationTitle(title)
-        #else
+        #if os(visionOS)
         self.toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Text(title)
                     .font(.largeTitle)
             }
         }
+        #else
+        self.navigationTitle(title)
         #endif
     }
 }

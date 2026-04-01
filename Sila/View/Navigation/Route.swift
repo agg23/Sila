@@ -11,6 +11,21 @@ import Twitch
 enum Route: Equatable, Hashable, Codable {
     case category(game: GameWrapper)
     case channel(user: UserWrapper)
+    case playback(video: StreamableVideo)
+}
+
+extension Route {
+    var playbackVideo: StreamableVideo? {
+        guard case .playback(video: let video) = self else {
+            return nil
+        }
+
+        return video
+    }
+
+    var isPlayback: Bool {
+        self.playbackVideo != nil
+    }
 }
 
 enum GameWrapper {

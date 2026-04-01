@@ -10,7 +10,6 @@ import Twitch
 
 struct SharedStreamButtonView<PreTitleRight: View, ImageOverlay: View, ContextMenu: View>: View {
     @Environment(Router.self) private var router
-    @Environment(\.openWindow) private var openWindow
     @Environment(AuthController.self) private var authController
 
     let source: StreamableVideo
@@ -44,14 +43,7 @@ struct SharedStreamButtonView<PreTitleRight: View, ImageOverlay: View, ContextMe
 
     var body: some View {
         AsyncImageButtonView(imageUrl: buildImageUrl(using: self.displayUrl), aspectRatio: 16.0/9.0, overlayAlignment: .bottomTrailing, refreshToken: self.refreshToken) {
-//            self.router.pushToActiveTab(route: .video(self.source))
-            self.router.activeVideo = self.source
-//            switch self.source {
-//            case .stream(let stream):
-//                StreamOpener.openStream(stream: stream, openWindow: self.openWindow, profileImageUrl: self.profileImageUrl)
-//            case .video(let video):
-//                openWindow(id: Window.vod, value: video)
-//            }
+            self.router.pushPlayback(self.source)
         } content: {
             VStack(alignment: .leading) {
                 HStack {

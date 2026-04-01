@@ -14,21 +14,27 @@ private struct RoundedBackground: ViewModifier {
     let enableSmallBorder: Bool
 
     func body(content: Content) -> some View {
+        #if os(macOS)
+        content
+        #else
         let clipShape = RoundedRectangle(cornerRadius: self.enableSmallBorder && self.smallBorderRadius ? Window.smallWindowCornerRadius : Window.largeWindowCornerRadius)
 
         switch self.type {
         case .glass:
+            #if os(tvOS)
             content
-                #if os(visionOS)
+                .background(.regularMaterial)
+                .clipShape(clipShape)
+            #else
+            content
                 .glassBackgroundEffect(in: clipShape)
-                #else
-                .background(.regularMaterial, in: clipShape)
-                #endif
+            #endif
         case .solid(let color):
             content
                 .background(color)
                 .clipShape(clipShape)
         }
+        #endif
     }
 }
 

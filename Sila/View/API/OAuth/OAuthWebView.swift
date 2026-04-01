@@ -5,6 +5,7 @@
 //  Created by Adam Gastineau on 2/16/24.
 //
 
+#if !os(tvOS)
 import SwiftUI
 import WebKit
 
@@ -173,3 +174,4 @@ class OAuthWebViewCoordinator: NSObject, WKUIDelegate, WKNavigationDelegate {
 
     }
 }
+#endif

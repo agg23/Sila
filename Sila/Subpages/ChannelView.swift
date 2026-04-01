@@ -40,7 +40,7 @@ struct ChannelView: View {
 }
 
 struct ChannelViewContent: View {
-    @Environment(\.openWindow) private var openWindow
+    @Environment(Router.self) private var router
 
     @State private var userLoader = StandardDataLoader<[Twitch.Stream]>()
     @State private var vodLoader = StandardDataLoader<([Video], String?)>()
@@ -59,7 +59,7 @@ struct ChannelViewContent: View {
 
                     if let stream = self.stream {
                         Button {
-                            StreamOpener.openStream(stream: stream, openWindow: self.openWindow, profileImageUrl: self.channelUser.profileImageUrl)
+                            StreamOpener.openStream(stream: stream, router: self.router, profileImageUrl: self.channelUser.profileImageUrl)
                         } label: {
                             Text("Watch Now")
                         }
@@ -83,7 +83,9 @@ struct ChannelViewContent: View {
         }
         .largeNavigationTitle(self.channelUser.displayName)
         .toolbar {
+            #if !os(tvOS)
             ShareLink(item: URL(string: "https://twitch.tv/\(self.channelUser.login)")!)
+            #endif
         }
     }
 

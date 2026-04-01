@@ -24,7 +24,6 @@ enum SelectedTab: Equatable, Codable {
     }
 
     var bufferedWindowOpen: StreamableVideo?
-    var activeVideo: StreamableVideo?
 
     init() {
 
@@ -32,10 +31,9 @@ enum SelectedTab: Equatable, Codable {
 
     init(from router: Router) {
         self.tab = router.tab
-        self.path = self.path
+        self.path = router.path
 
         self.bufferedWindowOpen = router.bufferedWindowOpen
-        self.activeVideo = router.activeVideo
     }
 
     init(from decoder: any Decoder) throws {
@@ -46,7 +44,6 @@ enum SelectedTab: Equatable, Codable {
         self.path = [self.tab: tabPath]
 
         self.bufferedWindowOpen = try values.decode(Optional<StreamableVideo>.self, forKey: .bufferedWindowOpen)
-        self.activeVideo = try values.decode(Optional<StreamableVideo>.self, forKey: .activeVideo)
     }
 
     func encode(to encoder: any Encoder) throws {
@@ -54,7 +51,6 @@ enum SelectedTab: Equatable, Codable {
         try container.encode(self.tab, forKey: .tab)
         try container.encode(self.pathForActiveTab(), forKey: .path)
         try container.encode(self.bufferedWindowOpen, forKey: .bufferedWindowOpen)
-        try container.encode(self.activeVideo, forKey: .activeVideo)
     }
 
     func pathForActiveTab() -> [Route] {
@@ -76,10 +72,37 @@ enum SelectedTab: Equatable, Codable {
     }
 
     func pushToActiveTab(route: Route) {
-        // Make sure path exists
-        let _ = self.path(for: self.tab)
+        self.push(route: route, in: self.tab)
+    }
 
-        self.path[self.tab]?.append(route)
+    func push(route: Route, in tab: SelectedTab) {
+        // Make sure path exists
+        let _ = self.path(for: tab)
+
+        self.path[tab]?.append(route)
+    }
+
+    func activePlaybackVideo(in tab: SelectedTab) -> StreamableVideo? {
+        self.path(for: tab).last?.playbackVideo
+    }
+
+    func pushPlayback(_ video: StreamableVideo, in tab: SelectedTab? = nil) {
+        let targetTab = tab ?? self.tab
+        self.dismissPlayback(in: targetTab)
+        self.push(route: .playback(video: video), in: targetTab)
+    }
+
+    func dismissPlayback(in tab: SelectedTab? = nil) {
+        let targetTab = tab ?? self.tab
+        guard let index = self.path(for: targetTab).lastIndex(where: { $0.isPlayback }) else {
+            return
+        }
+
+        self.path[targetTab]?.removeSubrange(index...)
+    }
+
+    func hasPlayback(in tab: SelectedTab? = nil) -> Bool {
+        self.activePlaybackVideo(in: tab ?? self.tab) != nil
     }
 
     func bufferOpenWindow(_ video: StreamableVideo) {
@@ -96,9 +119,6 @@ enum SelectedTab: Equatable, Codable {
         if lhs.bufferedWindowOpen != rhs.bufferedWindowOpen {
             return false
         }
-        if lhs.activeVideo != rhs.activeVideo {
-            return false
-        }
 
         return true
     }
@@ -107,6 +127,5 @@ enum SelectedTab: Equatable, Codable {
         case tab
         case path
         case bufferedWindowOpen
-        case activeVideo
     }
 }

@@ -11,7 +11,9 @@ import Twitch
 struct StreamButtonView: View {
     @AppStorage(Setting.disableIncrementingStreamDuration) var disableIncrementingStreamDuration: Bool = false
 
+    #if !os(tvOS)
     @Environment(\.openWindow) private var openWindow
+    #endif
     @Environment(Router.self) private var router
 
     @State private var initialRenderDate = Date.now
@@ -61,15 +63,17 @@ struct StreamButtonView: View {
                 nil
             }
 
+            #if !os(tvOS)
             Button {
                 let newRouter = Router(from: self.router)
-                newRouter.activeVideo = .stream(self.stream)
-                self.openWindow(value: WindowModel(router: newRouter))
+                newRouter.pushPlayback(.stream(self.stream))
+                openWindow(value: WindowModel(router: newRouter))
             } label: {
                 Label("Watch in New Window", systemImage: Icon.newWindow)
             }
 
             Divider()
+            #endif
 
             #if VOD_ENABLED
             if let last = self.router.pathForActiveTab().last {

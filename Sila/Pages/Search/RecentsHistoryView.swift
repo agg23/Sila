@@ -51,7 +51,7 @@ private struct RecentChannelsSection: View {
                         self.recentsStore.clearSearchRecents()
                     }
                 })
-                #if !os(macOS)
+                #if os(visionOS)
                 .listRowSpacing(8)
                 #endif
             }
@@ -71,7 +71,9 @@ private struct RecentChannelsSection: View {
                 })
             }
         }
+        #if !os(tvOS)
         .scrollContentBackground(.hidden)
+        #endif
         .listStyle(.plain)
         .task {
             guard let api = self.authController.status.api() else {
@@ -123,7 +125,10 @@ private struct RecentsSectionHeader: View {
 }
 
 private struct RecentChannelRow: View {
+    @Environment(Router.self) private var router
+    #if !os(tvOS)
     @Environment(\.openWindow) private var openWindow
+    #endif
     
     let recentChannel: RecentChannel
     let channelStatus: ChannelStatus
@@ -138,7 +143,7 @@ private struct RecentChannelRow: View {
     var body: some View {
         Button {
             if case .online(let stream) = self.channelStatus {
-                StreamOpener.openStream(stream: stream, openWindow: self.openWindow, profileImageUrl: self.recentChannel.profileImageUrl)
+                StreamOpener.openStream(stream: stream, router: self.router, profileImageUrl: self.recentChannel.profileImageUrl)
             }
         } label: {
             HStack {
@@ -177,9 +182,9 @@ enum ChannelStatus {
 }
 
 struct StreamOpener {
-    static func openStream(stream: Twitch.Stream, openWindow: OpenWindowAction, profileImageUrl: String?) {
-        openWindow(id: Window.stream, value: stream)
-        
+    static func openStream(stream: Twitch.Stream, router: Router, profileImageUrl: String?) {
+        router.pushPlayback(.stream(stream))
+
         RecentsStore.shared.addRecentChannel(
             userLogin: stream.userLogin,
             userName: stream.userName,
