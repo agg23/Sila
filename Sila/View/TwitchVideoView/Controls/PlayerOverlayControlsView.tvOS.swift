@@ -6,13 +6,12 @@ struct PlayerOverlayControlsView: View {
     @Binding var volume: CGFloat
 
     let streamableVideo: StreamableVideo
-    let isVisible: Bool
 
     let onInteraction: () -> Void
     let activeChanged: (Bool) -> Void
 
     var body: some View {
-        TVPlayerInfoOverlayView(streamableVideo: self.streamableVideo, isPlaying: self.player.isPlaying, isVisible: self.isVisible)
+        TVPlayerInfoOverlayView(streamableVideo: self.streamableVideo, isPlaying: self.player.isPlaying, isVisible: true)
     }
 }
 

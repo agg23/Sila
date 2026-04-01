@@ -39,7 +39,16 @@ struct TwitchVideoView: View {
                 }
             }
             .overlay(alignment: .top) {
-                self.topOverlayControls
+                if self.controlVisibility == .visible {
+                    PlayerOverlayControlsView(player: self.player, volume: self.$volume, streamableVideo: self.liveUpdatedStream ?? self.streamableVideo, onInteraction: self.onControlInteraction) { isActive in
+                        if isActive {
+                            print("Controls are active")
+                            self.forceVisibility()
+                        } else {
+                            self.resetTimer()
+                        }
+                    }
+                }
             }
             .ignoresSafeArea()
             .focusable(true)
@@ -89,18 +98,6 @@ struct TwitchVideoView: View {
 
                 self.focusTarget = .playbackSurface
             }
-    }
-
-    @ViewBuilder
-    private var topOverlayControls: some View {
-        PlayerOverlayControlsView(player: self.player, volume: self.$volume, streamableVideo: self.liveUpdatedStream ?? self.streamableVideo, isVisible: self.controlVisibility == .visible, onInteraction: self.onControlInteraction) { isActive in
-            if isActive {
-                print("Controls are active")
-                self.forceVisibility()
-            } else {
-                self.resetTimer()
-            }
-        }
     }
 
     func togglePlayback() {
