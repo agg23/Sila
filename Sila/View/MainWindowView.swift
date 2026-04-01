@@ -13,8 +13,6 @@ struct MainWindowView: View {
     @Environment(\.openImmersiveSpace) private var openImmersiveSpace
     #endif
 
-    @Environment(\.openWindow) private var openWindow
-    @Environment(\.dismissWindow) private var dismissWindow
     @Environment(\.scenePhase) private var scene
 
     @Environment(AuthController.self) private var authController
@@ -23,89 +21,57 @@ struct MainWindowView: View {
 
     @State private var showOauth = false
 
-    var body: some View {
-        #if !os(macOS)
-        visionOSBody
-        #else
-        macOSBody
-        #endif
-    }
-
     #if !os(macOS)
-    private var visionOSBody: some View {
-        let hasActiveVideo = self.router.activeVideo != nil
+    var body: some View {
+        let hasActiveVideo = self.router.hasPlayback()
 
-        ZStack {
-            // TODO: For some reason all windows expand their TabView ornament on hover in any window
-            TabView(selection: self.router.tabBinding) {
-                TabPage(title: "Following", systemImage: Icon.following, tab: .following) {
-                    FollowedStreamsView()
-                        .toolbar {
-                            defaultToolbar()
-                        }
-                }
-
-                TabPage(title: "Popular", systemImage: Icon.popular, tab: .popular) {
-                PopularView()
-                    .toolbar(hasActiveVideo ? .hidden : .automatic, for: .tabBar)
-                }
-
-                TabPage(title: "Categories", systemImage: Icon.category, tab: .categories) {
-                CategoryListView()
-                    .toolbar(hasActiveVideo ? .hidden : .automatic, for: .tabBar)
-                }
-
-                TabPage(title: "Search", systemImage: Icon.search, tab: .search) {
-                    SearchView()
-                        .toolbar {
-                            defaultToolbar()
-                        }
-                    .toolbar(hasActiveVideo ? .hidden : .automatic, for: .tabBar)
-                }
-
-                TabPage(title: "Settings", systemImage: Icon.settings, tab: .settings) {
-                    SettingsView()
-                        .toolbar {
-                            defaultToolbar()
-                        }
-                    .toolbar(hasActiveVideo ? .hidden : .automatic, for: .tabBar)
-                }
+        TabView(selection: self.router.tabBinding) {
+            TabPage(title: "Following", systemImage: Icon.following, tab: .following) {
+                FollowedStreamsView()
+                    .toolbar {
+                        defaultToolbar()
+                    }
             }
-            .environment(\.disablePrimaryOrnaments, hasActiveVideo)
-            .roundedBackground(.glass)
-            .scaleEffect(hasActiveVideo ? 0.8 : 1.0)
-            .opacity(hasActiveVideo ? 0.3 : 1.0)
-            #if os(visionOS)
-            .offset(z: hasActiveVideo ? -100 : 0)
-            #endif
-            .blur(radius: hasActiveVideo ? 10 : 0)
-            .animation(.easeInOut(duration: 0.2), value: hasActiveVideo)
 
-            if let activeVideo = self.router.activeVideo {
-                TwitchEmbeddedContentView(streamableVideo: activeVideo)
-                    .transition(
-                        .asymmetric(
-                            insertion: .scale(scale: 0.5).combined(with: .opacity),
-                            removal: .scale(scale: 0.8).combined(with: .opacity)
-                        )
-                        .animation(.easeInOut(duration: 0.2))
-                    )
-                    .zIndex(1)
-                    // Dismiss any open video when we close the window
-                    .onChange(of: self.scene) { _, newValue in
-                        switch newValue {
-                        case .background, .inactive:
-                            self.router.activeVideo = nil
-                        default:
-                            break
-                        }
+            TabPage(title: "Popular", systemImage: Icon.popular, tab: .popular) {
+                PopularView()
+            }
+
+            TabPage(title: "Categories", systemImage: Icon.category, tab: .categories) {
+                CategoryListView()
+            }
+
+            TabPage(title: "Search", systemImage: Icon.search, tab: .search) {
+                SearchView()
+                    .toolbar {
+                        defaultToolbar()
+                    }
+            }
+
+            TabPage(title: "Settings", systemImage: Icon.settings, tab: .settings) {
+                SettingsView()
+                    .toolbar {
+                        defaultToolbar()
                     }
             }
         }
-        .modifier(CommonMainWindowModifiers(router: self.router, authController: self.authController, openWindow: self.openWindow, showOauth: self.$showOauth))
+        .environment(\.disablePrimaryOrnaments, hasActiveVideo)
+        #if !os(tvOS)
+        .roundedBackground(.glass)
+        #endif
+        .modifier(CommonMainWindowModifiers(router: self.router, authController: self.authController, showOauth: self.$showOauth))
+        // Dismiss any open video when we close the window
+        .onChange(of: self.scene) { _, newValue in
+            switch newValue {
+            case .background, .inactive:
+                self.router.dismissPlayback()
+            default:
+                break
+            }
+        }
     }
     #else
-    private var macOSBody: some View {
+    var body: some View {
         NavigationSplitView {
             List(selection: self.router.tabBinding) {
                 Label("Following", systemImage: Icon.following)
@@ -121,43 +87,50 @@ struct MainWindowView: View {
             }
             .navigationTitle("Sila")
         } detail: {
-            NavigationStack(path: self.router.pathBinding(for: self.router.tab)) {
-                Group {
-                    switch self.router.tab {
-                    case .following:
-                        FollowedStreamsView()
-                            .navigationTitle("Following")
-                    case .popular:
-                        PopularView()
-                            .navigationTitle("Popular")
-                    case .categories:
-                        CategoryListView()
-                            .navigationTitle("Categories")
-                    case .search:
-                        SearchView()
-                            .navigationTitle("Search")
-                    case .settings:
-                        SettingsView()
-                            .navigationTitle("Settings")
+            ZStack {
+                NavigationStack(path: self.router.pathBinding(for: self.router.tab)) {
+                    Group {
+                        switch self.router.tab {
+                        case .following:
+                            FollowedStreamsView()
+                                .navigationTitle("Following")
+                        case .popular:
+                            PopularView()
+                                .navigationTitle("Popular")
+                        case .categories:
+                            CategoryListView()
+                                .navigationTitle("Categories")
+                        case .search:
+                            SearchView()
+                                .navigationTitle("Search")
+                        case .settings:
+                            SettingsView()
+                                .navigationTitle("Settings")
+                        }
                     }
-                }
-                .toolbar {
-                    defaultToolbar()
-                }
-                .navigationDestination(for: Route.self) { route in
-                    switch route {
-                    case .category(game: let gameWrapper):
-                        CategoryView(category: gameWrapper)
-                    case .channel(user: let userWrapper):
-                        ChannelView(channel: userWrapper)
-                            .toolbar {
-                                defaultToolbar()
-                            }
+                    .toolbar {
+                        if !self.router.hasPlayback() {
+                            defaultToolbar()
+                        }
+                    }
+                    .navigationDestination(for: Route.self) { route in
+                        switch route {
+                        case .category(game: let gameWrapper):
+                            CategoryView(category: gameWrapper)
+                        case .channel(user: let userWrapper):
+                            ChannelView(channel: userWrapper)
+                                .toolbar {
+                                    defaultToolbar()
+                                }
+                        case .playback(video: let video):
+                            TwitchEmbeddedContentView(streamableVideo: video)
+                                .id(PlaybackPresentableController.contentId(for: video))
+                        }
                     }
                 }
             }
         }
-        .modifier(CommonMainWindowModifiers(router: self.router, authController: self.authController, openWindow: self.openWindow, showOauth: self.$showOauth))
+        .modifier(CommonMainWindowModifiers(router: self.router, authController: self.authController, showOauth: self.$showOauth))
     }
     #endif
 
@@ -174,7 +147,7 @@ struct MainWindowView: View {
 
             let stream = streams[0]
             DispatchQueue.main.async {
-                openWindow(id: Window.stream, value: stream)
+                self.router.pushPlayback(.stream(stream))
             }
         }
     }
@@ -185,7 +158,6 @@ struct MainWindowView: View {
 private struct CommonMainWindowModifiers: ViewModifier {
     let router: Router
     let authController: AuthController
-    let openWindow: OpenWindowAction
     @Binding var showOauth: Bool
 
     func body(content: Content) -> some View {
@@ -197,13 +169,7 @@ private struct CommonMainWindowModifiers: ViewModifier {
                 }
 
                 self.router.bufferedWindowOpen = nil
-
-                switch window {
-                case .stream(let stream):
-                    openWindow(id: Window.stream, value: stream)
-                case .video(let video):
-                    openWindow(id: Window.vod, value: video)
-                }
+                self.router.pushPlayback(window)
             }
             .onOpenURL { url in
                 guard let host = url.host else {
@@ -246,6 +212,7 @@ private struct CommonMainWindowModifiers: ViewModifier {
 
                 print("Improperly handled deeplink \(url)")
             }
+            #if !os(tvOS)
             .onReceive(self.authController.requestReauthSubject) { _ in
                 // We need to reauth
                 self.showOauth = true
@@ -253,6 +220,7 @@ private struct CommonMainWindowModifiers: ViewModifier {
             .sheet(isPresented: self.$showOauth) {
                 OAuthView()
             }
+            #endif
     }
 
     func open(stream channel: String) {
@@ -268,7 +236,7 @@ private struct CommonMainWindowModifiers: ViewModifier {
 
             let stream = streams[0]
             DispatchQueue.main.async {
-                openWindow(id: Window.stream, value: stream)
+                self.router.pushPlayback(.stream(stream))
             }
         }
     }

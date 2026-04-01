@@ -39,8 +39,10 @@ struct TwitchContentView: View {
     @AppStorage(Setting.dimSurroundings) var dimSurroundings: Bool = false
 
     @Environment(\.scenePhase) private var scene
+    #if !os(tvOS)
     @Environment(\.dismissWindow) private var dismissWindow
     @Environment(\.dismiss) private var dismissNavView
+    #endif
 
     // TODO: Implement
 //    @State private var delayLoading = !WindowController.shared.checkAllMuted()
@@ -99,6 +101,11 @@ struct TwitchContentView: View {
                     self.player.setIsVideo(false)
                 }
             }
+            .onDisappear {
+                self.delayTimer?.invalidate()
+                self.delayTimer = nil
+                self.player.dispose()
+            }
             // TODO: Rewrite after windowing changes
 //            .onDisappear {
 //                print("Clearing onMute")
@@ -109,6 +116,7 @@ struct TwitchContentView: View {
 //                    controller.isMuted = newValue
 //                }
 //            })
+            #if !os(tvOS)
             .onReceive(NotificationCenter.default.publisher(for: .twitchLogOut), perform: { _ in
                 if self.isStandaloneWindow {
                     self.dismissWindow()
@@ -116,6 +124,7 @@ struct TwitchContentView: View {
                     self.dismissNavView()
                 }
             })
+            #endif
     }
 }
 

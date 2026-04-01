@@ -5,6 +5,7 @@
 //  Created by Adam Gastineau on 2/17/24.
 //
 
+#if !os(tvOS)
 import SwiftUI
 import Twitch
 
@@ -70,3 +71,4 @@ struct OAuthView: View {
 #Preview {
     OAuthView()
 }
+#endif

@@ -15,6 +15,8 @@ struct CloseButtonView: View {
         Button(action: self.action, label: {
             #if os(macOS)
             let color = NSColor.controlBackgroundColor
+            #elseif os(tvOS)
+            let color = UIColor.darkGray
             #else
             let color = UIColor.secondarySystemBackground
             #endif

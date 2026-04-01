@@ -1,10 +1,11 @@
 //
-//  TwitchVideoView.swift
+//  TwitchVideoView.Standard.swift
 //  VisionTwitch
 //
 //  Created by Adam Gastineau on 2/2/24.
 //
 
+#if !os(tvOS)
 import SwiftUI
 import Twitch
 import WebKit
@@ -236,3 +237,4 @@ struct TwitchVideoView: View {
 #Preview {
     TwitchVideoView(controlVisibility: .constant(.hidden), streamableVideo: .stream(STREAM_MOCK()), delayLoading: false, player: WebViewPlayer())
 }
+#endif

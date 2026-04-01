@@ -5,7 +5,7 @@
 //  Created by Adam Gastineau on 11/9/25.
 //
 
-#if !os(macOS)
+#if os(visionOS)
 import Foundation
 
 final class ChatPresentableController: PresentableControllerBase {

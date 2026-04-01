@@ -5,7 +5,7 @@
 //  Created by Adam Gastineau on 12/1/24.
 //
 
-#if !os(macOS)
+#if os(visionOS)
 import SwiftUI
 import JunoUI
 

@@ -5,7 +5,7 @@
 //  Created by Adam Gastineau on 2/29/24.
 //
 
-#if !os(macOS)
+#if os(visionOS)
 import SwiftUI
 import Combine
 import AsyncAnimatedImageUI

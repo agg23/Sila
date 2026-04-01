@@ -1,10 +1,4 @@
-//
-//  PlayerOverlayControlsView.swift
-//  Sila
-//
-//  Created by Adam Gastineau on 6/1/24.
-//
-
+#if !os(tvOS)
 import SwiftUI
 
 struct PlayerOverlayControlsView: View {
@@ -12,8 +6,8 @@ struct PlayerOverlayControlsView: View {
 
     #if os(visionOS)
     @Environment(\.openImmersiveSpace) private var openImmersiveSpace
-    #endif
     @Environment(\.dismissWindow) private var dismissWindow
+    #endif
 
     @AppStorage(Setting.dimSurroundings) var dimSurroundings: Bool = false
 
@@ -23,6 +17,7 @@ struct PlayerOverlayControlsView: View {
     @Binding var volume: CGFloat
 
     let streamableVideo: StreamableVideo
+    let isVisible: Bool
 
     let onInteraction: () -> Void
     let activeChanged: (Bool) -> Void
@@ -30,7 +25,7 @@ struct PlayerOverlayControlsView: View {
     var body: some View {
         HStack(spacing: 20) {
             PlayerOverlayButtonView(label: "Back", icon: Icon.back) {
-                self.router.activeVideo = nil
+                self.router.dismissPlayback()
             }
 
             PlayerOverlayButtonView(label: "Reload", icon: Icon.refresh) {
@@ -56,7 +51,7 @@ struct PlayerOverlayControlsView: View {
             }
             #endif
 
-            #if !os(macOS)
+            #if os(visionOS)
             VolumeSlider(volume: self.$volume, isActive: self.$volumePreventClose)
                 .onChange(of: self.volume) { _, newValue in
                     // Local volume has changed, either via UI slider, or by new client volume value
@@ -72,7 +67,7 @@ struct PlayerOverlayControlsView: View {
                     self.volume = newValue
                 }
                 .onChange(of: self.player.muted) { _, newValue in
-                    if (newValue) {
+                    if newValue {
                         self.volume = 0
                     }
                 }
@@ -81,5 +76,8 @@ struct PlayerOverlayControlsView: View {
                 }
             #endif
         }
+        .padding([.horizontal, .top], 40)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
     }
 }
+#endif

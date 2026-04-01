@@ -15,6 +15,10 @@ struct TwitchEmbeddedContentView: View {
 
     var body: some View {
         TwitchContentView(controlVisibility: self.$controlVisibility, player: self.player, streamableVideo: self.streamableVideo, isStandaloneWindow: false)
+            #if os(tvOS)
+            .background(.black)
+            #else
             .roundedBackground(.solid(.black))
+            #endif
     }
 }

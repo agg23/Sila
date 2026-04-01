@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+private let languageFilterPickerOptionIDs = SUPPORTED_LANGUAGE_IDS.filter { !$0.starts(with: "DIV") }
+
 struct LanguageFilterPickerView: View {
     let title: String
     let language: Binding<String>
@@ -18,17 +20,14 @@ struct LanguageFilterPickerView: View {
 
     var body: some View {
         Picker(self.title, selection: self.language) {
-            // Qualties are saved in reverse order
-            ForEach(SUPPORTED_LANGUAGE_IDS, id: \.self) { id in
-                if id.starts(with: "DIV") {
-                    Divider()
-                } else {
-                    Button(SUPPORTED_LANGUAGES[id]!) {
-                        self.language.wrappedValue = id
-                    }
-                }
+            ForEach(languageFilterPickerOptionIDs, id: \.self) { id in
+                Text(SUPPORTED_LANGUAGES[id] ?? id)
+                    .tag(id)
             }
         }
+        #if os(tvOS)
+        .pickerStyle(.menu)
+        #endif
     }
 }
 

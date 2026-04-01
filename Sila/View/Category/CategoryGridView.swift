@@ -9,6 +9,17 @@ import SwiftUI
 import Twitch
 
 struct CategoryGridView: View {
+    #if os(tvOS)
+    private static let columnSpacing: CGFloat = 24
+    private static let columns: [GridItem] = Array(repeating: GridItem(.flexible(), spacing: CategoryGridView.columnSpacing, alignment: .top), count: 6)
+    #elseif os(macOS)
+    private static let columnSpacing: CGFloat = 16
+    private static let columns: [GridItem] = [GridItem(.adaptive(minimum: 150), spacing: CategoryGridView.columnSpacing, alignment: .top)]
+    #else
+    private static let columnSpacing: CGFloat = 16
+    private static let columns: [GridItem] = Array(repeating: GridItem(.flexible(), spacing: CategoryGridView.columnSpacing, alignment: .top), count: 6)
+    #endif
+
     let categories: [Twitch.Game]
     let refreshToken: RefreshToken
 
@@ -21,14 +32,7 @@ struct CategoryGridView: View {
     }
 
     var body: some View {
-        LazyVGrid(columns: [
-            GridItem(spacing: 16),
-            GridItem(spacing: 16),
-            GridItem(spacing: 16),
-            GridItem(spacing: 16),
-            GridItem(spacing: 16),
-            GridItem(spacing: 16)
-        ], spacing: 16){
+        LazyVGrid(columns: CategoryGridView.columns, spacing: CategoryGridView.columnSpacing) {
             ForEach(self.categories, id: \.id) { category in
                 CategoryButtonView(category: category, refreshToken: self.refreshToken)
             }

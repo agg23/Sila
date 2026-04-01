@@ -5,7 +5,7 @@
 //  Created by Adam Gastineau on 10/28/25.
 //
 
-#if !os(macOS)
+#if os(visionOS)
 import Foundation
 
 final class ChatRegistry {

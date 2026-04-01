@@ -8,7 +8,13 @@
 import SwiftUI
 
 struct AsyncImageButtonView<Content: View, ImageOverlay: View, ContextMenu: View>: View {
-    private let cornerRadius = 20.0
+    private var cornerRadius: Double {
+        #if os(macOS)
+        10.0
+        #else
+        20.0
+        #endif
+    }
 
     let imageUrl: URL?
     let aspectRatio: CGFloat
@@ -52,7 +58,11 @@ struct AsyncImageButtonView<Content: View, ImageOverlay: View, ContextMenu: View
             #endif
         }
         .buttonBorderShape(.roundedRectangle(radius: self.cornerRadius))
+        #if os(tvOS)
+        .buttonStyle(.card)
+        #else
         .buttonStyle(StreamButtonStyle(radius: self.cornerRadius))
+        #endif
         .contextMenu {
             self.contextMenu?()
         }

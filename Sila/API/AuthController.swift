@@ -9,7 +9,9 @@ import Foundation
 import Combine
 import Twitch
 import KeychainWrapper
+#if !os(tvOS)
 import WebKit
+#endif
 
 @Observable final class AuthController: Sendable {
     // Embedding a secret into the client is insecure, but Twitch requires auth to access public APIs
@@ -67,12 +69,14 @@ import WebKit
         // Clear cookies
         HTTPCookieStorage.shared.removeCookies(since: Date.distantPast)
 
+        #if !os(tvOS)
         WKWebsiteDataStore.default().fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { records in
             records.forEach { record in
                 WKWebsiteDataStore.default().removeData(ofTypes: record.dataTypes, for: [record], completionHandler: {})
                 print("Cookie: \(record) deleted")
             }
         }
+        #endif
 
         let publicToken = AppGroup.shared.publicToken
 
