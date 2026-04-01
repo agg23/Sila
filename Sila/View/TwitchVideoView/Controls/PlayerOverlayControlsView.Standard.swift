@@ -17,7 +17,6 @@ struct PlayerOverlayControlsView: View {
     @Binding var volume: CGFloat
 
     let streamableVideo: StreamableVideo
-    let isVisible: Bool
 
     let onInteraction: () -> Void
     let activeChanged: (Bool) -> Void
