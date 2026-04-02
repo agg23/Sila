@@ -17,7 +17,7 @@ struct CategoryButtonView: View {
     var body: some View {
         AsyncImageButtonView(imageUrl: buildImageUrl(using: self.category), aspectRatio: 0.75, refreshToken: self.refreshToken) {
             self.router.pushToActiveTab(route: .category(game: GameWrapper.game(self.category)))
-        } content: {
+        } content: { _isFocused in
             VStack(alignment: .leading) {
                 Text(self.category.name)
                     .font(.title3)

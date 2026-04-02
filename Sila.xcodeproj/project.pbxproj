@@ -1343,6 +1343,7 @@
 				"SWIFT_OBJC_BRIDGING_HEADER[sdk=appletv*]" = "Sila/TVPrivateWebView-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,3,7";
+				TVOS_DEPLOYMENT_TARGET = 26.0;
 				XROS_DEPLOYMENT_TARGET = 26.0;
 			};
 			name = Debug;
@@ -1385,6 +1386,7 @@
 				"SWIFT_OBJC_BRIDGING_HEADER[sdk=appletv*]" = "Sila/TVPrivateWebView-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,3,7";
+				TVOS_DEPLOYMENT_TARGET = 26.0;
 				XROS_DEPLOYMENT_TARGET = 26.0;
 			};
 			name = Release;

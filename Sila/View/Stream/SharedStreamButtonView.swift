@@ -10,7 +10,6 @@ import Twitch
 
 struct SharedStreamButtonView<PreTitleRight: View, ImageOverlay: View, ContextMenu: View>: View {
     @Environment(Router.self) private var router
-    @Environment(AuthController.self) private var authController
 
     let source: StreamableVideo
 
@@ -44,7 +43,7 @@ struct SharedStreamButtonView<PreTitleRight: View, ImageOverlay: View, ContextMe
     var body: some View {
         AsyncImageButtonView(imageUrl: buildImageUrl(using: self.displayUrl), aspectRatio: 16.0/9.0, overlayAlignment: .bottomTrailing, refreshToken: self.refreshToken) {
             self.router.pushPlayback(self.source)
-        } content: {
+        } content: { isFocused in
             VStack(alignment: .leading) {
                 HStack {
                     Text(self.preTitleLeft)
@@ -60,6 +59,10 @@ struct SharedStreamButtonView<PreTitleRight: View, ImageOverlay: View, ContextMe
                 Text(self.title)
                     .font(.title3)
                     .lineLimit(1)
+                    #if os(tvOS)
+                    .fontWeight(isFocused ? .bold : .regular)
+                    .animation(.easeInOut(duration: 0.2), value: isFocused)
+                    #endif
                 Text(self.subtitle)
                     .truncationMode(.tail)
                     .lineLimit(1)

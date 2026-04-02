@@ -16,7 +16,7 @@ struct ChannelButtonView: View {
     var body: some View {
         AsyncImageButtonView(imageUrl: URL(string: self.channel.profileImageUrl), aspectRatio: 1.0) {
             self.router.pushToActiveTab(route: .channel(user: UserWrapper.user(self.channel)))
-        } content: {
+        } content: { _isFocused in
             VStack(alignment: .leading) {
                 Text(self.channel.displayName)
                     .font(.title3)

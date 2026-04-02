@@ -41,6 +41,9 @@ struct CategoryGridView: View {
                 await self.onPaginationThresholdMet?()
             }
         }
+        #if os(tvOS)
+        .scrollClipDisabled()
+        #endif
     }
 }
 
