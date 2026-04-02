@@ -34,6 +34,9 @@ struct ChannelGridView: View {
                 ChannelButtonView(channel: user)
             }
         })
+        #if os(tvOS)
+        .scrollClipDisabled()
+        #endif
     }
 }
 

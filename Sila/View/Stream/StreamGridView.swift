@@ -10,7 +10,7 @@ import Twitch
 
 struct StreamGridView: View {
     #if os(tvOS)
-    private static let columnSpacing: CGFloat = 28
+    private static let columnSpacing: CGFloat = 64
     private static let columns: [GridItem] = Array(
         repeating: GridItem(.flexible(), spacing: StreamGridView.columnSpacing, alignment: .top),
         count: 3
@@ -64,6 +64,9 @@ struct StreamGridView: View {
                     }
                 }
         }
+        #if os(tvOS)
+        .scrollClipDisabled()
+        #endif
     }
 }
 
