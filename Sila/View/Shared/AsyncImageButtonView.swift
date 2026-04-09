@@ -12,7 +12,7 @@ struct AsyncImageButtonView<Content: View, ImageOverlay: View, ContextMenu: View
         #if os(macOS)
         10.0
         #elseif os(tvOS)
-        30.0
+        40.0
         #else
         20.0
         #endif
@@ -48,13 +48,27 @@ struct AsyncImageButtonView<Content: View, ImageOverlay: View, ContextMenu: View
                     .overlay(alignment: self.overlayAlignment ?? .center) {
                         self.imageOverlay?()
                     }
+                    #if os(tvOS)
                     .hoverEffect(.highlight)
+                    #endif
 
-                FocusProvider { focus in
-                    self.content(focus)
+                FocusProvider { isFocused in
+                    let horizontalPadding = 16.0
+
+                    self.content(isFocused)
+                        #if os(tvOS)
+                        .padding(.top, 8)
+                        #endif
+                        .padding(.horizontal, horizontalPadding)
+                        .padding(.bottom, 8)
+                        #if os(tvOS)
+                        // Expanded image takes ~8px on each side. Decrease corner radius based on that
+                        .background(.quinary.opacity(isFocused ? 1.0 : 0.0), in: .rect(cornerRadius: self.cornerRadius / 2))
+                        .padding(.top, isFocused ? 12 : 0)
+                        .scaleEffect(isFocused ? 1.02 : 1.0)
+                        .animation(.easeInOut(duration: 0.15), value: isFocused)
+                        #endif
                 }
-                .padding(.horizontal, 16)
-                .padding(.bottom, 8)
             }
             #if !os(tvOS)
             .background(.tertiary)

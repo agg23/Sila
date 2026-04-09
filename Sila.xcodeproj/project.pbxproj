@@ -161,6 +161,7 @@
 		66F4E42C2B812A32008C565D /* AuthController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E42B2B812A32008C565D /* AuthController.swift */; };
 		66F4E4342B813A1F008C565D /* FollowedStreamsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E4332B813A1F008C565D /* FollowedStreamsView.swift */; };
 		66F4E43D2B818499008C565D /* DataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4E43C2B818499008C565D /* DataView.swift */; };
+		66F6FA7F2F88639600C4C54D /* Twitch in Frameworks */ = {isa = PBXBuildFile; productRef = 66F6FA7E2F88639600C4C54D /* Twitch */; };
 		66F73D0F2EC0F1C00093A4A6 /* PresentableTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F73D0E2EC0F1C00093A4A6 /* PresentableTypes.swift */; };
 		66F73D112EC0F1D80093A4A6 /* PresentableControllerBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F73D102EC0F1D80093A4A6 /* PresentableControllerBase.swift */; };
 		66F73D132EC0F1EC0093A4A6 /* PresentableInternalManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F73D122EC0F1EC0093A4A6 /* PresentableInternalManager.swift */; };
@@ -378,6 +379,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				66F6FA7F2F88639600C4C54D /* Twitch in Frameworks */,
 				6685E4312EE4AB4E00E1C20C /* KeychainWrapper in Frameworks */,
 				6685E4642EE5F3ED00E1C20C /* UIImageColors in Frameworks */,
 				6685E40F2EE3E99400E1C20C /* SwiftUI.framework in Frameworks */,
@@ -940,6 +942,7 @@
 			packageProductDependencies = (
 				6685E4302EE4AB4E00E1C20C /* KeychainWrapper */,
 				6685E4632EE5F3ED00E1C20C /* UIImageColors */,
+				66F6FA7E2F88639600C4C54D /* Twitch */,
 			);
 			productName = WidgetsExtension;
 			productReference = 6685E40B2EE3E99400E1C20C /* WidgetsExtension.appex */;
@@ -1586,6 +1589,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 66E102172B8262AC007A44D4 /* XCRemoteSwiftPackageReference "KeychainWrapper" */;
 			productName = KeychainWrapper;
+		};
+		66F6FA7E2F88639600C4C54D /* Twitch */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 66C8E4702F78349200095195 /* XCRemoteSwiftPackageReference "swift-twitch-client" */;
+			productName = Twitch;
 		};
 		66F73D6C2EC6D4FA0093A4A6 /* Twitch */ = {
 			isa = XCSwiftPackageProductDependency;

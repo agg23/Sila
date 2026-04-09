@@ -45,9 +45,17 @@ struct SharedStreamButtonView<PreTitleRight: View, ImageOverlay: View, ContextMe
             self.router.pushPlayback(self.source)
         } content: { isFocused in
             VStack(alignment: .leading) {
+                #if os(tvOS)
+                let titleFont: Font = .system(size: 24)
+                let subtitleFont: Font = .system(size: 20)
+                #else
+                let titleFont: Font = .title3
+                let subtitleFont: Font = .subheadline
+                #endif
+
                 HStack {
                     Text(self.preTitleLeft)
-                        .font(.subheadline.weight(.medium))
+                        .font(subtitleFont)
                         .foregroundStyle(.secondary)
                         .lineLimit(1)
 
@@ -57,17 +65,22 @@ struct SharedStreamButtonView<PreTitleRight: View, ImageOverlay: View, ContextMe
                 }
 
                 Text(self.title)
-                    .font(.title3)
+                    .font(titleFont)
                     .lineLimit(1)
-                    #if os(tvOS)
-                    .fontWeight(isFocused ? .bold : .regular)
-                    .animation(.easeInOut(duration: 0.2), value: isFocused)
-                    #endif
                 Text(self.subtitle)
+                    .font(subtitleFont)
+                    #if os(tvOS)
+                    .foregroundStyle(.secondary)
+                    #endif
                     .truncationMode(.tail)
                     .lineLimit(1)
             }
             .frame(minWidth: 0, maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .leading)
+//            .padding(16)
+//            .background(.quinary.opacity(isFocused ? 1.0 : 0.0), in: .rect(cornerRadius: 20))
+//            .padding(.top, isFocused ? 8 : 0)
+//            .scaleEffect(isFocused ? 1.02 : 1.0)
+//            .animation(.easeInOut(duration: 0.2), value: isFocused)
         } imageOverlay: {
             self.imageOverlay()
         } contextMenu: {
