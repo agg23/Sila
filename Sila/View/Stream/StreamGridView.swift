@@ -13,7 +13,7 @@ struct StreamGridView: View {
     private static let columnSpacing: CGFloat = 64
     private static let columns: [GridItem] = Array(
         repeating: GridItem(.flexible(), spacing: StreamGridView.columnSpacing, alignment: .top),
-        count: 3
+        count: 4
     )
     #else
     private static let columnSpacing: CGFloat = 16

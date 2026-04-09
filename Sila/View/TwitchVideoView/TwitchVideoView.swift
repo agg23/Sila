@@ -134,12 +134,14 @@ struct TwitchVideoView: View {
             .onTapGesture {
                 self.togglePlayback()
             }
+            #if os(tvOS)
             .onExitCommand {
                 self.router.dismissPlayback()
             }
             .onPlayPauseCommand {
                 self.togglePlayback()
             }
+            #endif
             .onReceive(self.streamRefreshTimer) { _ in
                 guard let channelId = self.player.channelId else {
                     return
