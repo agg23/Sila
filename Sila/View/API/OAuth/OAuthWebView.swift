@@ -21,37 +21,108 @@ struct OAuthWebView: UIViewRepresentable {
     let completed: (_ status: OAuthStatus) -> Void
 
     init(setIsLoading: @escaping (_ status: Bool) -> Void, completed: @escaping (_ status: OAuthStatus) -> Void) {
-        // Hide Twitch sign up and "Trouble logging in" links
+        // Hide Twitch sign up, social login ("Continue with..."), "or" divider,
+        // and "Trouble logging in" elements
+        //
         // Twitch sign up is problematic for App Store review, and doesn't make much
         // sense in the app, as the user cannot follow new channels
         // "Trouble logging in" doesn't work because it links out, so we also hide it
         let hideSignUpAndTroubleLoggingIn = WKUserScript(source: """
-            const style = document.createElement("style");
-            style.textContent = `
-              button:has([data-a-target="tw-core-button-label-text"]) {
-                display: none !important;
-              }
-            
-              a:has([data-a-target="tw-core-button-label-text"]) {
-                display: none !important;
-              }
-            
-              /* Reenable display of the login button itself */
-              button[data-a-target="passport-login-button"] {
-                display: unset !important;
-              }
-            
-              /* Reenable display of 2FA code submit button */
-              button[type=submit] {
-                display: unset !important;
+            (function() {
+              var ATTR = "data-sila-hide";
+
+              var style = document.createElement("style");
+              style.textContent = `
+                [${ATTR}="true"] {
+                  display: none !important;
+                }
+                
+                /* Fix missing bottom scroll in OAuth Authorize page */
+                .scrollable-area {
+                  height: 100dvh !important;
+                }
+              `;
+              document.head.appendChild(style);
+
+              function hide(element) {
+                if (element && element.getAttribute(ATTR) !== "true") {
+                  element.setAttribute(ATTR, "true");
+                }
               }
 
-              a[href="https://www.twitch.tv/user/account-recovery"] {
-                display: none !important;
-              }
-            `;
+              function process() {
+                // Hide "Trouble logging in?"
+                var recoveryLinks = document.querySelectorAll('a[href*="account-recovery"]');
+                for (var i = 0; i < recoveryLinks.length; i++) {
+                  var container = recoveryLinks[i].closest("div");
+                  if (container) {
+                    hide(container);
+                  }
+                }
 
-            document.head.appendChild(style);
+                // Hide "Need help?" on 2FA page (external links don't work right)
+                var helpLinks = document.querySelectorAll('a[href*="help.twitch.tv"]');
+                for (var i = 0; i < helpLinks.length; i++) {
+                  var container = helpLinks[i].closest("div");
+                  if (container) {
+                    hide(container);
+                  }
+                }
+
+                var form = document.querySelector('form[name="login-submit-form"]')
+                        || document.querySelector('form:has(input[autocomplete="username"])');
+                if (!form) {
+                  return;
+                }
+
+                var submitBtn = form.querySelector('button[type="submit"]');
+                if (!submitBtn) {
+                  return;
+                }
+
+                // Walk up from the submit button to find the container level
+                // where it sits alongside other buttons (social logins, sign up)
+                var submitWrapper = submitBtn.parentElement;
+                while (submitWrapper && submitWrapper.parentElement) {
+                  var parent = submitWrapper.parentElement;
+                  var siblings = Array.from(parent.children);
+                  var hasOtherButtons = siblings.some(function(sibling) {
+                    return sibling !== submitWrapper
+                        && sibling.querySelector("button")
+                        && !sibling.contains(submitBtn);
+                  });
+
+                  if (hasOtherButtons && siblings.length > 2) {
+                    // Hide every sibling that does not contain the submit button
+                    for (var i = 0; i < siblings.length; i++) {
+                      if (!siblings[i].contains(submitBtn)) {
+                        hide(siblings[i]);
+                      }
+                    }
+
+                    break;
+                  }
+
+                  // Don't walk past the form
+                  if (parent === form || parent.tagName === "FORM") {
+                    break;
+                  }
+                  
+                  submitWrapper = parent;
+                }
+              }
+
+              if (document.body) {
+                process();
+              }
+
+              // Re-run on every DOM change in case there's a rerender
+              var observer = new MutationObserver(function() { process(); });
+              observer.observe(document.documentElement, {
+                childList: true,
+                subtree: true
+              });
+            })();
             """, injectionTime: .atDocumentEnd, forMainFrameOnly: false)
 
         let controller = WKUserContentController()
