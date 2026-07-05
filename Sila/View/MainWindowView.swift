@@ -32,6 +32,7 @@ struct MainWindowView: View {
     }
 
     #if !os(macOS)
+    @ViewBuilder
     private var visionOSBody: some View {
         let hasActiveVideo = self.router.activeVideo != nil
 
@@ -105,79 +106,85 @@ struct MainWindowView: View {
         .modifier(CommonMainWindowModifiers(router: self.router, authController: self.authController, openWindow: self.openWindow, showOauth: self.$showOauth))
     }
     #else
+    @ViewBuilder
     private var macOSBody: some View {
-        NavigationSplitView {
-            List(selection: self.router.tabBinding) {
-                Label("Following", systemImage: Icon.following)
-                    .tag(SelectedTab.following)
-                Label("Popular", systemImage: Icon.popular)
-                    .tag(SelectedTab.popular)
-                Label("Categories", systemImage: Icon.category)
-                    .tag(SelectedTab.categories)
-                Label("Search", systemImage: Icon.search)
-                    .tag(SelectedTab.search)
-                Label("Settings", systemImage: Icon.settings)
-                    .tag(SelectedTab.settings)
+        ZStack {
+            NavigationSplitView {
+                List(selection: self.router.tabBinding) {
+                    Label("Following", systemImage: Icon.following)
+                        .tag(SelectedTab.following)
+                    Label("Popular", systemImage: Icon.popular)
+                        .tag(SelectedTab.popular)
+                    Label("Categories", systemImage: Icon.category)
+                        .tag(SelectedTab.categories)
+                    Label("Search", systemImage: Icon.search)
+                        .tag(SelectedTab.search)
+                    Label("Settings", systemImage: Icon.settings)
+                        .tag(SelectedTab.settings)
+                }
+                .navigationTitle("Sila")
+            } detail: {
+                NavigationStack(path: self.router.pathBinding(for: self.router.tab)) {
+                    Group {
+                        switch self.router.tab {
+                        case .following:
+                            FollowedStreamsView()
+                                .navigationTitle("Following")
+                        case .popular:
+                            PopularView()
+                                .navigationTitle("Popular")
+                        case .categories:
+                            CategoryListView()
+                                .navigationTitle("Categories")
+                        case .search:
+                            SearchView()
+                                .navigationTitle("Search")
+                        case .settings:
+                            SettingsView()
+                                .navigationTitle("Settings")
+                        }
+                    }
+                    .toolbar {
+                        defaultToolbar()
+                    }
+                    .navigationDestination(for: Route.self) { route in
+                        switch route {
+                        case .category(game: let gameWrapper):
+                            CategoryView(category: gameWrapper)
+                        case .channel(user: let userWrapper):
+                            ChannelView(channel: userWrapper)
+                                .toolbar {
+                                    defaultToolbar()
+                                }
+                        }
+                    }
+                }
             }
-            .navigationTitle("Sila")
-        } detail: {
-            NavigationStack(path: self.router.pathBinding(for: self.router.tab)) {
-                Group {
-                    switch self.router.tab {
-                    case .following:
-                        FollowedStreamsView()
-                            .navigationTitle("Following")
-                    case .popular:
-                        PopularView()
-                            .navigationTitle("Popular")
-                    case .categories:
-                        CategoryListView()
-                            .navigationTitle("Categories")
-                    case .search:
-                        SearchView()
-                            .navigationTitle("Search")
-                    case .settings:
-                        SettingsView()
-                            .navigationTitle("Settings")
+
+            if let activeVideo = self.router.activeVideo {
+                TwitchEmbeddedContentView(streamableVideo: activeVideo)
+                    .transition(
+                        .asymmetric(
+                            insertion: .scale(scale: 0.5).combined(with: .opacity),
+                            removal: .scale(scale: 0.8).combined(with: .opacity)
+                        )
+                        .animation(.easeInOut(duration: 0.2))
+                    )
+                    .zIndex(1)
+                    // Dismiss any open video when we close the window
+                    .onChange(of: self.scene) { _, newValue in
+                        switch newValue {
+                        case .background, .inactive:
+                            self.router.activeVideo = nil
+                        default:
+                            break
+                        }
                     }
-                }
-                .toolbar {
-                    defaultToolbar()
-                }
-                .navigationDestination(for: Route.self) { route in
-                    switch route {
-                    case .category(game: let gameWrapper):
-                        CategoryView(category: gameWrapper)
-                    case .channel(user: let userWrapper):
-                        ChannelView(channel: userWrapper)
-                            .toolbar {
-                                defaultToolbar()
-                            }
-                    }
-                }
             }
         }
         .modifier(CommonMainWindowModifiers(router: self.router, authController: self.authController, openWindow: self.openWindow, showOauth: self.$showOauth))
     }
     #endif
-
-    func open(stream channel: String) {
-        Task {
-            let api = try AuthShortcut.getAPI(self.authController)
-
-            let (streams, _) = try await api.helix(endpoint: .getStreams(userLogins: [channel]))
-
-            guard streams.count > 0 else {
-                print("Channel \"\(channel)\" is not live.")
-                return
-            }
-
-            let stream = streams[0]
-            DispatchQueue.main.async {
-                openWindow(id: Window.stream, value: stream)
-            }
-        }
-    }
 }
 
 // MARK: - Common Modifiers

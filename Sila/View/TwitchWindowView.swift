@@ -99,6 +99,9 @@ struct TwitchContentView: View {
                     self.player.setIsVideo(false)
                 }
             }
+            .onDisappear {
+                self.player.destroy()
+            }
             // TODO: Rewrite after windowing changes
 //            .onDisappear {
 //                print("Clearing onMute")

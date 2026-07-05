@@ -87,6 +87,26 @@ struct OnEventContinuation: Identifiable, Equatable {
 
     var webView: WKWebView?
 
+    func destroy() {
+        guard let webView = self.webView else {
+            return
+        }
+
+        print("Destroying webview")
+
+        webView.stopLoading()
+
+        // Kill any content on the curent page
+        webView.load(URLRequest(url: URL(string: "about:blank")!))
+
+        webView.removeFromSuperview()
+
+        // Break message handler retain cycle
+        webView.configuration.userContentController.removeScriptMessageHandler(forName: "twitch")
+
+        self.webView = nil
+    }
+
     init() {
         self.currentTime = 0.0
         self.duration = 0.0
