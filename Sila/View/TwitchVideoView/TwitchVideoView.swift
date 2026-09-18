@@ -64,7 +64,11 @@ struct TwitchVideoView: View {
                             self.resetTimer()
                         }
                     }
+                    #if os(macOS)
+                    .padding([.horizontal], 40)
+                    #else
                     .padding([.horizontal, .top], 40)
+                    #endif
                 }
             }
             .onTapGesture {

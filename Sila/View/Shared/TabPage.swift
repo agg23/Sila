@@ -42,9 +42,7 @@ struct TabPage<Content: View>: View {
                         CategoryView(category: gameWrapper)
                     case .channel(user: let userWrapper):
                         ChannelView(channel: userWrapper)
-                            .toolbar {
-                                defaultToolbar()
-                            }
+                            .defaultToolbarItem()
                     }
                 })
                 #if !os(macOS)

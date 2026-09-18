@@ -9,4 +9,6 @@ import SwiftUI
 
 extension EnvironmentValues {
     @Entry var disablePrimaryOrnaments: Bool = false
+
+    @Entry var enableToolbar: Bool = true
 }

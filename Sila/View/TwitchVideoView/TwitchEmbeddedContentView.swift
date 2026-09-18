@@ -15,6 +15,11 @@ struct TwitchEmbeddedContentView: View {
 
     var body: some View {
         TwitchContentView(controlVisibility: self.$controlVisibility, player: self.player, streamableVideo: self.streamableVideo, isStandaloneWindow: false)
+            #if os(macOS)
+            // When macOS is given a black background, it pops in and out of the title area
+            .background(.black)
+            #else
             .roundedBackground(.solid(.black))
+            #endif
     }
 }

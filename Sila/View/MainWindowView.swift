@@ -8,6 +8,8 @@
 import SwiftUI
 import Twitch
 
+private let ANIMATION_DURATION_S: Double = 0.2
+
 struct MainWindowView: View {
     #if os(visionOS)
     @Environment(\.openImmersiveSpace) private var openImmersiveSpace
@@ -22,6 +24,10 @@ struct MainWindowView: View {
     @Environment(Router.self) private var router
 
     @State private var showOauth = false
+
+    #if os(macOS)
+    @State private var columnVisibility: NavigationSplitViewVisibility = .all
+    #endif
 
     var body: some View {
         #if !os(macOS)
@@ -41,9 +47,7 @@ struct MainWindowView: View {
             TabView(selection: self.router.tabBinding) {
                 TabPage(title: "Following", systemImage: Icon.following, tab: .following) {
                     FollowedStreamsView()
-                        .toolbar {
-                            defaultToolbar()
-                        }
+                        .defaultToolbarItem()
                 }
 
                 TabPage(title: "Popular", systemImage: Icon.popular, tab: .popular) {
@@ -58,17 +62,13 @@ struct MainWindowView: View {
 
                 TabPage(title: "Search", systemImage: Icon.search, tab: .search) {
                     SearchView()
-                        .toolbar {
-                            defaultToolbar()
-                        }
+                        .defaultToolbarItem()
                     .toolbar(hasActiveVideo ? .hidden : .automatic, for: .tabBar)
                 }
 
                 TabPage(title: "Settings", systemImage: Icon.settings, tab: .settings) {
                     SettingsView()
-                        .toolbar {
-                            defaultToolbar()
-                        }
+                        .defaultToolbarItem()
                     .toolbar(hasActiveVideo ? .hidden : .automatic, for: .tabBar)
                 }
             }
@@ -108,8 +108,10 @@ struct MainWindowView: View {
     #else
     @ViewBuilder
     private var macOSBody: some View {
+        let isPlaying = self.router.activeVideo != nil
+
         ZStack {
-            NavigationSplitView {
+            NavigationSplitView(columnVisibility: self.$columnVisibility) {
                 List(selection: self.router.tabBinding) {
                     Label("Following", systemImage: Icon.following)
                         .tag(SelectedTab.following)
@@ -122,7 +124,7 @@ struct MainWindowView: View {
                     Label("Settings", systemImage: Icon.settings)
                         .tag(SelectedTab.settings)
                 }
-                .navigationTitle("Sila")
+                .toolbar(removing: .sidebarToggle)
             } detail: {
                 NavigationStack(path: self.router.pathBinding(for: self.router.tab)) {
                     Group {
@@ -144,45 +146,68 @@ struct MainWindowView: View {
                                 .navigationTitle("Settings")
                         }
                     }
-                    .toolbar {
-                        defaultToolbar()
-                    }
                     .navigationDestination(for: Route.self) { route in
                         switch route {
                         case .category(game: let gameWrapper):
                             CategoryView(category: gameWrapper)
                         case .channel(user: let userWrapper):
                             ChannelView(channel: userWrapper)
-                                .toolbar {
-                                    defaultToolbar()
-                                }
+                                .defaultToolbarItem()
                         }
                     }
                 }
             }
+            .opacity(!isPlaying ? 1 : 0)
+//            .animation(.easeInOut(duration: ANIMATION_DURATION_S), value: isPlaying)
+//            .toolbar(removing: .sidebarToggle)
+            .toolbarVisibility(isPlaying ? .hidden : .visible, for: .windowToolbar)
+//            .autoHideTitleBar(isVideoActive: isPlaying)
 
             if let activeVideo = self.router.activeVideo {
-                TwitchEmbeddedContentView(streamableVideo: activeVideo)
-                    .transition(
-                        .asymmetric(
-                            insertion: .scale(scale: 0.5).combined(with: .opacity),
-                            removal: .scale(scale: 0.8).combined(with: .opacity)
-                        )
-                        .animation(.easeInOut(duration: 0.2))
-                    )
-                    .zIndex(1)
-                    // Dismiss any open video when we close the window
-                    .onChange(of: self.scene) { _, newValue in
-                        switch newValue {
-                        case .background, .inactive:
-                            self.router.activeVideo = nil
-                        default:
-                            break
-                        }
+//                NavigationSplitView(columnVisibility: .constant(.detailOnly), sidebar: { EmptyView() }) {
+                    TwitchEmbeddedContentView(streamableVideo: activeVideo)
+                    // .toolbar {
+                    //     ToolbarItemGroup(placement: .primaryAction) {
+                    //         // Playing state toolbar items
+                    //         Button("Previous", systemImage: "backward.fill") { }
+                    //         Button("Play", systemImage: "pause.fill") { }
+                    //         Button("Next", systemImage: "forward.fill") { }
+                    //     }
+                    // }
+                        .ignoresSafeArea(edges: .top)
+//                }
+                .transition(
+//                    .asymmetric(
+//                        insertion: .scale(scale: 0.2).combined(with: .opacity),
+//                        removal: .scale(scale: 0.8).combined(with: .opacity)
+//                    )
+                    .opacity
+                    //                        .asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .trailing))
+                )
+                .zIndex(1)
+            // Dismiss any open video when we close the window
+                .onChange(of: self.scene) { _, newValue in
+                    switch newValue {
+                    case .background, .inactive:
+                        self.router.activeVideo = nil
+                    default:
+                        break
                     }
+                }
+                .autoHideTitleBar(isVideoActive: isPlaying)
             }
         }
+        .ignoresSafeArea(edges: .top)
+
         .modifier(CommonMainWindowModifiers(router: self.router, authController: self.authController, openWindow: self.openWindow, showOauth: self.$showOauth))
+        .animation(.easeInOut(duration: ANIMATION_DURATION_S), value: isPlaying)
+        .environment(\.enableToolbar, true)
+//        .autoHideTitleBar(isVideoActive: isPlaying)
+//        .onChange(of: isPlaying) { _, playing in
+//            withAnimation(.easeInOut(duration: ANIMATION_DURATION_S)) {
+//                columnVisibility = playing ? .detailOnly : .all
+//            }
+//        }
     }
     #endif
 }

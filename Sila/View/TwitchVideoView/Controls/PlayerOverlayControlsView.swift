@@ -7,6 +7,16 @@
 
 import SwiftUI
 
+private struct OverlayButton: Identifiable {
+    var id: String {
+        self.label
+    }
+
+    let label: String
+    let icon: String
+    let action: () -> Void
+}
+
 struct PlayerOverlayControlsView: View {
     @Environment(Router.self) private var router
 
@@ -28,21 +38,32 @@ struct PlayerOverlayControlsView: View {
     let activeChanged: (Bool) -> Void
 
     var body: some View {
-        HStack(spacing: 20) {
-            PlayerOverlayButtonView(label: "Back", icon: Icon.back) {
+        let overlayButtons = [
+            OverlayButton(label: "Back", icon: Icon.back, action: {
                 self.router.activeVideo = nil
-            }
-
-            PlayerOverlayButtonView(label: "Reload", icon: Icon.refresh) {
+            }),
+            OverlayButton(label: "Reload", icon: Icon.refresh, action: {
                 self.player.reload()
                 self.onInteraction()
-            }
-
-            let dimLabel = "\(self.dimSurroundings ? "Undim" : "Dim") Surroundings"
-
-            PlayerOverlayButtonView(label: dimLabel, icon: Icon.dimming) {
+            }),
+            OverlayButton(label: "\(self.dimSurroundings ? "Undim" : "Dim") Surroundings", icon: Icon.dimming, action: {
                 self.dimSurroundings.toggle()
                 self.onInteraction()
+            })
+        ]
+
+//        #if os(macOS)
+////        Color.clear.toolbar {
+////            ToolbarItemGroup(placement: .primaryAction) {
+////                ForEach(overlayButtons) { button in
+////                    PlayerOverlayButtonView(label: button.label, icon: button.icon, action: button.action)
+////                }
+////            }
+////        }
+//        #else
+        HStack(spacing: 20) {
+            ForEach(overlayButtons) { button in
+                PlayerOverlayButtonView(label: button.label, icon: button.icon, action: button.action)
             }
 
             Spacer()
@@ -81,5 +102,9 @@ struct PlayerOverlayControlsView: View {
                 }
             #endif
         }
+//        #endif
+        #if os(macOS)
+        .padding(.top, 24)
+        #endif
     }
 }

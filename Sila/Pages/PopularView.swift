@@ -85,17 +85,12 @@ private struct PopularContentView: View {
         }
         // .toolbar is here so it can be in the previews without networking
         .toolbar {
-            #if !os(macOS)
-            ToolbarItem(placement: .topBarTrailing) {
+            HidableToolbarItem(placement: defaultToolbarPlacement) {
                 LanguageFilterPickerView(language: self.$selectedLanguage)
             }
-            #else
-            ToolbarItem(placement: .automatic) {
-                LanguageFilterPickerView(language: self.$selectedLanguage)
+            HidableToolbarItem(placement: defaultToolbarPlacement) {
+                AuthBadgeView()
             }
-            #endif
-
-            defaultToolbar()
         }
     }
 }

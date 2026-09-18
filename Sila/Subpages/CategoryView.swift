@@ -31,8 +31,8 @@ struct CategoryView: View {
                 }
             }
         }
-        // TODO: Readd when .navigationTitle is fixed
-//        .navigationTitlePlaceholder()
+                // TODO: Readd when .navigationTitle is fixed
+        // .navigationTitlePlaceholder()
     }
 
     func fetchData(on api: TwitchClient, overwriting: Bool, language: String, using cursor: String? = nil) async throws -> ([Twitch.Stream], Game, String?) {
@@ -113,11 +113,12 @@ private struct CategoryViewContent: View {
         }
         // .toolbar is here so it can be in the previews without networking
         .toolbar {
-            ToolbarItem(placement: defaultToolbarPlacement) {
+            HidableToolbarItem(placement: defaultToolbarPlacement) {
                 LanguageFilterPickerView(language: self.$selectedLanguage)
             }
-
-            defaultToolbar()
+            HidableToolbarItem(placement: defaultToolbarPlacement) {
+                AuthBadgeView()
+            }
         }
         .largeNavigationTitle(self.game.name)
     }

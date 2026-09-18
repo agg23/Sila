@@ -50,6 +50,7 @@ struct SilaAppApp: App {
         } defaultValue: {
             WindowModel(router: self.router)
         }
+//        .windowToolbarStyle(.unified)
         #if os(visionOS)
         .windowStyle(.plain)
         .windowResizability(.contentSize)
