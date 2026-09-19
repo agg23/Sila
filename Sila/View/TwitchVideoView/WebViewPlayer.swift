@@ -112,7 +112,7 @@ struct OnEventContinuation: Identifiable, Equatable {
     func play() {
         self.webView?.evaluateJavaScript("""
             try {
-                Twitch._player.play();
+                window.__silaSendCommand(window.__silaCommand.play, null);
             } catch (e) {
                 console.error(`Failed to play: ${e}`);
             }
@@ -136,7 +136,7 @@ struct OnEventContinuation: Identifiable, Equatable {
     func pause() {
         self.webView?.evaluateJavaScript("""
             try {
-                Twitch._player.pause();
+                window.__silaSendCommand(window.__silaCommand.pause, null);
             } catch (e) {
                 console.error(`Failed to pause: ${e}`);
             }
@@ -155,7 +155,7 @@ struct OnEventContinuation: Identifiable, Equatable {
     private func seekImmediate(_ time: Double) {
         self.webView?.evaluateJavaScript("""
             try {
-                Twitch._player.seek(\(time));
+                window.__silaSendCommand(window.__silaCommand.seek, \(time));
             } catch (e) {
                 console.error(`Failed to seek: ${e}`);
             }
@@ -179,7 +179,7 @@ struct OnEventContinuation: Identifiable, Equatable {
     func setMute(_ mute: Bool) async -> Bool {
         await self.awaitJavaScriptContinuation("""
             try {
-                Twitch._player.setMuted(\(mute));
+                window.__silaSendCommand(window.__silaCommand.setMuted, \(mute));
             } catch (e) {
                 console.error(`Failed to set muted: ${e}`);
             }
@@ -211,10 +211,10 @@ struct OnEventContinuation: Identifiable, Equatable {
         self.webView?.evaluateJavaScript("""
             try {
                 if (\(self.muted)) {
-                    Twitch._player.setMuted(false);
+                    window.__silaSendCommand(window.__silaCommand.setMuted, false);
                 }
 
-                Twitch._player.setVolume(\(volume));
+                window.__silaSendCommand(window.__silaCommand.setVolume, \(volume));
             } catch (e) {
                 console.error(`Failed to set volume: ${e}`);
             }
@@ -224,7 +224,7 @@ struct OnEventContinuation: Identifiable, Equatable {
     func setQuality(_ quality: String) {
         self.webView?.evaluateJavaScript("""
             try {
-                Twitch._player.setQuality("\(quality)");
+                window.__silaSendCommand(window.__silaCommand.setQuality, "\(quality)");
             } catch (e) {
                 console.error(`Failed to set quality: ${e}`);
             }
