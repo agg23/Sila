@@ -85,13 +85,21 @@ struct VideoQuality {
 
     func play() {
         self.webView?.evaluateJavaScript("""
-            Twitch._player.play();
+            try {
+                window.__silaSendCommand(window.__silaCommand.play, null);
+            } catch (e) {
+                console.error(`Failed to play: ${e}`);
+            }
         """)
     }
 
     func pause() {
         self.webView?.evaluateJavaScript("""
-            Twitch._player.pause();
+            try {
+                window.__silaSendCommand(window.__silaCommand.pause, null);
+            } catch (e) {
+                console.error(`Failed to pause: ${e}`);
+            }
         """)
     }
 
@@ -106,7 +114,11 @@ struct VideoQuality {
 
     private func seekImmediate(_ time: Double) {
         self.webView?.evaluateJavaScript("""
-            Twitch._player.seek(\(time));
+            try {
+                window.__silaSendCommand(window.__silaCommand.seek, \(time));
+            } catch (e) {
+                console.error(`Failed to seek: ${e}`);
+            }
         """)
     }
 
@@ -126,23 +138,35 @@ struct VideoQuality {
 
     func setMute(_ mute: Bool) {
         self.webView?.evaluateJavaScript("""
-            Twitch._player.setMuted(\(mute));
+            try {
+                window.__silaSendCommand(window.__silaCommand.setMuted, \(mute));
+            } catch (e) {
+                console.error(`Failed to set muted: ${e}`);
+            }
         """)
     }
 
     func setVolume(_ volume: Double) {
         self.webView?.evaluateJavaScript("""
-            if (\(self.muted)) {
-                Twitch._player.setMuted(false);
-            }
+            try {
+                if (\(self.muted)) {
+                    window.__silaSendCommand(window.__silaCommand.setMuted, false);
+                }
 
-            Twitch._player.setVolume(\(volume));
+                window.__silaSendCommand(window.__silaCommand.setVolume, \(volume));
+            } catch (e) {
+                console.error(`Failed to set volume: ${e}`);
+            }
         """)
     }
 
     func setQuality(_ quality: String) {
         self.webView?.evaluateJavaScript("""
-            Twitch._player.setQuality("\(quality)");
+            try {
+                window.__silaSendCommand(window.__silaCommand.setQuality, "\(quality)");
+            } catch (e) {
+                console.error(`Failed to set quality: ${e}`);
+            }
         """)
     }
 
@@ -157,7 +181,7 @@ struct VideoQuality {
     func applyEvent(_ event: TwitchEvent) {
         self.currentTime = event.currentTime
         self.duration = event.duration
-        
+
         // Mark low enough volume as muted as well
         self.muted = event.muted || event.volume < 0.01
         self.status = event.playback

@@ -63,12 +63,33 @@ struct TwitchWebView: UIViewRepresentable {
             };
             """, injectionTime: .atDocumentStart, forMainFrameOnly: true)
 
-        let injectPlayerAPI = WKUserScript(source: """
-            const script = document.createElement("script");
-            script.src = "https://player.twitch.tv/js/embed/v1.js";
+        // Send playback commands directly via the message protocol
+        // This previously used `Twitch._player`, but it required touching internal Twitch JS and regressed several times
+        let injectPlayerCommands = WKUserScript(source: """
+            window.__silaCommand = Object.freeze({
+                disableCaptions: 0,
+                enableCaptions: 1,
+                pause: 2,
+                play: 3,
+                seek: 4,
+                setChannel: 5,
+                setChannelID: 6,
+                setCollection: 7,
+                setQuality: 8,
+                setVideo: 9,
+                setMuted: 10,
+                setVolume: 11
+            });
 
-            document.head.appendChild(script);
-        """, injectionTime: .atDocumentEnd, forMainFrameOnly: true)
+            // Twitch only responds to commands with `event.source === window.parent`
+            window.__silaSendCommand = (command, params) => {
+                window.postMessage({
+                    namespace: "twitch-embed-player-proxy",
+                    eventName: command,
+                    params: params !== undefined ? params : null
+                }, "*");
+            };
+        """, injectionTime: .atDocumentStart, forMainFrameOnly: true)
 
         let injectVideoGetter = WKUserScript(source: """
             window.getVideoTag = () => {
@@ -127,7 +148,7 @@ struct TwitchWebView: UIViewRepresentable {
         // One final script is injected after everything else has loaded in webView(:didFinish:)
         let controller = WKUserContentController()
         controller.addUserScript(overrideScript)
-        controller.addUserScript(injectPlayerAPI)
+        controller.addUserScript(injectPlayerCommands)
         controller.addUserScript(injectVideoGetter)
         // TODO: It seems like hiding the Chrome is breaking the video playback somehow
 //        controller.addUserScript(hideChromeScript)
@@ -261,29 +282,6 @@ class TwitchWebViewCoordinator: NSObject, WKUIDelegate, WKNavigationDelegate, WK
                     ...newContentRestrictions,
                 },
             }));
-
-            // Setup Twitch client
-            // Calling this, rather than treating it as a constructor, creates the _player object
-            // This will throw an error
-            try {
-                Twitch.Player();
-            } catch {
-
-            }
-
-            // Mark video as in current window
-            Twitch._player._embedWindow = window;
-
-            window.addEventListener("message", (event) => {
-                if (event.data.eventName === "ready") {
-                    console.log("Ready");
-                    // TODO: Does this actually do anything?
-                    Twitch._player.play();
-                    // Twitch._player.setMute(false);
-                    window.getVideoTag().muted = false;
-                    console.log(Twitch._player);
-                }
-            });
         """)
 
 
