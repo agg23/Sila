@@ -21,6 +21,13 @@ import WebKit
     static let CLIENT_SECRET = (Bundle.main.infoDictionary?["API_SECRET"] as! String).replacingOccurrences(of: "\"", with: "")
     static let REDIRECT_URL = "http://localhost"
 
+    /// The client ID the auth session belongs to. tvOS uses Twitch own's TV client token as that has a nicer auth flow
+    #if os(tvOS)
+    static let USER_CLIENT_ID = TwitchTVSession.clientID
+    #else
+    static let USER_CLIENT_ID = CLIENT_ID
+    #endif
+
     var status: AuthStatus
     let requestReauthSubject: PassthroughSubject<(), Never>
 
@@ -39,8 +46,16 @@ import WebKit
         if let oauthToken = AppGroup.shared.oauthToken, let user = AppGroup.shared.user {
             // We're logged in. Create authed Helix instance
             // Won't throw
-            let client = TwitchClient(authentication: .init(oAuth: oauthToken, clientID: AuthController.CLIENT_ID, userID: user.id, userLogin: user.username), urlSession: self.session)
+            let client = TwitchClient(authentication: .init(oAuth: oauthToken, clientID: AuthController.USER_CLIENT_ID, userID: user.id, userLogin: user.username), urlSession: self.session)
             self.status = .user(user: user, api: client)
+
+            #if os(tvOS)
+            // The player's cookies usually survive relaunch, but planting them again is
+            // cheap and covers a web data store that didn't persist
+            Task {
+                await TwitchTVSession.installWebSession(token: oauthToken)
+            }
+            #endif
         } else if let publicToken = AppGroup.shared.publicToken {
             let client = sharedCreatePublicClient(with: publicToken, session: self.session)
             self.status = .publicLoggedOut(api: client)
@@ -57,10 +72,16 @@ import WebKit
 
     func setLoggedInCredentials(withToken token: String, authUser: AuthUser) {
         // Helix creation can not throw because we set all of the cred values
-        let client = TwitchClient(authentication: TwitchCredentials(oAuth: token, clientID: AuthController.CLIENT_ID, userID: authUser.id, userLogin: authUser.username), urlSession: self.session)
+        let client = TwitchClient(authentication: TwitchCredentials(oAuth: token, clientID: AuthController.USER_CLIENT_ID, userID: authUser.id, userLogin: authUser.username), urlSession: self.session)
         self.status = .user(user: authUser, api: client)
 
         AppGroup.shared.updateUser(authUser, token: token)
+
+        #if os(tvOS)
+        Task {
+            await TwitchTVSession.installWebSession(token: token)
+        }
+        #endif
     }
 
     #if TARGET_Sila
@@ -69,7 +90,11 @@ import WebKit
         // Clear cookies
         HTTPCookieStorage.shared.removeCookies(since: Date.distantPast)
 
-        #if !os(tvOS)
+        #if os(tvOS)
+        Task {
+            await TwitchTVSession.removeWebSession()
+        }
+        #else
         WKWebsiteDataStore.default().fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { records in
             records.forEach { record in
                 WKWebsiteDataStore.default().removeData(ofTypes: record.dataTypes, for: [record], completionHandler: {})

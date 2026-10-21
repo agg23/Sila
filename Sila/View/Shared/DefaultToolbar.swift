@@ -9,7 +9,11 @@ import SwiftUI
 
 func defaultToolbar() -> some ToolbarContent {
     return ToolbarItem(placement: defaultToolbarPlacement) {
+        #if os(tvOS)
+        EmptyView()
+        #else
         AuthBadgeView()
+        #endif
     }
 }
 

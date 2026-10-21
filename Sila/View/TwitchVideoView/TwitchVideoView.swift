@@ -75,12 +75,27 @@ struct TwitchVideoView: View {
                     #endif
                 }
             }
+            #if !os(tvOS)
             .onTapGesture {
                 self.toggleVisibility()
             }
+            #endif
             #if os(tvOS)
             .ignoresSafeArea()
-            .focusable(true)
+            // Create an invisible focusable surface as the webview isn't focusable
+            .overlay {
+                if self.controlVisibility != .visible {
+                    Color.clear
+                        .contentShape(Rectangle())
+                        .focusable(true)
+                        .onTapGesture {
+                            self.toggleVisibility()
+                        }
+                        .onMoveCommand { _ in
+                            self.forceVisibility()
+                        }
+                }
+            }
             #elseif os(visionOS)
             // .center is used so the ornament isn't cut off at the edge (or a little past the edge) of the window
             // This would break the appearance animation
@@ -131,12 +146,21 @@ struct TwitchVideoView: View {
                 }
             }
             #endif
+            #if !os(tvOS)
             .onTapGesture {
                 self.togglePlayback()
             }
+            #endif
             #if os(tvOS)
             .onExitCommand {
-                self.router.dismissPlayback()
+                if self.controlVisibility == .visible {
+                    self.clearTimer()
+                    withAnimation {
+                        self.controlVisibility = .hidden
+                    }
+                } else {
+                    self.router.dismissPlayback()
+                }
             }
             .onPlayPauseCommand {
                 self.togglePlayback()
@@ -165,7 +189,7 @@ struct TwitchVideoView: View {
                 self.player.channel = channel
 
                 await EmoteController.shared.fetchUserEmotes(for: channelId)
-                
+
                 self.fetchStreamData(channelId: channelId)
             }
             .onReceive(WindowController.shared.popoutChatSubject, perform: { popoutUserId in

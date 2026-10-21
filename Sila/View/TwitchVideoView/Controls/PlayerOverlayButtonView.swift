@@ -23,8 +23,11 @@ struct PlayerOverlayButtonView: View {
             }
         }
         // .help() must be cached in some scenarios. Invalidate this view via .id() to rerender tooltip
+        #if !os(tvOS)
+        // On tvOS the labels change, causing it to act weird
         .id(self.label)
         .help(self.label)
+        #endif
         #if os(tvOS)
         .font(.headline)
         .labelStyle(.titleAndIcon)

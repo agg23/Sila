@@ -29,6 +29,8 @@ struct StreamGridView: View {
     }()
     #endif
 
+    @FocusState private var focusedStream: Twitch.Stream.ID?
+
     let streams: [Twitch.Stream]
 
     let refreshToken: RefreshToken
@@ -44,6 +46,7 @@ struct StreamGridView: View {
         LazyVGrid(columns: StreamGridView.columns, spacing: StreamGridView.columnSpacing) {
             ForEach(self.streams) { stream in
                 StreamButtonView(stream: stream, refreshToken: refreshToken)
+                    .focused(self.$focusedStream, equals: stream.id)
             }
 
             Color.clear
@@ -66,6 +69,8 @@ struct StreamGridView: View {
         }
         #if os(tvOS)
         .scrollClipDisabled()
+        // Focus the first stream on open
+        .defaultFocus(self.$focusedStream, self.streams.first?.id, priority: .userInitiated)
         #endif
     }
 }

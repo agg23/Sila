@@ -56,7 +56,10 @@ struct MainWindowView: View {
             }
         }
         .environment(\.disablePrimaryOrnaments, hasActiveVideo)
-        #if !os(tvOS)
+        #if os(tvOS)
+        // Always use sidebar on Vision
+        .tabViewStyle(.sidebarAdaptable)
+        #else
         .roundedBackground(.glass)
         #endif
         .modifier(CommonMainWindowModifiers(router: self.router, authController: self.authController, showOauth: self.$showOauth))
@@ -212,11 +215,16 @@ private struct CommonMainWindowModifiers: ViewModifier {
 
                 print("Improperly handled deeplink \(url)")
             }
-            #if !os(tvOS)
             .onReceive(self.authController.requestReauthSubject) { _ in
                 // We need to reauth
                 self.showOauth = true
             }
+            #if os(tvOS)
+            // The device code login wants the whole screen
+            .fullScreenCover(isPresented: self.$showOauth) {
+                OAuthView()
+            }
+            #else
             .sheet(isPresented: self.$showOauth) {
                 OAuthView()
             }

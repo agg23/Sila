@@ -22,7 +22,15 @@ class AppGroup {
 
     // This should never be nil (only when suiteName is empty)
     private static var defaults: UserDefaults = UserDefaults(suiteName: AppGroup.identifier)!
-    private static var keychain: KeychainWrapper = KeychainWrapper(serviceName: "im.agg.sila", accessGroup: AppGroup.identifier)
+
+    private static var keychain: KeychainWrapper = {
+        #if os(tvOS)
+        // tvOS has no widgets, so this does nothing. It will crash without properly handling it though
+        KeychainWrapper(serviceName: "im.agg.sila")
+        #else
+        KeychainWrapper(serviceName: "im.agg.sila", accessGroup: AppGroup.identifier)
+        #endif
+    }()
 
     var user: AuthUser? {
         get {

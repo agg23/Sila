@@ -206,6 +206,15 @@ final class TwitchWebViewController: NSObject, TwitchPlaybackBackend, InternalTw
 
     func internalWebViewDidReceiveScriptMessageBody(_ body: Any) {
         let body = body as! NSDictionary
+
+        #if DEBUG
+        // Console traffic from the bridge
+        if let level = body["__silaConsole"] as? String {
+            print("[JS \(level)] \(body["message"] as? String ?? "")")
+            return
+        }
+        #endif
+
         let params = body["params"] as? NSDictionary ?? [:]
 
         // Playback info
@@ -247,7 +256,17 @@ final class TwitchWebViewController: NSObject, TwitchPlaybackBackend, InternalTw
         }
 
         if (status != self.lastStatus) {
-            print(status)
+            print("status \(self.lastStatus) -> \(status)")
+        }
+
+        if status == .playing && self.lastStatus != .playing {
+            self.evaluateJavaScript(#"""
+                try {
+                    window.__silaSendCommand(window.__silaCommand.disableCaptions, null);
+                } catch (e) {
+                    console.error(`Failed to disable captions: ${e}`);
+                }
+                """#, completion: nil)
         }
 
         if self.lastStatus == .buffering {
@@ -283,6 +302,98 @@ final class TwitchWebViewController: NSObject, TwitchPlaybackBackend, InternalTw
     }
 
     private static var startupScripts: [TwitchUserScriptSpec] {
+        #if DEBUG
+        return self.consoleBridgeScripts + self.platformScripts + self.playerScripts
+        #else
+        return self.platformScripts + self.playerScripts
+        #endif
+    }
+
+    #if DEBUG
+    // Push console events into bridge
+    private static var consoleBridgeScripts: [TwitchUserScriptSpec] {
+        [
+            TwitchUserScriptSpec(source: #"""
+                (() => {
+                    const forward = (level) => {
+                        const original = console[level] ? console[level].bind(console) : () => {};
+                        console[level] = (...args) => {
+                            try {
+                                window.webkit.messageHandlers.twitch.postMessage({
+                                    __silaConsole: level,
+                                    message: args.map((arg) => {
+                                        try {
+                                            return typeof arg === "object" ? JSON.stringify(arg) : String(arg);
+                                        } catch (e) {
+                                            return "<unserializable>";
+                                        }
+                                    }).join(" ")
+                                });
+                            } catch (e) {
+                                // Handler not available in this frame; ignore
+                            }
+                            original(...args);
+                        };
+                    };
+
+                    ["log", "warn", "error"].forEach(forward);
+
+                    window.addEventListener("error", (event) => {
+                        try {
+                            window.webkit.messageHandlers.twitch.postMessage({
+                                __silaConsole: "uncaught",
+                                message: `${event.message} @ ${event.filename}:${event.lineno}`
+                            });
+                        } catch (e) {}
+                    });
+                })();
+                """#, injectionTime: .atDocumentStart, forMainFrameOnly: false),
+        ]
+    }
+    #endif
+
+    #if os(tvOS)
+    private static var platformScripts: [TwitchUserScriptSpec] {
+        [
+            TwitchUserScriptSpec(source: #"""
+                // FairPlay shim for runtimes without MSE (the tvOS private WebKit).
+                //
+                // The player only picks FairPlay as its CDM if `com.apple.fps.2_0` (the MSE
+                // flavor) is supported. Without MSE only `com.apple.fps.1_0` (native HLS) is,
+                // so it picks no CDM, usher rejects DRM streams with `no_cdm_specified`, and
+                // its native HLS FairPlay path (which is otherwise fine) is never reached.
+                // Answer for 2_0 with the key system the runtime actually has
+                (() => {
+                    const FPS_2 = "com.apple.fps.2_0";
+
+                    const keys = window.WebKitMediaKeys;
+                    if (keys && typeof keys.isTypeSupported === "function") {
+                        const isTypeSupported = keys.isTypeSupported.bind(keys);
+                        if (!isTypeSupported(FPS_2) && isTypeSupported("com.apple.fps.1_0")) {
+                            keys.isTypeSupported = (keySystem, ...rest) =>
+                                keySystem === FPS_2 ? isTypeSupported("com.apple.fps.1_0", ...rest) : isTypeSupported(keySystem, ...rest);
+                        }
+                    }
+
+                    if (typeof navigator.requestMediaKeySystemAccess === "function") {
+                        const request = navigator.requestMediaKeySystemAccess.bind(navigator);
+                        navigator.requestMediaKeySystemAccess = (keySystem, configs) => {
+                            if (keySystem !== FPS_2) {
+                                return request(keySystem, configs);
+                            }
+
+                            return request(keySystem, configs).catch(() => request("com.apple.fps", configs));
+                        };
+                    }
+                })();
+                """#, injectionTime: .atDocumentStart, forMainFrameOnly: true),
+        ]
+    }
+    #else
+    private static let platformScripts: [TwitchUserScriptSpec] = []
+    #endif
+
+    private static var playerScripts: [TwitchUserScriptSpec] {
         [
             TwitchUserScriptSpec(source: #"""
                 // Set custom window parent
@@ -348,7 +459,7 @@ final class TwitchWebViewController: NSObject, TwitchPlaybackBackend, InternalTw
                     window.postMessage({
                         namespace: "twitch-embed-player-proxy",
                         eventName: command,
-                        params: params !== undefined ? params : null
+                        params: params === undefined ? null : params
                     }, "*");
                 };
                 """#, injectionTime: .atDocumentStart, forMainFrameOnly: true),

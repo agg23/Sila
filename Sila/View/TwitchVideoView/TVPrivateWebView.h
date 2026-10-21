@@ -18,6 +18,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface TVPrivateWebView : UIView
 
 @property (nullable, nonatomic, weak) id<TVPrivateWebViewNavigationDelegate> delegate;
+
+@property (nullable, nonatomic, copy) NSString *customUserAgent;
 @property (nullable, nonatomic, readonly, copy) NSString *currentURLString;
 @property (nullable, nonatomic, readonly, copy) NSString *titleText;
 @property (nonatomic, readonly, getter=isRuntimeLoaded) BOOL runtimeLoaded;
@@ -40,6 +42,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)removeAllUserScripts;
 - (BOOL)installScriptMessageHandlerNamed:(NSString *)name;
 - (void)removeScriptMessageHandlerNamed:(NSString *)name;
+
++ (void)setWebsiteCookies:(NSArray<NSHTTPCookie *> *)cookies completion:(void (^ _Nullable)(BOOL success))completion;
++ (void)removeAllWebsiteDataWithCompletion:(void (^ _Nullable)(void))completion;
 
 @end
 

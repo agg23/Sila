@@ -21,6 +21,20 @@ static void normalizeViewLayout(UIView *view) {
     }
 }
 
+/// We have to hide the webview from focusing on tvOS, as it will steal control of the cursor
+static void detachSubtreeFromFocusEngine(UIView *view) {
+    if (view == nil) {
+        return;
+    }
+
+    view.userInteractionEnabled = NO;
+    view.accessibilityElementsHidden = YES;
+
+    for (UIView *subview in view.subviews) {
+        detachSubtreeFromFocusEngine(subview);
+    }
+}
+
 @interface TVPrivateWebView ()
 
 @property (nullable, nonatomic, strong) id runtimeWebView;
@@ -51,10 +65,32 @@ static void normalizeViewLayout(UIView *view) {
     [super layoutSubviews];
     UIView *runtimeView = (UIView *)self.runtimeWebView;
     runtimeView.frame = self.bounds;
+
+    detachSubtreeFromFocusEngine(runtimeView);
+}
+
+- (void)setCustomUserAgent:(NSString *)customUserAgent {
+    _customUserAgent = [customUserAgent copy];
+    [self applyCustomUserAgent];
+}
+
+- (void)applyCustomUserAgent {
+    if (self.runtimeWebView == nil || self.customUserAgent.length == 0) {
+        return;
+    }
+
+    SEL selector = NSSelectorFromString(@"setCustomUserAgent:");
+    if ([self.runtimeWebView respondsToSelector:selector]) {
+        ((void (*)(id, SEL, id))objc_msgSend)(self.runtimeWebView, selector, self.customUserAgent);
+    }
 }
 
 - (BOOL)canBecomeFocused {
     return NO;
+}
+
+- (NSArray<id<UIFocusEnvironment>> *)preferredFocusEnvironments {
+    return @[];
 }
 
 - (BOOL)prepareRuntimeIfNeeded {
@@ -135,6 +171,8 @@ static void normalizeViewLayout(UIView *view) {
     self.runtimeConfiguration = configuration;
     self.runtimeWebView = webViewObject;
 
+    [self applyCustomUserAgent];
+
     UIView *runtimeView = (UIView *)webViewObject;
     runtimeView.frame = self.bounds;
     runtimeView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
@@ -173,6 +211,7 @@ static void normalizeViewLayout(UIView *view) {
     }
 
     [self addSubview:runtimeView];
+    detachSubtreeFromFocusEngine(runtimeView);
     return YES;
 }
 
@@ -363,6 +402,86 @@ static void normalizeViewLayout(UIView *view) {
     [self.installedScriptMessageHandlerNames removeObject:name];
 }
 
++ (nullable id)defaultDataStore {
+    if (![[[TVPrivateWebView alloc] initWithFrame:CGRectZero] isRuntimeLoaded]) {
+        return nil;
+    }
+
+    Class dataStoreClass = NSClassFromString(@"WKWebsiteDataStore");
+    SEL defaultStoreSelector = NSSelectorFromString(@"defaultDataStore");
+    if (dataStoreClass == Nil || ![dataStoreClass respondsToSelector:defaultStoreSelector]) {
+        return nil;
+    }
+
+    return ((id (*)(id, SEL))objc_msgSend)((id)dataStoreClass, defaultStoreSelector);
+}
+
++ (nullable id)defaultHTTPCookieStore {
+    id dataStore = [self defaultDataStore];
+    SEL cookieStoreSelector = NSSelectorFromString(@"httpCookieStore");
+    if (![dataStore respondsToSelector:cookieStoreSelector]) {
+        return nil;
+    }
+
+    return ((id (*)(id, SEL))objc_msgSend)(dataStore, cookieStoreSelector);
+}
+
++ (void)removeAllWebsiteDataWithCompletion:(void (^)(void))completion {
+    if (!NSThread.isMainThread) {
+        dispatch_async(dispatch_get_main_queue(), ^{ [self removeAllWebsiteDataWithCompletion:completion]; });
+        return;
+    }
+
+    id dataStore = [self defaultDataStore];
+    Class dataStoreClass = NSClassFromString(@"WKWebsiteDataStore");
+    SEL allTypesSelector = NSSelectorFromString(@"allWebsiteDataTypes");
+    SEL removeSelector = NSSelectorFromString(@"removeDataOfTypes:modifiedSince:completionHandler:");
+    if (dataStore == nil || ![dataStoreClass respondsToSelector:allTypesSelector] || ![dataStore respondsToSelector:removeSelector]) {
+        if (completion != nil) {
+            completion();
+        }
+        return;
+    }
+
+    NSSet<NSString *> *types = ((id (*)(id, SEL))objc_msgSend)((id)dataStoreClass, allTypesSelector);
+    void (^done)(void) = ^{
+        if (completion != nil) {
+            completion();
+        }
+    };
+    ((void (*)(id, SEL, id, id, id))objc_msgSend)(dataStore, removeSelector, types, NSDate.distantPast, done);
+}
+
++ (void)setWebsiteCookies:(NSArray<NSHTTPCookie *> *)cookies completion:(void (^)(BOOL))completion {
+    // WebKit initialises itself on first use, and traps if that is off the main thread
+    if (!NSThread.isMainThread) {
+        dispatch_async(dispatch_get_main_queue(), ^{ [self setWebsiteCookies:cookies completion:completion]; });
+        return;
+    }
+
+    id cookieStore = [self defaultHTTPCookieStore];
+    SEL setCookieSelector = NSSelectorFromString(@"setCookie:completionHandler:");
+    if (cookieStore == nil || ![cookieStore respondsToSelector:setCookieSelector]) {
+        if (completion != nil) {
+            completion(NO);
+        }
+        return;
+    }
+
+    dispatch_group_t group = dispatch_group_create();
+    for (NSHTTPCookie *cookie in cookies) {
+        dispatch_group_enter(group);
+        void (^done)(void) = ^{ dispatch_group_leave(group); };
+        ((void (*)(id, SEL, id, id))objc_msgSend)(cookieStore, setCookieSelector, cookie, done);
+    }
+
+    dispatch_group_notify(group, dispatch_get_main_queue(), ^{
+        if (completion != nil) {
+            completion(YES);
+        }
+    });
+}
+
 - (void)webView:(id)webView didStartProvisionalNavigation:(id)navigation {
     self.loading = YES;
     if ([self.delegate respondsToSelector:@selector(privateWebViewDidStartLoad:)]) {
@@ -372,6 +491,8 @@ static void normalizeViewLayout(UIView *view) {
 
 - (void)webView:(id)webView didFinishNavigation:(id)navigation {
     self.loading = NO;
+
+    detachSubtreeFromFocusEngine((UIView *)self.runtimeWebView);
 
     SEL urlSelector = NSSelectorFromString(@"URL");
     if ([webView respondsToSelector:urlSelector]) {

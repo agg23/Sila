@@ -14,6 +14,9 @@ final class TVPrivateTwitchWebViewAdapter: NSObject, InternalTwitchWebView, TVPr
 
     let privateWebView: TVPrivateWebView
 
+    /// Current (as of time of commit) Safari's useragent to prevent DRM failures
+    private static let userAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.0 Safari/605.1.15"
+
     override init() {
         self.privateWebView = TVPrivateWebView(frame: .zero)
         super.init()
@@ -28,6 +31,8 @@ final class TVPrivateTwitchWebViewAdapter: NSObject, InternalTwitchWebView, TVPr
 
         _ = self.privateWebView.prepareRuntimeIfNeeded()
         _ = self.privateWebView.createRuntimeWebView()
+
+        self.privateWebView.customUserAgent = Self.userAgent
         self.privateWebView.delegate = self
         _ = self.privateWebView.installScriptMessageHandlerNamed(messageHandlerName)
 
