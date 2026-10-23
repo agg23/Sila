@@ -57,8 +57,11 @@ struct MainWindowView: View {
         }
         .environment(\.disablePrimaryOrnaments, hasActiveVideo)
         #if os(tvOS)
-        // Always use sidebar on Vision
         .tabViewStyle(.sidebarAdaptable)
+        // Present above the TabView so the sidebar indicator doesn't cover playback
+        .fullScreenCover(item: self.router.fullScreenPlaybackBinding) { video in
+            TwitchEmbeddedContentView(streamableVideo: video)
+        }
         #else
         .roundedBackground(.glass)
         #endif

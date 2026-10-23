@@ -19,6 +19,25 @@ struct OrnamentPickerTabView<LeftContent: View, RightContent: View>: View {
     @ViewBuilder var rightView: () -> RightContent
 
     var body: some View {
+        #if os(tvOS)
+        // A nested TabView fights the main sidebar TabView for focus, so use a plain picker instead
+        VStack(spacing: 0) {
+            Picker("", selection: $leftActive) {
+                Text(self.leftTitle)
+                    .tag(true)
+                Text(self.rightTitle)
+                    .tag(false)
+            }
+            .pickerStyle(.segmented)
+            .fixedSize()
+
+            if self.leftActive {
+                self.leftView()
+            } else {
+                self.rightView()
+            }
+        }
+        #else
         TabView(selection: $leftActive) {
             self.leftView()
                 .tag(true)
@@ -35,6 +54,7 @@ struct OrnamentPickerTabView<LeftContent: View, RightContent: View>: View {
         .ornament(visibility: self.disablePrimaryOrnaments ? .hidden : .automatic, attachmentAnchor: .scene(.bottom)) {
             Ornament(leftTitle: self.leftTitle, rightTitle: self.rightTitle, leftActive: $leftActive)
         }
+        #endif
         #endif
     }
 }

@@ -19,7 +19,10 @@ struct TabPage<Content: View>: View {
     var body: some View {
         NavStack(tab: self.tab) {
             self.content()
+                #if !os(tvOS)
+                // The sidebar shows the current tab on tvOS
                 .largeNavigationTitle(self.title)
+                #endif
                 .navigationDestination(for: Route.self, destination: { route in
                     switch route {
                     case .category(game: let gameWrapper):

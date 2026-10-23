@@ -70,7 +70,7 @@ struct StreamGridView: View {
         #if os(tvOS)
         .scrollClipDisabled()
         // Focus the first stream on open
-        .defaultFocus(self.$focusedStream, self.streams.first?.id, priority: .userInitiated)
+        .defaultFocus(self.$focusedStream, self.streams.first?.id)
         #endif
     }
 }

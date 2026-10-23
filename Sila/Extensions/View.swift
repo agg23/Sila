@@ -17,8 +17,6 @@ extension View {
                     .font(.largeTitle)
             }
         }
-        #elseif os(tvOS)
-        self
         #else
         self.navigationTitle(title)
         #endif

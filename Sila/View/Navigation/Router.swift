@@ -25,6 +25,15 @@ enum SelectedTab: Equatable, Codable {
 
     var bufferedWindowOpen: StreamableVideo?
 
+    #if os(tvOS)
+    // tvOS presents playback full screen over the TabView instead of in a tab's stack, as we can't hide the sidebar indicator
+    var fullScreenPlayback: StreamableVideo?
+
+    var fullScreenPlaybackBinding: Binding<StreamableVideo?> {
+        Binding(get: { self.fullScreenPlayback }, set: { self.fullScreenPlayback = $0 })
+    }
+    #endif
+
     init() {
 
     }
@@ -83,22 +92,34 @@ enum SelectedTab: Equatable, Codable {
     }
 
     func activePlaybackVideo(in tab: SelectedTab) -> StreamableVideo? {
+        #if os(tvOS)
+        self.fullScreenPlayback
+        #else
         self.path(for: tab).last?.playbackVideo
+        #endif
     }
 
     func pushPlayback(_ video: StreamableVideo, in tab: SelectedTab? = nil) {
+        #if os(tvOS)
+        self.fullScreenPlayback = video
+        #else
         let targetTab = tab ?? self.tab
         self.dismissPlayback(in: targetTab)
         self.push(route: .playback(video: video), in: targetTab)
+        #endif
     }
 
     func dismissPlayback(in tab: SelectedTab? = nil) {
+        #if os(tvOS)
+        self.fullScreenPlayback = nil
+        #else
         let targetTab = tab ?? self.tab
         guard let index = self.path(for: targetTab).lastIndex(where: { $0.isPlayback }) else {
             return
         }
 
         self.path[targetTab]?.removeSubrange(index...)
+        #endif
     }
 
     func hasPlayback(in tab: SelectedTab? = nil) -> Bool {

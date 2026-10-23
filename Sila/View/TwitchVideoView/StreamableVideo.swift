@@ -7,7 +7,7 @@
 
 import Twitch
 
-enum StreamableVideo: Equatable, Hashable, Encodable, Decodable {
+enum StreamableVideo: Equatable, Hashable, Identifiable, Encodable, Decodable {
     case stream(Twitch.Stream)
     case video(Twitch.Video)
 
