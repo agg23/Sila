@@ -396,6 +396,35 @@ final class TwitchWebViewController: NSObject, TwitchPlaybackBackend, InternalTw
     private static var playerScripts: [TwitchUserScriptSpec] {
         [
             TwitchUserScriptSpec(source: #"""
+                // Native HLS exposes in-band captions, which WebKit displays automatically
+                // Catch them and turn them off
+                (() => {
+                    const disableTrack = (track) => {
+                        if ((track.kind === "captions" || track.kind === "subtitles") && track.mode !== "disabled") {
+                            console.log(`Disabling ${track.kind} track "${track.label}" (${track.language}), was ${track.mode}`);
+                            track.mode = "disabled";
+                        }
+                    };
+
+                    const watched = new WeakSet();
+                    // Media events don't bubble, so catch them in the capture phase
+                    document.addEventListener("loadstart", (event) => {
+                        const video = event.target;
+                        if (!(video instanceof HTMLMediaElement) || watched.has(video)) {
+                            return;
+                        }
+
+                        watched.add(video);
+
+                        const tracks = video.textTracks;
+                        const disableAll = () => Array.from(tracks).forEach(disableTrack);
+                        tracks.addEventListener("addtrack", (event) => disableTrack(event.track));
+                        tracks.addEventListener("change", disableAll);
+                        disableAll();
+                    }, true);
+                })();
+                """#, injectionTime: .atDocumentStart, forMainFrameOnly: true),
+            TwitchUserScriptSpec(source: #"""
                 // Set custom window parent
                 window.parent = {
                   postMessage: (message, options) => {
